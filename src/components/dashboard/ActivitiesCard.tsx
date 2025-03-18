@@ -34,10 +34,16 @@ const ActivitiesCard = () => {
                   User Activities
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="system" 
+                  value="usage" 
                   className="relative p-0 h-auto data-[state=active]:bg-transparent data-[state=active]:shadow-none text-base font-bold data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:-bottom-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-black data-[state=active]:after:w-full"
                 >
-                  System Activities
+                  Usage Activities
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="course" 
+                  className="relative p-0 h-auto data-[state=active]:bg-transparent data-[state=active]:shadow-none text-base font-bold data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:-bottom-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-black data-[state=active]:after:w-full"
+                >
+                  Course Activities
                 </TabsTrigger>
               </TabsList>
               <div className="flex gap-2">
@@ -58,10 +64,17 @@ const ActivitiesCard = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="system" className="mt-4">
-              {/* System Activities content will go here */}
+            <TabsContent value="usage" className="mt-4">
+              {/* Usage Activities content will go here */}
               <div className="h-48 flex items-center justify-center text-gray-400">
-                No system activity data to display
+                No usage activity data to display
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="course" className="mt-4">
+              {/* Course Activities content will go here */}
+              <div className="h-48 flex items-center justify-center text-gray-400">
+                No course activity data to display
               </div>
             </TabsContent>
           </Tabs>
