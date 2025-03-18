@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { ChevronDown, Info, ArrowUp } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -105,7 +104,7 @@ const CoursePerformanceCard = () => {
               </div>
             </div>
             <div className="cursor-pointer">
-              <span className="text-[10px] text-[#4F5A69] border-b border-[#4F5A69] hover:text-[#338FFF] hover:border-[#338FFF] transition-colors">View Report</span>
+              <span className="text-[10px] text-[#4F5A69] hover:text-[#338FFF] hover:border-[#338FFF] transition-colors">View Report</span>
             </div>
           </div>
         </div>
