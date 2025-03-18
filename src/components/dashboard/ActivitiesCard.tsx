@@ -10,13 +10,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+// Updated data to better match the screenshot
 const data = [
-  { name: "Jan", active: 100, new: 200 },
-  { name: "Feb", active: 200, new: 150 },
-  { name: "Mar", active: 150, new: 220 },
-  { name: "Apr", active: 300, new: 250 },
-  { name: "May", active: 250, new: 180 },
-  { name: "Jun", active: 237, new: 8 },
+  { name: "Jan", active: 200, new: 370 },
+  { name: "Feb", active: 210, new: 30 },
+  { name: "Mar", active: 320, new: 420 },
+  { name: "Apr", active: 30, new: 150 },
+  { name: "May", active: 450, new: 240 },
+  { name: "June", active: 150, new: 300 },
 ];
 
 const StatIndicator = ({ value, isPositive }: { value: string, isPositive: boolean }) => {
@@ -78,6 +79,7 @@ const ActivitiesCard = () => {
   return (
     <Card className="w-full mt-6 animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
       <div className="w-full">
+        {/* Header */}
         <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
             <h3 className="text-[22px] font-bold text-[#233143] font-poppins">Activity Overview</h3>
@@ -104,6 +106,7 @@ const ActivitiesCard = () => {
           </div>
         </div>
 
+        {/* Tabs */}
         <div className="flex items-center gap-5 px-2.5 w-full bg-white overflow-x-auto">
           <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 border-b-4 border-[#338FFF]">
             <span className="text-[#338FFF] text-base font-bold font-poppins">User Activity</span>
@@ -117,6 +120,7 @@ const ActivitiesCard = () => {
         </div>
 
         <div className="flex flex-col gap-2.5 w-full">
+          {/* Stats Row */}
           <div className="flex items-center gap-5 p-2.5 h-20 w-full flex-wrap">
             <ActivityStat 
               title="Active Users" 
@@ -134,30 +138,34 @@ const ActivitiesCard = () => {
             />
           </div>
 
-          <div className="flex items-center gap-5 h-[287px] relative w-full">
-            <div className="flex flex-col justify-between items-start flex-1 w-full p-2.5 relative">
+          {/* Chart - Moved below the stats row */}
+          <div className="p-2.5 w-full">
+            <div className="h-[287px] relative w-full">
               {/* Y-axis labels */}
-              <div className="absolute top-0 right-0 bottom-0 left-0">
+              <div className="absolute top-0 right-0 bottom-0 left-0 pointer-events-none">
                 {[500, 400, 300, 200, 100, 0].map((value, index) => (
-                  <div key={index} className="flex justify-end items-center gap-1.5 h-[16.67%]">
-                    <span className="text-[10px] text-[#CDD1D7] font-poppins">{value}</span>
-                    <div className="w-1 h-[1px] bg-[#CDD1D7]"></div>
-                    <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
+                  <div key={index} className="flex justify-start items-center gap-1.5 h-[16.67%]">
+                    <span className="text-[10px] text-[#CDD1D7] font-poppins w-8 text-right mr-1">{value}</span>
+                    <div className="w-full h-[0.5px] bg-[#CDD1D7] opacity-70"></div>
                   </div>
                 ))}
               </div>
 
               {/* Chart */}
-              <div className="absolute top-0 left-0 w-full h-full">
+              <div className="absolute top-0 left-0 w-full h-full pl-10">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart
                     data={data}
-                    margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+                    margin={{ top: 0, right: 30, left: 0, bottom: 0 }}
                   >
                     <defs>
                       <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#338FFF" stopOpacity={0.2}/>
                         <stop offset="95%" stopColor="#338FFF" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorNew" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#CDD1D7" stopOpacity={0.2}/>
+                        <stop offset="95%" stopColor="#CDD1D7" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid vertical={false} stroke="#CDD1D7" opacity={0.3} />
@@ -174,7 +182,7 @@ const ActivitiesCard = () => {
                       dataKey="new" 
                       stroke="#CDD1D7" 
                       strokeWidth={2}
-                      fill="none"
+                      fill="url(#colorNew)"
                     />
                     <Area 
                       type="monotone" 
