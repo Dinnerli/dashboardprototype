@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -31,26 +30,26 @@ const ActiveUsersCard = () => {
   );
 };
 
-const CompletedCard = () => {
+const SignupUserCard = () => {
   return (
-    <div className="flex flex-col p-[5px_10px_10px_10px] items-start flex-1 rounded-[10px]">
-      <div className="flex p-[5px_10px] items-center gap-[20px] w-full">
-        <div className="text-black text-[14px] font-poppins font-medium leading-[24px]">
-          Completed
+    <div className="flex flex-col p-[5px_10px_10px_10px] items-start flex-1 rounded-[10px] bg-[rgba(255,255,255,0.10)]">
+      <div className="flex p-[5px_10px] items-center gap-[10px] w-full">
+        <div className="text-[#B3B3B3] text-[14px] font-poppins font-medium leading-[24px]">
+          Signup user
         </div>
+        <Info className="w-4 h-4 text-[#B3B3B3]" stroke="#B3B3B3" strokeWidth={1} />
       </div>
       <div className="flex justify-between items-center w-full">
         <div className="flex p-[0px_10px] items-center gap-[10px]">
-          <div className="text-black">
-            <span className="text-[24px] font-['Inter'] font-bold">82</span>
-            <span className="text-[16px] font-['Inter'] font-bold">%</span>
+          <div className="text-[#B3B3B3] text-[24px] font-['Inter'] font-bold">
+            248
           </div>
         </div>
         <div className="flex p-[6px_10px] items-center gap-[10px]">
-          <div className="text-[#019230] text-[14px] font-poppins font-bold">
-            32.8%
+          <div className="text-[#B3B3B3] text-[14px] font-poppins font-bold">
+            27.6%
           </div>
-          <ArrowUp className="w-4 h-4 text-[#019230]" stroke="#019230" strokeWidth={1.5} />
+          <ArrowUp className="w-4 h-4 text-[#B3B3B3]" stroke="#B3B3B3" strokeWidth={1.5} />
         </div>
       </div>
     </div>
@@ -113,7 +112,7 @@ const ActivitiesCard = () => {
             <TabsContent value="user" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActiveUsersCard />
-                <CompletedCard />
+                <SignupUserCard />
                 {/* Add more cards as needed */}
               </div>
             </TabsContent>
@@ -121,7 +120,7 @@ const ActivitiesCard = () => {
             <TabsContent value="usage" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActiveUsersCard />
-                <CompletedCard />
+                <SignupUserCard />
                 {/* Add more cards as needed */}
               </div>
             </TabsContent>
@@ -129,7 +128,7 @@ const ActivitiesCard = () => {
             <TabsContent value="course" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActiveUsersCard />
-                <CompletedCard />
+                <SignupUserCard />
                 {/* Add more cards as needed */}
               </div>
             </TabsContent>
