@@ -11,14 +11,12 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="flex flex-col w-full px-5 py-4 bg-white border-b animate-slide-in-up">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-3">
-        <div className="flex flex-col gap-1">
-          <h1 className="text-xl sm:text-2xl font-bold text-dark">Dashboard</h1>
-          <p className="text-gray-600 text-base sm:text-lg">
-            Overview administrative dashboard
-          </p>
-        </div>
+    <nav className="flex items-center justify-between w-full px-5 py-3 bg-white border-b animate-slide-in-up">
+      <div className="flex flex-col">
+        <h1 className="text-lg font-bold text-dark">Dashboard</h1>
+        <p className="text-gray-600 text-sm">
+          Overview administrative dashboard
+        </p>
       </div>
       
       <div className="flex gap-1 justify-end">
