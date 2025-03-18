@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import NavItem from './NavItem';
-import { LineChart, Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
+import { Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
 
 const Navigation = () => {
   const [activeItem, setActiveItem] = useState('dashboard');
@@ -78,10 +78,12 @@ const Navigation = () => {
           onClick={() => handleItemClick('reports')}
         >
           <NavItem 
-            icon={<LineChart 
-              size={24} 
-              className={`${activeItem === 'reports' ? 'text-blue' : 'text-black'}`} 
-            />} 
+            icon={
+              <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.05 12C21.65 12 22.73 11 21.77 7.72C21.12 5.51 19.22 3.61 17.01 2.96C13.73 2 12.73 3.08 12.73 5.68V8.56C12.73 11 13.73 12 15.73 12H19.05Z" stroke={activeItem === 'reports' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M20.73 14.7C19.8 19.33 15.36 22.69 10.31 21.87C6.52003 21.26 3.47003 18.21 2.85003 14.42C2.04003 9.39 5.38003 4.95 9.99003 4.01" stroke={activeItem === 'reports' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            } 
             label="Reports" 
             active={activeItem === 'reports'} 
             dropdown={true}
