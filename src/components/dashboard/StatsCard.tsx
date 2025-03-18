@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import { InfoIcon } from 'lucide-react';
 
@@ -21,7 +20,7 @@ const StatsCard = ({
   const formattedChange = `${Math.abs(percentChange).toFixed(1)}%`;
   
   return (
-    <div className="flex flex-col py-2 px-5 h-[95px] rounded-lg bg-white shadow-sm">
+    <div className="flex flex-col py-2 px-5 h-[95px] rounded-lg bg-white shadow-sm min-w-[200px]">
       <div className="flex items-start gap-5 w-full">
         <div className="text-black font-poppins text-sm font-medium leading-6">
           {title}
