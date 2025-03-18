@@ -28,9 +28,12 @@ const Index = () => {
             <ActivitiesCard />
             <LearningActivitiesCard />
           </div>
-          {/* Course Performance Card */}
-          <div className="pb-6">
+          
+          {/* Course Performance Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <CoursePerformanceCard />
+            {/* Placeholder for future card */}
+            <div className="hidden md:block"></div>
           </div>
         </div>
       </main>
