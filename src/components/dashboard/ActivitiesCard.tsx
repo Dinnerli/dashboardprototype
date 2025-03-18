@@ -1,8 +1,9 @@
+
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 const ActivitiesCard = () => {
   return <Card className="w-full mt-6 animate-slide-in-up" style={{
     animationDelay: '0.2s'
@@ -23,23 +24,50 @@ const ActivitiesCard = () => {
       </CardHeader>
       <CardContent className="p-6">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-row items-center justify-between">
-              <h4 className="font-bold text-base">User Activities</h4>
+          <Tabs defaultValue="user" className="w-full">
+            <div className="flex flex-row items-center justify-between mb-1">
+              <TabsList className="bg-transparent p-0 h-auto space-x-6">
+                <TabsTrigger 
+                  value="user" 
+                  className="relative p-0 h-auto data-[state=active]:bg-transparent data-[state=active]:shadow-none text-base font-bold data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:-bottom-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-black data-[state=active]:after:w-full"
+                >
+                  User Activities
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="system" 
+                  className="relative p-0 h-auto data-[state=active]:bg-transparent data-[state=active]:shadow-none text-base font-bold data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:-bottom-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-black data-[state=active]:after:w-full"
+                >
+                  System Activities
+                </TabsTrigger>
+              </TabsList>
               <div className="flex gap-2">
-                
-                
+                <Button variant="outline" size="sm" className="px-4">
+                  View All
+                </Button>
+                <Button variant="outline" size="sm" className="px-4">
+                  Export
+                </Button>
               </div>
             </div>
-            <Separator className="h-0.5 bg-black w-full" />
-          </div>
-          
-          {/* Activities content will go here */}
-          <div className="h-48 flex items-center justify-center text-gray-400">
-            No activity data to display
-          </div>
+            <div className="h-0.5 bg-slate-200 w-full"></div>
+            
+            <TabsContent value="user" className="mt-4">
+              {/* User Activities content will go here */}
+              <div className="h-48 flex items-center justify-center text-gray-400">
+                No activity data to display
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="system" className="mt-4">
+              {/* System Activities content will go here */}
+              <div className="h-48 flex items-center justify-center text-gray-400">
+                No system activity data to display
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </CardContent>
     </Card>;
 };
+
 export default ActivitiesCard;
