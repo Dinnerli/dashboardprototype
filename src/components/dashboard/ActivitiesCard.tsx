@@ -31,6 +31,32 @@ const ActiveUsersCard = () => {
   );
 };
 
+const CompletedCard = () => {
+  return (
+    <div className="flex flex-col p-[5px_10px_10px_10px] items-start flex-1 rounded-[10px]">
+      <div className="flex p-[5px_10px] items-center gap-[20px] w-full">
+        <div className="text-black text-[14px] font-poppins font-medium leading-[24px]">
+          Completed
+        </div>
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <div className="flex p-[0px_10px] items-center gap-[10px]">
+          <div className="text-black">
+            <span className="text-[24px] font-['Inter'] font-bold">82</span>
+            <span className="text-[16px] font-['Inter'] font-bold">%</span>
+          </div>
+        </div>
+        <div className="flex p-[6px_10px] items-center gap-[10px]">
+          <div className="text-[#019230] text-[14px] font-poppins font-bold">
+            32.8%
+          </div>
+          <ArrowUp className="w-4 h-4 text-[#019230]" stroke="#019230" strokeWidth={1.5} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ActivitiesCard = () => {
   return <Card className="w-full mt-6 animate-slide-in-up" style={{
     animationDelay: '0.2s'
@@ -87,6 +113,7 @@ const ActivitiesCard = () => {
             <TabsContent value="user" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActiveUsersCard />
+                <CompletedCard />
                 {/* Add more cards as needed */}
               </div>
             </TabsContent>
@@ -94,6 +121,7 @@ const ActivitiesCard = () => {
             <TabsContent value="usage" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActiveUsersCard />
+                <CompletedCard />
                 {/* Add more cards as needed */}
               </div>
             </TabsContent>
@@ -101,6 +129,7 @@ const ActivitiesCard = () => {
             <TabsContent value="course" className="mt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <ActiveUsersCard />
+                <CompletedCard />
                 {/* Add more cards as needed */}
               </div>
             </TabsContent>
