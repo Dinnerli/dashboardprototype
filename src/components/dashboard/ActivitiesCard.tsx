@@ -50,8 +50,8 @@ const ActivitiesCard = () => {
                 <Button variant="outline" size="sm" className="px-4">
                   View All
                 </Button>
-                <Button variant="outline" size="sm" className="px-4">
-                  Export
+                <Button variant="ghost" size="sm" className="px-4">
+                  View Report
                 </Button>
               </div>
             </div>
