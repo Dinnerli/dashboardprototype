@@ -112,11 +112,7 @@ const Dashboard = () => {
       <OverviewContent />
       
       {/* Placeholder for upcoming dashboard sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
-        <div className="dashboard-card min-h-[300px] flex items-center justify-center border border-gray-100">
-          <p className="text-gray-500">Activity graph will appear here</p>
-        </div>
-        
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-5 animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
         <div className="dashboard-card min-h-[300px] flex items-center justify-center border border-gray-100">
           <p className="text-gray-500">Recent users will appear here</p>
         </div>
