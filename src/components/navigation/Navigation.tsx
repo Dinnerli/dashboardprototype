@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import NavItem from './NavItem';
-import { Medal, LineChart, Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
+import { LineChart, Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
 
 const Navigation = () => {
   const [activeItem, setActiveItem] = useState('dashboard');
@@ -61,10 +61,12 @@ const Navigation = () => {
           onClick={() => handleItemClick('rewards')}
         >
           <NavItem 
-            icon={<Medal 
-              size={24} 
-              className={`${activeItem === 'rewards' ? 'text-blue' : 'text-black'}`} 
-            />} 
+            icon={
+              <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.67 15C16.398 15 19.42 12.0899 19.42 8.5C19.42 4.91015 16.398 2 12.67 2C8.94212 2 5.92004 4.91015 5.92004 8.5C5.92004 12.0899 8.94212 15 12.67 15Z" stroke={activeItem === 'rewards' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M8.19003 13.52L8.18005 20.9C8.18005 21.8 8.81006 22.24 9.59006 21.87L12.2701 20.6C12.4901 20.49 12.86 20.49 13.08 20.6L15.7701 21.87C16.5401 22.23 17.1801 21.8 17.1801 20.9V13.34" stroke={activeItem === 'rewards' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            } 
             label="Rewards" 
             active={activeItem === 'rewards'} 
             dropdown={true}
