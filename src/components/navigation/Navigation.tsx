@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import NavItem from './NavItem';
 import { Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
@@ -95,10 +94,18 @@ const Navigation = () => {
           onClick={() => handleItemClick('games')}
         >
           <NavItem 
-            icon={<Gamepad 
-              size={24} 
-              className={`${activeItem === 'games' ? 'text-blue' : 'text-black'}`} 
-            />} 
+            icon={
+              <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.3601 12.46L7.31006 15.51" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M7.34009 12.49L10.3901 15.54" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M14.3201 14H14.3301" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M18.26 14H18.27" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M16.29 15.98V15.96" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M16.29 12.04V12.02" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9.79004 22H15.79C20.79 22 22.79 20 22.79 15V13C22.79 8 20.79 6 15.79 6H9.79004C4.79004 6 2.79004 8 2.79004 13V15C2.79004 20 4.79004 22 9.79004 22Z" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M13.8 2L13.79 3.01C13.78 3.56 13.34 4 12.79 4H12.76C12.21 4 11.77 4.45 11.77 5C11.77 5.55 12.22 6 12.77 6H13.77" stroke={activeItem === 'games' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            } 
             label="Games" 
             active={activeItem === 'games'} 
           />
