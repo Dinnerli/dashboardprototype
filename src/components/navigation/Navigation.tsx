@@ -116,10 +116,14 @@ const Navigation = () => {
           onClick={() => handleItemClick('moderate')}
         >
           <NavItem 
-            icon={<BellDot 
-              size={24} 
-              className={`${activeItem === 'moderate' ? 'text-blue' : 'text-black'}`} 
-            />} 
+            icon={
+              <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.8501 8C21.507 8 22.8501 6.65685 22.8501 5C22.8501 3.34315 21.507 2 19.8501 2C18.1932 2 16.8501 3.34315 16.8501 5C16.8501 6.65685 18.1932 8 19.8501 8Z" stroke={activeItem === 'moderate' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M7.8501 13H12.8501" stroke={activeItem === 'moderate' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M7.8501 17H16.8501" stroke={activeItem === 'moderate' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M14.8501 2H9.8501C4.8501 2 2.8501 4 2.8501 9V15C2.8501 20 4.8501 22 9.8501 22H15.8501C20.8501 22 22.8501 20 22.8501 15V10" stroke={activeItem === 'moderate' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            } 
             label="Moderate" 
             active={activeItem === 'moderate'} 
           />
