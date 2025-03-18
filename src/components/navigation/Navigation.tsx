@@ -134,10 +134,14 @@ const Navigation = () => {
           onClick={() => handleItemClick('broadcasts')}
         >
           <NavItem 
-            icon={<SendHorizonal 
-              size={24} 
-              className={`${activeItem === 'broadcasts' ? 'text-blue' : 'text-black'}`} 
-            />} 
+            icon={
+              <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.91003 8.5C2.91003 5 4.91003 3.5 7.91003 3.5H17.91C20.91 3.5 22.91 5 22.91 8.5V15.5C22.91 19 20.91 20.5 17.91 20.5H7.91003" stroke={activeItem === 'broadcasts' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M17.91 9L14.78 11.5C13.75 12.32 12.06 12.32 11.03 11.5L7.91003 9" stroke={activeItem === 'broadcasts' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2.91003 16.5H8.91003" stroke={activeItem === 'broadcasts' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2.91003 12.5H5.91003" stroke={activeItem === 'broadcasts' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            } 
             label="Broadcasts" 
             active={activeItem === 'broadcasts'} 
           />
