@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import NavItem from './NavItem';
 import { Medal, LineChart, Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
@@ -44,10 +45,9 @@ const Navigation = () => {
           <NavItem 
             icon={
               <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.55 8.52V3.98C22.55 2.57 21.91 2 20.32 2H16.28C14.69 2 14.05 2.57 14.05 3.98V8.51C14.05 9.93 14.69 10.49 16.28 10.49H20.32C21.91 10.5 22.55 9.93 22.55 8.52Z" stroke={activeItem === 'manage' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M22.55 19.77V15.73C22.55 14.14 21.91 13.5 20.32 13.5H16.28C14.69 13.5 14.05 14.14 14.05 15.73V19.77C14.05 21.36 14.69 22 16.28 22H20.32C21.91 22 22.55 21.36 22.55 19.77Z" stroke={activeItem === 'manage' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M11.05 8.52V3.98C11.05 2.57 10.41 2 8.82005 2H4.78005C3.19005 2 2.55005 2.57 2.55005 3.98V8.51C2.55005 9.93 3.19005 10.49 4.78005 10.49H8.82005C10.41 10.5 11.05 9.93 11.05 8.52Z" stroke={activeItem === 'manage' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M11.05 19.77V15.73C11.05 14.14 10.41 13.5 8.82005 13.5H4.78005C3.19005 13.5 2.55005 14.14 2.55005 15.73V19.77C2.55005 21.36 3.19005 22 4.78005 22H8.82005C10.41 22 11.05 21.36 11.05 19.77Z" stroke={activeItem === 'manage' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M11.6101 2H9.61011C4.61011 2 2.61011 4 2.61011 9V15C2.61011 20 4.61011 22 9.61011 22H15.6101C20.6101 22 22.6101 20 22.6101 15V13" stroke={activeItem === 'manage' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M16.6501 3.02L8.77011 10.9C8.47011 11.2 8.17011 11.79 8.11011 12.22L7.68011 15.23C7.52011 16.32 8.29011 17.08 9.38011 16.93L12.3901 16.5C12.8101 16.44 13.4001 16.14 13.7101 15.84L21.5901 7.96C22.9501 6.6 23.5901 5.02 21.5901 3.02C19.5901 1.02 18.0101 1.66 16.6501 3.02Z" stroke={activeItem === 'manage' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M15.5201 4.15C16.1901 6.54 18.0601 8.41 20.4601 9.09" stroke={activeItem === 'manage' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             } 
             label="Manage" 
