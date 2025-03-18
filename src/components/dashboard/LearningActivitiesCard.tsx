@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { ChevronDown, Info } from "lucide-react";
 
