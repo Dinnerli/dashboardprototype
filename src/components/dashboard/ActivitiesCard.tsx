@@ -3,6 +3,33 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Info, ArrowUp } from "lucide-react";
+
+const ActiveUsersCard = () => {
+  return (
+    <div className="flex flex-col p-[5px_10px_10px_10px] items-start flex-1 rounded-[10px] bg-[rgba(9,169,255,0.07)]">
+      <div className="flex p-[5px_10px] items-center gap-[10px] w-full">
+        <div className="text-black text-[14px] font-poppins font-medium leading-[24px]">
+          Active users
+        </div>
+        <Info className="w-4 h-4" />
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <div className="flex p-[0px_10px] items-center gap-[10px]">
+          <div className="text-black text-[24px] font-['Inter'] font-bold">
+            237
+          </div>
+        </div>
+        <div className="flex p-[6px_10px] items-center gap-[10px]">
+          <div className="text-[#019230] text-[14px] font-poppins font-semibold">
+            8.4%
+          </div>
+          <ArrowUp className="w-4 h-4 text-[#019230]" stroke="#019230" strokeWidth={1.5} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ActivitiesCard = () => {
   return <Card className="w-full mt-6 animate-slide-in-up" style={{
@@ -58,23 +85,23 @@ const ActivitiesCard = () => {
             <div className="h-0.5 bg-slate-200 w-full"></div>
             
             <TabsContent value="user" className="mt-4">
-              {/* User Activities content will go here */}
-              <div className="h-48 flex items-center justify-center text-gray-400">
-                No activity data to display
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <ActiveUsersCard />
+                {/* Add more cards as needed */}
               </div>
             </TabsContent>
             
             <TabsContent value="usage" className="mt-4">
-              {/* Usage Activities content will go here */}
-              <div className="h-48 flex items-center justify-center text-gray-400">
-                No usage activity data to display
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <ActiveUsersCard />
+                {/* Add more cards as needed */}
               </div>
             </TabsContent>
             
             <TabsContent value="course" className="mt-4">
-              {/* Course Activities content will go here */}
-              <div className="h-48 flex items-center justify-center text-gray-400">
-                No course activity data to display
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <ActiveUsersCard />
+                {/* Add more cards as needed */}
               </div>
             </TabsContent>
           </Tabs>
