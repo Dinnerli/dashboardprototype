@@ -1,39 +1,48 @@
 
-import { Users, Gauge, Wallet, TrendingUp } from 'lucide-react';
-import StatCard from './StatCard';
+import StatsCard from './StatsCard';
 
 const OverviewContent = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 animate-slide-in-up" style={{ animationDelay: '0.1s' }}>
-      <StatCard
-        title="Total Users"
-        value="28,427"
-        change={{ value: 12.5, positive: true }}
-        icon={<Users size={18} className="text-blue" />}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6 gap-5 animate-slide-in-up" style={{ animationDelay: '0.1s' }}>
+      <StatsCard
+        title="Total training hours"
+        value="17"
+        valueSuffix="hrs"
+        isValueSuffixed={true}
+        percentChange={25.3}
       />
       
-      <StatCard
-        title="Active Games"
-        value="342"
-        change={{ value: 5.3, positive: true }}
-        icon={<Gauge size={18} className="text-blue" />}
+      <StatsCard
+        title="Avg. Daily Usage"
+        value="8"
+        valueSuffix="hrs"
+        isValueSuffixed={true}
+        percentChange={-25.3}
       />
       
-      <StatCard
-        title="Revenue"
-        value="$24,518"
-        change={{ value: 2.1, positive: false }}
-        icon={<Wallet size={18} className="text-blue" />}
+      <StatsCard
+        title="ILT Enrolled Rate"
+        value="15%"
+        percentChange={25.3}
       />
       
-      <StatCard
-        title="Engagement"
-        value="58.2%"
-        change={{ value: 8.7, positive: true }}
-        icon={<TrendingUp size={18} className="text-blue" />}
+      <StatsCard
+        title="ILT Dropout Rate"
+        value="35%"
+        percentChange={-25.3}
       />
       
-      {/* More cards can be added here later */}
+      <StatsCard
+        title="VILT Enrolled Rate"
+        value="6%"
+        percentChange={25.3}
+      />
+      
+      <StatsCard
+        title="VILT Dropout Rate"
+        value="35%"
+        percentChange={-25.3}
+      />
     </div>
   );
 };
