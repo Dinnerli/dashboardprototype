@@ -23,7 +23,7 @@ const StatsCard = ({
   return (
     <div className="flex flex-col py-2 px-5 h-[95px] rounded-lg bg-white shadow-sm min-w-[200px]">
       <div className="flex items-start gap-5 w-full">
-        <div className="text-black font-poppins text-paragraph-1 font-medium leading-6">
+        <div className="text-black font-poppins text-[14px] font-medium leading-6">
           {title}
         </div>
         <InfoIcon className="w-4 h-4 text-[#B3B3B3]" />
