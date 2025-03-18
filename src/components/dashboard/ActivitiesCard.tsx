@@ -84,7 +84,7 @@ const ActivitiesCard = () => {
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
             <h3 className="text-[22px] font-bold text-[#233143] font-poppins">Activity Overview</h3>
           </div>
-          <div className="flex gap-2.5">
+          <div className="flex gap-2.5 items-center">
             <div className="flex items-center h-[30px] gap-2.5">
               <div className="flex items-center gap-1.5 pl-2.5 rounded-[10px]">
                 <span className="text-xs text-[#8C9BAC] font-poppins">Filter by:</span>
@@ -98,8 +98,8 @@ const ActivitiesCard = () => {
                 <ChevronDown className="w-6 h-6 text-[#8C9BAC]" stroke="#8C9BAC" />
               </div>
             </div>
-            <div className="flex items-center p-2.5">
-              <div className="flex items-center justify-center gap-1.5 px-0 py-1.5 border border-[#4F5A69]">
+            <div className="flex items-center">
+              <div className="flex items-center justify-center gap-1.5 px-0 py-1.5">
                 <span className="text-xs text-[#4F5A69] font-poppins text-center">View Report</span>
               </div>
             </div>
