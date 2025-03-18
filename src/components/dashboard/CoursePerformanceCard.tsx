@@ -10,12 +10,12 @@ type CourseBarProps = {
 
 const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBarProps) => {
   return (
-    <div className="flex items-center gap-[5px] w-full">
-      <div className="flex w-[100px] justify-end items-center gap-[5px]">
-        <div className="w-[90px] text-right text-[10px] text-[#4F5A69] font-poppins">{name}</div>
+    <div className="flex items-center gap-2 my-2 w-full">
+      <div className="flex min-w-[120px] justify-end items-center gap-1">
+        <div className="w-full text-right text-xs text-[#4F5A69] font-poppins">{name}</div>
         <div className="w-[4px] h-[1px] bg-[#4F5A69]"></div>
       </div>
-      <div className="flex h-[10px] justify-end items-center flex-1">
+      <div className="flex h-[8px] justify-start items-center flex-1">
         <div 
           className="h-full bg-[#338FFF]" 
           style={{ width: `${completedPercentage}%` }}
@@ -33,10 +33,10 @@ const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBa
 const StatIndicator = ({ value, isPositive }: { value: string, isPositive: boolean }) => {
   return (
     <div className="flex items-center justify-end">
-      <span className="text-sm text-[#00D764]">
+      <span className="text-sm md:text-base text-[#00D764]">
         {value}
       </span>
-      <ArrowUp className="w-4 h-4 text-[#00D764]" stroke="#00D764" strokeWidth={1.5} />
+      <ArrowUp className="w-4 h-4 md:w-5 md:h-5 text-[#00D764]" stroke="#00D764" strokeWidth={1.5} />
     </div>
   );
 };
@@ -45,35 +45,29 @@ const ActivityStat = ({
   title, 
   value, 
   percentage, 
-  isActive
+  isActive,
+  icon
 }: { 
   title: string; 
   value: string; 
   percentage: string;
   isActive: boolean;
+  icon?: React.ReactNode;
 }) => {
   return (
-    <div className="flex items-center gap-2.5 p-2.5 rounded-lg">
-      <div className="flex flex-col items-center justify-center p-2.5">
-        <div 
-          className={`w-0.5 h-[35px] ${isActive ? 'bg-[#338FFF]' : 'bg-[#CDE4FF]'}`}
-        />
+    <div className="flex flex-col md:flex-row items-start md:items-center gap-2 p-4 relative">
+      {isActive && (
+        <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#338FFF]" />
+      )}
+      <div className="md:min-w-[140px] flex items-center gap-2">
+        <span className="text-sm md:text-base font-medium text-[#8C9BAC]">
+          {title}
+        </span>
+        <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
       </div>
-      <div className="flex flex-col">
-        <div className="flex items-center gap-2.5 px-2.5">
-          <span className="text-base font-bold text-[#8C9BAC]">
-            {title}
-          </span>
-          <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
-        </div>
-        <div className="flex items-center px-2.5">
-          <div>
-            <span className="text-2xl font-bold text-[#4F5A69]">{value}</span>
-          </div>
-          <div className="w-[66px] flex justify-end items-center">
-            <StatIndicator value={percentage} isPositive={true} />
-          </div>
-        </div>
+      <div className="flex items-center gap-4">
+        <span className="text-xl md:text-2xl font-bold text-[#4F5A69]">{value}</span>
+        <StatIndicator value={percentage} isPositive={true} />
       </div>
     </div>
   );
@@ -89,48 +83,42 @@ const courseData = [
 
 const CoursePerformanceCard = () => {
   return (
-    <Card className="w-full mt-6 animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
+    <Card className="w-full mt-6 animate-slide-in-up overflow-hidden" style={{ animationDelay: '0.3s' }}>
       <div className="w-full">
         {/* Header */}
-        <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
-          <div className="flex items-center gap-2.5 px-2.5 flex-1">
-            <h3 className="text-xl font-bold text-[#233143] font-poppins">Course Performance</h3>
-          </div>
-          <div className="flex gap-2.5 items-center">
-            <div className="flex items-center h-[30px] gap-2.5">
-              <div className="flex items-center gap-1.5 pl-2.5 rounded-[10px]">
-                <span className="text-xs text-[#8C9BAC] font-poppins">Filter by:</span>
+        <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
+          <h3 className="text-xl md:text-2xl font-bold text-[#233143] font-poppins">Course Performance</h3>
+          <div className="flex items-center gap-4 text-xs md:text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-[#8C9BAC]">Filter by:</span>
+              <div className="flex items-center gap-1 cursor-pointer">
+                <span className="text-[#8C9BAC]">Last 60 Days</span>
+                <ChevronDown className="w-4 h-4 text-[#8C9BAC]" />
               </div>
-              <div className="flex items-center gap-1.5 rounded-[10px]">
-                <span className="text-xs text-[#8C9BAC] font-poppins">Last 60 Days</span>
-                <ChevronDown className="w-6 h-6 text-[#8C9BAC]" stroke="#8C9BAC" />
-              </div>
-              <div className="flex items-center gap-1.5 rounded-[10px]">
-                <span className="text-xs text-[#8C9BAC] font-poppins">All</span>
-                <ChevronDown className="w-6 h-6 text-[#8C9BAC]" stroke="#8C9BAC" />
+              <div className="flex items-center gap-1 cursor-pointer">
+                <span className="text-[#8C9BAC]">All</span>
+                <ChevronDown className="w-4 h-4 text-[#8C9BAC]" />
               </div>
             </div>
-            <div className="flex items-center">
-              <div className="flex items-center justify-center gap-1.5 px-0 py-1.5">
-                <span className="text-xs text-[#4F5A69] font-poppins text-center px-2">View Report</span>
-              </div>
+            <div className="cursor-pointer">
+              <span className="text-[#4F5A69] border-b border-[#4F5A69] hover:text-[#338FFF] hover:border-[#338FFF] transition-colors">View Report</span>
             </div>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-5 px-2.5 w-full bg-white overflow-x-auto">
-          <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 border-b-4 border-[#338FFF]">
-            <span className="text-[#338FFF] text-base font-bold font-poppins">Top Performers</span>
+        <div className="flex items-center w-full bg-white border-b border-[#E5E7EB]">
+          <div className="px-8 py-4 border-b-2 border-[#338FFF]">
+            <span className="text-[#338FFF] text-sm md:text-base font-semibold">Top Performers</span>
           </div>
-          <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5">
-            <span className="text-[#8C9BAC] text-base font-bold font-poppins">Underperformers</span>
+          <div className="px-8 py-4">
+            <span className="text-[#8C9BAC] text-sm md:text-base font-semibold">Underperformers</span>
           </div>
         </div>
 
-        <div className="flex flex-col gap-2.5 w-full">
+        <div className="px-8 py-6">
           {/* Stats Row */}
-          <div className="flex items-center gap-5 p-2.5 h-20 w-full flex-wrap">
+          <div className="flex flex-col md:flex-row md:gap-8 mb-6 border-b border-[#E5E7EB]">
             <ActivityStat 
               title="Completed" 
               value="237" 
@@ -146,10 +134,10 @@ const CoursePerformanceCard = () => {
           </div>
 
           {/* Chart */}
-          <div className="p-2.5 w-full">
+          <div className="py-4">
             <div className="flex flex-col w-full">
               {/* Course bars */}
-              <div className="flex flex-col pb-2.5 justify-between items-start flex-1 w-full gap-2">
+              <div className="flex flex-col justify-between items-start w-full">
                 {courseData.map((course, index) => (
                   <CourseBar 
                     key={index}
@@ -161,17 +149,15 @@ const CoursePerformanceCard = () => {
               </div>
               
               {/* Separator line */}
-              <div className="flex items-center gap-[5px] w-full">
-                <div className="flex w-[100px] h-0 justify-end items-center gap-[5px]"></div>
-                <div className="flex h-[10px] justify-end items-center flex-1">
-                  <div className="h-[1px] flex-1 bg-[#CDD1D7]"></div>
-                </div>
+              <div className="flex items-center gap-[5px] w-full mt-2">
+                <div className="min-w-[120px]"></div>
+                <div className="flex h-[1px] flex-1 bg-[#E5E7EB]"></div>
               </div>
               
               {/* X-axis labels */}
-              <div className="flex pl-[105px] justify-between items-center w-full">
+              <div className="flex ml-[120px] justify-between items-center w-calc[100%-120px] mt-2 text-xs text-[#8C9BAC]">
                 {["0", "10", "20", "40", "50", "60", "70", "80", "90", "100 %"].map((label, index) => (
-                  <div key={index} className="text-[10px] text-[#CDD1D7] font-poppins">{label}</div>
+                  <div key={index}>{label}</div>
                 ))}
               </div>
             </div>
