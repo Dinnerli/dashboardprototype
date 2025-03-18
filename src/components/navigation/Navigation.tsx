@@ -1,6 +1,7 @@
+
 import { useState } from 'react';
 import NavItem from './NavItem';
-import { Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
+import { Gamepad, BellDot, SendHorizonal } from 'lucide-react';
 
 const Navigation = () => {
   const [activeItem, setActiveItem] = useState('dashboard');
@@ -152,10 +153,12 @@ const Navigation = () => {
           onClick={() => handleItemClick('ideabox')}
         >
           <NavItem 
-            icon={<Lightbulb 
-              size={24} 
-              className={`${activeItem === 'ideabox' ? 'text-blue' : 'text-black'}`} 
-            />} 
+            icon={
+              <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.26996 18.04V16.88C6.96996 15.49 5.07996 12.78 5.07996 9.9C5.07996 4.95 9.62996 1.07 14.77 2.19C17.03 2.69 19.01 4.19 20.04 6.26C22.13 10.46 19.93 14.92 16.7 16.87V18.03C16.7 18.32 16.81 18.99 15.74 18.99H10.23C9.12996 19 9.26996 18.57 9.26996 18.04Z" stroke={activeItem === 'ideabox' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9.46997 22C11.76 21.35 14.18 21.35 16.47 22" stroke={activeItem === 'ideabox' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            } 
             label="Ideabox" 
             active={activeItem === 'ideabox'} 
             dropdown={true}
