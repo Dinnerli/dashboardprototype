@@ -11,8 +11,8 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between w-full px-5 py-2 animate-slide-in-up">
-      <div className="flex w-full max-w-3xl overflow-x-auto pb-2 gap-1 justify-between">
+    <nav className="flex items-center justify-end w-full px-5 py-2 animate-slide-in-up">
+      <div className="flex gap-1 justify-end">
         <div 
           className="cursor-pointer" 
           onClick={() => handleItemClick('dashboard')}
