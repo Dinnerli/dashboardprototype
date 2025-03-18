@@ -91,7 +91,7 @@ const CoursePerformanceCard = () => {
       <div className="w-full">
         {/* Header */}
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
-          <h3 className="text-lg md:text-xl font-bold text-[#233143] font-poppins">Course Performance</h3>
+          <h3 className="h3 text-[#233143] font-poppins">Course Performance</h3>
           <div className="flex items-center gap-4 text-xs md:text-sm">
             <div className="flex items-center gap-2">
               <span className="text-[#8C9BAC]">Filter by:</span>
