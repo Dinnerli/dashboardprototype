@@ -15,7 +15,7 @@ const NavItem = ({ icon, label, active = false, dropdown = false }: NavItemProps
         {icon}
       </div>
       <div className="flex items-center justify-center gap-1 mt-2">
-        <span className="text-sm font-medium">{label}</span>
+        <span className="text-[14px] font-semibold">{label}</span>
         {dropdown && (
           <svg 
             width="24" 
