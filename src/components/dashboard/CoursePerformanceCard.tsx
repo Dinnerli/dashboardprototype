@@ -92,20 +92,20 @@ const CoursePerformanceCard = () => {
         {/* Header */}
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
           <h3 className="h3 text-[#233143] font-poppins">Course Performance</h3>
-          <div className="flex items-center gap-4 text-xs md:text-sm">
+          <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-[#8C9BAC]">Filter by:</span>
+              <span className="text-[10px] text-[#8C9BAC]">Filter by:</span>
               <div className="flex items-center gap-1 cursor-pointer">
-                <span className="text-[#8C9BAC]">Last 60 Days</span>
+                <span className="text-[10px] text-[#8C9BAC]">Last 60 Days</span>
                 <ChevronDown className="w-4 h-4 text-[#8C9BAC]" />
               </div>
               <div className="flex items-center gap-1 cursor-pointer">
-                <span className="text-[#8C9BAC]">All</span>
+                <span className="text-[10px] text-[#8C9BAC]">All</span>
                 <ChevronDown className="w-4 h-4 text-[#8C9BAC]" />
               </div>
             </div>
             <div className="cursor-pointer">
-              <span className="text-[#4F5A69] border-b border-[#4F5A69] hover:text-[#338FFF] hover:border-[#338FFF] transition-colors">View Report</span>
+              <span className="text-[10px] text-[#4F5A69] border-b border-[#4F5A69] hover:text-[#338FFF] hover:border-[#338FFF] transition-colors">View Report</span>
             </div>
           </div>
         </div>
