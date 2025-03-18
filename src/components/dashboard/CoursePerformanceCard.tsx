@@ -1,5 +1,8 @@
+
 import { Card } from "@/components/ui/card";
 import { ChevronDown, Info, ArrowUp } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useState } from "react";
 
 type CourseBarProps = {
   name: string;
@@ -81,6 +84,8 @@ const courseData = [
 ];
 
 const CoursePerformanceCard = () => {
+  const [activeTab, setActiveTab] = useState("top-performers");
+
   return (
     <Card className="w-full mt-6 animate-slide-in-up overflow-hidden" style={{ animationDelay: '0.3s' }}>
       <div className="w-full">
@@ -105,63 +110,125 @@ const CoursePerformanceCard = () => {
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="flex items-center w-full bg-white border-b border-[#E5E7EB]">
-          <div className="px-8 py-4 border-b-2 border-[#338FFF]">
-            <span className="text-[#338FFF] text-sm md:text-base font-semibold">Top Performers</span>
-          </div>
-          <div className="px-8 py-4">
-            <span className="text-[#8C9BAC] text-sm md:text-base font-semibold">Underperformers</span>
-          </div>
-        </div>
-
-        <div className="px-8 py-6">
-          {/* Stats Row */}
-          <div className="flex flex-col md:flex-row md:gap-8 mb-6 border-b border-[#E5E7EB]">
-            <ActivityStat 
-              title="Completed" 
-              value="237" 
-              percentage="40%" 
-              isActive={false}
-            />
-            <ActivityStat 
-              title="Passed" 
-              value="237" 
-              percentage="40%" 
-              isActive={true}
-            />
-          </div>
-
-          {/* Chart */}
-          <div className="py-4">
-            <div className="flex flex-col w-full">
-              {/* Course bars */}
-              <div className="flex flex-col justify-between items-start w-full">
-                {courseData.map((course, index) => (
-                  <CourseBar 
-                    key={index}
-                    name={course.name}
-                    completedPercentage={course.completedPercentage}
-                    inProgressPercentage={course.inProgressPercentage}
-                  />
-                ))}
+        {/* Tabs - Updated to use shadcn Tabs with top indicator */}
+        <Tabs defaultValue="top-performers" value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="flex h-auto w-full bg-white rounded-none p-0 border-b border-[#E5E7EB]">
+            <TabsTrigger 
+              value="top-performers"
+              className="flex-1 px-8 py-4 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0"
+            >
+              {activeTab === "top-performers" && <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#338FFF]"></div>}
+              Top Performers
+            </TabsTrigger>
+            <TabsTrigger 
+              value="underperformers"
+              className="flex-1 px-8 py-4 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0"
+            >
+              {activeTab === "underperformers" && <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#338FFF]"></div>}
+              Underperformers
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="top-performers" className="mt-0">
+            <div className="px-8 py-6">
+              {/* Stats Row */}
+              <div className="flex flex-col md:flex-row md:gap-8 mb-6 border-b border-[#E5E7EB]">
+                <ActivityStat 
+                  title="Completed" 
+                  value="237" 
+                  percentage="40%" 
+                  isActive={false}
+                />
+                <ActivityStat 
+                  title="Passed" 
+                  value="237" 
+                  percentage="40%" 
+                  isActive={true}
+                />
               </div>
-              
-              {/* Separator line */}
-              <div className="flex items-center gap-[5px] w-full mt-2">
-                <div className="min-w-[120px]"></div>
-                <div className="flex h-[1px] flex-1 bg-[#E5E7EB]"></div>
-              </div>
-              
-              {/* X-axis labels */}
-              <div className="flex ml-[120px] justify-between items-center w-calc[100%-120px] mt-2 text-xs text-[#8C9BAC]">
-                {["0", "10", "20", "40", "50", "60", "70", "80", "90", "100 %"].map((label, index) => (
-                  <div key={index}>{label}</div>
-                ))}
+
+              {/* Chart */}
+              <div className="py-4">
+                <div className="flex flex-col w-full">
+                  {/* Course bars */}
+                  <div className="flex flex-col justify-between items-start w-full">
+                    {courseData.map((course, index) => (
+                      <CourseBar 
+                        key={index}
+                        name={course.name}
+                        completedPercentage={course.completedPercentage}
+                        inProgressPercentage={course.inProgressPercentage}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Separator line */}
+                  <div className="flex items-center gap-[5px] w-full mt-2">
+                    <div className="min-w-[120px]"></div>
+                    <div className="flex h-[1px] flex-1 bg-[#E5E7EB]"></div>
+                  </div>
+                  
+                  {/* X-axis labels */}
+                  <div className="flex ml-[120px] justify-between items-center w-calc[100%-120px] mt-2 text-xs text-[#8C9BAC]">
+                    {["0", "10", "20", "40", "50", "60", "70", "80", "90", "100 %"].map((label, index) => (
+                      <div key={index}>{label}</div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </TabsContent>
+          
+          <TabsContent value="underperformers" className="mt-0">
+            <div className="px-8 py-6">
+              {/* Stats Row for Underperformers - Sample content */}
+              <div className="flex flex-col md:flex-row md:gap-8 mb-6 border-b border-[#E5E7EB]">
+                <ActivityStat 
+                  title="Incomplete" 
+                  value="124" 
+                  percentage="20%" 
+                  isActive={true}
+                />
+                <ActivityStat 
+                  title="Failed" 
+                  value="89" 
+                  percentage="15%" 
+                  isActive={false}
+                />
+              </div>
+
+              {/* Chart - Same structure for consistency */}
+              <div className="py-4">
+                <div className="flex flex-col w-full">
+                  {/* Course bars - Same data for now */}
+                  <div className="flex flex-col justify-between items-start w-full">
+                    {courseData.map((course, index) => (
+                      <CourseBar 
+                        key={index}
+                        name={course.name}
+                        completedPercentage={course.completedPercentage}
+                        inProgressPercentage={course.inProgressPercentage}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Separator line */}
+                  <div className="flex items-center gap-[5px] w-full mt-2">
+                    <div className="min-w-[120px]"></div>
+                    <div className="flex h-[1px] flex-1 bg-[#E5E7EB]"></div>
+                  </div>
+                  
+                  {/* X-axis labels */}
+                  <div className="flex ml-[120px] justify-between items-center w-calc[100%-120px] mt-2 text-xs text-[#8C9BAC]">
+                    {["0", "10", "20", "40", "50", "60", "70", "80", "90", "100 %"].map((label, index) => (
+                      <div key={index}>{label}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </Card>
   );
