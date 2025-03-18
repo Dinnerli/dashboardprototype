@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { ChevronDown, Info } from "lucide-react";
 
@@ -9,7 +8,7 @@ const LearningActivitiesCard = () => {
         {/* Header */}
         <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
-            <h3 className="text-base font-bold text-[#233143] font-poppins whitespace-nowrap">Learning Activities</h3>
+            {/* Heading removed */}
           </div>
           <div className="flex gap-2.5 items-center">
             <div className="flex items-center h-[30px] gap-2.5">
