@@ -106,16 +106,19 @@ const ActivitiesCard = () => {
           </div>
         </div>
 
-        {/* Tabs */}
+        {/* Tabs - Updated to have indicator on top and font size 16px */}
         <div className="flex items-center gap-5 px-2.5 w-full bg-white overflow-x-auto">
-          <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 border-b-4 border-[#338FFF]">
-            <span className="text-[#338FFF] text-base font-bold font-poppins">User Activity</span>
+          <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5">
+            <div className="h-1 w-full bg-[#338FFF]"></div>
+            <span className="text-[16px] text-[#338FFF] font-bold font-poppins">User Activity</span>
           </div>
           <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5">
-            <span className="text-[#8C9BAC] text-base font-bold font-poppins">Usage Activities</span>
+            <div className="h-1 w-full bg-transparent"></div>
+            <span className="text-[16px] text-[#8C9BAC] font-bold font-poppins">Usage Activities</span>
           </div>
           <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5">
-            <span className="text-[#8C9BAC] text-base font-bold font-poppins">Course Activities</span>
+            <div className="h-1 w-full bg-transparent"></div>
+            <span className="text-[16px] text-[#8C9BAC] font-bold font-poppins">Course Activities</span>
           </div>
         </div>
 
