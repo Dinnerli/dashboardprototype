@@ -5,6 +5,7 @@ import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
 import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
 import LearningActivitiesCard from '@/components/dashboard/LearningActivitiesCard';
+import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
 
 const Index = () => {
   // Smooth scroll to top when component mounts
@@ -26,6 +27,10 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <ActivitiesCard />
             <LearningActivitiesCard />
+          </div>
+          {/* Course Performance Card */}
+          <div className="pb-6">
+            <CoursePerformanceCard />
           </div>
         </div>
       </main>
