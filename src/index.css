@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -52,6 +53,39 @@
 
   body {
     @apply bg-background text-foreground font-poppins;
+  }
+  
+  /* Typography classes based on the provided design */
+  h1, .h1 {
+    @apply text-h1 font-light leading-tight;
+  }
+  
+  h2, .h2 {
+    @apply text-h2 font-bold leading-tight;
+  }
+  
+  h3, .h3 {
+    @apply text-h3 font-semibold leading-snug;
+  }
+  
+  h4, .h4 {
+    @apply text-h4 font-bold leading-snug;
+  }
+  
+  .subheading-1 {
+    @apply text-subheading-1 font-regular leading-normal;
+  }
+  
+  .subheading-2 {
+    @apply text-subheading-2 font-semibold leading-normal;
+  }
+  
+  .paragraph-1 {
+    @apply text-paragraph-1 font-medium leading-relaxed;
+  }
+  
+  .paragraph-2 {
+    @apply text-paragraph-2 font-medium leading-relaxed;
   }
 }
 

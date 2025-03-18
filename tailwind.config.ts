@@ -22,6 +22,23 @@ export default {
 			fontFamily: {
 				poppins: ['Poppins', 'sans-serif'],
 			},
+			fontSize: {
+				'h1': '30px',
+				'h2': '24px',
+				'h3': '22px',
+				'h4': '20px',
+				'subheading-1': '18px',
+				'subheading-2': '16px',
+				'paragraph-1': '14px',
+				'paragraph-2': '12px',
+			},
+			fontWeight: {
+				light: '300',
+				regular: '400',
+				medium: '500',
+				semibold: '600',
+				bold: '700',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
