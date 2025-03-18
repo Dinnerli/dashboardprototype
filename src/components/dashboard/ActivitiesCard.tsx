@@ -1,55 +1,73 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, ArrowUp } from "lucide-react";
 
-const ActiveUsersCard = () => {
+import { Card } from "@/components/ui/card";
+import { ChevronDown, Info, ArrowUp, ArrowDown } from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
+
+const data = [
+  { name: "Jan", active: 100, new: 200 },
+  { name: "Feb", active: 200, new: 150 },
+  { name: "Mar", active: 150, new: 220 },
+  { name: "Apr", active: 300, new: 250 },
+  { name: "May", active: 250, new: 180 },
+  { name: "Jun", active: 237, new: 8 },
+];
+
+const StatIndicator = ({ value, isPositive }: { value: string, isPositive: boolean }) => {
   return (
-    <div className="flex flex-col p-[5px_10px_10px_10px] items-start flex-1 rounded-[10px] bg-[rgba(9,169,255,0.07)]">
-      <div className="flex p-[5px_10px] items-center gap-[10px] w-full">
-        <div className="text-black text-[14px] font-poppins font-medium leading-[24px]">
-          Active users
-        </div>
-        <Info className="w-4 h-4" />
-      </div>
-      <div className="flex justify-between items-center w-full">
-        <div className="flex p-[0px_10px] items-center gap-[10px]">
-          <div className="text-black text-[24px] font-['Inter'] font-bold">
-            237
-          </div>
-        </div>
-        <div className="flex p-[6px_10px] items-center gap-[10px]">
-          <div className="text-[#019230] text-[14px] font-poppins font-semibold">
-            8.4%
-          </div>
-          <ArrowUp className="w-4 h-4 text-[#019230]" stroke="#019230" strokeWidth={1.5} />
-        </div>
-      </div>
+    <div className="flex items-center justify-end">
+      <span className={`text-sm ${isPositive ? 'text-[#00D764]' : 'text-[#ED5158]'}`}>
+        {value}
+      </span>
+      {isPositive ? (
+        <ArrowUp className="w-4 h-4 text-[#00D764]" stroke="#00D764" strokeWidth={1.5} />
+      ) : (
+        <ArrowDown className="w-4 h-4 text-[#ED5158]" stroke="#ED5158" strokeWidth={1.5} />
+      )}
     </div>
   );
 };
 
-const SignupUserCard = () => {
+const ActivityStat = ({ 
+  title, 
+  value, 
+  percentage, 
+  isActive, 
+  isPositive 
+}: { 
+  title: string; 
+  value: string; 
+  percentage: string;
+  isActive: boolean;
+  isPositive: boolean;
+}) => {
   return (
-    <div className="flex flex-col p-[5px_10px_10px_10px] items-start flex-1 rounded-[10px] bg-[rgba(255,255,255,0.10)]">
-      <div className="flex p-[5px_10px] items-center gap-[10px] w-full">
-        <div className="text-[#B3B3B3] text-[14px] font-poppins font-medium leading-[24px]">
-          Signup user
-        </div>
-        <Info className="w-4 h-4 text-[#B3B3B3]" stroke="#B3B3B3" strokeWidth={1} />
+    <div className={`flex items-center gap-2.5 p-2.5 rounded-lg ${isActive ? 'bg-[#F2F3F5]' : ''}`}>
+      <div className="flex flex-col items-center justify-center p-2.5">
+        <div 
+          className={`w-0.5 h-[35px] ${isActive ? 'bg-[#338FFF]' : 'bg-[#CDD1D7]'}`}
+        />
       </div>
-      <div className="flex justify-between items-center w-full">
-        <div className="flex p-[0px_10px] items-center gap-[10px]">
-          <div className="text-[#B3B3B3] text-[24px] font-['Inter'] font-bold">
-            248
-          </div>
+      <div className="flex flex-col">
+        <div className="flex items-center gap-2.5 px-2.5">
+          <span className={`text-base font-bold ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}>
+            {title}
+          </span>
+          <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
         </div>
-        <div className="flex p-[6px_10px] items-center gap-[10px]">
-          <div className="text-[#B3B3B3] text-[14px] font-poppins font-bold">
-            27.6%
+        <div className="flex items-center px-2.5">
+          <div>
+            <span className="text-2xl font-bold text-[#4F5A69]">{value}</span>
           </div>
-          <ArrowUp className="w-4 h-4 text-[#B3B3B3]" stroke="#B3B3B3" strokeWidth={1.5} />
+          <div className="w-[66px] flex justify-end items-center">
+            <StatIndicator value={percentage} isPositive={isPositive} />
+          </div>
         </div>
       </div>
     </div>
@@ -57,85 +75,123 @@ const SignupUserCard = () => {
 };
 
 const ActivitiesCard = () => {
-  return <Card className="w-full mt-6 animate-slide-in-up" style={{
-    animationDelay: '0.2s'
-  }}>
-      <CardHeader className="p-6 flex flex-row items-center justify-between border-b border-[#E5E7EA]">
-        <h3 className="text-xl font-bold">Activities</h3>
-        <Select defaultValue="average">
-          <SelectTrigger className="w-auto min-w-[120px] border-none shadow-none bg-white p-2 h-auto focus:ring-0">
-            <SelectValue placeholder="Average" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="average">Average</SelectItem>
-            <SelectItem value="daily">Daily</SelectItem>
-            <SelectItem value="weekly">Weekly</SelectItem>
-            <SelectItem value="monthly">Monthly</SelectItem>
-          </SelectContent>
-        </Select>
-      </CardHeader>
-      <CardContent className="p-6">
-        <div className="flex flex-col gap-4">
-          <Tabs defaultValue="user" className="w-full">
-            <div className="flex flex-row items-center justify-between mb-1">
-              <TabsList className="bg-transparent p-0 h-auto space-x-6">
-                <TabsTrigger 
-                  value="user" 
-                  className="relative p-0 h-auto data-[state=active]:bg-transparent data-[state=active]:shadow-none text-base font-bold data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:-bottom-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-black data-[state=active]:after:w-full"
-                >
-                  User Activities
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="usage" 
-                  className="relative p-0 h-auto data-[state=active]:bg-transparent data-[state=active]:shadow-none text-base font-bold data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:-bottom-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-black data-[state=active]:after:w-full"
-                >
-                  Usage Activities
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="course" 
-                  className="relative p-0 h-auto data-[state=active]:bg-transparent data-[state=active]:shadow-none text-base font-bold data-[state=active]:after:content-[''] data-[state=active]:after:absolute data-[state=active]:after:left-0 data-[state=active]:after:right-0 data-[state=active]:after:-bottom-1 data-[state=active]:after:h-0.5 data-[state=active]:after:bg-black data-[state=active]:after:w-full"
-                >
-                  Course Activities
-                </TabsTrigger>
-              </TabsList>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="px-4">
-                  View All
-                </Button>
-                <Button variant="ghost" size="sm" className="px-4">
-                  View Report
-                </Button>
+  return (
+    <Card className="w-full mt-6 animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+      <div className="w-full">
+        <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
+          <div className="flex items-center gap-2.5 px-2.5 flex-1">
+            <h3 className="text-[22px] font-bold text-[#233143] font-poppins">Activity Overview</h3>
+          </div>
+          <div className="flex gap-2.5">
+            <div className="flex items-center h-[30px] gap-2.5">
+              <div className="flex items-center gap-1.5 pl-2.5 rounded-[10px]">
+                <span className="text-xs text-[#8C9BAC] font-poppins">Filter by:</span>
+              </div>
+              <div className="flex items-center gap-1.5 rounded-[10px]">
+                <span className="text-xs text-[#8C9BAC] font-poppins">Last 60 Days</span>
+                <ChevronDown className="w-6 h-6 text-[#8C9BAC]" stroke="#8C9BAC" />
+              </div>
+              <div className="flex items-center gap-1.5 rounded-[10px]">
+                <span className="text-xs text-[#8C9BAC] font-poppins">All</span>
+                <ChevronDown className="w-6 h-6 text-[#8C9BAC]" stroke="#8C9BAC" />
               </div>
             </div>
-            <div className="h-0.5 bg-slate-200 w-full"></div>
-            
-            <TabsContent value="user" className="mt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <ActiveUsersCard />
-                <SignupUserCard />
-                {/* Add more cards as needed */}
+            <div className="flex items-center p-2.5">
+              <div className="flex items-center justify-center gap-1.5 px-0 py-1.5 border border-[#4F5A69]">
+                <span className="text-xs text-[#4F5A69] font-poppins text-center">View Report</span>
               </div>
-            </TabsContent>
-            
-            <TabsContent value="usage" className="mt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <ActiveUsersCard />
-                <SignupUserCard />
-                {/* Add more cards as needed */}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="course" className="mt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <ActiveUsersCard />
-                <SignupUserCard />
-                {/* Add more cards as needed */}
-              </div>
-            </TabsContent>
-          </Tabs>
+            </div>
+          </div>
         </div>
-      </CardContent>
-    </Card>;
+
+        <div className="flex items-center gap-5 px-2.5 w-full bg-white overflow-x-auto">
+          <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 border-b-4 border-[#338FFF]">
+            <span className="text-[#338FFF] text-base font-bold font-poppins">User Activity</span>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5">
+            <span className="text-[#8C9BAC] text-base font-bold font-poppins">Usage Activities</span>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5">
+            <span className="text-[#8C9BAC] text-base font-bold font-poppins">Course Activities</span>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2.5 w-full">
+          <div className="flex items-center gap-5 p-2.5 h-20 w-full flex-wrap">
+            <ActivityStat 
+              title="Active Users" 
+              value="237" 
+              percentage="40%" 
+              isActive={true}
+              isPositive={true}
+            />
+            <ActivityStat 
+              title="New Users" 
+              value="8" 
+              percentage="40%" 
+              isActive={false}
+              isPositive={false}
+            />
+          </div>
+
+          <div className="flex items-center gap-5 h-[287px] relative w-full">
+            <div className="flex flex-col justify-between items-start flex-1 w-full p-2.5 relative">
+              {/* Y-axis labels */}
+              <div className="absolute top-0 right-0 bottom-0 left-0">
+                {[500, 400, 300, 200, 100, 0].map((value, index) => (
+                  <div key={index} className="flex justify-end items-center gap-1.5 h-[16.67%]">
+                    <span className="text-[10px] text-[#CDD1D7] font-poppins">{value}</span>
+                    <div className="w-1 h-[1px] bg-[#CDD1D7]"></div>
+                    <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Chart */}
+              <div className="absolute top-0 left-0 w-full h-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={data}
+                    margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#338FFF" stopOpacity={0.2}/>
+                        <stop offset="95%" stopColor="#338FFF" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid vertical={false} stroke="#CDD1D7" opacity={0.3} />
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fontSize: 10, fill: '#CDD1D7' }}
+                      padding={{ left: 30, right: 30 }}
+                    />
+                    <YAxis hide />
+                    <Area 
+                      type="monotone" 
+                      dataKey="new" 
+                      stroke="#CDD1D7" 
+                      strokeWidth={2}
+                      fill="none"
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="active" 
+                      stroke="#338FFF" 
+                      strokeWidth={2}
+                      fill="url(#colorActive)"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
 };
 
 export default ActivitiesCard;
