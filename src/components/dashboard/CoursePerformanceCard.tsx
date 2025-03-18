@@ -111,7 +111,7 @@ const CoursePerformanceCard = () => {
               </div>
             </div>
             <div className="flex items-center">
-              <div className="flex items-center justify-center gap-1.5 px-0 py-1.5 border border-[#4F5A69]">
+              <div className="flex items-center justify-center gap-1.5 px-0 py-1.5">
                 <span className="text-xs text-[#4F5A69] font-poppins text-center px-2">View Report</span>
               </div>
             </div>
