@@ -1,6 +1,8 @@
 
 import { useState } from 'react';
-import { ChevronDown, User } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Separator } from "../ui/separator";
 
 const Header = () => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -24,42 +26,47 @@ const Header = () => {
             <path d="M19.3607 8.93851C19.3607 8.93001 19.3587 8.92201 19.3577 8.91351V8.9035C19.3577 8.89676 19.3542 8.89076 19.3532 8.88426C19.3486 8.85549 19.3419 8.82709 19.3332 8.79926C19.3292 8.78751 19.3237 8.77676 19.3192 8.76551C19.3105 8.74271 19.3004 8.7205 19.2888 8.69901C19.2813 8.68576 19.2723 8.67402 19.2638 8.66052C19.2521 8.6423 19.2395 8.62476 19.2258 8.60801C19.2158 8.59626 19.2048 8.58602 19.1941 8.57527C19.1784 8.55862 19.1617 8.543 19.1441 8.52852C19.1411 8.52544 19.1379 8.52252 19.1346 8.51977C19.1266 8.51327 19.1169 8.50927 19.1084 8.50352C19.0896 8.49033 19.0701 8.47832 19.0499 8.46752C19.0346 8.45976 19.0188 8.45283 19.0027 8.44677C18.9845 8.43927 18.9665 8.43177 18.947 8.42602C18.9273 8.42077 18.9074 8.41652 18.8873 8.41327C18.8745 8.41102 18.8623 8.40652 18.8493 8.40477C18.8403 8.40477 18.8316 8.40477 18.8223 8.40277H18.8178C17.351 8.24375 15.8673 8.42054 14.4788 8.91978C13.0904 9.41902 11.8335 10.2276 10.8034 11.2845C9.77325 12.3413 8.99678 13.6187 8.53268 15.02C8.06858 16.4214 7.92903 17.9099 8.12455 19.3732V19.3817C8.12455 19.3889 8.12579 19.3962 8.12679 19.4034C8.12779 19.4107 8.13079 19.4144 8.13154 19.4202C8.13843 19.4624 8.15009 19.5036 8.16627 19.5432C8.16977 19.5519 8.17277 19.5607 8.17677 19.5682C8.1959 19.6106 8.22005 19.6505 8.24871 19.6872C8.25021 19.6894 8.25272 19.6912 8.25422 19.6929C8.25572 19.6947 8.26046 19.6987 8.26295 19.7019C8.2919 19.7354 8.32469 19.7654 8.36064 19.7912C8.36988 19.7982 8.37948 19.8048 8.38939 19.8109C8.42711 19.8357 8.4676 19.8559 8.51005 19.8712C8.51305 19.8712 8.5153 19.8742 8.5183 19.8752H8.52054C8.55873 19.8875 8.59808 19.8959 8.63798 19.9002C8.99848 19.9399 9.36086 19.9598 9.72354 19.9599C10.1631 19.9594 10.6022 19.9293 11.0377 19.8697C13.5885 19.52 15.8968 18.1729 17.4569 16.1236C19.017 14.0743 19.7018 11.4898 19.3612 8.93626L19.3607 8.93851ZM17.4579 9.51074L15.1251 11.9037V9.92548C15.8796 9.6791 16.6648 9.53942 17.4579 9.51049V9.51074ZM16.0443 16.0085L12.6922 16.0623L14.8158 13.8831H17.4734C17.1062 14.6592 16.6243 15.3756 16.0441 16.0083L16.0443 16.0085ZM13.9656 13.0931L11.8852 15.2271V11.8522C12.5034 11.2676 13.2046 10.7777 13.9661 10.3985L13.9656 13.0931ZM10.7249 16.418L9.19413 17.9887C9.21274 16.2764 9.74614 14.6094 10.7249 13.2046V16.418ZM11.5429 17.243L14.7159 17.193C13.3473 18.1817 11.7154 18.74 10.0284 18.7967L11.5429 17.243ZM15.9466 12.7219L18.2846 10.322C18.277 11.1352 18.1541 11.9432 17.9196 12.7219H15.9466Z" fill="#0D6FFB"></path>
           </svg>
           
-          <div className="flex items-center gap-2.5">
-            <div className="flex items-center px-3 py-2 transition-colors hover:bg-blue-light/20 rounded-full cursor-pointer">
-              <p className="text-dark font-semibold text-[14px] font-poppins">Switch to User</p>
-            </div>
-            
-            {/* Vertical divider line */}
-            <div className="h-5 w-px bg-[#D9D9D9] rotate-90"></div>
-            
-            <div className="relative">
+          <div className="flex items-center">
+            <div className="flex items-center space-x-3">
+              <div className="text-dark font-semibold text-[14px] font-poppins">
+                Switch to User
+              </div>
+              
+              {/* Vertical divider line */}
+              <Separator orientation="vertical" className="h-6 bg-[#D9D9D9]" />
+              
               <div 
-                className="flex items-center gap-5 px-3 py-2 cursor-pointer"
+                className="flex items-center gap-2 cursor-pointer"
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               >
-                <p className="text-dark font-semibold text-[14px] font-poppins">Welcome Layup Admin</p>
+                <div className="text-dark font-semibold text-[14px] font-poppins">
+                  Welcome Layup Admin
+                </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-[30px] h-[30px] rounded-full bg-blue-light/50 flex items-center justify-center overflow-hidden">
-                    <User size={18} className="text-blue" />
-                  </div>
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="/lovable-uploads/412aab9f-da03-46d8-a2c8-0cdf3d143751.png" />
+                    <AvatarFallback className="bg-blue-light/50">LA</AvatarFallback>
+                  </Avatar>
                   <ChevronDown size={16} className={`transition-transform duration-300 ${userDropdownOpen ? 'rotate-180' : ''}`} />
                 </div>
               </div>
               
-              <div className={`nav-dropdown ${userDropdownOpen ? 'nav-dropdown-active' : ''}`}>
-                <div className="flex flex-col gap-2 w-full">
-                  <button className="text-sm text-left hover:bg-blue-light/20 px-3 py-2 rounded transition-colors">
-                    Profile
-                  </button>
-                  <button className="text-sm text-left hover:bg-blue-light/20 px-3 py-2 rounded transition-colors">
-                    Settings
-                  </button>
-                  <div className="w-full h-px bg-gray-100 my-1"></div>
-                  <button className="text-sm text-left text-red-500 hover:bg-red-50 px-3 py-2 rounded transition-colors">
-                    Logout
-                  </button>
+              {userDropdownOpen && (
+                <div className="absolute right-5 top-14 bg-white shadow-lg rounded-lg p-3 min-w-40 z-10">
+                  <div className="flex flex-col gap-2 w-full">
+                    <button className="text-sm text-left hover:bg-blue-light/20 px-3 py-2 rounded transition-colors">
+                      Profile
+                    </button>
+                    <button className="text-sm text-left hover:bg-blue-light/20 px-3 py-2 rounded transition-colors">
+                      Settings
+                    </button>
+                    <Separator className="my-1" />
+                    <button className="text-sm text-left text-red-500 hover:bg-red-50 px-3 py-2 rounded transition-colors">
+                      Logout
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
