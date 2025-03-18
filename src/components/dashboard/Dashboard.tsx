@@ -1,9 +1,10 @@
 
 import { useState } from 'react';
 import OverviewContent from './OverviewContent';
+import { CalendarDays, ClipboardList, Globe } from 'lucide-react';
 
 const Dashboard = () => {
-  const [activePeriod, setActivePeriod] = useState('weekly');
+  const [activeFilter, setActiveFilter] = useState('period');
 
   return (
     <div className="flex flex-col gap-6 px-5 py-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
@@ -15,37 +16,36 @@ const Dashboard = () => {
           </p>
         </div>
         
-        <div className="flex items-center p-1 rounded-lg border border-gray-200 bg-gray-50">
-          <button 
-            className={`px-3 py-1.5 text-sm rounded-md font-medium transition-colors ${
-              activePeriod === 'daily' 
-                ? 'bg-white text-blue shadow-sm' 
-                : 'text-gray-600 hover:text-blue hover:bg-gray-100'
+        <div className="flex items-center gap-4">
+          <div 
+            className={`flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors ${
+              activeFilter === 'period' ? 'bg-blue-light text-blue' : 'text-dark hover:bg-gray-100'
             }`}
-            onClick={() => setActivePeriod('daily')}
+            onClick={() => setActiveFilter('period')}
           >
-            Daily
-          </button>
-          <button 
-            className={`px-3 py-1.5 text-sm rounded-md font-medium transition-colors ${
-              activePeriod === 'weekly' 
-                ? 'bg-white text-blue shadow-sm' 
-                : 'text-gray-600 hover:text-blue hover:bg-gray-100'
+            <CalendarDays size={16} />
+            <span className="font-poppins font-medium text-sm">Last 60 Days</span>
+          </div>
+          
+          <div 
+            className={`flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors ${
+              activeFilter === 'type' ? 'bg-blue-light text-blue' : 'text-dark hover:bg-gray-100'
             }`}
-            onClick={() => setActivePeriod('weekly')}
+            onClick={() => setActiveFilter('type')}
           >
-            Weekly
-          </button>
-          <button 
-            className={`px-3 py-1.5 text-sm rounded-md font-medium transition-colors ${
-              activePeriod === 'monthly' 
-                ? 'bg-white text-blue shadow-sm' 
-                : 'text-gray-600 hover:text-blue hover:bg-gray-100'
+            <ClipboardList size={16} />
+            <span className="font-poppins font-medium text-sm">Marketing</span>
+          </div>
+          
+          <div 
+            className={`flex items-center gap-1 px-3 py-2 cursor-pointer rounded-lg transition-colors ${
+              activeFilter === 'status' ? 'bg-blue-light text-blue' : 'text-dark hover:bg-gray-100'
             }`}
-            onClick={() => setActivePeriod('monthly')}
+            onClick={() => setActiveFilter('status')}
           >
-            Monthly
-          </button>
+            <Globe size={16} />
+            <span className="font-poppins font-medium text-sm">Published</span>
+          </div>
         </div>
       </div>
       
