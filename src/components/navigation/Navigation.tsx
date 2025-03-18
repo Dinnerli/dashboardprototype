@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import NavItem from './NavItem';
-import { Edit, Medal, LayoutDashboard, LineChart, Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
+import { Edit, Medal, LineChart, Gamepad, BellDot, SendHorizonal, Lightbulb } from 'lucide-react';
 
 const Navigation = () => {
   const [activeItem, setActiveItem] = useState('dashboard');
@@ -25,10 +25,14 @@ const Navigation = () => {
           onClick={() => handleItemClick('dashboard')}
         >
           <NavItem 
-            icon={<LayoutDashboard 
-              size={24} 
-              className={`${activeItem === 'dashboard' ? 'text-blue' : 'text-black'}`} 
-            />} 
+            icon={
+              <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.55 8.52V3.98C22.55 2.57 21.91 2 20.32 2H16.28C14.69 2 14.05 2.57 14.05 3.98V8.51C14.05 9.93 14.69 10.49 16.28 10.49H20.32C21.91 10.5 22.55 9.93 22.55 8.52Z" stroke={activeItem === 'dashboard' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M22.55 19.77V15.73C22.55 14.14 21.91 13.5 20.32 13.5H16.28C14.69 13.5 14.05 14.14 14.05 15.73V19.77C14.05 21.36 14.69 22 16.28 22H20.32C21.91 22 22.55 21.36 22.55 19.77Z" stroke={activeItem === 'dashboard' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M11.05 8.52V3.98C11.05 2.57 10.41 2 8.82005 2H4.78005C3.19005 2 2.55005 2.57 2.55005 3.98V8.51C2.55005 9.93 3.19005 10.49 4.78005 10.49H8.82005C10.41 10.5 11.05 9.93 11.05 8.52Z" stroke={activeItem === 'dashboard' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M11.05 19.77V15.73C11.05 14.14 10.41 13.5 8.82005 13.5H4.78005C3.19005 13.5 2.55005 14.14 2.55005 15.73V19.77C2.55005 21.36 3.19005 22 4.78005 22H8.82005C10.41 22 11.05 21.36 11.05 19.77Z" stroke={activeItem === 'dashboard' ? "#0D6FFB" : "currentColor"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            } 
             label="Dashboard" 
             active={activeItem === 'dashboard'} 
           />
