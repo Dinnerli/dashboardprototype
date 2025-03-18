@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
+import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
 
 const Index = () => {
   // Smooth scroll to top when component mounts
@@ -18,7 +19,10 @@ const Index = () => {
       <Header />
       <main className="flex-1 flex flex-col">
         <Navigation />
-        <Dashboard />
+        <div className="px-6">
+          <Dashboard />
+          <ActivitiesCard />
+        </div>
       </main>
     </div>
   );
