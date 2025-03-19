@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface HighchartsCardProps {
   title?: string;
@@ -11,6 +11,9 @@ interface HighchartsCardProps {
 const HighchartsCard = ({
   title = "Performance Metrics"
 }: HighchartsCardProps) => {
+  const [animate, setAnimate] = useState(false);
+  const chartRef = useRef<HighchartsReact.RefObject>(null);
+  
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     title: {
       text: 'Monthly Performance',
@@ -30,12 +33,12 @@ const HighchartsCard = ({
     series: [{
       type: 'spline',
       name: 'Course Completion',
-      data: [43, 52, 57, 69, 72, 75, 80, 65, 60, 63, 68, 76],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Start with zero values
       color: '#338FFF'
     }, {
       type: 'spline',
       name: 'Engagement',
-      data: [30, 35, 40, 55, 59, 68, 62, 50, 45, 60, 65, 70],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Start with zero values
       color: '#00D764'
     }],
     credits: {
@@ -45,8 +48,38 @@ const HighchartsCard = ({
       itemStyle: {
         fontFamily: 'Poppins'
       }
+    },
+    plotOptions: {
+      series: {
+        animation: {
+          duration: 1500
+        }
+      }
     }
   });
+
+  useEffect(() => {
+    // Animate chart data after component mounts
+    const timer = setTimeout(() => {
+      setAnimate(true);
+      setChartOptions({
+        ...chartOptions,
+        series: [{
+          type: 'spline',
+          name: 'Course Completion',
+          data: [43, 52, 57, 69, 72, 75, 80, 65, 60, 63, 68, 76],
+          color: '#338FFF'
+        }, {
+          type: 'spline',
+          name: 'Engagement',
+          data: [30, 35, 40, 55, 59, 68, 62, 50, 45, 60, 65, 70],
+          color: '#00D764'
+        }]
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Card className="w-[455px] h-[555px] shadow-sm animate-slide-in-up font-poppins" style={{ animationDelay: '0.4s' }}>
@@ -62,6 +95,7 @@ const HighchartsCard = ({
         <HighchartsReact
           highcharts={Highcharts}
           options={chartOptions}
+          ref={chartRef}
         />
       </CardContent>
     </Card>
