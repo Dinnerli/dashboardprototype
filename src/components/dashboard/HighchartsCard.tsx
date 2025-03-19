@@ -48,9 +48,7 @@ const HighchartsCard = ({
     animationDelay: '0.4s'
   }}>
       
-      <CardContent className="p-6">
-        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-      </CardContent>
+      
     </Card>;
 };
 export default HighchartsCard;
