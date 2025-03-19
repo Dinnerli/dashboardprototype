@@ -29,8 +29,8 @@ const EngagementActivitiesCard = () => {
 
         {/* Content */}
         <div className="px-8 py-5 flex flex-col h-[431px] justify-between">
-          {/* Stats Row */}
-          <div className="flex flex-wrap gap-4 md:gap-2 lg:gap-4">
+          {/* Stats Row - Updated to display all four in one row with responsive layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Active Users */}
             <div className="flex items-center gap-2 p-2.5 bg-[#F2F3F5] rounded-lg">
               <div className="flex p-2.5 flex-col justify-center items-center">
