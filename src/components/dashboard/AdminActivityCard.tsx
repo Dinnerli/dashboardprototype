@@ -96,10 +96,10 @@ const AdminActivityCard = () => {
             <div className="flex justify-between items-end h-[250px] mb-2">
               {Array(6).fill(0).map((_, index) => (
                 <div key={index} className="flex items-end justify-center h-full">
-                  <div className="w-10 flex flex-col items-center h-[85px]">
-                    <div className="w-[10px] h-1/3 rounded-full bg-[#CDE4FF]"></div>
-                    <div className="w-[10px] h-1/3 rounded-full bg-[#338FFF]"></div>
-                    <div className="w-[10px] h-1/3 rounded-full bg-[#003072]"></div>
+                  <div className="w-10 flex flex-col items-center">
+                    <div className="w-[10px] h-[28px] rounded-full bg-[#CDE4FF]"></div>
+                    <div className="w-[10px] h-[28px] rounded-full bg-[#338FFF]"></div>
+                    <div className="w-[10px] h-[29px] rounded-full bg-[#003072]"></div>
                   </div>
                 </div>
               ))}
