@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+
+import { useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
@@ -8,7 +9,7 @@ import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard'
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
-import DraggableCard from '@/components/dashboard/DraggableCard';
+import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 
 const Index = () => {
   // Smooth scroll to top when component mounts
@@ -19,44 +20,13 @@ const Index = () => {
     });
   }, []);
 
-  // State to keep track of card order
-  const [cards, setCards] = useState([
+  // Initial cards configuration
+  const dashboardCards = [
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
     { id: 3, component: <LeaderboardCard /> },
     { id: 4, component: <LeaderboardCard title="Leaderboard 2" /> }
-  ]);
-
-  // Handler for drag and drop functionality
-  const handleDragStart = (e: React.DragEvent) => {
-    e.stopPropagation();
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const draggedIndex = parseInt(e.dataTransfer.getData('card-index'));
-    
-    if (draggedIndex === targetIndex) return;
-    
-    const newCards = [...cards];
-    const draggedCard = newCards[draggedIndex];
-    
-    // Remove the dragged card
-    newCards.splice(draggedIndex, 1);
-    
-    // Insert at the new position
-    newCards.splice(targetIndex, 0, draggedCard);
-    
-    // Update state
-    setCards(newCards);
-  };
+  ];
 
   return (
     <div className="min-h-screen bg-white font-poppins flex flex-col">
@@ -78,20 +48,8 @@ const Index = () => {
             <div className="hidden md:block"></div>
           </div>
           
-          {/* All four cards in a single row - responsive grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-6">
-            {cards.map((card, index) => (
-              <DraggableCard 
-                key={card.id} 
-                index={index}
-                onDragStart={handleDragStart}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, index)}
-              >
-                {card.component}
-              </DraggableCard>
-            ))}
-          </div>
+          {/* Draggable cards grid */}
+          <DashboardCardGrid initialCards={dashboardCards} />
         </div>
       </main>
     </div>
