@@ -12,6 +12,7 @@ import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
 import RewardsCard from '@/components/dashboard/RewardsCard';
 import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 import HighchartsCard from '@/components/dashboard/HighchartsCard';
+import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
 
 const Index = () => {
   // Smooth scroll to top when component mounts
@@ -44,10 +45,10 @@ const Index = () => {
             <LearningActivitiesCard />
           </div>
           
-          {/* Course Performance Row - removed Engagement Activities Card */}
+          {/* Course Performance and Engagement Activities Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <CoursePerformanceCard />
-            {/* EngagementActivitiesCard removed */}
+            <EngagementActivitiesCard />
           </div>
           
           {/* Draggable cards grid - using fixed height cards */}
