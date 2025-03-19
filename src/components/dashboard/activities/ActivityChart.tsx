@@ -27,7 +27,7 @@ interface ActivityChartProps {
 const ActivityChart = ({ chartType }: ActivityChartProps) => {
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     chart: {
-      type: 'area',
+      type: 'areaspline', // Changed from 'area' to 'areaspline' for curved edges
       animation: {
         duration: 1000
       },
@@ -91,7 +91,7 @@ const ActivityChart = ({ chartType }: ActivityChartProps) => {
       }
     },
     plotOptions: {
-      area: {
+      areaspline: { // Changed from 'area' to 'areaspline'
         fillOpacity: 0.2,
         lineWidth: 2,
         marker: {
@@ -123,7 +123,9 @@ const ActivityChart = ({ chartType }: ActivityChartProps) => {
             [0, 'rgba(51, 143, 255, 0.8)'],
             [1, 'rgba(205, 228, 255, 0)']
           ]
-        }
+        },
+        // Add smooth parameter for more curve
+        smoothness: 0.6
       },
       series: {
         animation: {
@@ -136,13 +138,13 @@ const ActivityChart = ({ chartType }: ActivityChartProps) => {
         name: 'Active Users',
         data: chartData[chartType].active,
         color: '#338FFF',
-        type: 'area'
+        type: 'areaspline' // Changed from 'area' to 'areaspline'
       },
       {
         name: 'New Users',
         data: chartData[chartType].new,
         color: '#F2F3F5',
-        type: 'area',
+        type: 'areaspline', // Changed from 'area' to 'areaspline'
         visible: false
       }
     ],
