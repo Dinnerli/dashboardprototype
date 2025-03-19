@@ -9,6 +9,7 @@ import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard'
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
+import RewardsCard from '@/components/dashboard/RewardsCard';
 import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 
 const Index = () => {
@@ -25,7 +26,7 @@ const Index = () => {
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
     { id: 3, component: <LeaderboardCard /> },
-    { id: 4, component: <LeaderboardCard title="Leaderboard 2" /> }
+    { id: 4, component: <RewardsCard /> }
   ];
 
   return (
