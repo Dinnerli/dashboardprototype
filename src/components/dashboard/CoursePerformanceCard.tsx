@@ -9,8 +9,8 @@ const CoursePerformanceCard = () => {
   const { activeTab, setActiveTab, courseData, tabContents } = useCourseData();
 
   return (
-    <Card className="w-full mt-6 animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
-      <div className="w-full">
+    <Card className="w-full h-[555px] mt-6 animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
+      <div className="w-full h-full flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
           <h3 className="text-lg font-semibold text-[#233143] font-poppins">Course Performance</h3>
@@ -33,7 +33,7 @@ const CoursePerformanceCard = () => {
         </div>
 
         {/* Tabs with top indicator */}
-        <Tabs defaultValue="top-performers" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs defaultValue="top-performers" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
           <TabsList className="flex h-auto w-full bg-white rounded-none p-0">
             <TabsTrigger 
               value="top-performers"
@@ -51,14 +51,14 @@ const CoursePerformanceCard = () => {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="top-performers" className="mt-0">
+          <TabsContent value="top-performers" className="mt-0 flex-1">
             <CourseTabContent 
               stats={tabContents["top-performers"].stats}
               courseData={courseData}
             />
           </TabsContent>
           
-          <TabsContent value="underperformers" className="mt-0">
+          <TabsContent value="underperformers" className="mt-0 flex-1">
             <CourseTabContent 
               stats={tabContents["underperformers"].stats}
               courseData={courseData}

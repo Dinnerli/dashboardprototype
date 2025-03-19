@@ -4,8 +4,8 @@ import { Info, ChevronDown } from "lucide-react";
 
 const EngagementActivitiesCard = () => {
   return (
-    <Card className="w-full animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
-      <div className="w-full">
+    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
+      <div className="w-full h-full flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#CDD1D7] bg-white">
           <h3 className="text-lg font-semibold text-[#233143] font-poppins">Engagement Activities</h3>
@@ -28,7 +28,7 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Content */}
-        <div className="px-8 py-5 flex flex-col h-[431px] justify-between">
+        <div className="px-8 py-5 flex flex-col flex-1 justify-between">
           {/* Stats Row - Updated to display all four in one row with responsive layout */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Active Users */}
@@ -125,7 +125,7 @@ const EngagementActivitiesCard = () => {
           </div>
 
           {/* Graph - Updated to match the provided UI design with clean lines */}
-          <div className="w-full h-[280px] mt-4 relative flex flex-col">
+          <div className="w-full flex-1 mt-4 relative flex flex-col">
             {/* Y-axis grid lines and labels */}
             <div className="absolute top-0 right-0 bottom-0 left-0 flex flex-col justify-between pointer-events-none">
               <div className="flex items-center text-xs text-[#CDD1D7] h-8">
