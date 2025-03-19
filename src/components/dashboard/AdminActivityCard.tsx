@@ -1,8 +1,31 @@
 
 import { Card } from "@/components/ui/card";
 import { Info, ArrowUp } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const AdminActivityCard = () => {
+  const [animatedBars, setAnimatedBars] = useState(Array(6).fill(0));
+
+  useEffect(() => {
+    // Animate bars one after another with a delay
+    const animateCharts = () => {
+      const newHeights = [];
+      const interval = setInterval(() => {
+        newHeights.push([65, 65, 65]); // Full heights for each bar section
+        setAnimatedBars([...newHeights, ...Array(6 - newHeights.length).fill(0)]);
+        
+        if (newHeights.length === 6) {
+          clearInterval(interval);
+        }
+      }, 150);
+      
+      return () => clearInterval(interval);
+    };
+    
+    const timeout = setTimeout(animateCharts, 500); // Start animation after component mount
+    return () => clearTimeout(timeout);
+  }, []);
+
   return <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{
     animationDelay: '0.4s'
   }}>
@@ -93,15 +116,35 @@ const AdminActivityCard = () => {
         {/* Chart section */}
         <div className="w-full h-[300px]">
           <div className="w-full flex flex-col">
-            {/* Bar chart */}
+            {/* Bar chart with animation */}
             <div className="flex justify-between items-end h-[250px] mb-2">
-              {Array(6).fill(0).map((_, index) => <div key={index} className="flex items-end justify-center h-full">
+              {Array(6).fill(0).map((_, index) => (
+                <div key={index} className="flex items-end justify-center h-full">
                   <div className="w-8 flex flex-col items-center">
-                    <div className="w-[10px] h-[65px] rounded-full bg-[#CDE4FF]"></div>
-                    <div className="w-[10px] h-[65px] rounded-full bg-[#338FFF]"></div>
-                    <div className="w-[10px] h-[65px] rounded-full bg-[#003072]"></div>
+                    <div 
+                      className="w-[10px] rounded-full bg-[#CDE4FF] transition-all duration-1000 ease-out"
+                      style={{ 
+                        height: animatedBars[index] ? `${animatedBars[index][0]}px` : '0px',
+                        marginTop: 'auto'
+                      }}
+                    ></div>
+                    <div 
+                      className="w-[10px] rounded-full bg-[#338FFF] transition-all duration-1000 ease-out"
+                      style={{ 
+                        height: animatedBars[index] ? `${animatedBars[index][1]}px` : '0px',
+                        transitionDelay: '0.2s'
+                      }}
+                    ></div>
+                    <div 
+                      className="w-[10px] rounded-full bg-[#003072] transition-all duration-1000 ease-out"
+                      style={{ 
+                        height: animatedBars[index] ? `${animatedBars[index][2]}px` : '0px',
+                        transitionDelay: '0.4s'
+                      }}
+                    ></div>
                   </div>
-                </div>)}
+                </div>
+              ))}
             </div>
             
             {/* Chart x-axis */}
