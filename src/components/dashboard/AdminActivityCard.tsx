@@ -95,11 +95,11 @@ const AdminActivityCard = () => {
             {/* Bar chart */}
             <div className="flex justify-between items-end h-[250px] mb-2">
               {Array(6).fill(0).map((_, index) => (
-                <div key={index} className="w-10 h-full flex flex-col justify-end gap-0 relative">
-                  <div className="w-4 mx-auto h-[80%] flex flex-col">
-                    <div className="w-full rounded-full bg-[#CDE4FF] h-[33%]"></div>
-                    <div className="w-full rounded-full bg-[#338FFF] h-[33%]"></div>
-                    <div className="w-full rounded-full bg-[#003072] h-[34%]"></div>
+                <div key={index} className="flex items-end justify-center h-full">
+                  <div className="w-10 flex flex-col items-center h-[85px]">
+                    <div className="w-[10px] h-1/3 rounded-full bg-[#CDE4FF]"></div>
+                    <div className="w-[10px] h-1/3 rounded-full bg-[#338FFF]"></div>
+                    <div className="w-[10px] h-1/3 rounded-full bg-[#003072]"></div>
                   </div>
                 </div>
               ))}
