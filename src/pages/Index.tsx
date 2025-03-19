@@ -10,6 +10,7 @@ import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
 import RewardsCard from '@/components/dashboard/RewardsCard';
+import MarketingCertificationsCard from '@/components/dashboard/MarketingCertificationsCard';
 import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 
 const Index = () => {
@@ -25,8 +26,9 @@ const Index = () => {
   const dashboardCards = [
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
-    { id: 3, component: <LeaderboardCard /> },
-    { id: 4, component: <RewardsCard /> }
+    { id: 3, component: <MarketingCertificationsCard /> },
+    { id: 4, component: <LeaderboardCard /> },
+    { id: 5, component: <RewardsCard /> }
   ];
 
   return (
