@@ -33,7 +33,7 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
     title: {
       text: undefined
     },
-    xAxis: {
+    xAxis: [{
       categories,
       labels: {
         style: {
@@ -44,7 +44,22 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
       },
       lineWidth: 0,
       tickWidth: 0
-    },
+    }, {
+      // Secondary X-axis for percentage indicators
+      categories: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100%'],
+      opposite: true,
+      linkedTo: 0,
+      labels: {
+        style: {
+          color: '#8C9BAC',
+          fontSize: '10px',
+          fontFamily: 'Poppins'
+        }
+      },
+      lineWidth: 0,
+      tickWidth: 0,
+      visible: false
+    }],
     yAxis: {
       min: 0,
       max: 100,
@@ -78,10 +93,6 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
       bar: {
         stacking: 'normal',
         borderRadius: 4, // Add rounded corners to the bars
-        borderRadiusTopLeft: 4,
-        borderRadiusTopRight: 4,
-        borderRadiusBottomLeft: 4,
-        borderRadiusBottomRight: 4,
         pointPadding: 0.2,
         groupPadding: 0.3,
         animation: {
@@ -116,48 +127,7 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
     ],
     credits: {
       enabled: false
-    },
-    // Add X-axis labels at the bottom
-    xAxis: {
-      categories,
-      labels: {
-        style: {
-          color: '#4F5A69',
-          fontSize: '12px',
-          fontFamily: 'Poppins'
-        }
-      },
-      lineWidth: 0,
-      tickWidth: 0
-    },
-    // Add percentage markers on the X-axis
-    xAxis: [{
-      categories,
-      labels: {
-        style: {
-          color: '#4F5A69',
-          fontSize: '12px',
-          fontFamily: 'Poppins'
-        }
-      },
-      lineWidth: 0,
-      tickWidth: 0
-    }, {
-      // Secondary X-axis for percentage indicators
-      categories: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100%'],
-      opposite: true,
-      linkedTo: 0,
-      labels: {
-        style: {
-          color: '#8C9BAC',
-          fontSize: '10px',
-          fontFamily: 'Poppins'
-        }
-      },
-      lineWidth: 0,
-      tickWidth: 0,
-      visible: false
-    }]
+    }
   };
 
   return (
