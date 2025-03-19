@@ -6,6 +6,7 @@ import Dashboard from '@/components/dashboard/Dashboard';
 import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
 import LearningActivitiesCard from '@/components/dashboard/LearningActivitiesCard';
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
+import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
@@ -42,11 +43,10 @@ const Index = () => {
             <LearningActivitiesCard />
           </div>
           
-          {/* Course Performance Row */}
+          {/* Course Performance and Engagement Activities Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <CoursePerformanceCard />
-            {/* Placeholder for future card */}
-            <div className="hidden md:block"></div>
+            <EngagementActivitiesCard />
           </div>
           
           {/* Draggable cards grid - now with 4 cards in one row on desktop */}
