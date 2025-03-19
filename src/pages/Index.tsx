@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
@@ -9,6 +10,7 @@ import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
 import HighchartsCard from '@/components/dashboard/HighchartsCard';
+import RewardsCard from '@/components/dashboard/RewardsCard';
 import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 
 const Index = () => {
@@ -20,12 +22,13 @@ const Index = () => {
     });
   }, []);
 
-  // Updated cards configuration - with Highcharts card added
+  // Updated cards configuration - with Rewards card added
   const dashboardCards = [
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
-    { id: 3, component: <LeaderboardCard /> },
-    { id: 4, component: <HighchartsCard /> }
+    { id: 3, component: <RewardsCard /> },
+    { id: 4, component: <LeaderboardCard /> },
+    { id: 5, component: <HighchartsCard /> }
   ];
 
   return (

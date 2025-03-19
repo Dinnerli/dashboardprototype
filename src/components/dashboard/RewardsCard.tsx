@@ -139,7 +139,6 @@ const RewardsCard = () => {
             </div>
           </div>
         </div>
-
       </div>
     </Card>
   );
