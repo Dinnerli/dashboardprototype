@@ -136,8 +136,9 @@ export default {
 					'50%': { opacity: '0.85' }
 				},
 				'dash': {
-					'0%': { strokeDashoffset: '251.2' },
-					'100%': { strokeDashoffset: '58' }
+					'0%': { strokeDasharray: '1, 150', strokeDashoffset: '0' },
+					'50%': { strokeDasharray: '90, 150', strokeDashoffset: '-35' },
+					'100%': { strokeDasharray: '90, 150', strokeDashoffset: '-124' }
 				}
 			},
 			animation: {
