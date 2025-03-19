@@ -4,7 +4,7 @@ import { ChevronDown, Info, ArrowUp, ArrowDown } from "lucide-react";
 
 const DevicesCard = () => {
   return (
-    <Card className="w-full animate-slide-in-up shadow-sm" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-full animate-slide-in-up shadow-sm h-[400px]" style={{ animationDelay: '0.4s' }}>
       <div className="px-6 py-6 flex justify-between items-center border-b border-[#CDD1D7]">
         <div className="flex items-center gap-2.5 flex-1">
           <span className="font-bold text-[22px] text-[#233143]">Devices</span>
@@ -23,7 +23,7 @@ const DevicesCard = () => {
         </div>
       </div>
 
-      <div className="px-6 py-5 flex flex-col h-[431px] justify-between">
+      <div className="px-6 py-5 flex flex-col h-[330px] justify-between">
         {/* Device options section */}
         <div className="flex items-center gap-4 px-2">
           {/* Desktop Option - Active */}
@@ -86,8 +86,8 @@ const DevicesCard = () => {
         </div>
         
         {/* Graph section */}
-        <div className="flex justify-center items-center h-[287px]">
-          <svg width="301" height="287" viewBox="0 0 301 287" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className="flex justify-center items-center h-[200px]">
+          <svg width="220" height="200" viewBox="0 0 301 287" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M40.5419 128.327C44.2098 101.746 57.3819 77.394 77.6206 59.7766C97.8594 42.1592 123.795 32.4693 150.627 32.5001" stroke="#F2F3F5" strokeWidth="40"/>
             <path d="M150.5 32.5C173.093 32.5 195.148 39.3942 213.718 52.2617C232.289 65.1291 246.491 83.3571 254.427 104.51C262.363 125.664 263.655 148.735 258.13 170.642C252.606 192.549 240.528 212.249 223.51 227.109C206.493 241.97 185.345 251.283 162.894 253.806C140.442 256.329 117.755 251.94 97.8642 241.227C77.973 230.513 61.8246 213.985 51.5764 193.85C41.3282 173.715 37.4682 150.932 40.512 128.546" stroke="#338FFF" strokeWidth="40" strokeLinecap="round"/>
           </svg>
