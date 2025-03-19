@@ -1,7 +1,6 @@
 
 import React from "react";
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import CourseBar from "./CourseBar";
 
 type CourseChartProps = {
   courseData: Array<{
@@ -12,132 +11,41 @@ type CourseChartProps = {
 };
 
 const CourseChart = ({ courseData }: CourseChartProps) => {
-  // Format the data for Highcharts
-  const categories = courseData.map(course => course.name);
-  const completed = courseData.map(course => course.completedPercentage);
-  const inProgress = courseData.map(course => course.inProgressPercentage);
-
-  // Configure Highcharts options
-  const chartOptions: Highcharts.Options = {
-    chart: {
-      type: 'bar',
-      height: courseData.length * 60 + 80, // Adjusted height calculation
-      animation: {
-        duration: 1000
-      },
-      backgroundColor: 'transparent',
-      style: {
-        fontFamily: 'Poppins, sans-serif'
-      },
-      spacing: [10, 10, 0, 10], // [top, right, bottom, left] - reduced bottom spacing
-      marginBottom: 0, // Remove bottom margin
-    },
-    title: {
-      text: undefined
-    },
-    xAxis: [{
-      categories,
-      labels: {
-        style: {
-          color: '#4F5A69',
-          fontSize: '12px',
-          fontFamily: 'Poppins'
-        }
-      },
-      lineWidth: 0,
-      tickWidth: 0
-    }, {
-      // Secondary X-axis for percentage indicators
-      categories: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100%'],
-      opposite: true,
-      linkedTo: 0,
-      labels: {
-        style: {
-          color: '#8C9BAC',
-          fontSize: '10px',
-          fontFamily: 'Poppins'
-        }
-      },
-      lineWidth: 0,
-      tickWidth: 0,
-      visible: false
-    }],
-    yAxis: {
-      min: 0,
-      max: 100,
-      title: {
-        text: null
-      },
-      labels: {
-        formatter: function() {
-          return this.value + '%';
-        },
-        style: {
-          color: '#8C9BAC',
-          fontSize: '12px',
-          fontFamily: 'Poppins'
-        }
-      },
-      gridLineColor: '#E5E7EB',
-      gridLineDashStyle: 'Dot',
-      gridLineWidth: 0.5
-    },
-    legend: {
-      enabled: true,
-      align: 'right',
-      verticalAlign: 'top',
-      itemStyle: {
-        fontFamily: 'Poppins',
-        fontSize: '12px'
-      }
-    },
-    plotOptions: {
-      bar: {
-        stacking: 'normal',
-        borderRadius: 4, // Add rounded corners to the bars
-        pointPadding: 0.2,
-        groupPadding: 0.3,
-        animation: {
-          duration: 1500
-        }
-      },
-      series: {
-        animation: {
-          duration: 1500
-        }
-      }
-    },
-    series: [
-      {
-        name: 'Completed',
-        data: completed,
-        color: '#338FFF', // Bright blue like in the image
-        type: 'bar',
-        animation: {
-          duration: 1500
-        }
-      },
-      {
-        name: 'In Progress',
-        data: inProgress,
-        color: '#CDE4FF', // Light blue like in the image
-        type: 'bar',
-        animation: {
-          duration: 1500
-        }
-      }
-    ],
-    credits: {
-      enabled: false
-    }
-  };
+  // Generate percentage scale markers (0, 10, 20, etc.)
+  const percentageMarkers = [];
+  for (let i = 0; i <= 100; i += 10) {
+    percentageMarkers.push(i);
+  }
 
   return (
-    <div className="w-full flex-1 flex flex-col">
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-      />
+    <div className="w-full flex-1 flex flex-col font-poppins">
+      {/* Course bars */}
+      <div className="flex flex-col gap-2.5 mb-4 mt-5">
+        {courseData.map((course, index) => (
+          <CourseBar
+            key={index}
+            name={course.name}
+            completedPercentage={course.completedPercentage}
+            inProgressPercentage={course.inProgressPercentage}
+          />
+        ))}
+      </div>
+      
+      {/* Percentage scale at the bottom */}
+      <div className="flex items-center w-full">
+        <div className="w-[100px]"></div>
+        <div className="flex-1 h-[1px] bg-[#CDD1D7]"></div>
+      </div>
+      <div className="flex pl-[105px] justify-between items-center w-full">
+        {percentageMarkers.map((percentage, index) => (
+          <div 
+            key={index} 
+            className="text-[#CDD1D7] text-[10px] font-normal"
+          >
+            {percentage}{index === percentageMarkers.length - 1 ? ' %' : ''}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
