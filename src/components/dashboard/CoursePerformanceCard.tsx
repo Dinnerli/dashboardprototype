@@ -51,14 +51,14 @@ const CoursePerformanceCard = () => {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="top-performers" className="mt-0 flex-1">
+          <TabsContent value="top-performers" className="mt-0 flex-1 px-0">
             <CourseTabContent 
               stats={tabContents["top-performers"].stats}
               courseData={courseData}
             />
           </TabsContent>
           
-          <TabsContent value="underperformers" className="mt-0 flex-1">
+          <TabsContent value="underperformers" className="mt-0 flex-1 px-0">
             <CourseTabContent 
               stats={tabContents["underperformers"].stats}
               courseData={courseData}

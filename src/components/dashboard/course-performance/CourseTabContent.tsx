@@ -29,7 +29,7 @@ const CourseTabContent = ({ stats, courseData }: CourseTabContentProps) => {
   return (
     <div className="px-8 py-4 h-full flex flex-col">
       {/* Stats Row */}
-      <div className="flex mb-4 border-b border-[#E5E7EB]">
+      <div className="flex mb-2">
         <ActivityStat 
           title={stats.firstStat.title}
           value={stats.firstStat.value}
@@ -44,7 +44,7 @@ const CourseTabContent = ({ stats, courseData }: CourseTabContentProps) => {
         />
       </div>
 
-      {/* Chart - taking remaining space */}
+      {/* Chart - taking remaining space without border */}
       <div className="flex-1 flex">
         <CourseChart courseData={courseData} />
       </div>
