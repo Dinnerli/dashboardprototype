@@ -6,7 +6,6 @@ import Dashboard from '@/components/dashboard/Dashboard';
 import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
 import LearningActivitiesCard from '@/components/dashboard/LearningActivitiesCard';
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
-import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
@@ -45,10 +44,10 @@ const Index = () => {
             <LearningActivitiesCard />
           </div>
           
-          {/* Course Performance and Engagement Activities Row - now with matching heights */}
+          {/* Course Performance Row - removed Engagement Activities Card */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <CoursePerformanceCard />
-            <EngagementActivitiesCard />
+            {/* EngagementActivitiesCard removed */}
           </div>
           
           {/* Draggable cards grid - using fixed height cards */}
