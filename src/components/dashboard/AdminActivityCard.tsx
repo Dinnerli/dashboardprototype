@@ -1,8 +1,9 @@
+
 import { Card } from "@/components/ui/card";
 import { Info, ArrowUp } from "lucide-react";
 
 const AdminActivityCard = () => {
-  return <Card className="w-full animate-slide-in-up shadow-sm h-[400px]" style={{
+  return <Card className="w-[455px] h-[555px] animate-slide-in-up shadow-sm" style={{
     animationDelay: '0.4s'
   }}>
       <div className="px-6 py-6 flex justify-between items-center">
@@ -25,7 +26,7 @@ const AdminActivityCard = () => {
 
       <div className="w-full h-px bg-[#CDD1D7]"></div>
 
-      <div className="px-6 py-4 flex flex-col h-[330px]">
+      <div className="px-6 py-4 flex flex-col h-[450px]">
         {/* Stats section */}
         <div className="flex items-center justify-between w-full mb-4">
           {/* Course Assigned */}
@@ -90,15 +91,15 @@ const AdminActivityCard = () => {
         </div>
         
         {/* Chart section */}
-        <div className="w-full h-[210px]">
+        <div className="w-full h-[300px]">
           <div className="w-full flex flex-col">
             {/* Bar chart */}
-            <div className="flex justify-between items-end h-[180px] mb-2">
+            <div className="flex justify-between items-end h-[250px] mb-2">
               {Array(6).fill(0).map((_, index) => <div key={index} className="flex items-end justify-center h-full">
                   <div className="w-8 flex flex-col items-center">
-                    <div className="w-[10px] h-[55px] rounded-full bg-[#CDE4FF]"></div>
-                    <div className="w-[10px] h-[55px] rounded-full bg-[#338FFF]"></div>
-                    <div className="w-[10px] h-[55px] rounded-full bg-[#003072]"></div>
+                    <div className="w-[10px] h-[65px] rounded-full bg-[#CDE4FF]"></div>
+                    <div className="w-[10px] h-[65px] rounded-full bg-[#338FFF]"></div>
+                    <div className="w-[10px] h-[65px] rounded-full bg-[#003072]"></div>
                   </div>
                 </div>)}
             </div>

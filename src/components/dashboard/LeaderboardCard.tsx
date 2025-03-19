@@ -8,7 +8,7 @@ interface LeaderboardCardProps {
 
 const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
   return (
-    <Card className="w-full animate-slide-in-up shadow-sm" style={{
+    <Card className="w-[455px] h-[555px] animate-slide-in-up shadow-sm" style={{
       animationDelay: '0.4s'
     }}>
       <div className="px-6 py-6 flex justify-between items-center border-b border-[#CDD1D7]">
@@ -37,7 +37,7 @@ const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
         </div>
       </div>
 
-      <div className="px-0 py-0 flex flex-col">
+      <div className="px-0 py-0 flex flex-col h-[480px] overflow-y-auto">
         {/* User 1 */}
         <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
           <div className="w-[55px] h-[55px] rounded-full overflow-hidden">
