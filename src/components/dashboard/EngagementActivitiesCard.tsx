@@ -56,17 +56,19 @@ const EngagementActivitiesCard = () => {
 
             {/* Posts */}
             <div className="flex items-center gap-2 p-2.5 rounded-lg">
-              <div className="w-2 h-[35px] bg-[#F2F3F5]"></div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1">
-                  <span className="font-bold text-[#8C9BAC]">Posts</span>
+              <div className="flex p-2.5 flex-col justify-center items-center">
+                <div className="w-2 h-[35px] bg-[#F2F3F5]"></div>
+              </div>
+              <div className="flex flex-col justify-center items-start">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-[#8C9BAC] font-poppins text-base">Posts</span>
                   <Info className="w-4 h-4 text-[#8C9BAC]" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-[#4F5A69]">8</span>
-                  <div className="flex items-center">
-                    <span className="text-sm text-[#ED5158]">40%</span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-2xl text-[#4F5A69] font-poppins">8</span>
+                  <div className="flex w-[66px] justify-end items-center">
+                    <span className="text-sm text-[#ED5158] text-right font-poppins">40%</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex w-4 h-4 justify-center items-center flex-shrink-0">
                       <path d="M12.0467 9.61996L8.00004 13.6666L3.95337 9.61996" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -77,17 +79,19 @@ const EngagementActivitiesCard = () => {
 
             {/* Comments */}
             <div className="flex items-center gap-2 p-2.5 rounded-lg">
-              <div className="w-2 h-[35px] bg-[#F2F3F5]"></div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1">
-                  <span className="font-bold text-[#8C9BAC]">Comments</span>
+              <div className="flex p-2.5 flex-col justify-center items-center">
+                <div className="w-2 h-[35px] bg-[#F2F3F5]"></div>
+              </div>
+              <div className="flex flex-col justify-center items-start">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-[#8C9BAC] font-poppins text-base">Comments</span>
                   <Info className="w-4 h-4 text-[#8C9BAC]" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-[#4F5A69]">8</span>
-                  <div className="flex items-center">
-                    <span className="text-sm text-[#ED5158]">40%</span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-2xl text-[#4F5A69] font-poppins">8</span>
+                  <div className="flex w-[66px] justify-end items-center">
+                    <span className="text-sm text-[#ED5158] text-right font-poppins">40%</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex w-4 h-4 justify-center items-center flex-shrink-0">
                       <path d="M12.0467 9.61996L8.00004 13.6666L3.95337 9.61996" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -98,17 +102,19 @@ const EngagementActivitiesCard = () => {
 
             {/* Reactions */}
             <div className="flex items-center gap-2 p-2.5 rounded-lg">
-              <div className="w-2 h-[35px] bg-[#F2F3F5]"></div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1">
-                  <span className="font-bold text-[#8C9BAC]">Reactions</span>
+              <div className="flex p-2.5 flex-col justify-center items-center">
+                <div className="w-2 h-[35px] bg-[#F2F3F5]"></div>
+              </div>
+              <div className="flex flex-col justify-center items-start">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-[#8C9BAC] font-poppins text-base">Reactions</span>
                   <Info className="w-4 h-4 text-[#8C9BAC]" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-[#4F5A69]">8</span>
-                  <div className="flex items-center">
-                    <span className="text-sm text-[#ED5158]">40%</span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-2xl text-[#4F5A69] font-poppins">8</span>
+                  <div className="flex w-[66px] justify-end items-center">
+                    <span className="text-sm text-[#ED5158] text-right font-poppins">40%</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex w-4 h-4 justify-center items-center flex-shrink-0">
                       <path d="M12.0467 9.61996L8.00004 13.6666L3.95337 9.61996" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
