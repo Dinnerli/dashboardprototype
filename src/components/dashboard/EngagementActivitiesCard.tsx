@@ -28,7 +28,7 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="flex flex-wrap px-6 space-x-0 md:space-x-2 w-full py-[4px]">
+        <div className="flex flex-wrap px-6 space-x-0 md:space-x-2 w-full py-0">
           {/* Active Users Stat */}
           <div className="flex items-center gap-5 p-5 bg-[#F2F3F5] rounded-lg flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
@@ -127,7 +127,7 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Chart Section */}
-        <div className="flex-1 px-6 pb-4 relative">
+        <div className="flex-1 px-6 pb-4 relative py-[3px]">
           {/* Y-axis labels */}
           <div className="absolute left-6 top-0 h-full flex flex-col justify-between text-xs text-[#CDD1D7]">
             <div>500</div>
