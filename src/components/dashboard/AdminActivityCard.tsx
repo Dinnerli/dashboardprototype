@@ -17,14 +17,14 @@ const AdminActivityCard = () => {
               <path d="M8.1975 7.57495L4.5 13.5" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <div className="flex items-center py-1.5">
+          <div className="flex items-center">
             <span className="text-xs text-[#8C9BAC] border-b border-[#8C9BAC] px-2">View Report</span>
           </div>
         </div>
       </div>
 
-      <div className="px-6 py-5 flex flex-col h-[431px] justify-between">
-        {/* Legend and stats section */}
+      <div className="px-6 py-5 flex flex-col h-[431px]">
+        {/* Stats section - rearranged to the top */}
         <div className="flex items-center justify-between w-full py-4">
           {/* Course Assigned */}
           <div className="flex flex-col items-start">
@@ -105,17 +105,17 @@ const AdminActivityCard = () => {
           </div>
         </div>
         
-        {/* Chart section */}
-        <div className="flex flex-1 items-center justify-center w-full px-5">
+        {/* Chart section - now below the stats with proper padding */}
+        <div className="flex items-center justify-center w-full px-5 mt-4 flex-1">
           <div className="w-full h-full flex flex-col">
-            {/* Bar chart */}
-            <div className="flex-1 flex justify-between items-end gap-2 pb-2">
+            {/* Bar chart with fixed height */}
+            <div className="flex justify-between items-end gap-2 pb-2 h-[200px]">
               {Array(6).fill(0).map((_, index) => (
-                <div key={index} className="flex flex-col items-center gap-0.5 w-10">
-                  <div className="flex-1 w-full flex flex-col items-center gap-0.5">
-                    <div className="flex-1 w-full rounded-2xl bg-[#CDE4FF]"></div>
-                    <div className="flex-1 w-full rounded-2xl bg-[#338FFF]"></div>
-                    <div className="flex-1 w-full rounded-2xl bg-[#003072]"></div>
+                <div key={index} className="flex flex-col items-center gap-0.5 w-10 h-full">
+                  <div className="flex-1 w-full flex flex-col items-center gap-0.5 justify-end">
+                    <div className="w-full rounded-2xl bg-[#CDE4FF] h-[30%]"></div>
+                    <div className="w-full rounded-2xl bg-[#338FFF] h-[30%]"></div>
+                    <div className="w-full rounded-2xl bg-[#003072] h-[30%]"></div>
                   </div>
                 </div>
               ))}
