@@ -2,18 +2,29 @@
 import { useEffect, useState } from "react";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { TabType } from "./ActivityTabs";
 
-// Data for the chart
-const data = [
-  { name: "Jan", active: 200, new: 370 },
-  { name: "Feb", active: 210, new: 30 },
-  { name: "Mar", active: 320, new: 420 },
-  { name: "Apr", active: 30, new: 150 },
-  { name: "May", active: 450, new: 240 },
-  { name: "June", active: 150, new: 300 },
-];
+// Data for different chart types
+const chartData = {
+  user: {
+    active: [200, 210, 320, 30, 450, 150],
+    new: [370, 30, 420, 150, 240, 300]
+  },
+  usage: {
+    active: [350, 280, 220, 300, 180, 410],
+    new: [120, 250, 300, 280, 390, 270]
+  },
+  course: {
+    active: [180, 290, 310, 250, 400, 290],
+    new: [80, 180, 240, 320, 260, 350]
+  }
+};
 
-const ActivityChart = () => {
+interface ActivityChartProps {
+  chartType: TabType;
+}
+
+const ActivityChart = ({ chartType }: ActivityChartProps) => {
   const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
     chart: {
       type: 'area',
@@ -30,7 +41,7 @@ const ActivityChart = () => {
       text: undefined
     },
     xAxis: {
-      categories: data.map(item => item.name),
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
       labels: {
         style: {
           color: '#CDD1D7',
@@ -123,13 +134,13 @@ const ActivityChart = () => {
     series: [
       {
         name: 'Active Users',
-        data: [200, 280, 200, 300, 30, 450, 150],
+        data: chartData[chartType].active,
         color: '#338FFF',
         type: 'area'
       },
       {
         name: 'New Users',
-        data: [150, 320, 250, 390, 240, 350, 160],
+        data: chartData[chartType].new,
         color: '#F2F3F5',
         type: 'area',
         visible: false
@@ -139,6 +150,33 @@ const ActivityChart = () => {
       enabled: false
     }
   });
+
+  // Update chart data when chartType changes
+  useEffect(() => {
+    setChartOptions(prevOptions => {
+      const newOptions = { ...prevOptions };
+      if (newOptions.series && Array.isArray(newOptions.series) && newOptions.series.length >= 2) {
+        // Update first series (active)
+        (newOptions.series[0] as Highcharts.SeriesOptionsType).data = chartData[chartType].active;
+        
+        // Update second series (new)
+        (newOptions.series[1] as Highcharts.SeriesOptionsType).data = chartData[chartType].new;
+      
+        // Update series name based on tab
+        if (chartType === 'user') {
+          (newOptions.series[0] as Highcharts.SeriesOptionsType).name = 'Active Users';
+          (newOptions.series[1] as Highcharts.SeriesOptionsType).name = 'New Users';
+        } else if (chartType === 'usage') {
+          (newOptions.series[0] as Highcharts.SeriesOptionsType).name = 'Total Usage';
+          (newOptions.series[1] as Highcharts.SeriesOptionsType).name = 'Avg. Time';
+        } else if (chartType === 'course') {
+          (newOptions.series[0] as Highcharts.SeriesOptionsType).name = 'Completed';
+          (newOptions.series[1] as Highcharts.SeriesOptionsType).name = 'In Progress';
+        }
+      }
+      return newOptions;
+    });
+  }, [chartType]);
 
   return (
     <div className="p-2.5 w-full">
