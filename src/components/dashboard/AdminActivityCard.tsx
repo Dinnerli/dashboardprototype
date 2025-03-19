@@ -1,5 +1,6 @@
 
 import { Card } from "@/components/ui/card";
+import { Info } from "lucide-react";
 
 const AdminActivityCard = () => {
   const months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
@@ -25,58 +26,79 @@ const AdminActivityCard = () => {
           </div>
         </div>
         
-        {/* Stats section */}
-        <div className="grid grid-cols-3 gap-2 p-4">
+        {/* Stats section - updated to match the new design */}
+        <div className="flex justify-between items-center p-2">
           {/* Course Assigned */}
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-[#0054A6]"></div>
-              <span className="text-xs text-[#4F5A69]">Course Assigned</span>
+          <div className="flex items-start">
+            <div className="flex p-[8px_5px_5px_5px] flex-col justify-center items-center">
+              <div className="w-[10px] h-[10px] rounded-full bg-[#003072]"></div>
             </div>
-            <div className="flex items-center gap-1 mt-1">
-              <span className="text-base font-semibold text-[#233143]">237</span>
-              <div className="flex items-center">
-                <span className="text-[#00D764] text-[10px]">40%</span>
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12.0467 6.38004L8.00001 2.33337L3.95334 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+            <div className="flex flex-col justify-center items-start">
+              <div className="flex px-[0px_5px] items-center gap-1">
+                <span className="font-poppins text-xs text-[#8C9BAC]">Course Assigned</span>
+                <Info className="w-[10px] h-[10px] text-[#8C9BAC]" />
+              </div>
+              <div className="flex px-[0px_5px] items-center">
+                <div className="flex flex-col justify-center items-start">
+                  <span className="font-poppins text-[20px] font-bold text-[#4F5A69]">237</span>
+                </div>
+                <div className="flex justify-end items-center ml-2">
+                  <span className="text-[#00D764] text-right font-poppins text-[14px]">40%</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.0466 6.38004L7.99998 2.33337L3.95331 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                    <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
           
           {/* User Creation */}
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-[#338FFF]"></div>
-              <span className="text-xs text-[#4F5A69]">User Creation</span>
+          <div className="flex items-start">
+            <div className="flex p-[8px_5px_5px_5px] flex-col justify-center items-center">
+              <div className="w-[10px] h-[10px] rounded-full bg-[#F2F3F5]"></div>
             </div>
-            <div className="flex items-center gap-1 mt-1">
-              <span className="text-base font-semibold text-[#233143]">237</span>
-              <div className="flex items-center">
-                <span className="text-[#00D764] text-[10px]">40%</span>
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12.0467 6.38004L8.00001 2.33337L3.95334 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+            <div className="flex flex-col justify-center items-start">
+              <div className="flex px-[0px_5px] items-center gap-1">
+                <span className="font-poppins text-xs text-[#8C9BAC]">User Creation</span>
+                <Info className="w-[10px] h-[10px] text-[#8C9BAC]" />
+              </div>
+              <div className="flex px-[0px_5px] items-center">
+                <div className="flex flex-col justify-center items-start">
+                  <span className="font-poppins text-[20px] font-bold text-[#4F5A69]">237</span>
+                </div>
+                <div className="flex justify-end items-center ml-2">
+                  <span className="text-[#00D764] text-right font-poppins text-[14px]">40%</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.0466 6.38004L7.99998 2.33337L3.95331 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                    <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
           
           {/* Group Assigned */}
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 rounded-full bg-[#CDE4FF]"></div>
-              <span className="text-xs text-[#4F5A69]">Group Assigned</span>
+          <div className="flex items-start">
+            <div className="flex p-[8px_5px_5px_5px] flex-col justify-center items-center">
+              <div className="w-[10px] h-[10px] rounded-full bg-[#CDE4FF]"></div>
             </div>
-            <div className="flex items-center gap-1 mt-1">
-              <span className="text-base font-semibold text-[#233143]">237</span>
-              <div className="flex items-center">
-                <span className="text-[#00D764] text-[10px]">40%</span>
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12.0467 6.38004L8.00001 2.33337L3.95334 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+            <div className="flex flex-col justify-center items-start">
+              <div className="flex px-[0px_5px] items-center gap-1">
+                <span className="font-poppins text-xs text-[#8C9BAC]">Group Assigned</span>
+                <Info className="w-[10px] h-[10px] text-[#8C9BAC]" />
+              </div>
+              <div className="flex px-[0px_5px] items-center">
+                <div className="flex flex-col justify-center items-start">
+                  <span className="font-poppins text-[20px] font-bold text-[#4F5A69]">237</span>
+                </div>
+                <div className="flex justify-end items-center ml-2">
+                  <span className="text-[#00D764] text-right font-poppins text-[14px]">40%</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.0466 6.38004L7.99998 2.33337L3.95331 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                    <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
