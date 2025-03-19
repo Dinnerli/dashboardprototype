@@ -45,10 +45,10 @@ const Index = () => {
             <AdminActivityCard />
           </div>
           
-          {/* Leaderboard Card Row */}
+          {/* Leaderboard Cards Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <LeaderboardCard />
-            <div className="hidden md:block"></div>
+            <LeaderboardCard />
           </div>
         </div>
       </main>
