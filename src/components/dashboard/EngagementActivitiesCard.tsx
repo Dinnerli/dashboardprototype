@@ -33,17 +33,19 @@ const EngagementActivitiesCard = () => {
           <div className="flex flex-wrap gap-4 md:gap-2 lg:gap-4">
             {/* Active Users */}
             <div className="flex items-center gap-2 p-2.5 bg-[#F2F3F5] rounded-lg">
-              <div className="w-2 h-[35px] bg-[#338FFF]"></div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1">
-                  <span className="font-bold text-[#338FFF]">Active Users</span>
+              <div className="flex p-2.5 flex-col justify-center items-center">
+                <div className="w-2 h-[35px] bg-[#338FFF]"></div>
+              </div>
+              <div className="flex flex-col justify-center items-start">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-[#338FFF] font-poppins text-base">Active Users</span>
                   <Info className="w-4 h-4 text-[#8C9BAC]" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-[#4F5A69]">237</span>
-                  <div className="flex items-center">
-                    <span className="text-sm text-[#00D764]">40%</span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex px-2.5 items-center gap-2.5">
+                  <span className="font-bold text-2xl text-[#4F5A69] font-poppins">237</span>
+                  <div className="flex w-[66px] justify-end items-center">
+                    <span className="text-sm text-[#00D764] text-right font-poppins">40%</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex w-4 h-4 justify-center items-center flex-shrink-0">
                       <path d="M12.0467 6.38004L8.00004 2.33337L3.95337 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                       <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
