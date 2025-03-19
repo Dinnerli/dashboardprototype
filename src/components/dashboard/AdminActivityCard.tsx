@@ -1,10 +1,9 @@
-
 import { Card } from "@/components/ui/card";
 import { Info, ArrowUp } from "lucide-react";
-
 const AdminActivityCard = () => {
-  return (
-    <Card className="w-full animate-slide-in-up shadow-sm" style={{ animationDelay: '0.4s' }}>
+  return <Card className="w-full animate-slide-in-up shadow-sm" style={{
+    animationDelay: '0.4s'
+  }}>
       <div className="px-6 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2.5 flex-1">
           <span className="font-bold text-[22px] text-[#233143]">Admin Activity</span>
@@ -13,8 +12,8 @@ const AdminActivityCard = () => {
         <div className="flex items-center gap-3">
           <div className="flex items-center">
             <svg width="18" height="30" viewBox="0 0 18 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.04993 7.57495H13.9499C14.7749 7.57495 15.4499 8.24995 15.4499 9.07495V10.725C15.4499 11.325 15.0749 12.075 14.6999 12.45L11.4749 15.3C11.0249 15.675 10.7249 16.425 10.7249 17.025V20.25C10.7249 20.7 10.4249 21.3 10.0499 21.525L8.99993 22.2C8.02493 22.8 6.67493 22.125 6.67493 20.925V16.95C6.67493 16.425 6.37493 15.75 6.07493 15.375L3.22493 12.375C2.84993 12 2.54993 11.325 2.54993 10.875V9.14995C2.54993 8.24995 3.22493 7.57495 4.04993 7.57495Z" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M8.1975 7.57495L4.5 13.5" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M4.04993 7.57495H13.9499C14.7749 7.57495 15.4499 8.24995 15.4499 9.07495V10.725C15.4499 11.325 15.0749 12.075 14.6999 12.45L11.4749 15.3C11.0249 15.675 10.7249 16.425 10.7249 17.025V20.25C10.7249 20.7 10.4249 21.3 10.0499 21.525L8.99993 22.2C8.02493 22.8 6.67493 22.125 6.67493 20.925V16.95C6.67493 16.425 6.37493 15.75 6.07493 15.375L3.22493 12.375C2.84993 12 2.54993 11.325 2.54993 10.875V9.14995C2.54993 8.24995 3.22493 7.57495 4.04993 7.57495Z" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M8.1975 7.57495L4.5 13.5" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
           <div className="flex items-center">
@@ -94,15 +93,13 @@ const AdminActivityCard = () => {
           <div className="w-full flex flex-col">
             {/* Bar chart */}
             <div className="flex justify-between items-end h-[250px] mb-2">
-              {Array(6).fill(0).map((_, index) => (
-                <div key={index} className="flex items-end justify-center h-full">
-                  <div className="w-10 flex flex-col items-center">
+              {Array(6).fill(0).map((_, index) => <div key={index} className="flex items-end justify-center h-full">
+                  <div className="w-10 h-85 flex flex-col items-center">
                     <div className="w-[10px] h-[28px] rounded-full bg-[#CDE4FF]"></div>
                     <div className="w-[10px] h-[28px] rounded-full bg-[#338FFF]"></div>
                     <div className="w-[10px] h-[29px] rounded-full bg-[#003072]"></div>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
             
             {/* Chart x-axis */}
@@ -118,8 +115,6 @@ const AdminActivityCard = () => {
           </div>
         </div>
       </div>
-    </Card>
-  );
+    </Card>;
 };
-
 export default AdminActivityCard;
