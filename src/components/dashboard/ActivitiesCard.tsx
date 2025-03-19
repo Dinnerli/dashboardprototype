@@ -1,14 +1,9 @@
 
 import { Card } from "@/components/ui/card";
 import { ChevronDown, Info, ArrowUp, ArrowDown } from "lucide-react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-} from "recharts";
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { useEffect, useState } from "react";
 
 // Updated data to better match the screenshot
 const data = [
@@ -76,6 +71,116 @@ const ActivityStat = ({
 };
 
 const ActivitiesCard = () => {
+  const [chartOptions, setChartOptions] = useState<Highcharts.Options>({
+    chart: {
+      type: 'area',
+      animation: {
+        duration: 1000
+      },
+      backgroundColor: 'transparent',
+      style: {
+        fontFamily: 'Poppins, sans-serif'
+      }
+    },
+    title: {
+      text: undefined
+    },
+    xAxis: {
+      categories: data.map(item => item.name),
+      labels: {
+        style: {
+          color: '#CDD1D7',
+          fontSize: '10px',
+          fontFamily: 'Poppins, sans-serif'
+        }
+      },
+      lineWidth: 0,
+      tickWidth: 0
+    },
+    yAxis: {
+      title: {
+        text: null
+      },
+      labels: {
+        style: {
+          color: '#CDD1D7',
+          fontSize: '10px',
+          fontFamily: 'Poppins, sans-serif'
+        },
+        formatter: function() {
+          return this.value + '';
+        }
+      },
+      gridLineColor: '#CDD1D7',
+      gridLineDashStyle: 'Dot',
+      gridLineWidth: 0.5,
+      min: 0,
+      max: 500,
+      tickAmount: 5,
+      tickPositions: [0, 100, 200, 300, 400, 500]
+    },
+    legend: {
+      enabled: false
+    },
+    tooltip: {
+      shared: true,
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      borderWidth: 1,
+      borderColor: '#CDD1D7',
+      shadow: true,
+      style: {
+        fontFamily: 'Poppins, sans-serif',
+        fontSize: '12px'
+      }
+    },
+    plotOptions: {
+      area: {
+        fillOpacity: 0.2,
+        lineWidth: 2,
+        marker: {
+          enabled: false,
+          symbol: 'circle',
+          radius: 4,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        },
+        states: {
+          hover: {
+            lineWidth: 3
+          }
+        },
+        animation: {
+          duration: 1500
+        }
+      },
+      series: {
+        animation: {
+          duration: 1500
+        }
+      }
+    },
+    series: [
+      {
+        name: 'Active Users',
+        data: data.map(item => item.active),
+        color: '#338FFF',
+        type: 'area'
+      },
+      {
+        name: 'New Users',
+        data: data.map(item => item.new),
+        color: '#CDD1D7',
+        type: 'area'
+      }
+    ],
+    credits: {
+      enabled: false
+    }
+  });
+
   return (
     <Card className="w-full mt-6 animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
       <div className="w-full">
@@ -141,62 +246,14 @@ const ActivitiesCard = () => {
             />
           </div>
 
-          {/* Chart - Moved below the stats row */}
+          {/* Chart - Replaced with Highcharts */}
           <div className="p-2.5 w-full">
-            <div className="h-[287px] relative w-full">
-              {/* Y-axis labels */}
-              <div className="absolute top-0 right-0 bottom-0 left-0 pointer-events-none">
-                {[500, 400, 300, 200, 100, 0].map((value, index) => (
-                  <div key={index} className="flex justify-start items-center gap-1.5 h-[16.67%]">
-                    <span className="text-[10px] text-[#CDD1D7] font-poppins w-8 text-right mr-1">{value}</span>
-                    <div className="w-full h-[0.5px] bg-[#CDD1D7] opacity-70"></div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Chart */}
-              <div className="absolute top-0 left-0 w-full h-full pl-10">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart
-                    data={data}
-                    margin={{ top: 0, right: 30, left: 0, bottom: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#338FFF" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#338FFF" stopOpacity={0}/>
-                      </linearGradient>
-                      <linearGradient id="colorNew" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#CDD1D7" stopOpacity={0.2}/>
-                        <stop offset="95%" stopColor="#CDD1D7" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid vertical={false} stroke="#CDD1D7" opacity={0.3} />
-                    <XAxis 
-                      dataKey="name" 
-                      axisLine={false} 
-                      tickLine={false} 
-                      tick={{ fontSize: 10, fill: '#CDD1D7' }}
-                      padding={{ left: 30, right: 30 }}
-                    />
-                    <YAxis hide />
-                    <Area 
-                      type="monotone" 
-                      dataKey="new" 
-                      stroke="#CDD1D7" 
-                      strokeWidth={2}
-                      fill="url(#colorNew)"
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="active" 
-                      stroke="#338FFF" 
-                      strokeWidth={2}
-                      fill="url(#colorActive)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
+            <div className="h-[287px] w-full animate-fade-in">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={chartOptions}
+                containerProps={{ className: 'h-full w-full' }}
+              />
             </div>
           </div>
         </div>
