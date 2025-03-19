@@ -134,6 +134,10 @@ export default {
 				'pulse-subtle': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.85' }
+				},
+				'dash': {
+					'0%': { strokeDashoffset: '251.2' },
+					'100%': { strokeDashoffset: '58' }
 				}
 			},
 			animation: {
@@ -145,7 +149,8 @@ export default {
 				'slide-in-left': 'slide-in-left 0.4s ease-out',
 				'slide-in-up': 'slide-in-up 0.4s ease-out',
 				'float': 'float 3s ease-in-out infinite',
-				'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite'
+				'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
+				'dash': 'dash 1.5s ease-in-out forwards'
 			}
 		}
 	},
