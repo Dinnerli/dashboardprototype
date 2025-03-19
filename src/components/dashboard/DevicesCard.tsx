@@ -17,7 +17,7 @@ const DevicesCard = () => {
               <path d="M8.1975 7.57495L4.5 13.5" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <div className="flex items-center border border-[#8C9BAC] py-1.5">
+          <div className="flex items-center py-1.5 border-b border-[#8C9BAC]">
             <span className="text-xs text-[#8C9BAC] px-2">View Report</span>
           </div>
         </div>
