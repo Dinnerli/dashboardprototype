@@ -20,11 +20,11 @@ const Index = () => {
     });
   }, []);
 
-  // Initial cards configuration - removed RewardsCard and MarketingCertificationsCard
+  // Initial cards configuration - with the updated LeaderboardCard
   const dashboardCards = [
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
-    { id: 4, component: <LeaderboardCard /> }
+    { id: 3, component: <LeaderboardCard /> }
   ];
 
   return (
