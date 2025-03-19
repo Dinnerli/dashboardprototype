@@ -21,14 +21,16 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
   const chartOptions: Highcharts.Options = {
     chart: {
       type: 'bar',
-      height: courseData.length * 60 + 100, // Adjust height based on number of items
+      height: courseData.length * 60 + 80, // Adjusted height calculation
       animation: {
         duration: 1000
       },
       backgroundColor: 'transparent',
       style: {
         fontFamily: 'Poppins, sans-serif'
-      }
+      },
+      spacing: [10, 10, 0, 10], // [top, right, bottom, left] - reduced bottom spacing
+      marginBottom: 0, // Remove bottom margin
     },
     title: {
       text: undefined
@@ -131,13 +133,11 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
   };
 
   return (
-    <div className="py-4 pb-8">
-      <div className="flex flex-col w-full">
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={chartOptions}
-        />
-      </div>
+    <div className="w-full flex-1 flex flex-col">
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={chartOptions}
+      />
     </div>
   );
 };
