@@ -1,6 +1,5 @@
 
-import React, { useState } from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import React from 'react';
 
 type ActivityTabProps = {
   title: string;
@@ -22,6 +21,7 @@ const ActivityTab = ({ title, isActive, onClick }: ActivityTabProps) => {
   );
 };
 
+// Make sure TabType is properly defined as a union of literal string types
 export type TabType = 'user' | 'usage' | 'course';
 
 interface ActivityTabsProps {

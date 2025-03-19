@@ -13,21 +13,21 @@ const tabData = {
       { title: "Active Users", value: "237", percentage: "40%", isPositive: true },
       { title: "New Users", value: "8", percentage: "40%", isPositive: false }
     ],
-    chartType: 'user'
+    chartType: 'user' as TabType
   },
   usage: {
     stats: [
       { title: "Total Usage", value: "1,243", percentage: "15%", isPositive: true },
       { title: "Avg. Time", value: "45m", percentage: "5%", isPositive: true }
     ],
-    chartType: 'usage'
+    chartType: 'usage' as TabType
   },
   course: {
     stats: [
       { title: "Completed", value: "89", percentage: "12%", isPositive: false },
       { title: "In Progress", value: "156", percentage: "32%", isPositive: true }
     ],
-    chartType: 'course'
+    chartType: 'course' as TabType
   }
 };
 

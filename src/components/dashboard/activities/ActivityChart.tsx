@@ -156,22 +156,29 @@ const ActivityChart = ({ chartType }: ActivityChartProps) => {
     setChartOptions(prevOptions => {
       const newOptions = { ...prevOptions };
       if (newOptions.series && Array.isArray(newOptions.series) && newOptions.series.length >= 2) {
-        // Update first series (active)
-        (newOptions.series[0] as Highcharts.SeriesOptionsType).data = chartData[chartType].active;
+        // Need to cast series to any to modify data
+        const activeSeries = newOptions.series[0] as any;
+        const newUsersSeries = newOptions.series[1] as any;
         
-        // Update second series (new)
-        (newOptions.series[1] as Highcharts.SeriesOptionsType).data = chartData[chartType].new;
+        // Update series data
+        if (activeSeries) {
+          activeSeries.data = chartData[chartType].active;
+        }
+        
+        if (newUsersSeries) {
+          newUsersSeries.data = chartData[chartType].new;
+        }
       
         // Update series name based on tab
         if (chartType === 'user') {
-          (newOptions.series[0] as Highcharts.SeriesOptionsType).name = 'Active Users';
-          (newOptions.series[1] as Highcharts.SeriesOptionsType).name = 'New Users';
+          if (activeSeries) activeSeries.name = 'Active Users';
+          if (newUsersSeries) newUsersSeries.name = 'New Users';
         } else if (chartType === 'usage') {
-          (newOptions.series[0] as Highcharts.SeriesOptionsType).name = 'Total Usage';
-          (newOptions.series[1] as Highcharts.SeriesOptionsType).name = 'Avg. Time';
+          if (activeSeries) activeSeries.name = 'Total Usage';
+          if (newUsersSeries) newUsersSeries.name = 'Avg. Time';
         } else if (chartType === 'course') {
-          (newOptions.series[0] as Highcharts.SeriesOptionsType).name = 'Completed';
-          (newOptions.series[1] as Highcharts.SeriesOptionsType).name = 'In Progress';
+          if (activeSeries) activeSeries.name = 'Completed';
+          if (newUsersSeries) newUsersSeries.name = 'In Progress';
         }
       }
       return newOptions;
