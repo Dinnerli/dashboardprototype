@@ -5,7 +5,7 @@ import { Info, ArrowUp } from "lucide-react";
 const AdminActivityCard = () => {
   return (
     <Card className="w-full animate-slide-in-up shadow-sm" style={{ animationDelay: '0.4s' }}>
-      <div className="px-6 py-6 flex justify-between items-center border-b border-[#CDD1D7]">
+      <div className="px-6 py-6 flex justify-between items-center">
         <div className="flex items-center gap-2.5 flex-1">
           <span className="font-bold text-[22px] text-[#233143]">Admin Activity</span>
         </div>
@@ -23,23 +23,19 @@ const AdminActivityCard = () => {
         </div>
       </div>
 
-      <div className="px-6 py-5 flex flex-col h-[431px]">
-        {/* Stats section - rearranged to the top */}
-        <div className="flex items-center justify-between w-full py-4">
+      <div className="w-full h-px bg-[#CDD1D7]"></div>
+
+      <div className="px-6 py-8 flex flex-col">
+        {/* Stats section */}
+        <div className="flex items-center justify-between w-full mb-12">
           {/* Course Assigned */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2">
-              <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10" cy="13" r="5" fill="#003072"/>
-              </svg>
+              <div className="w-4 h-4 rounded-full bg-[#003072]"></div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1">
                   <span className="text-xs text-[#8C9BAC]">Course Assigned</span>
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.99998 0.833292C7.29165 0.833292 9.16665 2.70829 9.16665 4.99996C9.16665 7.29163 7.29165 9.16663 4.99998 9.16663C2.70831 9.16663 0.833313 7.29163 0.833313 4.99996C0.833313 2.70829 2.70831 0.833292 4.99998 0.833292Z" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M5 6.66663V4.58329" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M4.99768 3.33337H5.00142" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Info className="w-3 h-3 text-[#8C9BAC]" />
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-xl text-[#4F5A69]">237</span>
@@ -55,17 +51,11 @@ const AdminActivityCard = () => {
           {/* User Creation */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2">
-              <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10" cy="13" r="5" fill="#F2F3F5"/>
-              </svg>
+              <div className="w-4 h-4 rounded-full bg-[#F2F3F5]"></div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1">
                   <span className="text-xs text-[#8C9BAC]">User Creation</span>
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.99998 0.833292C7.29165 0.833292 9.16665 2.70829 9.16665 4.99996C9.16665 7.29163 7.29165 9.16663 4.99998 9.16663C2.70831 9.16663 0.833313 7.29163 0.833313 4.99996C0.833313 2.70829 2.70831 0.833292 4.99998 0.833292Z" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M5 6.66663V4.58329" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M4.99768 3.33337H5.00142" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Info className="w-3 h-3 text-[#8C9BAC]" />
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-xl text-[#4F5A69]">237</span>
@@ -81,17 +71,11 @@ const AdminActivityCard = () => {
           {/* Group Assigned */}
           <div className="flex flex-col items-start">
             <div className="flex items-center gap-2">
-              <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="10" cy="13" r="5" fill="#CDE4FF"/>
-              </svg>
+              <div className="w-4 h-4 rounded-full bg-[#CDE4FF]"></div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-1">
                   <span className="text-xs text-[#8C9BAC]">Group Assigned</span>
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4.99998 0.833292C7.29165 0.833292 9.16665 2.70829 9.16665 4.99996C9.16665 7.29163 7.29165 9.16663 4.99998 9.16663C2.70831 9.16663 0.833313 7.29163 0.833313 4.99996C0.833313 2.70829 2.70831 0.833292 4.99998 0.833292Z" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M5 6.66663V4.58329" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M4.99768 3.33337H5.00142" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Info className="w-3 h-3 text-[#8C9BAC]" />
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-xl text-[#4F5A69]">237</span>
@@ -105,25 +89,25 @@ const AdminActivityCard = () => {
           </div>
         </div>
         
-        {/* Chart section - now below the stats with proper padding */}
-        <div className="flex items-center justify-center w-full px-5 mt-4 flex-1">
-          <div className="w-full h-full flex flex-col">
-            {/* Bar chart with fixed height */}
-            <div className="flex justify-between items-end gap-2 pb-2 h-[200px]">
+        {/* Chart section */}
+        <div className="w-full flex-1">
+          <div className="w-full flex flex-col">
+            {/* Bar chart */}
+            <div className="flex justify-between items-end h-[250px] mb-2">
               {Array(6).fill(0).map((_, index) => (
-                <div key={index} className="flex flex-col items-center gap-0.5 w-10 h-full">
-                  <div className="flex-1 w-full flex flex-col items-center gap-0.5 justify-end">
-                    <div className="w-full rounded-2xl bg-[#CDE4FF] h-[30%]"></div>
-                    <div className="w-full rounded-2xl bg-[#338FFF] h-[30%]"></div>
-                    <div className="w-full rounded-2xl bg-[#003072] h-[30%]"></div>
+                <div key={index} className="w-10 h-full flex flex-col justify-end gap-0 relative">
+                  <div className="w-4 mx-auto h-[80%] flex flex-col">
+                    <div className="w-full rounded-full bg-[#CDE4FF] h-[33%]"></div>
+                    <div className="w-full rounded-full bg-[#338FFF] h-[33%]"></div>
+                    <div className="w-full rounded-full bg-[#003072] h-[34%]"></div>
                   </div>
                 </div>
               ))}
             </div>
             
             {/* Chart x-axis */}
-            <div className="h-px w-full bg-[#CDD1D7]"></div>
-            <div className="flex justify-between w-full pt-1">
+            <div className="h-px w-full bg-[#CDD1D7] mb-1"></div>
+            <div className="flex justify-between w-full">
               <span className="text-[10px] text-[#CDD1D7]">Oct</span>
               <span className="text-[10px] text-[#CDD1D7]">Nov</span>
               <span className="text-[10px] text-[#CDD1D7]">Dec</span>
