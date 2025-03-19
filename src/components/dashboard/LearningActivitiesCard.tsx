@@ -34,8 +34,9 @@ const LearningActivitiesCard = () => {
         size: '100%',
         dataLabels: {
           enabled: true,
-          formatter: function() {
-            return this.point.name;
+          formatter: function(this: Highcharts.PointLabelObject) {
+            // Use the correct 'this' type with the proper properties
+            return this.key;
           },
           style: {
             color: '#8C9BAC',
