@@ -7,6 +7,7 @@ import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
 import LearningActivitiesCard from '@/components/dashboard/LearningActivitiesCard';
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
 import DevicesCard from '@/components/dashboard/DevicesCard';
+import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 
 const Index = () => {
   // Smooth scroll to top when component mounts
@@ -37,11 +38,10 @@ const Index = () => {
             <div className="hidden md:block"></div>
           </div>
           
-          {/* Devices Card Row */}
+          {/* Devices and Admin Activity Cards Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <DevicesCard />
-            {/* Placeholder for future card */}
-            <div className="hidden md:block"></div>
+            <AdminActivityCard />
           </div>
         </div>
       </main>
