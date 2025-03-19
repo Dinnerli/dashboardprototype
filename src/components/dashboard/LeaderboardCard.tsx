@@ -1,51 +1,21 @@
-
 import { Card } from "@/components/ui/card";
 import { Search, Filter } from "lucide-react";
-
 interface LeaderboardCardProps {
   title?: string;
 }
+const LeaderboardCard = ({
+  title = "Leaderboard"
+}: LeaderboardCardProps) => {
+  return <Card className="w-full animate-slide-in-up shadow-sm" style={{
+    animationDelay: '0.4s'
+  }}>
+      
 
-const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
-  return (
-    <Card className="w-[455px] h-[555px] animate-slide-in-up shadow-sm" style={{
-      animationDelay: '0.4s'
-    }}>
-      <div className="px-6 py-6 flex justify-between items-center border-b border-[#CDD1D7]">
-        <div className="flex items-center gap-2.5 flex-1">
-          <span className="font-bold text-[22px] text-[#233143]">{title}</span>
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <div className="flex items-center">
-            <svg width="18" height="30" viewBox="0 0 18 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 15C11.0711 15 12.75 13.3211 12.75 11.25C12.75 9.17893 11.0711 7.5 9 7.5C6.92893 7.5 5.25 9.17893 5.25 11.25C5.25 13.3211 6.92893 15 9 15Z" stroke="#8C9BAC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-              <path d="M2.55762 22.5C2.55762 19.5975 5.44514 17.25 9.00014 17.25" stroke="#8C9BAC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-              <path d="M13.65 22.05C14.9755 22.05 16.05 20.9755 16.05 19.65C16.05 18.3245 14.9755 17.25 13.65 17.25C12.3245 17.25 11.25 18.3245 11.25 19.65C11.25 20.9755 12.3245 22.05 13.65 22.05Z" stroke="#8C9BAC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-              <path d="M16.5 22.5L15.75 21.75" stroke="#8C9BAC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-            </svg>
-          </div>
-          <div className="flex items-center">
-            <svg width="18" height="30" viewBox="0 0 18 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4.04993 7.57495H13.9499C14.7749 7.57495 15.4499 8.24995 15.4499 9.07495V10.725C15.4499 11.325 15.0749 12.075 14.6999 12.45L11.4749 15.3C11.0249 15.675 10.7249 16.425 10.7249 17.025V20.25C10.7249 20.7 10.4249 21.3 10.0499 21.525L8.99993 22.2C8.02493 22.8 6.67493 22.125 6.67493 20.925V16.95C6.67493 16.425 6.37493 15.75 6.07493 15.375L3.22493 12.375C2.84993 12 2.54993 11.325 2.54993 10.875V9.14995C2.54993 8.24995 3.22493 7.57495 4.04993 7.57495Z" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-              <path d="M8.1975 7.57495L4.5 13.5" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-            </svg>
-          </div>
-          <div className="flex items-center">
-            <span className="text-xs text-[#8C9BAC] border-b border-[#8C9BAC] px-2">View Report</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-0 py-0 flex flex-col h-[480px] overflow-y-auto">
+      <div className="px-0 py-0 flex flex-col">
         {/* User 1 */}
         <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
           <div className="w-[55px] h-[55px] rounded-full overflow-hidden">
-            <img 
-              src="https://randomuser.me/api/portraits/men/32.jpg" 
-              alt="James de Silva"
-              className="w-full h-full object-cover"
-            />
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James de Silva" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center w-[200px] px-2.5">
             <span className="text-[#4F5A69] font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap">James de Silva</span>
@@ -67,11 +37,7 @@ const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
         {/* User 2 */}
         <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
           <div className="w-[55px] h-[55px] rounded-full overflow-hidden">
-            <img 
-              src="https://randomuser.me/api/portraits/women/44.jpg" 
-              alt="Lakshika Matthegoda"
-              className="w-full h-full object-cover"
-            />
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Lakshika Matthegoda" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center w-[200px] px-2.5">
             <span className="text-[#4F5A69] font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap">Lakshika Matthegoda</span>
@@ -93,11 +59,7 @@ const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
         {/* User 3 */}
         <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
           <div className="w-[55px] h-[55px] rounded-full overflow-hidden">
-            <img 
-              src="https://randomuser.me/api/portraits/men/46.jpg" 
-              alt="Nuwan Gajanyaka"
-              className="w-full h-full object-cover"
-            />
+            <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Nuwan Gajanyaka" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center w-[200px] px-2.5">
             <span className="text-[#4F5A69] font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap">Nuwan Gajanyaka</span>
@@ -119,11 +81,7 @@ const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
         {/* User 4 */}
         <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
           <div className="w-[55px] h-[55px] rounded-full overflow-hidden">
-            <img 
-              src="https://randomuser.me/api/portraits/women/28.jpg" 
-              alt="Hansika Diddugoda"
-              className="w-full h-full object-cover"
-            />
+            <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Hansika Diddugoda" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center w-[200px] px-2.5">
             <span className="text-[#4F5A69] font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap">Hansika Diddugoda</span>
@@ -145,11 +103,7 @@ const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
         {/* User 5 */}
         <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
           <div className="w-[55px] h-[55px] rounded-full overflow-hidden">
-            <img 
-              src="https://randomuser.me/api/portraits/men/33.jpg" 
-              alt="James de Silva"
-              className="w-full h-full object-cover"
-            />
+            <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="James de Silva" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col justify-center w-[200px] px-2.5">
             <span className="text-[#4F5A69] font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap">James de Silva</span>
@@ -168,8 +122,6 @@ const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
           </div>
         </div>
       </div>
-    </Card>
-  );
+    </Card>;
 };
-
 export default LeaderboardCard;
