@@ -80,7 +80,8 @@ const ActivitiesCard = () => {
       backgroundColor: 'transparent',
       style: {
         fontFamily: 'Poppins, sans-serif'
-      }
+      },
+      spacing: [10, 10, 10, 10]
     },
     title: {
       text: undefined
@@ -95,7 +96,8 @@ const ActivitiesCard = () => {
         }
       },
       lineWidth: 0,
-      tickWidth: 0
+      tickWidth: 0,
+      padding: 10
     },
     yAxis: {
       title: {
@@ -107,6 +109,8 @@ const ActivitiesCard = () => {
           fontSize: '10px',
           fontFamily: 'Poppins, sans-serif'
         },
+        align: 'right',
+        x: -10,
         formatter: function() {
           return this.value + '';
         }
@@ -116,7 +120,7 @@ const ActivitiesCard = () => {
       gridLineWidth: 0.5,
       min: 0,
       max: 500,
-      tickAmount: 5,
+      tickAmount: 6,
       tickPositions: [0, 100, 200, 300, 400, 500]
     },
     legend: {
@@ -154,6 +158,18 @@ const ActivitiesCard = () => {
         },
         animation: {
           duration: 1500
+        },
+        fillColor: {
+          linearGradient: {
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 1
+          },
+          stops: [
+            [0, 'rgba(51, 143, 255, 0.8)'],
+            [1, 'rgba(205, 228, 255, 0)']
+          ]
         }
       },
       series: {
@@ -165,15 +181,16 @@ const ActivitiesCard = () => {
     series: [
       {
         name: 'Active Users',
-        data: data.map(item => item.active),
+        data: [200, 280, 200, 300, 30, 450, 150],
         color: '#338FFF',
         type: 'area'
       },
       {
         name: 'New Users',
-        data: data.map(item => item.new),
-        color: '#CDD1D7',
-        type: 'area'
+        data: [150, 320, 250, 390, 240, 350, 160],
+        color: '#F2F3F5',
+        type: 'area',
+        visible: false
       }
     ],
     credits: {
@@ -246,7 +263,7 @@ const ActivitiesCard = () => {
             />
           </div>
 
-          {/* Chart - Replaced with Highcharts */}
+          {/* Chart - Updated with better styling to match the design */}
           <div className="p-2.5 w-full">
             <div className="h-[287px] w-full animate-fade-in">
               <HighchartsReact
