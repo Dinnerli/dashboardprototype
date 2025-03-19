@@ -1,6 +1,7 @@
 
 import React from "react";
-import CourseBar from "./CourseBar";
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 
 type CourseChartProps = {
   courseData: Array<{
@@ -11,40 +12,108 @@ type CourseChartProps = {
 };
 
 const CourseChart = ({ courseData }: CourseChartProps) => {
+  // Format the data for Highcharts
+  const categories = courseData.map(course => course.name);
+  const completed = courseData.map(course => course.completedPercentage);
+  const inProgress = courseData.map(course => course.inProgressPercentage);
+
+  // Configure Highcharts options
+  const chartOptions: Highcharts.Options = {
+    chart: {
+      type: 'bar',
+      height: courseData.length * 60 + 100, // Adjust height based on number of items
+      animation: {
+        duration: 1000
+      }
+    },
+    title: {
+      text: undefined
+    },
+    xAxis: {
+      categories,
+      labels: {
+        style: {
+          color: '#4F5A69',
+          fontSize: '12px',
+          fontFamily: 'Poppins'
+        }
+      }
+    },
+    yAxis: {
+      min: 0,
+      max: 100,
+      title: {
+        text: null
+      },
+      labels: {
+        formatter: function() {
+          return this.value + '%';
+        },
+        style: {
+          color: '#8C9BAC',
+          fontSize: '12px',
+          fontFamily: 'Poppins'
+        }
+      },
+      gridLineColor: '#E5E7EB'
+    },
+    legend: {
+      enabled: true,
+      align: 'right',
+      verticalAlign: 'top',
+      itemStyle: {
+        fontFamily: 'Poppins',
+        fontSize: '12px'
+      }
+    },
+    plotOptions: {
+      bar: {
+        stacking: 'normal',
+        borderRadius: 2,
+        pointPadding: 0.2,
+        groupPadding: 0.3,
+        animation: {
+          duration: 1500
+        }
+      },
+      series: {
+        animation: {
+          duration: 1500,
+          staggerLines: 5
+        },
+      }
+    },
+    series: [
+      {
+        name: 'Completed',
+        data: completed,
+        color: '#338FFF',
+        animation: {
+          duration: 1500
+        }
+      },
+      {
+        name: 'In Progress',
+        data: inProgress,
+        color: '#CDE4FF',
+        animation: {
+          duration: 1500,
+          delay: 300
+        }
+      }
+    ],
+    credits: {
+      enabled: false
+    }
+  };
+
   return (
     <div className="py-4 pb-8">
       <div className="flex flex-col w-full">
-        {/* Course bars */}
-        <div className="flex flex-col justify-between items-start w-full">
-          {courseData.map((course, index) => (
-            <CourseBar 
-              key={index}
-              name={course.name}
-              completedPercentage={course.completedPercentage}
-              inProgressPercentage={course.inProgressPercentage}
-            />
-          ))}
-        </div>
-        
-        {/* Separator line */}
-        <div className="flex items-center gap-[5px] w-full mt-2">
-          <div className="min-w-[120px]"></div>
-          <div className="flex h-[1px] flex-1 bg-[#E5E7EB]"></div>
-        </div>
-        
-        {/* X-axis labels */}
-        <div className="flex ml-[120px] justify-between w-[calc(100%-120px)] mt-2 text-xs text-[#8C9BAC]">
-          <div>0</div>
-          <div>10</div>
-          <div>20</div>
-          <div>40</div>
-          <div>50</div>
-          <div>60</div>
-          <div>70</div>
-          <div>80</div>
-          <div>90</div>
-          <div>100 %</div>
-        </div>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={chartOptions}
+        />
       </div>
     </div>
   );
