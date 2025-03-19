@@ -24,6 +24,10 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
       height: courseData.length * 60 + 100, // Adjust height based on number of items
       animation: {
         duration: 1000
+      },
+      backgroundColor: 'transparent',
+      style: {
+        fontFamily: 'Poppins, sans-serif'
       }
     },
     title: {
@@ -37,7 +41,9 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
           fontSize: '12px',
           fontFamily: 'Poppins'
         }
-      }
+      },
+      lineWidth: 0,
+      tickWidth: 0
     },
     yAxis: {
       min: 0,
@@ -55,7 +61,9 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
           fontFamily: 'Poppins'
         }
       },
-      gridLineColor: '#E5E7EB'
+      gridLineColor: '#E5E7EB',
+      gridLineDashStyle: 'Dot',
+      gridLineWidth: 0.5
     },
     legend: {
       enabled: true,
@@ -69,7 +77,11 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
     plotOptions: {
       bar: {
         stacking: 'normal',
-        borderRadius: 2,
+        borderRadius: 4, // Add rounded corners to the bars
+        borderRadiusTopLeft: 4,
+        borderRadiusTopRight: 4,
+        borderRadiusBottomLeft: 4,
+        borderRadiusBottomRight: 4,
         pointPadding: 0.2,
         groupPadding: 0.3,
         animation: {
@@ -79,7 +91,6 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
       series: {
         animation: {
           duration: 1500
-          // Removed staggerLines property as it's not valid
         }
       }
     },
@@ -87,8 +98,8 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
       {
         name: 'Completed',
         data: completed,
-        color: '#338FFF',
-        type: 'bar', // Added explicit type
+        color: '#338FFF', // Bright blue like in the image
+        type: 'bar',
         animation: {
           duration: 1500
         }
@@ -96,17 +107,57 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
       {
         name: 'In Progress',
         data: inProgress,
-        color: '#CDE4FF',
-        type: 'bar', // Added explicit type
+        color: '#CDE4FF', // Light blue like in the image
+        type: 'bar',
         animation: {
           duration: 1500
-          // Removed delay property as it's not valid
         }
       }
     ],
     credits: {
       enabled: false
-    }
+    },
+    // Add X-axis labels at the bottom
+    xAxis: {
+      categories,
+      labels: {
+        style: {
+          color: '#4F5A69',
+          fontSize: '12px',
+          fontFamily: 'Poppins'
+        }
+      },
+      lineWidth: 0,
+      tickWidth: 0
+    },
+    // Add percentage markers on the X-axis
+    xAxis: [{
+      categories,
+      labels: {
+        style: {
+          color: '#4F5A69',
+          fontSize: '12px',
+          fontFamily: 'Poppins'
+        }
+      },
+      lineWidth: 0,
+      tickWidth: 0
+    }, {
+      // Secondary X-axis for percentage indicators
+      categories: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100%'],
+      opposite: true,
+      linkedTo: 0,
+      labels: {
+        style: {
+          color: '#8C9BAC',
+          fontSize: '10px',
+          fontFamily: 'Poppins'
+        }
+      },
+      lineWidth: 0,
+      tickWidth: 0,
+      visible: false
+    }]
   };
 
   return (
