@@ -21,7 +21,7 @@ const Index = () => {
     });
   }, []);
 
-  // Updated cards configuration - with HighchartsCard removed
+  // Updated cards configuration - spread proportionately in one row
   const dashboardCards = [
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
@@ -49,7 +49,7 @@ const Index = () => {
             <div className="hidden md:block"></div>
           </div>
           
-          {/* Draggable cards grid */}
+          {/* Draggable cards grid - now with 4 cards in one row on desktop */}
           <DashboardCardGrid initialCards={dashboardCards} />
         </div>
       </main>

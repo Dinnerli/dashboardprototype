@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Info, ArrowUp } from "lucide-react";
 
 const AdminActivityCard = () => {
-  return <Card className="w-[455px] h-[555px] animate-slide-in-up shadow-sm" style={{
+  return <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{
     animationDelay: '0.4s'
   }}>
       <div className="px-6 py-6 flex justify-between items-center">
