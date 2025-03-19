@@ -89,10 +89,10 @@ const DevicesCard = () => {
         {/* Circle Graph */}
         <div className="flex justify-center items-center flex-1 px-4 pb-4">
           <div className="w-48 h-48 relative">
-            {/* Background circle */}
-            <div className="w-full h-full rounded-full bg-[#F8F9FA] absolute"></div>
+            {/* White circle background to ensure the middle is white */}
+            <div className="w-full h-full rounded-full bg-white absolute"></div>
             
-            {/* Blue donut segment (approximately 77% coverage) */}
+            {/* Light gray background circle */}
             <svg viewBox="0 0 100 100" className="w-full h-full absolute">
               <circle
                 cx="50"
@@ -102,6 +102,10 @@ const DevicesCard = () => {
                 stroke="#F8F9FA"
                 strokeWidth="15"
               />
+            </svg>
+            
+            {/* Blue donut segment (approximately 77% coverage) */}
+            <svg viewBox="0 0 100 100" className="w-full h-full absolute">
               <circle
                 cx="50"
                 cy="50"
@@ -116,6 +120,9 @@ const DevicesCard = () => {
                 className="animate-[dash_1.5s_ease-in-out]"
               />
             </svg>
+            
+            {/* White center circle to create donut hole */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] bg-white rounded-full"></div>
           </div>
         </div>
       </div>
