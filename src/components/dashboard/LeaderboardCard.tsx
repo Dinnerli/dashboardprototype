@@ -2,14 +2,18 @@
 import { Card } from "@/components/ui/card";
 import { Search, Filter } from "lucide-react";
 
-const LeaderboardCard = () => {
+interface LeaderboardCardProps {
+  title?: string;
+}
+
+const LeaderboardCard = ({ title = "Leaderboard" }: LeaderboardCardProps) => {
   return (
     <Card className="w-full animate-slide-in-up shadow-sm" style={{
       animationDelay: '0.4s'
     }}>
       <div className="px-6 py-6 flex justify-between items-center border-b border-[#CDD1D7]">
         <div className="flex items-center gap-2.5 flex-1">
-          <span className="font-bold text-[22px] text-[#233143]">Leaderboard</span>
+          <span className="font-bold text-[22px] text-[#233143]">{title}</span>
         </div>
         
         <div className="flex items-center gap-3">

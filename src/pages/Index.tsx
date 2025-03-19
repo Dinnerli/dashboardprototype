@@ -48,7 +48,7 @@ const Index = () => {
           {/* Leaderboard Cards Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <LeaderboardCard />
-            <LeaderboardCard />
+            <LeaderboardCard title="Leaderboard 2" />
           </div>
         </div>
       </main>
