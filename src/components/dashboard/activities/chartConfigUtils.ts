@@ -7,9 +7,7 @@ import { chartData } from './chartData';
 export const createBaseChartOptions = (): Highcharts.Options => ({
   chart: {
     type: 'areaspline', // Using areaspline for curved edges
-    animation: {
-      duration: 1000
-    },
+    animation: false,
     backgroundColor: 'transparent',
     style: {
       fontFamily: 'Poppins, sans-serif'
@@ -88,9 +86,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
           lineWidth: 3
         }
       },
-      animation: {
-        duration: 1500
-      },
+      animation: false,
       fillColor: {
         linearGradient: {
           x1: 0,
@@ -105,9 +101,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
       }
     },
     series: {
-      animation: {
-        duration: 1500
-      }
+      animation: false
     }
   },
   credits: {

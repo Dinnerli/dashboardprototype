@@ -4,7 +4,6 @@ import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
 import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
-import LearningActivitiesCard from '@/components/dashboard/LearningActivitiesCard';
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
@@ -41,10 +40,10 @@ const Index = () => {
           {/* Cards row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
             <ActivitiesCard />
-            <LearningActivitiesCard />
+            <HighchartsCard />
           </div>
           
-          {/* Engagement Activities Row - CoursePerformanceCard removed */}
+          {/* Engagement Activities Row */}
           <div className="grid grid-cols-1 md:grid-cols-1 gap-6 pb-6">
             <EngagementActivitiesCard />
           </div>
