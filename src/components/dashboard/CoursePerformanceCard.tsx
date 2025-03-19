@@ -34,11 +34,11 @@ const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBa
 
 const StatIndicator = ({ value, isPositive }: { value: string, isPositive: boolean }) => {
   return (
-    <div className="flex items-center justify-end">
-      <span className="text-sm md:text-base text-[#00D764]">
+    <div className="flex items-center justify-end w-[66px]">
+      <span className="text-sm text-[#00D764] font-medium">
         {value}
       </span>
-      <ArrowUp className="w-4 h-4 md:w-5 md:h-5 text-[#00D764]" stroke="#00D764" strokeWidth={1.5} />
+      <ArrowUp className="w-4 h-4 text-[#00D764]" stroke="#00D764" strokeWidth={1.5} />
     </div>
   );
 };
@@ -56,17 +56,24 @@ const ActivityStat = ({
   isActive: boolean;
   icon?: React.ReactNode;
 }) => {
+  const borderColor = isActive ? "#338FFF" : "#CDE4FF";
+  
   return (
-    <div className="flex flex-col items-start gap-1 relative p-6 border-r border-[#E5E7EB] w-1/2">
-      <div className="flex items-center gap-2 mb-1">
-        <span className="text-base text-[#8C9BAC] font-medium">
-          {title}
-        </span>
-        <Info className="w-4 h-4 text-[#8C9BAC]" />
+    <div className="flex items-center gap-5 p-5 flex-1">
+      <div className="flex p-2.5 flex-col justify-center items-center">
+        <div className="w-[2px] h-[35px]" style={{ backgroundColor: borderColor }}></div>
       </div>
-      <div className="flex items-center gap-4">
-        <span className="text-2xl font-bold text-[#4F5A69]">{value}</span>
-        <StatIndicator value={percentage} isPositive={true} />
+      <div className="flex w-full items-center">
+        <div className="flex px-2.5 items-center gap-2.5 flex-1">
+          <span className="text-base text-[#8C9BAC] font-semibold">
+            {title}
+          </span>
+          <Info className="w-4 h-4 text-[#8C9BAC]" />
+        </div>
+        <div className="flex px-2.5 justify-end items-center gap-2.5 flex-1">
+          <span className="text-2xl font-bold text-[#4F5A69]">{value}</span>
+          <StatIndicator value={percentage} isPositive={true} />
+        </div>
       </div>
     </div>
   );
