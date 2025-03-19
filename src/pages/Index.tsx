@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
@@ -9,6 +8,7 @@ import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard'
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
+import HighchartsCard from '@/components/dashboard/HighchartsCard';
 import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 
 const Index = () => {
@@ -20,11 +20,12 @@ const Index = () => {
     });
   }, []);
 
-  // Initial cards configuration - with the updated LeaderboardCard
+  // Updated cards configuration - with Highcharts card added
   const dashboardCards = [
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
-    { id: 3, component: <LeaderboardCard /> }
+    { id: 3, component: <LeaderboardCard /> },
+    { id: 4, component: <HighchartsCard /> }
   ];
 
   return (
