@@ -22,12 +22,12 @@ const Index = () => {
     });
   }, []);
 
-  // Updated cards configuration - spread proportionately in one row
+  // Updated cards configuration with fixed height
   const dashboardCards = [
     { id: 1, component: <DevicesCard /> },
     { id: 2, component: <AdminActivityCard /> },
-    { id: 3, component: <RewardsCard /> },
-    { id: 4, component: <LeaderboardCard /> }
+    { id: 3, component: <LeaderboardCard /> },
+    { id: 4, component: <RewardsCard /> }
   ];
 
   return (
@@ -49,7 +49,7 @@ const Index = () => {
             <EngagementActivitiesCard />
           </div>
           
-          {/* Draggable cards grid - now with 4 cards in one row on desktop */}
+          {/* Draggable cards grid - using fixed height cards */}
           <DashboardCardGrid initialCards={dashboardCards} />
         </div>
       </main>
