@@ -1,8 +1,46 @@
 
 import { Card } from "@/components/ui/card";
 import { ChevronDown, Info } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const LearningActivitiesCard = () => {
+  // Animation state for the circle segments
+  const [animate, setAnimate] = useState(false);
+
+  // Trigger animation after component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimate(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Progress data for the circles
+  const circleData = [
+    { id: 'library', name: 'Library', progress: 20, color: '#E5E7EA' },
+    { id: 'exams', name: 'Exams', progress: 35, color: '#E5E7EA' },
+    { id: 'ilt-vilt', name: 'ILT/VILT', progress: 50, color: '#E5E7EA' },
+    { id: 'courses', name: 'Courses', progress: 65, colors: ['#003072', '#338FFF', '#CDE4FF'] }
+  ];
+
+  // Calculate stroke dasharray and dashoffset for circle segments
+  const calculateCircleProps = (progress, index, isActive = false) => {
+    const radius = 100 - index * 30; // Different radius for each circle
+    const circumference = 2 * Math.PI * radius;
+    const strokeDasharray = circumference;
+    const strokeDashoffset = circumference * (1 - (animate ? progress / 100 : 0));
+    
+    return {
+      r: radius,
+      strokeDasharray,
+      strokeDashoffset,
+      style: {
+        transition: `stroke-dashoffset 1.5s ease-in-out ${index * 0.2}s`,
+      }
+    };
+  };
+
   return (
     <Card className="w-full mt-6 animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
       <div className="w-full">
@@ -35,26 +73,109 @@ const LearningActivitiesCard = () => {
 
         {/* Content */}
         <div className="flex flex-col lg:flex-row p-6 gap-6">
-          {/* Chart */}
-          <div className="flex-1 flex justify-center items-center animate-float">
-            <svg width="400" height="400" viewBox="0 0 400 401" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
-              <path d="M199.882 13.2917C236.927 13.2917 273.141 24.2659 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802C387.105 162.993 390.814 200.616 383.587 236.913C376.36 273.21 358.521 306.551 332.326 332.72C306.131 358.888 272.757 376.71 236.423 383.929C200.09 391.149 162.429 387.444 128.204 373.281C93.9788 359.119 64.726 335.136 44.1448 304.364C23.5637 273.593 12.5785 237.416 12.5786 200.408" stroke="#E5E7EA" strokeWidth="20" strokeLinecap="round" className="animate-dash"></path>
-              <path d="M199.882 13.2917C236.928 13.2917 273.141 24.266 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802C387.105 162.993 390.814 200.616 383.587 236.913C376.36 273.21 358.521 306.551 332.326 332.72C306.131 358.889 272.757 376.71 236.423 383.93" stroke="black" strokeOpacity="0.1" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '0.2s' }}></path>
-              <path d="M199.882 13.2917C236.928 13.2917 273.141 24.266 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802" stroke="black" strokeOpacity="0.1" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '0.4s' }}></path>
-              <text fill="#8C9BAC" xmlSpace="preserve" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" className="animate-fade-in" style={{ whiteSpace: "pre", animationDelay: '0.6s' }}><tspan x="125.023" y="18.6">Library</tspan></text>
-              <path d="M199.882 46.0371C230.444 46.0371 260.32 55.0908 285.732 72.0534C311.144 89.0159 330.95 113.125 342.645 141.333C354.341 169.541 357.401 200.58 351.439 230.525C345.476 260.47 330.759 287.976 309.148 309.565C287.537 331.154 260.004 345.857 230.028 351.813C200.053 357.77 168.983 354.713 140.748 343.028C112.512 331.344 88.3782 311.558 71.3988 286.172C54.4193 260.786 45.3566 230.94 45.3567 200.408" stroke="#E5E7EA" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '0.8s' }}></path>
-              <path d="M199.882 46.0371C230.444 46.0371 260.32 55.0908 285.732 72.0534C311.143 89.0159 330.949 113.125 342.645 141.333C354.341 169.541 357.401 200.58 351.438 230.525C345.476 260.47 330.759 287.976 309.148 309.565" stroke="black" strokeOpacity="0.1" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '1s' }}></path>
-              <path d="M199.882 46.0371C230.444 46.0371 260.32 55.0908 285.732 72.0534" stroke="black" strokeOpacity="0.1" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '1.2s' }}></path>
-              <text fill="#8C9BAC" xmlSpace="preserve" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" className="animate-fade-in" style={{ whiteSpace: "pre", animationDelay: '1.4s' }}><tspan x="127.648" y="51.1">Exams</tspan></text>
-              <path d="M199.881 78.7825C223.961 78.7825 247.499 85.9157 267.521 99.2801C287.542 112.645 303.147 131.64 312.361 153.864C321.576 176.088 323.987 200.543 319.289 224.136C314.592 247.729 302.996 269.401 285.97 286.411C268.943 303.42 247.25 315.004 223.633 319.697C200.016 324.39 175.537 321.981 153.291 312.776C131.044 303.57 112.03 287.981 98.652 267.98C85.2743 247.978 78.134 224.463 78.134 200.408" stroke="#E5E7EA" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '1.6s' }}></path>
-              <path d="M199.881 78.7825C223.96 78.7825 247.499 85.9157 267.52 99.2801C287.541 112.645 303.146 131.64 312.361 153.864C321.575 176.088 323.986 200.543 319.289 224.136C314.591 247.729 302.996 269.401 285.969 286.411C268.942 303.42 247.249 315.004 223.632 319.697C200.016 324.39 175.536 321.981 153.29 312.776" stroke="black" strokeOpacity="0.1" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '1.8s' }}></path>
-              <path d="M199.882 78.7825C223.961 78.7825 247.5 85.9157 267.521 99.2801C287.542 112.645 303.147 131.64 312.362 153.864C321.576 176.088 323.987 200.543 319.29 224.136" stroke="black" strokeOpacity="0.1" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '2s' }}></path>
-              <text fill="#8C9BAC" xmlSpace="preserve" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" className="animate-fade-in" style={{ whiteSpace: "pre", animationDelay: '2.2s' }}><tspan x="119.913" y="83.6">ILT/VILT</tspan></text>
-              <path d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.236 250.826 262.794 263.256C250.351 275.686 234.498 284.151 217.24 287.581C199.982 291.01 182.093 289.25 165.836 282.523C149.579 275.796 135.684 264.404 125.908 249.787C116.132 235.171 110.914 217.987 110.914 200.408" stroke="#003072" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '2.4s' }}></path>
-              <path d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.237 250.826 262.794 263.256C250.352 275.686 234.499 284.151 217.24 287.581" stroke="#338FFF" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '2.6s' }}></path>
-              <path d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395" stroke="#CDE4FF" strokeWidth="20" strokeLinecap="round" className="animate-dash" style={{ animationDelay: '2.8s' }}></path>
-              <text fill="#338FFF" xmlSpace="preserve" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" className="animate-pulse-subtle" style={{ whiteSpace: "pre" }}><tspan x="114.288" y="121.1">Courses</tspan></text>
-            </svg>
+          {/* Chart - Updated to match the image */}
+          <div className="flex-1 flex justify-center items-center">
+            <div className="relative w-[400px] h-[400px]">
+              <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Background circles */}
+                {circleData.map((item, index) => (
+                  <circle
+                    key={`bg-${item.id}`}
+                    cx="200"
+                    cy="200"
+                    r={100 - index * 30}
+                    stroke={item.color}
+                    strokeWidth="20"
+                    fill="none"
+                    opacity={0.3}
+                  />
+                ))}
+                
+                {/* Progress circles */}
+                {circleData.map((item, index) => {
+                  if (item.id !== 'courses') {
+                    const circleProps = calculateCircleProps(item.progress, index);
+                    return (
+                      <circle
+                        key={`progress-${item.id}`}
+                        cx="200"
+                        cy="200"
+                        r={circleProps.r}
+                        stroke={item.color}
+                        strokeWidth="20"
+                        strokeDasharray={circleProps.strokeDasharray}
+                        strokeDashoffset={circleProps.strokeDashoffset}
+                        fill="none"
+                        transform="rotate(-90 200 200)"
+                        style={circleProps.style}
+                      />
+                    );
+                  }
+                  return null;
+                })}
+                
+                {/* Courses - special treatment with gradient */}
+                {(() => {
+                  const courseItem = circleData[3];
+                  const circleProps = calculateCircleProps(courseItem.progress, 3, true);
+                  
+                  // Create 3 segments for the courses circle
+                  const colors = courseItem.colors;
+                  const segmentLengths = [0.3, 0.5, 0.2]; // Proportions of each segment
+                  
+                  return colors.map((color, i) => {
+                    const segmentStart = segmentLengths.slice(0, i).reduce((a, b) => a + b, 0) * courseItem.progress;
+                    const segmentEnd = segmentLengths.slice(0, i + 1).reduce((a, b) => a + b, 0) * courseItem.progress;
+                    
+                    const segmentLength = (segmentEnd - segmentStart) / 100 * circleProps.strokeDasharray;
+                    const offset = (1 - segmentEnd / 100) * circleProps.strokeDasharray;
+                    const dashArray = `${segmentLength} ${circleProps.strokeDasharray - segmentLength}`;
+                    
+                    return (
+                      <circle
+                        key={`course-segment-${i}`}
+                        cx="200"
+                        cy="200"
+                        r={circleProps.r}
+                        stroke={color}
+                        strokeWidth="20"
+                        strokeDasharray={dashArray}
+                        strokeDashoffset={animate ? offset : circleProps.strokeDasharray}
+                        fill="none"
+                        transform="rotate(-90 200 200)"
+                        style={{
+                          transition: `stroke-dashoffset 1.5s ease-in-out ${0.6 + i * 0.2}s`,
+                        }}
+                      />
+                    );
+                  });
+                })()}
+                
+                {/* Text labels */}
+                {circleData.map((item, index) => {
+                  const yPosition = 40 + index * 30;
+                  const textColor = item.id === 'courses' ? '#338FFF' : '#8C9BAC';
+                  const fontWeight = item.id === 'courses' ? '600' : 'normal';
+                  
+                  return (
+                    <text 
+                      key={`text-${item.id}`}
+                      x="200" 
+                      y={yPosition} 
+                      textAnchor="middle" 
+                      fill={textColor}
+                      fontFamily="Poppins" 
+                      fontSize="16"
+                      fontWeight={fontWeight}
+                      className={animate ? "animate-fade-in" : "opacity-0"}
+                      style={{ animationDelay: `${0.8 + index * 0.2}s` }}
+                    >
+                      {item.name}
+                    </text>
+                  );
+                })}
+              </svg>
+            </div>
           </div>
 
           {/* Stats */}
