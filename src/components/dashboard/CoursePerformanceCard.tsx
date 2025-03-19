@@ -1,6 +1,6 @@
 
 import { Card } from "@/components/ui/card";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Info } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CourseTabContent from "./course-performance/CourseTabContent";
 import { useCourseData } from "./course-performance/useCourseData";
@@ -9,7 +9,7 @@ const CoursePerformanceCard = () => {
   const { activeTab, setActiveTab, courseData, tabContents } = useCourseData();
 
   return (
-    <Card className="w-full h-[555px] mt-6 animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
+    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
       <div className="w-full h-full flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">

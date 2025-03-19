@@ -1,10 +1,13 @@
+
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { Info, ChevronDown, ArrowUp, ArrowDown } from "lucide-react";
+
 const EngagementActivitiesCard = () => {
-  return <Card className="w-full h-[555px] mt-6 animate-slide-in-up shadow-sm" style={{
-    animationDelay: '0.3s'
-  }}>
+  return (
+    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{
+      animationDelay: '0.3s'
+    }}>
       <div className="w-full h-full flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
@@ -28,7 +31,7 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="flex flex-wrap px-6 space-x-0 md:space-x-2 w-full py-0">
+        <div className="flex flex-wrap px-6 space-x-0 md:space-x-2 w-full py-4">
           {/* Active Users Stat */}
           <div className="flex items-center gap-5 p-5 bg-[#F2F3F5] rounded-lg flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
@@ -176,6 +179,8 @@ const EngagementActivitiesCard = () => {
           </div>
         </div>
       </div>
-    </Card>;
+    </Card>
+  );
 };
+
 export default EngagementActivitiesCard;

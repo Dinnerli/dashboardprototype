@@ -20,7 +20,7 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
   return (
     <div className="w-full flex-1 flex flex-col font-poppins">
       {/* Course bars with more vertical spacing */}
-      <div className="flex flex-col gap-4 mb-4 flex-1">
+      <div className="flex flex-col gap-4 mb-6 flex-1">
         {courseData.map((course, index) => (
           <CourseBar
             key={index}

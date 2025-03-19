@@ -27,9 +27,9 @@ type CourseTabContentProps = {
 
 const CourseTabContent = ({ stats, courseData }: CourseTabContentProps) => {
   return (
-    <div className="px-8 py-0 h-full flex flex-col">
+    <div className="px-8 py-4 h-full flex flex-col">
       {/* Stats Row */}
-      <div className="flex mb-2">
+      <div className="flex flex-col sm:flex-row gap-4 mb-4">
         <ActivityStat 
           title={stats.firstStat.title}
           value={stats.firstStat.value}
@@ -44,8 +44,8 @@ const CourseTabContent = ({ stats, courseData }: CourseTabContentProps) => {
         />
       </div>
 
-      {/* Chart - taking remaining space without border */}
-      <div className="flex-1 flex pt-0">
+      {/* Chart - taking remaining space */}
+      <div className="flex-1 flex pt-4">
         <CourseChart courseData={courseData} />
       </div>
     </div>
