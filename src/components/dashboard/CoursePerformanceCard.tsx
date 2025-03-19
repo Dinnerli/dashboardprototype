@@ -1,94 +1,12 @@
 
 import { Card } from "@/components/ui/card";
-import { ChevronDown, Info, ArrowUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { useState } from "react";
-
-type CourseBarProps = {
-  name: string;
-  completedPercentage: number;
-  inProgressPercentage: number;
-};
-
-const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBarProps) => {
-  return (
-    <div className="flex items-center gap-2 my-3 w-full">
-      <div className="flex min-w-[120px] justify-end items-center gap-1">
-        <div className="w-full text-right text-xs text-[#4F5A69] font-poppins">{name}</div>
-        <div className="w-[4px] h-[1px] bg-[#4F5A69]"></div>
-      </div>
-      <div className="flex h-[8px] justify-start items-center flex-1">
-        <div 
-          className="h-full bg-[#338FFF] rounded-l-sm" 
-          style={{ width: `${completedPercentage}%` }}
-        ></div>
-        <div 
-          className="h-full bg-[#CDE4FF] rounded-r-sm" 
-          style={{ width: `${inProgressPercentage}%` }}
-        ></div>
-        <div className="flex-1 h-full bg-transparent"></div>
-      </div>
-    </div>
-  );
-};
-
-const StatIndicator = ({ value, isPositive }: { value: string, isPositive: boolean }) => {
-  return (
-    <div className="flex items-center justify-end w-[66px]">
-      <span className="text-sm text-[#00D764] font-medium">
-        {value}
-      </span>
-      <ArrowUp className="w-4 h-4 text-[#00D764]" stroke="#00D764" strokeWidth={1.5} />
-    </div>
-  );
-};
-
-const ActivityStat = ({ 
-  title, 
-  value, 
-  percentage, 
-  isActive,
-  icon
-}: { 
-  title: string; 
-  value: string; 
-  percentage: string;
-  isActive: boolean;
-  icon?: React.ReactNode;
-}) => {
-  const borderColor = isActive ? "#338FFF" : "#CDE4FF";
-  
-  return (
-    <div className="flex items-center gap-5 p-5 flex-1">
-      <div className="flex p-2.5 flex-col justify-center items-center">
-        <div className="w-[2px] h-[35px]" style={{ backgroundColor: borderColor }}></div>
-      </div>
-      <div className="flex w-full items-center">
-        <div className="flex px-2.5 items-center gap-2.5 flex-1">
-          <span className="text-base text-[#8C9BAC] font-semibold">
-            {title}
-          </span>
-          <Info className="w-4 h-4 text-[#8C9BAC]" />
-        </div>
-        <div className="flex px-2.5 justify-end items-center gap-2.5 flex-1">
-          <span className="text-2xl font-bold text-[#4F5A69]">{value}</span>
-          <StatIndicator value={percentage} isPositive={true} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const courseData = [
-  { name: "UAT", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Legal", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Pricing 101", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Orientation", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Presentation Skills", completedPercentage: 50, inProgressPercentage: 30 },
-];
+import CourseTabContent from "./course-performance/CourseTabContent";
+import { useCourseData } from "./course-performance/useCourseData";
 
 const CoursePerformanceCard = () => {
-  const [activeTab, setActiveTab] = useState("top-performers");
+  const { activeTab, setActiveTab, courseData, tabContents } = useCourseData();
 
   return (
     <Card className="w-full mt-6 animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
@@ -134,117 +52,17 @@ const CoursePerformanceCard = () => {
           </TabsList>
           
           <TabsContent value="top-performers" className="mt-0">
-            <div className="px-8 py-0">
-              {/* Stats Row - Updated layout to match design */}
-              <div className="flex mb-4 border-b border-[#E5E7EB]">
-                <ActivityStat 
-                  title="Completed" 
-                  value="237" 
-                  percentage="40%" 
-                  isActive={false}
-                />
-                <ActivityStat 
-                  title="Passed" 
-                  value="237" 
-                  percentage="40%" 
-                  isActive={true}
-                />
-              </div>
-
-              {/* Chart - Updated layout and spacing */}
-              <div className="py-4 pb-8">
-                <div className="flex flex-col w-full">
-                  {/* Course bars */}
-                  <div className="flex flex-col justify-between items-start w-full">
-                    {courseData.map((course, index) => (
-                      <CourseBar 
-                        key={index}
-                        name={course.name}
-                        completedPercentage={course.completedPercentage}
-                        inProgressPercentage={course.inProgressPercentage}
-                      />
-                    ))}
-                  </div>
-                  
-                  {/* Separator line */}
-                  <div className="flex items-center gap-[5px] w-full mt-2">
-                    <div className="min-w-[120px]"></div>
-                    <div className="flex h-[1px] flex-1 bg-[#E5E7EB]"></div>
-                  </div>
-                  
-                  {/* X-axis labels */}
-                  <div className="flex ml-[120px] justify-between w-[calc(100%-120px)] mt-2 text-xs text-[#8C9BAC]">
-                    <div>0</div>
-                    <div>10</div>
-                    <div>20</div>
-                    <div>40</div>
-                    <div>50</div>
-                    <div>60</div>
-                    <div>70</div>
-                    <div>80</div>
-                    <div>90</div>
-                    <div>100 %</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CourseTabContent 
+              stats={tabContents["top-performers"].stats}
+              courseData={courseData}
+            />
           </TabsContent>
           
           <TabsContent value="underperformers" className="mt-0">
-            <div className="px-8 py-0">
-              {/* Stats Row for Underperformers - Updated layout to match design */}
-              <div className="flex mb-4 border-b border-[#E5E7EB]">
-                <ActivityStat 
-                  title="Incomplete" 
-                  value="124" 
-                  percentage="20%" 
-                  isActive={true}
-                />
-                <ActivityStat 
-                  title="Failed" 
-                  value="89" 
-                  percentage="15%" 
-                  isActive={false}
-                />
-              </div>
-
-              {/* Chart - Same structure but with updated spacing */}
-              <div className="py-4 pb-8">
-                <div className="flex flex-col w-full">
-                  {/* Course bars */}
-                  <div className="flex flex-col justify-between items-start w-full">
-                    {courseData.map((course, index) => (
-                      <CourseBar 
-                        key={index}
-                        name={course.name}
-                        completedPercentage={course.completedPercentage}
-                        inProgressPercentage={course.inProgressPercentage}
-                      />
-                    ))}
-                  </div>
-                  
-                  {/* Separator line */}
-                  <div className="flex items-center gap-[5px] w-full mt-2">
-                    <div className="min-w-[120px]"></div>
-                    <div className="flex h-[1px] flex-1 bg-[#E5E7EB]"></div>
-                  </div>
-                  
-                  {/* X-axis labels */}
-                  <div className="flex ml-[120px] justify-between w-[calc(100%-120px)] mt-2 text-xs text-[#8C9BAC]">
-                    <div>0</div>
-                    <div>10</div>
-                    <div>20</div>
-                    <div>40</div>
-                    <div>50</div>
-                    <div>60</div>
-                    <div>70</div>
-                    <div>80</div>
-                    <div>90</div>
-                    <div>100 %</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CourseTabContent 
+              stats={tabContents["underperformers"].stats}
+              courseData={courseData}
+            />
           </TabsContent>
         </Tabs>
       </div>
