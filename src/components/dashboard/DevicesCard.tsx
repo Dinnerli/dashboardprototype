@@ -1,11 +1,10 @@
-
 import { Card } from "@/components/ui/card";
 import { Info } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const DevicesCard = () => {
   return (
-    <Card className="w-full h-[555px] shadow-sm animate-slide-in-up" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-[455px] h-[555px] shadow-sm animate-slide-in-up" style={{ animationDelay: '0.4s' }}>
       <div className="flex flex-col h-full p-6 max-sm:p-4">
         {/* Header section */}
         <div className="flex justify-between items-center w-full py-5 px-2 border-b border-[#CDD1D7]">
