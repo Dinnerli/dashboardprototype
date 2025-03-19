@@ -78,9 +78,9 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
       },
       series: {
         animation: {
-          duration: 1500,
-          staggerLines: 5
-        },
+          duration: 1500
+          // Removed staggerLines property as it's not valid
+        }
       }
     },
     series: [
@@ -88,6 +88,7 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
         name: 'Completed',
         data: completed,
         color: '#338FFF',
+        type: 'bar', // Added explicit type
         animation: {
           duration: 1500
         }
@@ -96,9 +97,10 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
         name: 'In Progress',
         data: inProgress,
         color: '#CDE4FF',
+        type: 'bar', // Added explicit type
         animation: {
-          duration: 1500,
-          delay: 300
+          duration: 1500
+          // Removed delay property as it's not valid
         }
       }
     ],
