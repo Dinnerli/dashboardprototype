@@ -7,7 +7,7 @@ const LearningActivitiesCard = () => {
     <Card className="w-full animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
       <div className="w-full">
         {/* Header */}
-        <div className="flex justify-between items-center w-full p-4 border-b border-[#B3B3B3]">
+        <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
             <h3 className="h3 text-[#233143] font-poppins">Learning Activities</h3>
           </div>
@@ -34,7 +34,7 @@ const LearningActivitiesCard = () => {
         </div>
 
         {/* Content */}
-        <div className="flex flex-col lg:flex-row p-6 gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Chart */}
           <div className="flex-1 flex justify-center items-center animate-float">
             <svg width="400" height="400" viewBox="0 0 400 401" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
