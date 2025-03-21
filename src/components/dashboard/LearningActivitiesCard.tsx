@@ -34,7 +34,7 @@ const LearningActivitiesCard = () => {
         </div>
 
         {/* Content */}
-        <div className="flex flex-col lg:flex-row p-6 gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Chart */}
           <div className="flex-1 flex justify-center items-center animate-float">
             <svg width="400" height="400" viewBox="0 0 400 401" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
