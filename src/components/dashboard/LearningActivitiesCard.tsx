@@ -4,10 +4,10 @@ import { ChevronDown, Info } from "lucide-react";
 
 const LearningActivitiesCard = () => {
   return (
-    <Card className="w-full mt-6 animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
+    <Card className="w-full animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
       <div className="w-full">
         {/* Header */}
-        <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
+        <div className="flex justify-between items-center w-full p-4 border-b border-[#B3B3B3]">
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
             <h3 className="h3 text-[#233143] font-poppins">Learning Activities</h3>
           </div>
