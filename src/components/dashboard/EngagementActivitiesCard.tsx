@@ -4,13 +4,15 @@ import { Info, ChevronDown, ArrowUp, ArrowDown } from "lucide-react";
 
 const EngagementActivitiesCard = () => {
   return (
-    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{
+    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm overflow-hidden bg-white p-6" style={{
       animationDelay: '0.3s'
     }}>
       <div className="w-full h-full flex flex-col">
         {/* Header */}
+
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
           <CardTitle>Engagement Activities</CardTitle>
+
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-xs text-[#8C9BAC]">Filter by:</span>
@@ -30,8 +32,9 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="flex flex-wrap px-6 space-x-0 md:space-x-2 w-full py-4">
+        <div className="grid grid-cols-4 gap-4 py-6">
           {/* Active Users Stat */}
+
           <div className="flex items-center gap-5 p-5 bg-[#F5F6F8] rounded-lg flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
               <div className="w-[2px] h-[35px] bg-[#338FFF]"></div>
@@ -41,14 +44,13 @@ const EngagementActivitiesCard = () => {
                 <span className="text-base text-[#338FFF] font-semibold">
                   Active Users
                 </span>
+
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
-              <div className="flex px-2.5 justify-end items-center gap-2.5 flex-1">
+              <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">237</span>
-                <div className="flex items-center justify-end w-[66px]">
-                  <span className="text-sm text-[#00D764] font-medium">
-                    40%
-                  </span>
+                <div className="flex items-center gap-1">
+                  <span className="text-[#00D764]">40%</span>
                   <ArrowUp className="w-4 h-4 text-[#00D764]" />
                 </div>
               </div>
@@ -56,6 +58,7 @@ const EngagementActivitiesCard = () => {
           </div>
 
           {/* Posts Stat */}
+
           <div className="flex items-center gap-5 p-5 flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
               <div className="w-[2px] h-[35px] bg-[#F5F6F8]"></div>
@@ -67,12 +70,10 @@ const EngagementActivitiesCard = () => {
                 </span>
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
-              <div className="flex px-2.5 justify-end items-center gap-2.5 flex-1">
+              <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">8</span>
-                <div className="flex items-center justify-end w-[66px]">
-                  <span className="text-sm text-[#ED5158] font-medium">
-                    40%
-                  </span>
+                <div className="flex items-center gap-1">
+                  <span className="text-[#ED5158]">40%</span>
                   <ArrowDown className="w-4 h-4 text-[#ED5158]" />
                 </div>
               </div>
@@ -80,6 +81,7 @@ const EngagementActivitiesCard = () => {
           </div>
 
           {/* Comments Stat */}
+
           <div className="flex items-center gap-5 p-5 flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
               <div className="w-[2px] h-[35px] bg-[#F5F6F8]"></div>
@@ -89,14 +91,13 @@ const EngagementActivitiesCard = () => {
                 <span className="text-base text-[#8C9BAC] font-semibold">
                   Comments
                 </span>
+
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
-              <div className="flex px-2.5 justify-end items-center gap-2.5 flex-1">
+              <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">8</span>
-                <div className="flex items-center justify-end w-[66px]">
-                  <span className="text-sm text-[#ED5158] font-medium">
-                    40%
-                  </span>
+                <div className="flex items-center gap-1">
+                  <span className="text-[#ED5158]">40%</span>
                   <ArrowDown className="w-4 h-4 text-[#ED5158]" />
                 </div>
               </div>
@@ -104,6 +105,7 @@ const EngagementActivitiesCard = () => {
           </div>
 
           {/* Reactions Stat */}
+
           <div className="flex items-center gap-5 p-5 flex-1">
             <div className="flex p-2.5 flex-col justify-center items-center">
               <div className="w-[2px] h-[35px] bg-[#F5F6F8]"></div>
@@ -115,12 +117,10 @@ const EngagementActivitiesCard = () => {
                 </span>
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
-              <div className="flex px-2.5 justify-end items-center gap-2.5 flex-1">
+              <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">8</span>
-                <div className="flex items-center justify-end w-[66px]">
-                  <span className="text-sm text-[#ED5158] font-medium">
-                    40%
-                  </span>
+                <div className="flex items-center gap-1">
+                  <span className="text-[#ED5158]">40%</span>
                   <ArrowDown className="w-4 h-4 text-[#ED5158]" />
                 </div>
               </div>
@@ -129,30 +129,31 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Chart Section */}
-        <div className="flex-1 px-6 pb-4 relative py-[3px]">
+        <div className="flex-1 relative overflow-hidden pt-2 px-2">
           {/* Y-axis labels */}
-          <div className="absolute left-6 top-0 h-full flex flex-col justify-between text-xs text-[#CDD1D7]">
-            <div>500</div>
-            <div>400</div>
-            <div>300</div>
-            <div>200</div>
-            <div>100</div>
-            <div>0</div>
+          <div className="absolute left-0 top-4 h-[calc(100%-100px)] flex flex-col justify-between text-xs text-[#8C9BAC]">
+            <div className="h-5 flex items-center">500</div>
+            <div className="h-5 flex items-center">400</div>
+            <div className="h-5 flex items-center">300</div>
+            <div className="h-5 flex items-center">200</div>
+            <div className="h-5 flex items-center">100</div>
+            <div className="h-5 flex items-center">0</div>
           </div>
           
           {/* Chart grid lines */}
-          <div className="ml-10 h-full relative">
+          <div className="ml-8 h-[calc(100%-100px)] relative mt-4 mr-4">
             <div className="absolute w-full h-full flex flex-col justify-between">
-              <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
-              <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
-              <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
-              <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
-              <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
-              <div className="w-full h-[0.5px] bg-[#CDD1D7]"></div>
+              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
+              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
+              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
+              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
+              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
+              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
             </div>
             
             {/* Chart SVG */}
             <div className="absolute inset-0">
+
               <svg width="100%" height="100%" viewBox="0 0 828 275" preserveAspectRatio="none">
                 <g>
                   {/* Background lines */}
@@ -168,7 +169,7 @@ const EngagementActivitiesCard = () => {
           </div>
           
           {/* X-axis labels */}
-          <div className="mt-2 ml-10 flex justify-between text-xs text-[#CDD1D7]">
+          <div className="absolute bottom-6 left-8 right-4 flex justify-between text-xs text-[#8C9BAC]">
             <div>Jan</div>
             <div>Feb</div>
             <div>Mar</div>
