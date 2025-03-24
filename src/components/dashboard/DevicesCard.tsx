@@ -8,7 +8,9 @@ const DevicesCard = () => {
         {/* Header section */}
         <div className="flex justify-between items-center w-full p-4 border-b border-[#E5E7EA]">
           <div className="flex items-center">
+
             <CardTitle>Devices</CardTitle>
+
           </div>
           
           <div className="flex items-center gap-2">
