@@ -6,11 +6,15 @@ interface NavItemProps {
   label: string;
   active?: boolean;
   dropdown?: boolean;
+  onClick?: () => void;
 }
 
-const NavItem = ({ icon, label, active = false, dropdown = false }: NavItemProps) => {
+const NavItem = ({ icon, label, active = false, dropdown = false, onClick }: NavItemProps) => {
   return (
-    <div className={`nav-item group w-24 ${active ? 'nav-item-active' : 'nav-item-inactive'}`}>
+    <div 
+      className={`nav-item group w-24 ${active ? 'nav-item-active' : 'nav-item-inactive'} cursor-pointer transition-all hover:opacity-90 active:scale-95`}
+      onClick={onClick}
+    >
       <div className="flex justify-center items-center h-6">
         {icon}
       </div>
