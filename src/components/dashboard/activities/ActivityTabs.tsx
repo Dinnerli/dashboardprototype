@@ -10,7 +10,7 @@ type ActivityTabProps = {
 const ActivityTab = ({ title, isActive, onClick }: ActivityTabProps) => {
   return (
     <div 
-      className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 cursor-pointer hover:bg-gray-50 transition-colors"
+      className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 cursor-pointer"
       onClick={onClick}
     >
       <div className={`h-1 w-full ${isActive ? 'bg-[#338FFF]' : 'bg-transparent'}`}></div>
