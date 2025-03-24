@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import ActivityTabs, { TabType } from "./activities/ActivityTabs";
 import ActivityStat from "./activities/ActivityStat";
 import ActivityChart from "./activities/ActivityChart";
@@ -36,12 +35,12 @@ const ActivitiesCard = () => {
   const currentData = tabData[activeTab];
 
   return (
-    <Card className="w-full mt-6 animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+    <Card className="w-full animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
       <div className="w-full">
         {/* Header */}
         <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
-            <h3 className="h3 text-[#233143] font-poppins">Activity Overview</h3>
+            <CardTitle>Activity Overview</CardTitle>
           </div>
           <ActivityFilters />
         </div>

@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import { InfoIcon } from 'lucide-react';
 
@@ -18,77 +17,47 @@ const StatsCard = ({
   valueSuffix = '' 
 }: StatsCardProps) => {
   const isPositive = percentChange >= 0;
-  const formattedChange = `${Math.abs(percentChange).toFixed(1)}%`;
+  const formattedChange = `${Math.abs(percentChange)}%`;
   
   return (
-    <div className="flex flex-col py-2 px-5 h-[95px] rounded-lg bg-white shadow-sm min-w-[200px]">
-      <div className="flex items-start gap-5 w-full">
-        <div className="text-black font-poppins text-[14px] font-medium leading-6">
-          {title}
+    <div className="flex h-[95px] px-5 py-2.5 flex-col justify-center items-start flex-[1_0_0] rounded-[10px] bg-white">
+      <div className="flex flex-col justify-center items-start gap-2.5 w-full">
+        {/* Title row */}
+        <div className="flex items-center gap-2.5 w-full">
+          <div className="text-[#8C9BAC] font-poppins text-base font-semibold">
+            {title}
+          </div>
+          <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex w-4 h-4 justify-center items-center">
+            <path d="M8 1.83334C11.6667 1.83334 14.6667 4.83334 14.6667 8.5C14.6667 12.1667 11.6667 15.1667 8 15.1667C4.33333 15.1667 1.33333 12.1667 1.33333 8.5C1.33333 4.83334 4.33333 1.83334 8 1.83334Z" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M8 11.1667V7.83334" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M7.99634 5.83333H8.00233" stroke="#8C9BAC" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
-        <InfoIcon className="w-4 h-4 text-[#B3B3B3]" />
-      </div>
-      
-      <div className="flex justify-between items-center w-full mt-auto">
-        <div className="text-[#616161] font-poppins font-bold">
-          {isValueSuffixed ? (
-            <>
-              <span className="text-xl">{value}</span>
-              {valueSuffix && <span className="text-base ml-0.5">{valueSuffix}</span>}
-            </>
-          ) : (
-            <span className="text-xl">{value}</span>
-          )}
-        </div>
-        
-        <div className="flex items-center gap-1">
-          <div 
-            className={`text-right font-poppins text-sm font-bold ${
-              isPositive ? 'text-[#019230]' : 'text-[#F10045]'
-            }`}
-          >
-            {formattedChange}
+
+        {/* Value row */}
+        <div className="flex justify-between items-center w-full">
+          <div className="flex flex-col justify-center items-start">
+            <div className="text-[#4F5A69] font-poppins text-2xl font-bold">
+              {isValueSuffixed ? (
+                <>
+                  {value}
+                  {valueSuffix && <span className="ml-0.5">{valueSuffix}</span>}
+                </>
+              ) : (
+                value
+              )}
+            </div>
           </div>
           
-          {isPositive ? (
-            <svg width="16" height="16" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path 
-                d="M12.7135 7.14652L8.66678 3.09985L4.62012 7.14652" 
-                stroke="#019230" 
-                strokeWidth="1.5" 
-                strokeMiterlimit="10" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
-              <path 
-                d="M8.66675 14.4334V3.21338" 
-                stroke="#019230" 
-                strokeWidth="1.5" 
-                strokeMiterlimit="10" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
+          <div className="flex w-[66px] justify-end items-center">
+            <div className="text-[#00D764] text-right font-poppins text-sm font-medium">
+              {formattedChange}
+            </div>
+            <svg width="16" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex w-4 h-4 justify-center items-center flex-shrink-0">
+              <path d="M12.7133 6.87999L8.66666 2.83333L4.62 6.87999" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8.66666 14.1667V2.94667" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          ) : (
-            <svg width="16" height="16" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path 
-                d="M12.7135 10.3867L8.66678 14.4333L4.62012 10.3867" 
-                stroke="#F10045" 
-                strokeWidth="1.5" 
-                strokeMiterlimit="10" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
-              <path 
-                d="M8.66675 3.09982V14.3198" 
-                stroke="#F10045" 
-                strokeWidth="1.5" 
-                strokeMiterlimit="10" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
-            </svg>
-          )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import Highcharts from 'highcharts';
 import { TabType } from "./ActivityTabs";
 import { chartData } from './chartData';
@@ -154,7 +153,7 @@ export const createInitialSeries = (): Highcharts.SeriesOptionsType[] => [
   {
     name: 'New Users',
     data: chartData['user'].new,
-    color: '#F2F3F5',
+    color: '#F5F6F8',
     type: 'areaspline',
     visible: false
   }

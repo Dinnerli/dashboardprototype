@@ -1,5 +1,4 @@
-
-import { Card } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
 const RewardsCard = () => {
@@ -10,7 +9,7 @@ const RewardsCard = () => {
       <div className="flex flex-col h-full">
         <div className="flex px-4 py-4 justify-between items-center border-b border-[#CDD1D7]">
           <div className="flex items-center">
-            <span className="font-bold text-lg text-[#233143]">Rewards</span>
+            <CardTitle>Rewards</CardTitle>
           </div>
           
           <div className="flex items-center gap-2">
@@ -29,7 +28,7 @@ const RewardsCard = () => {
         </div>
 
         {/* Tabs section */}
-        <div className="flex px-4 items-center w-full bg-white border-b border-[#F2F3F5]">
+        <div className="flex px-4 items-center w-full bg-white border-b border-[#F5F6F8]">
           <div className="flex py-2 px-2 flex-col justify-center items-center border-b-2 border-[#338FFF]">
             <span className="text-[#338FFF] font-semibold text-xs">Certificates</span>
           </div>
@@ -41,7 +40,7 @@ const RewardsCard = () => {
         {/* Certificate list */}
         <div className="flex flex-col w-full overflow-y-auto h-[calc(100%-88px)]">
           {[1, 2, 3, 4, 5].map((num, index) => (
-            <div key={num} className="flex py-2 px-4 justify-between items-center border-b border-[#F2F3F5]">
+            <div key={num} className="flex py-2 px-4 justify-between items-center border-b border-[#F5F6F8]">
               <div className="flex h-9 justify-center items-center pr-2">
                 <span className="w-2 text-[#4F5A69] text-center text-xs">{num}</span>
               </div>

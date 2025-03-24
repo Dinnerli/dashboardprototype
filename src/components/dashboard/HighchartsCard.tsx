@@ -71,7 +71,7 @@ const HighchartsCard = ({
                   </div>
                 </div>
                 
-                <div className="w-px h-8 bg-[#F2F3F5]"></div>
+                <div className="w-px h-8 bg-[#F5F6F8]"></div>
                 
                 <div className="flex items-center">
                   <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
