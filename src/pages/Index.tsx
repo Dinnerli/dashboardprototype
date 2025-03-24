@@ -28,7 +28,7 @@ const Index = () => {
     { id: 2, component: <AdminActivityCard /> },
     { id: 3, component: <LeaderboardCard /> },
     { id: 4, component: <RewardsCard /> },
-    { id: 5, component: <HighchartsCard /> }
+    //{ id: 5, component: <HighchartsCard /> }
   ];
 
   return (
