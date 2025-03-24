@@ -1,5 +1,4 @@
-
-import { Card } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Award } from "lucide-react";
 
 const LeaderboardCard = () => {
@@ -45,7 +44,9 @@ const LeaderboardCard = () => {
     <Card className="w-full h-full animate-slide-in-up shadow-sm overflow-hidden flex flex-col" style={{ animationDelay: '0.4s' }}>
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-[#E5E7EA]">
-        <h3 className="font-bold text-lg text-[#233143]">Leaderboard</h3>
+        <div className="flex items-center">
+          <CardTitle>Leaderboard</CardTitle>
+        </div>
         <div className="flex items-center gap-2">
           {/* User icon */}
           <div className="flex items-center">
@@ -72,7 +73,7 @@ const LeaderboardCard = () => {
       {/* Leaders list - using flex-1 to take remaining space */}
       <div className="flex-1 overflow-y-auto">
         {leaders.map((leader, index) => (
-          <div key={leader.id} className="flex py-3 px-4 items-center border-b border-[#F2F3F5]">
+          <div key={leader.id} className="flex py-3 px-4 items-center border-b border-[#F5F6F8]">
             {/* Avatar */}
             <div className="w-8 h-8 rounded-full bg-gray-200 mr-3 overflow-hidden">
               <img 

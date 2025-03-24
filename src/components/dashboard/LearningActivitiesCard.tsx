@@ -35,7 +35,62 @@ const LearningActivitiesCard = () => {
           {/* Chart */}
           <div className="flex justify-center items-center animate-float">
             <svg width="400" height="400" viewBox="0 0 400 401" className="max-w-full h-auto">
-              <path d="M199.882 13.2917C236.927 13.2917 273.141 24.2659 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802" stroke="#CDE4FF" strokeWidth="20" strokeLinecap="round" />
+              <style type="text/css">
+                {`
+                  @keyframes progress {
+                    0% {
+                      stroke-dasharray: 0 1000;
+                    }
+                  }
+                  .progress-ring {
+                    transform-origin: center;
+                    transform: rotate(-90deg);
+                    animation: progress 1.5s ease-out forwards;
+                  }
+                `}
+              </style>
+              
+              {/* Library Ring (Outermost) */}
+              <path 
+                d="M199.882 13.2917C236.927 13.2917 273.141 24.2659 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802" 
+                stroke="#CDE4FF" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                className="progress-ring"
+                style={{ animationDelay: '0s' }}
+              />
+              
+              {/* Exams Ring */}
+              <path 
+                d="M199.882 43.2917C226.927 43.2917 253.141 54.2659 273.943 74.8266C294.745 95.3872 308.752 124.6109 312.928 158.802" 
+                stroke="#CDE4FF" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                className="progress-ring"
+                style={{ animationDelay: '0.2s' }}
+              />
+              
+              {/* ILT/VILT Ring */}
+              <path 
+                d="M199.882 73.2917C216.927 73.2917 233.141 84.2659 243.943 104.8266C254.745 125.3872 258.752 154.6109 252.928 188.802" 
+                stroke="#CDE4FF" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                className="progress-ring"
+                style={{ animationDelay: '0.4s' }}
+              />
+              
+              {/* Courses Ring (Active - Innermost) */}
+              <path 
+                d="M199.882 103.2917C206.927 103.2917 213.141 114.2659 213.943 134.8266C214.745 155.3872 208.752 184.6109 192.928 218.802" 
+                stroke="#338FFF" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                className="progress-ring"
+                style={{ animationDelay: '0.6s' }}
+              />
+
+              {/* Text Labels */}
               <text x="125" y="18" fill="#8C9BAC" fontSize="16" fontWeight="600">Library</text>
               <text x="127" y="51" fill="#8C9BAC" fontSize="16" fontWeight="600">Exams</text>
               <text x="119" y="83" fill="#8C9BAC" fontSize="16" fontWeight="600">ILT/VILT</text>

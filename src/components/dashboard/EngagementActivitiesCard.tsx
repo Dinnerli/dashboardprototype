@@ -1,6 +1,5 @@
-
 import React from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Info, ChevronDown, ArrowUp, ArrowDown } from "lucide-react";
 
 const EngagementActivitiesCard = () => {
@@ -11,7 +10,7 @@ const EngagementActivitiesCard = () => {
       <div className="w-full h-full flex flex-col">
         {/* Header */}
         <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
-          <h3 className="text-lg font-semibold text-[#233143] font-poppins">Engagement Activities</h3>
+          <CardTitle>Engagement Activities</CardTitle>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-xs text-[#8C9BAC]">Filter by:</span>
@@ -33,7 +32,7 @@ const EngagementActivitiesCard = () => {
         {/* Stats Section */}
         <div className="flex flex-wrap px-6 space-x-0 md:space-x-2 w-full py-4">
           {/* Active Users Stat */}
-          <div className="flex items-center gap-5 p-5 bg-[#F2F3F5] rounded-lg flex-1 mb-2 md:mb-0">
+          <div className="flex items-center gap-5 p-5 bg-[#F5F6F8] rounded-lg flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
               <div className="w-[2px] h-[35px] bg-[#338FFF]"></div>
             </div>
@@ -59,7 +58,7 @@ const EngagementActivitiesCard = () => {
           {/* Posts Stat */}
           <div className="flex items-center gap-5 p-5 flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
-              <div className="w-[2px] h-[35px] bg-[#F2F3F5]"></div>
+              <div className="w-[2px] h-[35px] bg-[#F5F6F8]"></div>
             </div>
             <div className="flex w-full items-center">
               <div className="flex px-2.5 items-center gap-2.5 flex-1">
@@ -83,7 +82,7 @@ const EngagementActivitiesCard = () => {
           {/* Comments Stat */}
           <div className="flex items-center gap-5 p-5 flex-1 mb-2 md:mb-0">
             <div className="flex p-2.5 flex-col justify-center items-center">
-              <div className="w-[2px] h-[35px] bg-[#F2F3F5]"></div>
+              <div className="w-[2px] h-[35px] bg-[#F5F6F8]"></div>
             </div>
             <div className="flex w-full items-center">
               <div className="flex px-2.5 items-center gap-2.5 flex-1">
@@ -107,7 +106,7 @@ const EngagementActivitiesCard = () => {
           {/* Reactions Stat */}
           <div className="flex items-center gap-5 p-5 flex-1">
             <div className="flex p-2.5 flex-col justify-center items-center">
-              <div className="w-[2px] h-[35px] bg-[#F2F3F5]"></div>
+              <div className="w-[2px] h-[35px] bg-[#F5F6F8]"></div>
             </div>
             <div className="flex w-full items-center">
               <div className="flex px-2.5 items-center gap-2.5 flex-1">
@@ -157,9 +156,9 @@ const EngagementActivitiesCard = () => {
               <svg width="100%" height="100%" viewBox="0 0 828 275" preserveAspectRatio="none">
                 <g>
                   {/* Background lines */}
-                  <path d="M0 107.688L138 133.002L276 184.052L414 51.9798L552 237.559L828 81.2738" stroke="#F2F3F5" strokeWidth="2" fill="none" />
-                  <path d="M0 163.312L138 137.998L276 86.9479L414 219.02L552 33.4407L828 189.726" stroke="#F2F3F5" strokeWidth="2" fill="none" />
-                  <path d="M0 157.989L138 133.67L276 108.293L414 235.177L552 33.2198L828 183.366" stroke="#F2F3F5" strokeWidth="2" fill="none" />
+                  <path d="M0 107.688L138 133.002L276 184.052L414 51.9798L552 237.559L828 81.2738" stroke="#F5F6F8" strokeWidth="2" fill="none" />
+                  <path d="M0 163.312L138 137.998L276 86.9479L414 219.02L552 33.4407L828 189.726" stroke="#F5F6F8" strokeWidth="2" fill="none" />
+                  <path d="M0 157.989L138 133.67L276 108.293L414 235.177L552 33.2198L828 183.366" stroke="#F5F6F8" strokeWidth="2" fill="none" />
                   
                   {/* Main blue line */}
                   <path d="M0 113.011L138 229L276 162.707L414 35.8236L552 237.78L828 87.6346" stroke="#338FFF" strokeWidth="2" fill="none" />
