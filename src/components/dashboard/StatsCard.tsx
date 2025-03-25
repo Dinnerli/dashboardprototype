@@ -1,4 +1,3 @@
-
 import { ReactNode } from 'react';
 import { InfoIcon } from 'lucide-react';
 
@@ -29,8 +28,8 @@ const StatsCard = ({
       className={`flex h-[95px] px-5 py-2.5 flex-col justify-center items-start flex-[1_0_0] rounded-[10px] bg-white cursor-pointer 
         transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]
         ${isSelected 
-          ? 'shadow-md' 
-          : 'hover:shadow-sm'
+          ? 'border-2 border-[#338FFF] shadow-md shadow-[#338FFF]/20' 
+          : 'hover:border hover:border-[#338FFF]/50 hover:shadow-sm'
         }`}
       onClick={onClick}
     >

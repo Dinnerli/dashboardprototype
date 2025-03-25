@@ -1,4 +1,3 @@
-
 import { Info } from "lucide-react";
 import StatIndicator from "./StatIndicator";
 
@@ -22,7 +21,7 @@ const ActivityStat = ({
   return (
     <div 
       className={`flex items-center gap-2.5 p-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
-        isActive ? 'bg-[#F5F6F8] shadow-md' : ''
+        isActive ? 'bg-[#F5F6F8] shadow-md border border-[#338FFF]' : ''
       }`}
       onClick={onClick}
     >
