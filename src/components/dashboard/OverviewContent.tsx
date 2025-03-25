@@ -1,9 +1,8 @@
-
 import StatsCard from './StatsCard';
 
 const OverviewContent = () => {
   return (
-    <div className="flex overflow-x-auto pb-4 space-x-5 animate-slide-in-up hide-scrollbar" style={{ animationDelay: '0.1s' }}>
+    <div className="flex overflow-x-auto pb-4 justify-between gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8]" style={{ animationDelay: '0.1s' }}>
       <StatsCard
         title="Total training hours"
         value="17"

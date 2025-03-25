@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Info, ChevronDown, ArrowUp, ArrowDown } from "lucide-react";
 
 const EngagementActivitiesCard = () => {
@@ -32,11 +32,13 @@ const EngagementActivitiesCard = () => {
         {/* Stats Section */}
         <div className="grid grid-cols-4 gap-4 py-6">
           {/* Active Users Stat */}
+
           <div className="bg-[#F8F9FA] rounded-lg p-4 relative">
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#338FFF] rounded-r"></div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1 mb-2">
                 <span className="text-[#338FFF] font-medium">Active Users</span>
+
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
               <div className="flex items-center justify-between">
@@ -50,10 +52,12 @@ const EngagementActivitiesCard = () => {
           </div>
 
           {/* Posts Stat */}
+
           <div className="bg-white rounded-lg p-4 relative">
             <div className="flex flex-col">
               <div className="flex items-center gap-1 mb-2">
                 <span className="text-[#8C9BAC] font-medium">Posts</span>
+
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
               <div className="flex items-center justify-between">
@@ -67,10 +71,13 @@ const EngagementActivitiesCard = () => {
           </div>
 
           {/* Comments Stat */}
+
+
           <div className="bg-white rounded-lg p-4 relative">
             <div className="flex flex-col">
               <div className="flex items-center gap-1 mb-2">
                 <span className="text-[#8C9BAC] font-medium">Comments</span>
+
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
               <div className="flex items-center justify-between">
@@ -84,10 +91,12 @@ const EngagementActivitiesCard = () => {
           </div>
 
           {/* Reactions Stat */}
+
           <div className="bg-white rounded-lg p-4 relative">
             <div className="flex flex-col">
               <div className="flex items-center gap-1 mb-2">
                 <span className="text-[#8C9BAC] font-medium">Reactions</span>
+
                 <Info className="w-4 h-4 text-[#8C9BAC]" />
               </div>
               <div className="flex items-center justify-between">
@@ -126,6 +135,7 @@ const EngagementActivitiesCard = () => {
             
             {/* Chart SVG */}
             <div className="absolute inset-0">
+
               <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 800 300">
                 {/* Background lines - light gray */}
                 <path d="M0 150L160 180L320 120L480 200L640 80L800 180" stroke="#F2F3F5" strokeWidth="2" fill="none" />

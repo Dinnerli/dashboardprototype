@@ -1,16 +1,17 @@
-
-import { Card } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
 
 const AdminActivityCard = () => {
   const months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
   
   return (
-    <Card className="w-full h-[450px] animate-slide-in-up shadow-sm overflow-hidden" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-full h-[450px] shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
       <div className="flex flex-col h-full">
-        {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b border-[#E5E7EA]">
-          <h3 className="font-bold text-lg text-[#233143]">Admin Activity</h3>
+        {/* Header section */}
+        <div className="flex justify-between items-center w-full p-4 border-b border-[#E5E7EA]">
+          <div className="flex items-center">
+            <CardTitle>Admin Activity</CardTitle>
+          </div>
           <div className="flex items-center gap-2">
             {/* Filter icon */}
             <div className="flex items-center">
@@ -56,7 +57,7 @@ const AdminActivityCard = () => {
           {/* User Creation */}
           <div className="flex items-start">
             <div className="flex p-[8px_5px_5px_5px] flex-col justify-center items-center">
-              <div className="w-[10px] h-[10px] rounded-full bg-[#F2F3F5]"></div>
+              <div className="w-[10px] h-[10px] rounded-full bg-[#F5F6F8]"></div>
             </div>
             <div className="flex flex-col justify-center items-start">
               <div className="flex px-[0px_5px] items-center gap-1">

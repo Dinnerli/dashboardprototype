@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
@@ -41,7 +40,7 @@ const MarketingCertificationsCard = () => {
       {/* Certificate list */}
       <div className="flex flex-col w-full h-[400px] overflow-y-auto">
         {/* Certificate 1 */}
-        <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
+        <div className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
           <div className="flex h-[55px] p-2.5 justify-center items-center">
             <span className="w-[13px] text-[#4F5A69] text-center text-xs">1</span>
           </div>
@@ -61,7 +60,7 @@ const MarketingCertificationsCard = () => {
         </div>
 
         {/* Certificate 2 */}
-        <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
+        <div className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
           <div className="flex h-[55px] p-2.5 justify-center items-center">
             <span className="w-[13px] text-[#4F5A69] text-center text-xs">2</span>
           </div>
@@ -81,7 +80,7 @@ const MarketingCertificationsCard = () => {
         </div>
 
         {/* Certificate 3 */}
-        <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
+        <div className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
           <div className="flex h-[55px] p-2.5 justify-center items-center">
             <span className="w-[13px] text-[#4F5A69] text-center text-xs">3</span>
           </div>
@@ -101,7 +100,7 @@ const MarketingCertificationsCard = () => {
         </div>
 
         {/* Certificate 4 */}
-        <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
+        <div className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
           <div className="flex h-[55px] p-2.5 justify-center items-center">
             <span className="w-[13px] text-[#4F5A69] text-center text-xs">4</span>
           </div>
@@ -121,7 +120,7 @@ const MarketingCertificationsCard = () => {
         </div>
 
         {/* Certificate 5 */}
-        <div className="flex p-2.5 justify-between items-center border-b border-[#F2F3F5]">
+        <div className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
           <div className="flex h-[55px] p-2.5 justify-center items-center">
             <span className="w-[13px] text-[#4F5A69] text-center text-xs">5</span>
           </div>

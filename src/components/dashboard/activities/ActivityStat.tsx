@@ -1,4 +1,3 @@
-
 import { Info } from "lucide-react";
 import StatIndicator from "./StatIndicator";
 
@@ -18,7 +17,7 @@ const ActivityStat = ({
   isPositive 
 }: ActivityStatProps) => {
   return (
-    <div className={`flex items-center gap-2.5 p-2.5 rounded-lg ${isActive ? 'bg-[#F2F3F5]' : ''}`}>
+    <div className={`flex items-center gap-2.5 p-2.5 rounded-lg ${isActive ? 'bg-[#F5F6F8]' : ''}`}>
       <div className="flex flex-col items-center justify-center p-2.5">
         <div 
           className={`w-0.5 h-[35px] ${isActive ? 'bg-[#338FFF]' : 'bg-[#CDD1D7]'}`}
