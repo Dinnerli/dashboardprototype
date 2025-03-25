@@ -40,7 +40,7 @@ const ActivitiesCard = () => {
         {/* Header */}
         <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
-            <CardTitle>Activity Overview</CardTitle>
+            <CardTitle>Activity Overview </CardTitle>
           </div>
           <ActivityFilters />
         </div>

@@ -13,10 +13,11 @@ const RewardsCard = () => {
           </div>
           
           <div className="flex items-center gap-2">
-            {/* Filter icon */}
+            {/* Updated Filter icon */}
             <div className="flex items-center">
-              <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.04993 7.57495H13.9499C14.7749 7.57495 15.4499 8.24995 15.4499 9.07495V10.725C15.4499 11.325 15.0749 12.075 14.6999 12.45L11.4749 15.3C11.0249 15.675 10.7249 16.425 10.7249 17.025V20.25C10.7249 20.7 10.4249 21.3 10.0499 21.525L8.99993 22.2C8.02493 22.8 6.67493 22.125 6.67493 20.925V16.95C6.67493 16.425 6.37493 15.75 6.07493 15.375L3.22493 12.375C2.84993 12 2.54993 11.325 2.54993 10.875V9.14995C2.54993 8.24995 3.22493 7.57495 4.04993 7.57495Z" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.04993 1.57495H13.9499C14.7749 1.57495 15.4499 2.24995 15.4499 3.07495V4.72495C15.4499 5.32495 15.0749 6.07495 14.6999 6.44995L11.4749 9.29995C11.0249 9.67495 10.7249 10.425 10.7249 11.025V14.25C10.7249 14.7 10.4249 15.3 10.0499 15.525L8.99993 16.2C8.02493 16.8 6.67493 16.125 6.67493 14.925V10.95C6.67493 10.425 6.37493 9.74995 6.07493 9.37495L3.22493 6.37495C2.84993 5.99995 2.54993 5.32495 2.54993 4.87495V3.14995C2.54993 2.24995 3.22493 1.57495 4.04993 1.57495Z" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M8.1975 1.57495L4.5 7.49995" stroke="#8C9BAC" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             

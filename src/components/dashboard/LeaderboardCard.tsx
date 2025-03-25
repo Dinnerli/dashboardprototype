@@ -45,7 +45,7 @@ const LeaderboardCard = () => {
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-[#E5E7EA]">
         <div className="flex items-center">
-          <CardTitle>Leaderboard</CardTitle>
+          <CardTitle>Leaderboard </CardTitle>
         </div>
         <div className="flex items-center gap-2">
           {/* User icon */}

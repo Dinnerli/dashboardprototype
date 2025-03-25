@@ -9,7 +9,7 @@ const LearningActivitiesCard = () => {
         {/* Header */}
         <div className="flex justify-between items-center w-full p-5 border-b border-gray-300">
           <div className="flex items-center gap-2.5 px-2.5 flex-1">
-            <h3 className="text-[#233143] font-poppins text-lg font-semibold">Learning Activities</h3>
+            <h3 className="text-[#233143] font-poppins text-lg font-semibold">Learning Activities </h3>
           </div>
           <div className="flex gap-2.5 items-center">
             <div className="flex items-center gap-2.5">
