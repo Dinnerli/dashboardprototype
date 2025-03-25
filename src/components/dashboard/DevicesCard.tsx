@@ -1,19 +1,20 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
+import { useState } from "react";
 
 const DevicesCard = () => {
+  const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile' | null>(null);
+
   return (
     <Card className="w-full h-[450px] shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
       <div className="flex flex-col h-full">
         {/* Header section */}
         <div className="flex justify-between items-center w-full p-4 border-b border-[#E5E7EA]">
           <div className="flex items-center">
-
             <CardTitle>Devices</CardTitle>
-
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4 ml-8">
             {/* Filter icon */}
             <div className="flex items-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,15 +32,24 @@ const DevicesCard = () => {
         {/* Device options section - reduced padding */}
         <div className="flex gap-2 px-4 py-3">
           {/* Desktop Option */}
-          <div className="bg-[#F8F9FA] rounded-lg p-3 flex-1">
+          <div 
+            className={`bg-[#F8F9FA] rounded-lg p-3 flex-1 cursor-pointer transition-all duration-200 hover:shadow-md ${
+              selectedDevice === 'desktop' ? 'shadow-md border border-[#338FFF]' : ''
+            }`}
+            onClick={() => setSelectedDevice('desktop')}
+          >
             <div className="flex items-start gap-2">
-              {/* Blue vertical indicator */}
-              <div className="w-1 h-10 bg-[#338FFF] rounded-full self-center"></div>
+              {/* Blue vertical indicator - only show when selected */}
+              <div className={`w-1 h-10 rounded-full self-center transition-colors duration-200 ${
+                selectedDevice === 'desktop' ? 'bg-[#338FFF]' : 'bg-transparent'
+              }`}></div>
               
               <div className="flex-1">
                 {/* Title row */}
                 <div className="flex items-center gap-1">
-                  <span className="font-semibold text-sm text-[#338FFF]">Desktop</span>
+                  <span className={`font-semibold text-sm transition-colors duration-200 ${
+                    selectedDevice === 'desktop' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
+                  }`}>Desktop</span>
                   <Info size={12} className="text-[#8C9BAC]" />
                 </div>
                 
@@ -59,15 +69,24 @@ const DevicesCard = () => {
           </div>
           
           {/* Mobile Option */}
-          <div className="bg-[#F8F9FA] rounded-lg p-3 flex-1">
+          <div 
+            className={`bg-[#F8F9FA] rounded-lg p-3 flex-1 cursor-pointer transition-all duration-200 hover:shadow-md ${
+              selectedDevice === 'mobile' ? 'shadow-md border border-[#338FFF]' : ''
+            }`}
+            onClick={() => setSelectedDevice('mobile')}
+          >
             <div className="flex items-start gap-2">
-              {/* No indicator for inactive */}
-              <div className="w-1 h-10 bg-transparent rounded-full self-center"></div>
+              {/* Blue vertical indicator - only show when selected */}
+              <div className={`w-1 h-10 rounded-full self-center transition-colors duration-200 ${
+                selectedDevice === 'mobile' ? 'bg-[#338FFF]' : 'bg-transparent'
+              }`}></div>
               
               <div className="flex-1">
                 {/* Title row */}
                 <div className="flex items-center gap-1">
-                  <span className="font-semibold text-sm text-[#8C9BAC]">Mobile</span>
+                  <span className={`font-semibold text-sm transition-colors duration-200 ${
+                    selectedDevice === 'mobile' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
+                  }`}>Mobile</span>
                   <Info size={12} className="text-[#8C9BAC]" />
                 </div>
                 

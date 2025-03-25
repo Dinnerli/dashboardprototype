@@ -1,7 +1,10 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { Award } from "lucide-react";
+import { useState } from "react";
 
 const LeaderboardCard = () => {
+  const [selectedUser, setSelectedUser] = useState<number | null>(null);
+  
   const leaders = [
     { 
       id: 1, 
@@ -64,16 +67,22 @@ const LeaderboardCard = () => {
           </div>
           
           {/* View Report link */}
-          <div className="flex items-center border-b border-[#8C9BAC]">
-            <span className="text-xs text-[#8C9BAC]">View Report</span>
-          </div>
+          <a href="/reports/leaderboard" className="text-xs text-[#8C9BAC] border-b border-[#8C9BAC] hover:text-[#338FFF] hover:border-[#338FFF] transition-all duration-200 cursor-pointer">
+            View Report
+          </a>
         </div>
       </div>
       
       {/* Leaders list - using flex-1 to take remaining space */}
       <div className="flex-1 overflow-y-auto">
         {leaders.map((leader, index) => (
-          <div key={leader.id} className="flex py-3 px-4 items-center border-b border-[#F5F6F8]">
+          <div 
+            key={leader.id} 
+            className={`flex py-3 px-4 items-center border-b border-[#F5F6F8] cursor-pointer transition-all duration-200 hover:bg-[#F8F9FA] ${
+              selectedUser === leader.id ? 'bg-[#F5F6F8] border-l-4 border-l-[#338FFF]' : ''
+            }`}
+            onClick={() => setSelectedUser(selectedUser === leader.id ? null : leader.id)}
+          >
             {/* Avatar */}
             <div className="w-8 h-8 rounded-full bg-gray-200 mr-3 overflow-hidden">
               <img 
@@ -85,7 +94,9 @@ const LeaderboardCard = () => {
             
             {/* User info - using flex-1 to take available width */}
             <div className="flex flex-col flex-1">
-              <span className="text-xs font-semibold text-[#4F5A69]">{leader.name}</span>
+              <span className={`text-xs font-semibold transition-colors duration-200 ${
+                selectedUser === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'
+              }`}>{leader.name}</span>
               <span className="text-[10px] text-[#8C9BAC]">{leader.email}</span>
             </div>
             

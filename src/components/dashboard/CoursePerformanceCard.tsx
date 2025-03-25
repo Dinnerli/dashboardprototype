@@ -6,7 +6,7 @@ import { useCourseData } from "./course-performance/useCourseData";
 import FilterDropdown from "./common/FilterDropdown";
 
 const CoursePerformanceCard = () => {
-  const { activeTab, setActiveTab, courseData, tabContents } = useCourseData();
+  const { activeTab, setActiveTab, courseData, tabContents, handleStatClick } = useCourseData();
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
 
@@ -66,6 +66,7 @@ const CoursePerformanceCard = () => {
             <CourseTabContent 
               stats={tabContents["top-performers"].stats}
               courseData={courseData}
+              onStatClick={handleStatClick}
             />
           </TabsContent>
           
@@ -73,6 +74,7 @@ const CoursePerformanceCard = () => {
             <CourseTabContent 
               stats={tabContents["underperformers"].stats}
               courseData={courseData}
+              onStatClick={handleStatClick}
             />
           </TabsContent>
         </Tabs>

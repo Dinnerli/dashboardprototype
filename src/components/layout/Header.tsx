@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -6,6 +5,11 @@ import { Separator } from "../ui/separator";
 
 const Header = () => {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+  const handleSwitchToUser = () => {
+    // Handle switch to user functionality
+    console.log('Switching to user view');
+  };
 
   return (
     <header className="animate-fade-in">
@@ -28,7 +32,10 @@ const Header = () => {
           
           <div className="flex items-center">
             <div className="flex items-center space-x-3">
-              <div className="text-dark font-semibold text-[14px] font-poppins">
+              <div 
+                onClick={handleSwitchToUser}
+                className="text-dark font-semibold text-[14px] font-poppins cursor-pointer hover:text-[#338FFF] transition-colors"
+              >
                 Switch to User
               </div>
               
@@ -44,8 +51,8 @@ const Header = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src="/lovable-uploads/412aab9f-da03-46d8-a2c8-0cdf3d143751.png" />
-                    <AvatarFallback className="bg-blue-light/50">LA</AvatarFallback>
+                    <AvatarImage src="https://ui-avatars.com/api/?name=Layup+Admin&background=338FFF&color=fff" />
+                    <AvatarFallback className="bg-[#338FFF] text-white">LA</AvatarFallback>
                   </Avatar>
                   <ChevronDown size={16} className={`transition-transform duration-300 ${userDropdownOpen ? 'rotate-180' : ''}`} />
                 </div>

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import NavItem from './NavItem';
 import { Gamepad, BellDot, SendHorizonal } from 'lucide-react';
@@ -13,7 +12,7 @@ const Navigation = () => {
   return (
     <nav className="flex items-center justify-between w-full px-5 py-3 bg-white border-b animate-slide-in-up">
       <div className="flex flex-col">
-        <h1 className="text-h4 font-bold text-dark">Dashboard</h1>
+        <h1 className="text-h4 font-bold text-dark mb-1">Dashboard</h1>
         <p className="text-subheading-2 text-gray-600">
           Overview administrative dashboard
         </p>

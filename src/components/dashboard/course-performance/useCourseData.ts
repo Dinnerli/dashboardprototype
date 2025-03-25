@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 // Mock course data - this could be fetched from an API in a real application
@@ -12,6 +11,11 @@ const courseData = [
 
 export const useCourseData = () => {
   const [activeTab, setActiveTab] = useState("top-performers");
+  const [selectedStat, setSelectedStat] = useState<string | null>(null);
+  
+  const handleStatClick = (statName: string) => {
+    setSelectedStat(selectedStat === statName ? null : statName);
+  };
   
   const tabContents = {
     "top-performers": {
@@ -20,13 +24,15 @@ export const useCourseData = () => {
           title: "Completed",
           value: "237",
           percentage: "40%",
-          isActive: false
+          isActive: false,
+          isSelected: selectedStat === "Completed"
         },
         secondStat: {
           title: "Passed",
           value: "237",
           percentage: "40%",
-          isActive: true
+          isActive: true,
+          isSelected: selectedStat === "Passed"
         }
       }
     },
@@ -36,13 +42,15 @@ export const useCourseData = () => {
           title: "Incomplete",
           value: "124",
           percentage: "20%",
-          isActive: true
+          isActive: true,
+          isSelected: selectedStat === "Incomplete"
         },
         secondStat: {
           title: "Failed",
           value: "89",
           percentage: "15%",
-          isActive: false
+          isActive: false,
+          isSelected: selectedStat === "Failed"
         }
       }
     }
@@ -52,6 +60,8 @@ export const useCourseData = () => {
     activeTab,
     setActiveTab,
     courseData,
-    tabContents
+    tabContents,
+    selectedStat,
+    handleStatClick
   };
 };

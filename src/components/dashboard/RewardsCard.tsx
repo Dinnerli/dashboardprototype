@@ -1,7 +1,10 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
+import { useState } from "react";
 
 const RewardsCard = () => {
+  const [selectedTab, setSelectedTab] = useState<'certificates' | 'rank'>('certificates');
+
   return (
     <Card className="w-full h-[450px] animate-slide-in-up shadow-sm overflow-hidden" style={{
       animationDelay: '0.4s'
@@ -22,19 +25,33 @@ const RewardsCard = () => {
             </div>
             
             {/* View Report link */}
-            <div className="flex items-center border-b border-[#8C9BAC]">
-              <span className="text-xs text-[#8C9BAC]">View Report</span>
-            </div>
+            <a href="/reports/rewards" className="text-xs text-[#8C9BAC] border-b border-[#8C9BAC] hover:text-[#338FFF] hover:border-[#338FFF] transition-all duration-200 cursor-pointer">
+              View Report
+            </a>
           </div>
         </div>
 
         {/* Tabs section */}
         <div className="flex px-4 items-center w-full bg-white border-b border-[#F5F6F8]">
-          <div className="flex py-2 px-2 flex-col justify-center items-center border-b-2 border-[#338FFF]">
-            <span className="text-[#338FFF] font-semibold text-xs">Certificates</span>
+          <div 
+            className={`flex py-2 px-2 flex-col justify-center items-center cursor-pointer transition-all duration-200 ${
+              selectedTab === 'certificates' ? 'border-b-2 border-[#338FFF]' : ''
+            }`}
+            onClick={() => setSelectedTab('certificates')}
+          >
+            <span className={`font-semibold text-xs transition-colors duration-200 ${
+              selectedTab === 'certificates' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
+            }`}>Certificates</span>
           </div>
-          <div className="flex py-2 px-2 flex-col justify-center items-center">
-            <span className="text-[#8C9BAC] font-semibold text-xs">Rank Lobby</span>
+          <div 
+            className={`flex py-2 px-2 flex-col justify-center items-center cursor-pointer transition-all duration-200 ${
+              selectedTab === 'rank' ? 'border-b-2 border-[#338FFF]' : ''
+            }`}
+            onClick={() => setSelectedTab('rank')}
+          >
+            <span className={`font-semibold text-xs transition-colors duration-200 ${
+              selectedTab === 'rank' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
+            }`}>Rank Lobby</span>
           </div>
         </div>
 

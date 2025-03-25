@@ -1,4 +1,3 @@
-
 import React from "react";
 import ActivityStat from "./ActivityStat";
 import CourseChart from "./CourseChart";
@@ -10,12 +9,14 @@ type CourseTabContentProps = {
       value: string;
       percentage: string;
       isActive: boolean;
+      isSelected: boolean;
     };
     secondStat: {
       title: string;
       value: string;
       percentage: string;
       isActive: boolean;
+      isSelected: boolean;
     };
   };
   courseData: Array<{
@@ -23,9 +24,10 @@ type CourseTabContentProps = {
     completedPercentage: number;
     inProgressPercentage: number;
   }>;
+  onStatClick: (statName: string) => void;
 };
 
-const CourseTabContent = ({ stats, courseData }: CourseTabContentProps) => {
+const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentProps) => {
   return (
     <div className="px-8 py-4 h-full flex flex-col">
       {/* Stats Row */}
@@ -35,12 +37,16 @@ const CourseTabContent = ({ stats, courseData }: CourseTabContentProps) => {
           value={stats.firstStat.value}
           percentage={stats.firstStat.percentage}
           isActive={stats.firstStat.isActive}
+          isSelected={stats.firstStat.isSelected}
+          onClick={() => onStatClick(stats.firstStat.title)}
         />
         <ActivityStat 
           title={stats.secondStat.title}
           value={stats.secondStat.value}
           percentage={stats.secondStat.percentage}
           isActive={stats.secondStat.isActive}
+          isSelected={stats.secondStat.isSelected}
+          onClick={() => onStatClick(stats.secondStat.title)}
         />
       </div>
 

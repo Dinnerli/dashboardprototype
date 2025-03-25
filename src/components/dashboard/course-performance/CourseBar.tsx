@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export type CourseBarProps = {
   name: string;
@@ -8,6 +7,16 @@ export type CourseBarProps = {
 };
 
 const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBarProps) => {
+  const [isAnimated, setIsAnimated] = useState(false);
+
+  useEffect(() => {
+    // Trigger animation after a small delay to ensure the component is mounted
+    const timer = setTimeout(() => {
+      setIsAnimated(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="flex items-center gap-1 w-full">
       <div className="flex w-[100px] justify-end items-center gap-[5px]">
@@ -18,12 +27,18 @@ const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBa
       </div>
       <div className="flex h-[10px] items-center gap-[2px] flex-1">
         <div 
-          className="h-full bg-[#338FFF] rounded-[10px]" 
-          style={{ width: `${completedPercentage}%` }}
+          className="h-full bg-[#338FFF] rounded-[10px] transition-all duration-1000 ease-out" 
+          style={{ 
+            width: isAnimated ? `${completedPercentage}%` : '0%',
+            transitionDelay: '0.2s'
+          }}
         ></div>
         <div 
-          className="h-full bg-[#CDE4FF] rounded-[5px]" 
-          style={{ width: `${inProgressPercentage}%` }}
+          className="h-full bg-[#CDE4FF] rounded-[5px] transition-all duration-1000 ease-out" 
+          style={{ 
+            width: isAnimated ? `${inProgressPercentage}%` : '0%',
+            transitionDelay: '0.4s'
+          }}
         ></div>
         <div className="flex-1 h-full bg-transparent"></div>
       </div>

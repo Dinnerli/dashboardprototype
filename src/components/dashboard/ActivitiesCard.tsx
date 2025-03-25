@@ -32,7 +32,12 @@ const tabData = {
 
 const ActivitiesCard = () => {
   const [activeTab, setActiveTab] = useState<TabType>('user');
+  const [selectedStat, setSelectedStat] = useState<string | null>(null);
   const currentData = tabData[activeTab];
+
+  const handleStatClick = (title: string) => {
+    setSelectedStat(selectedStat === title ? null : title);
+  };
 
   return (
     <Card className="w-full animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
@@ -57,8 +62,9 @@ const ActivitiesCard = () => {
                 title={stat.title} 
                 value={stat.value} 
                 percentage={stat.percentage} 
-                isActive={index === 0}
+                isActive={selectedStat === stat.title}
                 isPositive={stat.isPositive}
+                onClick={() => handleStatClick(stat.title)}
               />
             ))}
           </div>
