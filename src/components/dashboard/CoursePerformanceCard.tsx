@@ -1,12 +1,15 @@
 
 import { Card } from "@/components/ui/card";
-import { ChevronDown, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CourseTabContent from "./course-performance/CourseTabContent";
 import { useCourseData } from "./course-performance/useCourseData";
+import FilterDropdown from "./common/FilterDropdown";
 
 const CoursePerformanceCard = () => {
   const { activeTab, setActiveTab, courseData, tabContents } = useCourseData();
+  const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
+  const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
 
   return (
     <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
@@ -17,14 +20,16 @@ const CoursePerformanceCard = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-xs text-[#8C9BAC]">Filter by:</span>
-              <div className="flex items-center gap-1 cursor-pointer">
-                <span className="text-xs text-[#8C9BAC]">Last 60 Days</span>
-                <ChevronDown className="w-4 h-4 text-[#8C9BAC]" />
-              </div>
-              <div className="flex items-center gap-1 cursor-pointer">
-                <span className="text-xs text-[#8C9BAC]">All</span>
-                <ChevronDown className="w-4 h-4 text-[#8C9BAC]" />
-              </div>
+              <FilterDropdown 
+                options={timeOptions} 
+                defaultValue="Last 60 Days" 
+                size="md"
+              />
+              <FilterDropdown 
+                options={typeOptions} 
+                defaultValue="All" 
+                size="md"
+              />
             </div>
             <div className="cursor-pointer">
               <span className="text-xs text-[#4F5A69] hover:text-[#338FFF] transition-colors">View Report</span>
