@@ -1,19 +1,14 @@
 import { Card } from "@/components/ui/card";
-import { ChevronDown, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CourseTabContent from "./course-performance/CourseTabContent";
 import { useCourseData } from "./course-performance/useCourseData";
-import { useState } from "react";
+import FilterDropdown from "./common/FilterDropdown";
 
 const CoursePerformanceCard = () => {
   const { activeTab, setActiveTab, courseData, tabContents } = useCourseData();
-  const [isTimeDropdownOpen, setIsTimeDropdownOpen] = useState(false);
-  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
-  const [selectedTimeFilter, setSelectedTimeFilter] = useState('Last 60 Days');
-  const [selectedStatus, setSelectedStatus] = useState('All');
-
-  const timeFilterOptions = ['Last 60 Days', 'Last 30 Days', 'Last 10 Days', 'Last 7 Days', 'Today'];
-  const statusOptions = ['All', 'Active', 'Inactive', 'Completed'];
+  const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
+  const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
 
   return (
     <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
@@ -24,62 +19,16 @@ const CoursePerformanceCard = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-xs text-[#8C9BAC]">Filter by:</span>
-              
-              {/* Time Filter Dropdown */}
-              <div className="relative">
-                <div 
-                  className="flex items-center gap-1 cursor-pointer"
-                  onClick={() => setIsTimeDropdownOpen(!isTimeDropdownOpen)}
-                >
-                  <span className="text-xs text-[#8C9BAC]">{selectedTimeFilter}</span>
-                  <ChevronDown className={`w-4 h-4 text-[#8C9BAC] transition-transform duration-200 ${isTimeDropdownOpen ? 'rotate-180' : ''}`} />
-                </div>
-                
-                {isTimeDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-lg py-2 z-50 min-w-[140px] border border-gray-100">
-                    {timeFilterOptions.map((option) => (
-                      <div
-                        key={option}
-                        className="px-4 py-2 text-xs text-[#8C9BAC] hover:bg-gray-50 cursor-pointer"
-                        onClick={() => {
-                          setSelectedTimeFilter(option);
-                          setIsTimeDropdownOpen(false);
-                        }}
-                      >
-                        {option}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Status Filter Dropdown */}
-              <div className="relative">
-                <div 
-                  className="flex items-center gap-1 cursor-pointer"
-                  onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
-                >
-                  <span className="text-xs text-[#8C9BAC]">{selectedStatus}</span>
-                  <ChevronDown className={`w-4 h-4 text-[#8C9BAC] transition-transform duration-200 ${isStatusDropdownOpen ? 'rotate-180' : ''}`} />
-                </div>
-                
-                {isStatusDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-lg py-2 z-50 min-w-[140px] border border-gray-100">
-                    {statusOptions.map((option) => (
-                      <div
-                        key={option}
-                        className="px-4 py-2 text-xs text-[#8C9BAC] hover:bg-gray-50 cursor-pointer"
-                        onClick={() => {
-                          setSelectedStatus(option);
-                          setIsStatusDropdownOpen(false);
-                        }}
-                      >
-                        {option}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <FilterDropdown 
+                options={timeOptions} 
+                defaultValue="Last 60 Days" 
+                size="md"
+              />
+              <FilterDropdown 
+                options={typeOptions} 
+                defaultValue="All" 
+                size="md"
+              />
             </div>
             <div className="cursor-pointer">
               <span 

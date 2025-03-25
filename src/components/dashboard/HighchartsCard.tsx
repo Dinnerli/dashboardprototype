@@ -1,5 +1,7 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface HighchartsCardProps {
   title?: string;
@@ -8,6 +10,25 @@ interface HighchartsCardProps {
 const HighchartsCard = ({
   title = "Learning Activities"
 }: HighchartsCardProps) => {
+  const [segments, setSegments] = useState({
+    library: false,
+    exams: false,
+    iltvilt: false,
+    courses: false
+  });
+
+  useEffect(() => {
+    // Staggered animation to reveal each segment
+    const timers = [
+      setTimeout(() => setSegments(prev => ({ ...prev, library: true })), 300),
+      setTimeout(() => setSegments(prev => ({ ...prev, exams: true })), 600),
+      setTimeout(() => setSegments(prev => ({ ...prev, iltvilt: true })), 900),
+      setTimeout(() => setSegments(prev => ({ ...prev, courses: true })), 1200)
+    ];
+
+    return () => timers.forEach(timer => clearTimeout(timer));
+  }, []);
+
   return (
     <Card className="w-full h-[555px] shadow-sm animate-slide-in-up font-poppins" style={{
       animationDelay: '0.4s'
@@ -17,22 +38,160 @@ const HighchartsCard = ({
       </CardHeader>
       <CardContent className="p-6">
         <div className="flex flex-col lg:flex-row p-6 gap-6">
-          {/* Chart */}
+          {/* Chart with loading animation */}
           <div className="flex-1 flex justify-center items-center">
-            <svg width="400" height="400" viewBox="0 0 400 401" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
-              <path d="M199.882 13.2917C236.927 13.2917 273.141 24.2659 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802C387.105 162.993 390.814 200.616 383.587 236.913C376.36 273.21 358.521 306.551 332.326 332.72C306.131 358.888 272.757 376.71 236.423 383.929C200.09 391.149 162.429 387.444 128.204 373.281C93.9788 359.119 64.726 335.136 44.1448 304.364C23.5637 273.593 12.5785 237.416 12.5786 200.408" stroke="#E5E7EA" strokeWidth="20" strokeLinecap="round"></path>
-              <text fill="#8C9BAC" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" style={{ whiteSpace: "pre" }}><tspan x="125.023" y="18.6">Library</tspan></text>
+            <svg 
+              width="400" 
+              height="400" 
+              viewBox="0 0 400 401" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="max-w-full h-auto"
+            >
+              {/* Library Ring - Outermost */}
+              <path 
+                d="M199.882 13.2917C236.927 13.2917 273.141 24.2659 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802C387.105 162.993 390.814 200.616 383.587 236.913C376.36 273.21 358.521 306.551 332.326 332.72C306.131 358.888 272.757 376.71 236.423 383.929C200.09 391.149 162.429 387.444 128.204 373.281C93.9788 359.119 64.726 335.136 44.1448 304.364C23.5637 273.593 12.5785 237.416 12.5786 200.408" 
+                stroke="#E5E7EA" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                style={{
+                  opacity: segments.library ? "1" : "0",
+                  strokeDasharray: "1000",
+                  strokeDashoffset: segments.library ? "0" : "1000",
+                  transition: "stroke-dashoffset 1.2s ease-out, opacity 0.3s ease-in"
+                }}
+              />
+              <text 
+                fill="#8C9BAC" 
+                fontFamily="Poppins" 
+                fontSize="16" 
+                fontWeight="600" 
+                letterSpacing="0em" 
+                style={{ 
+                  whiteSpace: "pre",
+                  opacity: segments.library ? "1" : "0",
+                  transition: "opacity 0.5s ease-out",
+                  transitionDelay: "0.2s"
+                }}
+              >
+                <tspan x="125.023" y="18.6">Library</tspan>
+              </text>
               
-              <path d="M199.882 46.0371C230.444 46.0371 260.32 55.0908 285.732 72.0534C311.144 89.0159 330.95 113.125 342.645 141.333C354.341 169.541 357.401 200.58 351.439 230.525C345.476 260.47 330.759 287.976 309.148 309.565C287.537 331.154 260.004 345.857 230.028 351.813C200.053 357.77 168.983 354.713 140.748 343.028C112.512 331.344 88.3782 311.558 71.3988 286.172C54.4193 260.786 45.3566 230.94 45.3567 200.408" stroke="#E5E7EA" strokeWidth="20" strokeLinecap="round"></path>
-              <text fill="#8C9BAC" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" style={{ whiteSpace: "pre" }}><tspan x="127.648" y="51.1">Exams</tspan></text>
+              {/* Exams Ring */}
+              <path 
+                d="M199.882 46.0371C230.444 46.0371 260.32 55.0908 285.732 72.0534C311.144 89.0159 330.95 113.125 342.645 141.333C354.341 169.541 357.401 200.58 351.439 230.525C345.476 260.47 330.759 287.976 309.148 309.565C287.537 331.154 260.004 345.857 230.028 351.813C200.053 357.77 168.983 354.713 140.748 343.028C112.512 331.344 88.3782 311.558 71.3988 286.172C54.4193 260.786 45.3566 230.94 45.3567 200.408" 
+                stroke="#E5E7EA" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                style={{
+                  opacity: segments.exams ? "1" : "0",
+                  strokeDasharray: "900",
+                  strokeDashoffset: segments.exams ? "0" : "900",
+                  transition: "stroke-dashoffset 1.1s ease-out, opacity 0.3s ease-in",
+                  transitionDelay: "0.2s"
+                }}
+              />
+              <text 
+                fill="#8C9BAC" 
+                fontFamily="Poppins" 
+                fontSize="16" 
+                fontWeight="600" 
+                letterSpacing="0em" 
+                style={{ 
+                  whiteSpace: "pre",
+                  opacity: segments.exams ? "1" : "0",
+                  transition: "opacity 0.5s ease-out",
+                  transitionDelay: "0.4s"
+                }}
+              >
+                <tspan x="127.648" y="51.1">Exams</tspan>
+              </text>
               
-              <path d="M199.881 78.7825C223.961 78.7825 247.499 85.9157 267.521 99.2801C287.542 112.645 303.147 131.64 312.361 153.864C321.576 176.088 323.987 200.543 319.289 224.136C314.592 247.729 302.996 269.401 285.97 286.411C268.943 303.42 247.25 315.004 223.633 319.697C200.016 324.39 175.537 321.981 153.291 312.776C131.044 303.57 112.03 287.981 98.652 267.98C85.2743 247.978 78.134 224.463 78.134 200.408" stroke="#E5E7EA" strokeWidth="20" strokeLinecap="round"></path>
-              <text fill="#8C9BAC" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" style={{ whiteSpace: "pre" }}><tspan x="119.913" y="83.6">ILT/VILT</tspan></text>
+              {/* ILT/VILT Ring */}
+              <path 
+                d="M199.881 78.7825C223.961 78.7825 247.499 85.9157 267.521 99.2801C287.542 112.645 303.147 131.64 312.361 153.864C321.576 176.088 323.987 200.543 319.289 224.136C314.592 247.729 302.996 269.401 285.97 286.411C268.943 303.42 247.25 315.004 223.633 319.697C200.016 324.39 175.537 321.981 153.291 312.776C131.044 303.57 112.03 287.981 98.652 267.98C85.2743 247.978 78.134 224.463 78.134 200.408" 
+                stroke="#E5E7EA" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                style={{
+                  opacity: segments.iltvilt ? "1" : "0",
+                  strokeDasharray: "800",
+                  strokeDashoffset: segments.iltvilt ? "0" : "800",
+                  transition: "stroke-dashoffset 1s ease-out, opacity 0.3s ease-in",
+                  transitionDelay: "0.4s"
+                }}
+              />
+              <text 
+                fill="#8C9BAC" 
+                fontFamily="Poppins" 
+                fontSize="16" 
+                fontWeight="600" 
+                letterSpacing="0em" 
+                style={{ 
+                  whiteSpace: "pre",
+                  opacity: segments.iltvilt ? "1" : "0",
+                  transition: "opacity 0.5s ease-out",
+                  transitionDelay: "0.6s"
+                }}
+              >
+                <tspan x="119.913" y="83.6">ILT/VILT</tspan>
+              </text>
               
-              <path d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.236 250.826 262.794 263.256C250.351 275.686 234.498 284.151 217.24 287.581C199.982 291.01 182.093 289.25 165.836 282.523C149.579 275.796 135.684 264.404 125.908 249.787C116.132 235.171 110.914 217.987 110.914 200.408" stroke="#003072" strokeWidth="20" strokeLinecap="round"></path>
-              <path d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.237 250.826 262.794 263.256C250.352 275.686 234.499 284.151 217.24 287.581" stroke="#338FFF" strokeWidth="20" strokeLinecap="round"></path>
-              <path d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395" stroke="#CDE4FF" strokeWidth="20" strokeLinecap="round"></path>
-              <text fill="#338FFF" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" style={{ whiteSpace: "pre" }}><tspan x="114.288" y="121.1">Courses</tspan></text>
+              {/* Courses Ring - Split into three sections for progressive reveal */}
+              <path 
+                d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.237 250.826 262.794 263.256C250.352 275.686 234.499 284.151 217.24 287.581" 
+                stroke="#338FFF" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                style={{
+                  opacity: segments.courses ? "1" : "0",
+                  strokeDasharray: "400",
+                  strokeDashoffset: segments.courses ? "0" : "400",
+                  transition: "stroke-dashoffset 0.9s ease-out, opacity 0.3s ease-in",
+                  transitionDelay: "0.6s"
+                }}
+              />
+              <path 
+                d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395" 
+                stroke="#CDE4FF" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                style={{
+                  opacity: segments.courses ? "1" : "0",
+                  strokeDasharray: "200",
+                  strokeDashoffset: segments.courses ? "0" : "200",
+                  transition: "stroke-dashoffset 0.7s ease-out, opacity 0.3s ease-in",
+                  transitionDelay: "0.8s"
+                }}
+              />
+              <path 
+                d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.236 250.826 262.794 263.256C250.351 275.686 234.498 284.151 217.24 287.581C199.982 291.01 182.093 289.25 165.836 282.523C149.579 275.796 135.684 264.404 125.908 249.787C116.132 235.171 110.914 217.987 110.914 200.408" 
+                stroke="#003072" 
+                strokeWidth="20" 
+                strokeLinecap="round"
+                style={{
+                  opacity: segments.courses ? "1" : "0",
+                  strokeDasharray: "700",
+                  strokeDashoffset: segments.courses ? "0" : "700",
+                  transition: "stroke-dashoffset 1s ease-out, opacity 0.3s ease-in",
+                  transitionDelay: "0.8s"
+                }}
+              />
+              <text 
+                fill="#338FFF" 
+                fontFamily="Poppins" 
+                fontSize="16" 
+                fontWeight="600" 
+                letterSpacing="0em" 
+                style={{ 
+                  whiteSpace: "pre",
+                  opacity: segments.courses ? "1" : "0",
+                  transition: "opacity 0.5s ease-out",
+                  transitionDelay: "1s"
+                }}
+              >
+                <tspan x="114.288" y="121.1">Courses</tspan>
+              </text>
             </svg>
           </div>
 
