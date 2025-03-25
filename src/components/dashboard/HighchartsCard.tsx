@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface HighchartsCardProps {
   title?: string;
@@ -8,6 +9,17 @@ interface HighchartsCardProps {
 const HighchartsCard = ({
   title = "Learning Activities"
 }: HighchartsCardProps) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Set animation after a short delay to ensure component is mounted
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Card className="w-full h-[555px] shadow-sm animate-slide-in-up font-poppins" style={{
       animationDelay: '0.4s'
@@ -17,9 +29,16 @@ const HighchartsCard = ({
       </CardHeader>
       <CardContent className="p-6">
         <div className="flex flex-col lg:flex-row p-6 gap-6">
-          {/* Chart */}
+          {/* Chart with animation */}
           <div className="flex-1 flex justify-center items-center">
-            <svg width="400" height="400" viewBox="0 0 400 401" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-w-full h-auto">
+            <svg 
+              width="400" 
+              height="400" 
+              viewBox="0 0 400 401" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              className={`max-w-full h-auto transition-all duration-1000 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}
+            >
               <path d="M199.882 13.2917C236.927 13.2917 273.141 24.2659 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802C387.105 162.993 390.814 200.616 383.587 236.913C376.36 273.21 358.521 306.551 332.326 332.72C306.131 358.888 272.757 376.71 236.423 383.929C200.09 391.149 162.429 387.444 128.204 373.281C93.9788 359.119 64.726 335.136 44.1448 304.364C23.5637 273.593 12.5785 237.416 12.5786 200.408" stroke="#E5E7EA" strokeWidth="20" strokeLinecap="round"></path>
               <text fill="#8C9BAC" fontFamily="Poppins" fontSize="16" fontWeight="600" letterSpacing="0em" style={{ whiteSpace: "pre" }}><tspan x="125.023" y="18.6">Library</tspan></text>
               
