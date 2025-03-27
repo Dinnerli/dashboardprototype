@@ -9,192 +9,119 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      courses: {
+      pdf_extractions: {
         Row: {
-          categories: string[] | null
           created_at: string | null
-          deadline_date: string | null
-          description: string | null
-          disable_module_screen: boolean | null
-          disable_results_screen: boolean | null
-          estimated_time: string | null
-          has_acknowledgement_form: boolean | null
-          has_bonus_points: boolean | null
-          has_deadline: boolean | null
-          has_feedback: boolean | null
+          extracted_text: string | null
+          file_name: string
+          id: string
+          original_pdf_path: string
+          status: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          extracted_text?: string | null
+          file_name: string
+          id?: string
+          original_pdf_path: string
+          status?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          extracted_text?: string | null
+          file_name?: string
+          id?: string
+          original_pdf_path?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      plantations: {
+        Row: {
+          bamboo_area: number | null
+          clump_age: number | null
+          clump_conditions: string | null
+          clump_year: number | null
+          created_at: string | null
+          distance_to_factory: number | null
+          distance_to_road: number | null
+          harvest_year: number | null
           id: string
           image_url: string | null
-          is_premium: boolean | null
-          language: string | null
-          pass_mark: number | null
-          score_scale: number | null
-          title: string
+          internode_length: number | null
+          land_area: number | null
+          landowner_name: string
+          location: string | null
+          pole_dbh: number | null
+          pole_height: number | null
+          poles_harvested: number | null
+          site_conditions: string | null
+          site_status: string | null
+          soil_type: string | null
+          species_name: string | null
+          total_clumps: number | null
+          total_poles: number | null
+          total_poles_count: number | null
           updated_at: string | null
+          wall_thickness: number | null
         }
         Insert: {
-          categories?: string[] | null
+          bamboo_area?: number | null
+          clump_age?: number | null
+          clump_conditions?: string | null
+          clump_year?: number | null
           created_at?: string | null
-          deadline_date?: string | null
-          description?: string | null
-          disable_module_screen?: boolean | null
-          disable_results_screen?: boolean | null
-          estimated_time?: string | null
-          has_acknowledgement_form?: boolean | null
-          has_bonus_points?: boolean | null
-          has_deadline?: boolean | null
-          has_feedback?: boolean | null
+          distance_to_factory?: number | null
+          distance_to_road?: number | null
+          harvest_year?: number | null
+          id: string
+          image_url?: string | null
+          internode_length?: number | null
+          land_area?: number | null
+          landowner_name: string
+          location?: string | null
+          pole_dbh?: number | null
+          pole_height?: number | null
+          poles_harvested?: number | null
+          site_conditions?: string | null
+          site_status?: string | null
+          soil_type?: string | null
+          species_name?: string | null
+          total_clumps?: number | null
+          total_poles?: number | null
+          total_poles_count?: number | null
+          updated_at?: string | null
+          wall_thickness?: number | null
+        }
+        Update: {
+          bamboo_area?: number | null
+          clump_age?: number | null
+          clump_conditions?: string | null
+          clump_year?: number | null
+          created_at?: string | null
+          distance_to_factory?: number | null
+          distance_to_road?: number | null
+          harvest_year?: number | null
           id?: string
           image_url?: string | null
-          is_premium?: boolean | null
-          language?: string | null
-          pass_mark?: number | null
-          score_scale?: number | null
-          title: string
+          internode_length?: number | null
+          land_area?: number | null
+          landowner_name?: string
+          location?: string | null
+          pole_dbh?: number | null
+          pole_height?: number | null
+          poles_harvested?: number | null
+          site_conditions?: string | null
+          site_status?: string | null
+          soil_type?: string | null
+          species_name?: string | null
+          total_clumps?: number | null
+          total_poles?: number | null
+          total_poles_count?: number | null
           updated_at?: string | null
-        }
-        Update: {
-          categories?: string[] | null
-          created_at?: string | null
-          deadline_date?: string | null
-          description?: string | null
-          disable_module_screen?: boolean | null
-          disable_results_screen?: boolean | null
-          estimated_time?: string | null
-          has_acknowledgement_form?: boolean | null
-          has_bonus_points?: boolean | null
-          has_deadline?: boolean | null
-          has_feedback?: boolean | null
-          id?: string
-          image_url?: string | null
-          is_premium?: boolean | null
-          language?: string | null
-          pass_mark?: number | null
-          score_scale?: number | null
-          title?: string
-          updated_at?: string | null
+          wall_thickness?: number | null
         }
         Relationships: []
-      }
-      departments: {
-        Row: {
-          created_at: string
-          id: string
-          name: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          name: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          name?: string
-        }
-        Relationships: []
-      }
-      lessons: {
-        Row: {
-          content: Json | null
-          created_at: string | null
-          id: string
-          module_id: string | null
-          order_index: number
-          title: string
-          updated_at: string | null
-        }
-        Insert: {
-          content?: Json | null
-          created_at?: string | null
-          id?: string
-          module_id?: string | null
-          order_index: number
-          title: string
-          updated_at?: string | null
-        }
-        Update: {
-          content?: Json | null
-          created_at?: string | null
-          id?: string
-          module_id?: string | null
-          order_index?: number
-          title?: string
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "lessons_module_id_fkey"
-            columns: ["module_id"]
-            isOneToOne: false
-            referencedRelation: "modules"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      metrics_data: {
-        Row: {
-          date: string
-          department: string
-          id: string
-          metric: string
-          timeframe: string
-          value: number
-        }
-        Insert: {
-          date?: string
-          department: string
-          id?: string
-          metric: string
-          timeframe: string
-          value: number
-        }
-        Update: {
-          date?: string
-          department?: string
-          id?: string
-          metric?: string
-          timeframe?: string
-          value?: number
-        }
-        Relationships: []
-      }
-      modules: {
-        Row: {
-          course_id: string | null
-          created_at: string | null
-          id: string
-          order_index: number
-          title: string
-          type: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          course_id?: string | null
-          created_at?: string | null
-          id?: string
-          order_index: number
-          title: string
-          type?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          course_id?: string | null
-          created_at?: string | null
-          id?: string
-          order_index?: number
-          title?: string
-          type?: string | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "modules_course_id_fkey"
-            columns: ["course_id"]
-            isOneToOne: false
-            referencedRelation: "courses"
-            referencedColumns: ["id"]
-          },
-        ]
       }
     }
     Views: {
