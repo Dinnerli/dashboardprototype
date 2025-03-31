@@ -1,9 +1,12 @@
+
 import { Card, CardTitle } from "@/components/ui/card";
 import { Award } from "lucide-react";
 import { useState } from "react";
+import { useMediaQuery } from '@mui/material';
 
 const LeaderboardCard = () => {
   const [selectedUser, setSelectedUser] = useState<number | null>(null);
+  const isMobile = useMediaQuery('(max-width:600px)');
   
   const leaders = [
     { 
@@ -46,11 +49,11 @@ const LeaderboardCard = () => {
   return (
     <Card className="w-full h-full animate-slide-in-up shadow-sm overflow-hidden flex flex-col" style={{ animationDelay: '0.4s' }}>
       {/* Header */}
-      <div className="flex justify-between items-center p-4 border-b border-[#E5E7EA]">
+      <div className="flex justify-between items-center p-2 sm:p-3 md:p-4 border-b border-[#E5E7EA]">
         <div className="flex items-center">
-          <CardTitle>Leaderboard </CardTitle>
+          <CardTitle className="text-sm sm:text-base md:text-lg">Leaderboard</CardTitle>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* User icon */}
           <div className="flex items-center">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,10 +69,12 @@ const LeaderboardCard = () => {
             </svg>
           </div>
           
-          {/* View Report link */}
-          <a href="/reports/leaderboard" className="text-xs text-[#8C9BAC] border-b border-[#8C9BAC] hover:text-[#338FFF] hover:border-[#338FFF] transition-all duration-200 cursor-pointer">
-            View Report
-          </a>
+          {/* View Report link - hide on small mobile */}
+          {!isMobile && (
+            <a href="/reports/leaderboard" className="text-xs text-[#8C9BAC] border-b border-[#8C9BAC] hover:text-[#338FFF] hover:border-[#338FFF] transition-all duration-200 cursor-pointer">
+              View Report
+            </a>
+          )}
         </div>
       </div>
       
@@ -78,13 +83,13 @@ const LeaderboardCard = () => {
         {leaders.map((leader, index) => (
           <div 
             key={leader.id} 
-            className={`flex py-3 px-4 items-center border-b border-[#F5F6F8] cursor-pointer transition-all duration-200 hover:bg-[#F8F9FA] ${
+            className={`flex py-2 sm:py-3 px-2 sm:px-3 md:px-4 items-center border-b border-[#F5F6F8] cursor-pointer transition-all duration-200 hover:bg-[#F8F9FA] ${
               selectedUser === leader.id ? 'bg-[#F5F6F8] border-l-4 border-l-[#338FFF]' : ''
             }`}
             onClick={() => setSelectedUser(selectedUser === leader.id ? null : leader.id)}
           >
             {/* Avatar */}
-            <div className="w-8 h-8 rounded-full bg-gray-200 mr-3 overflow-hidden">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gray-200 mr-2 sm:mr-3 overflow-hidden">
               <img 
                 src={`https://i.pravatar.cc/150?img=${leader.id + 10}`} 
                 alt={leader.name} 
@@ -97,14 +102,16 @@ const LeaderboardCard = () => {
               <span className={`text-xs font-semibold transition-colors duration-200 ${
                 selectedUser === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'
               }`}>{leader.name}</span>
-              <span className="text-[10px] text-[#8C9BAC]">{leader.email}</span>
+              <span className="text-[9px] sm:text-[10px] text-[#8C9BAC]">{leader.email}</span>
             </div>
             
             {/* Points - using ml-auto to push to right */}
             <div className="flex items-center ml-auto">
-              <span className="text-base font-semibold text-[#4F5A69] mr-3">{leader.points} <span className="text-[10px] font-normal">Points</span></span>
-              <div className="w-6 h-6 flex items-center justify-center bg-[#F8F9FA] rounded">
-                <Award size={14} className="text-[#8C9BAC]" />
+              <span className="text-sm sm:text-base font-semibold text-[#4F5A69] mr-2 sm:mr-3">
+                {leader.points} <span className="text-[9px] sm:text-[10px] font-normal">Points</span>
+              </span>
+              <div className="w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center bg-[#F8F9FA] rounded">
+                <Award size={isMobile ? 12 : 14} className="text-[#8C9BAC]" />
               </div>
             </div>
           </div>

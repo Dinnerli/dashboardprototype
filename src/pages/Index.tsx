@@ -1,5 +1,6 @@
 
 import { useEffect } from 'react';
+import { useMediaQuery } from '@mui/material';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
@@ -14,6 +15,9 @@ import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitie
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
 
 const Index = () => {
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const isTablet = useMediaQuery('(max-width:960px)');
+  
   // Smooth scroll to top when component mounts
   useEffect(() => {
     window.scrollTo({
@@ -28,7 +32,6 @@ const Index = () => {
     { id: 2, component: <AdminActivityCard /> },
     { id: 3, component: <LeaderboardCard /> },
     { id: 4, component: <RewardsCard /> },
-    //{ id: 5, component: <HighchartsCard /> }
   ];
 
   return (
@@ -36,21 +39,21 @@ const Index = () => {
       <Header />
       <main className="flex-1 flex flex-col">
         <Navigation />
-        <div className="px-6 bg-slate-200">
+        <div className="px-3 sm:px-4 md:px-6 bg-slate-200">
           <Dashboard />
-          {/* Cards row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
+          {/* Cards row - stack on mobile, side by side on larger screens */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6">
             <ActivitiesCard />
             <HighchartsCard />
           </div>
           
-          {/* Course Performance and Engagement Activities side by side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6">
+          {/* Course Performance and Engagement Activities - stack on mobile */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6">
             <CoursePerformanceCard />
             <EngagementActivitiesCard />
           </div>
           
-          {/* Draggable cards grid - using fixed height cards */}
+          {/* Draggable cards grid - using fixed height cards with responsive columns */}
           <DashboardCardGrid initialCards={dashboardCards} />
         </div>
       </main>

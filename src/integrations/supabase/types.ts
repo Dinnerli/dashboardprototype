@@ -9,6 +9,223 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      api_keys: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          key_value: string
+          name: string
+          service_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          key_value: string
+          name: string
+          service_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          key_value?: string
+          name?: string
+          service_type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      api_logs: {
+        Row: {
+          created_at: string
+          endpoint: string
+          id: string
+          request_data: Json | null
+          response_data: Json | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          endpoint: string
+          id?: string
+          request_data?: Json | null
+          response_data?: Json | null
+          status: string
+        }
+        Update: {
+          created_at?: string
+          endpoint?: string
+          id?: string
+          request_data?: Json | null
+          response_data?: Json | null
+          status?: string
+        }
+        Relationships: []
+      }
+      courses: {
+        Row: {
+          categories: string[] | null
+          created_at: string | null
+          deadline_date: string | null
+          description: string | null
+          disable_module_screen: boolean
+          disable_results_screen: boolean
+          estimated_time: string | null
+          has_acknowledgement_form: boolean
+          has_bonus_points: boolean
+          has_deadline: boolean | null
+          has_feedback: boolean
+          id: string
+          image_url: string | null
+          is_premium: boolean
+          language: string
+          pass_mark: number | null
+          score_scale: number | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          categories?: string[] | null
+          created_at?: string | null
+          deadline_date?: string | null
+          description?: string | null
+          disable_module_screen?: boolean
+          disable_results_screen?: boolean
+          estimated_time?: string | null
+          has_acknowledgement_form?: boolean
+          has_bonus_points?: boolean
+          has_deadline?: boolean | null
+          has_feedback?: boolean
+          id?: string
+          image_url?: string | null
+          is_premium?: boolean
+          language: string
+          pass_mark?: number | null
+          score_scale?: number | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          categories?: string[] | null
+          created_at?: string | null
+          deadline_date?: string | null
+          description?: string | null
+          disable_module_screen?: boolean
+          disable_results_screen?: boolean
+          estimated_time?: string | null
+          has_acknowledgement_form?: boolean
+          has_bonus_points?: boolean
+          has_deadline?: boolean | null
+          has_feedback?: boolean
+          id?: string
+          image_url?: string | null
+          is_premium?: boolean
+          language?: string
+          pass_mark?: number | null
+          score_scale?: number | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      lessons: {
+        Row: {
+          content: Json | null
+          created_at: string | null
+          id: string
+          module_id: string
+          order_index: number
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          content?: Json | null
+          created_at?: string | null
+          id?: string
+          module_id: string
+          order_index: number
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: Json | null
+          created_at?: string | null
+          id?: string
+          module_id?: string
+          order_index?: number
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lessons_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modules: {
+        Row: {
+          course_id: string
+          created_at: string | null
+          id: string
+          order_index: number
+          title: string
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          course_id: string
+          created_at?: string | null
+          id?: string
+          order_index: number
+          title: string
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          course_id?: string
+          created_at?: string | null
+          id?: string
+          order_index?: number
+          title?: string
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "modules_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pdf_extractions: {
         Row: {
           created_at: string | null
