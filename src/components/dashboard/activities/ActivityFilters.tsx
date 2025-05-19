@@ -6,7 +6,7 @@ const ActivityFilters = () => {
 
   return (
     <div className="flex gap-2.5 items-center">
-      <div className="flex items-center h-[30px] gap-2.5">
+      <div className="flex items-center  gap-2.5">
         <div className="flex items-center gap-1.5 pl-2.5 rounded-[10px]">
           <span className="text-[10px] text-[#8C9BAC] font-poppins">Filter by:</span>
         </div>
