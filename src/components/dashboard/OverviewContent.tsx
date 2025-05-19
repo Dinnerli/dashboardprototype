@@ -11,7 +11,7 @@ const OverviewContent = () => {
   return (
     <div className="flex overflow-x-auto pb-4 justify-between gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8]" style={{ animationDelay: '0.1s' }}>
       <StatsCard
-        title="Total training hours"
+        title="Training Data"
         value="17"
         valueSuffix="hrs"
         isValueSuffixed={true}
