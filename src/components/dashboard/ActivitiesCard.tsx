@@ -48,6 +48,11 @@ const ActivitiesCard = () => {
             <CardTitle>Activity Overview </CardTitle>
           </div>
           <ActivityFilters />
+          <div className="flex items-center">
+        <div className="flex items-center justify-center gap-1.5 px-0 py-1.5">
+          <span className="text-[12px] text-[#4F5A69] font-poppins text-center cursor-pointer hover:text-[#338FFF] transition-colors">View Report</span>
+        </div>
+      </div>
         </div>
 
         {/* Tabs */}

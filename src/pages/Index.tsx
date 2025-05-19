@@ -13,6 +13,7 @@ import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 import HighchartsCard from '@/components/dashboard/HighchartsCard';
 import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
+import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
 
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -39,7 +40,14 @@ const Index = () => {
       <Header />
       <main className="flex-1 flex flex-col">
         <Navigation />
+         
         <div className="px-3 sm:px-4 md:px-6 bg-slate-200">
+          <div className='flex flex-row items-center gap-4 sm:gap-6 pt-4 sm:pt-6'>
+          <div className='border-b w-[80%]'></div>
+          <div className='justify-end'> <ActivityFilters /></div>
+         
+          </div>
+          
           <Dashboard />
           {/* Cards row - stack on mobile, side by side on larger screens */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6">
