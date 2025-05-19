@@ -10,12 +10,12 @@ interface NavItemProps {
 
 const NavItem = ({ icon, label, active = false, dropdown = false }: NavItemProps) => {
   return (
-    <div className={`nav-item group w-24 ${active ? 'nav-item-active' : 'nav-item-inactive'}`}>
+    <div className={`nav-item group w-20  ${active ? 'nav-item-active' : 'nav-item-inactive'}`}>
       <div className="flex justify-center items-center h-6">
         {icon}
       </div>
-      <div className="flex items-center justify-center gap-1 mt-2">
-        <span className="text-[14px] font-semibold">{label}</span>
+      <div className="flex items-center justify-center mt-2">
+        <span className="text-[12px] font-medium">{label}</span>
         {dropdown && (
           <svg 
             width="24" 
