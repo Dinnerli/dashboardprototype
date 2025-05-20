@@ -121,114 +121,171 @@ const DateRangePicker = ({
   };
 
   return (
-    <div className="relative">
-      {/* Trigger button */}
-      <div 
-        className="flex items-center gap-1 cursor-pointer"
-        onClick={() => setIsOpen(true)}
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <div 
+          className="flex items-center gap-1 cursor-pointer"
+          ref={triggerRef}
+        >
+          <span className="text-[10px] text-[#8C9BAC]">{getDisplayText()}</span>
+          <ChevronDown 
+            className="w-6 h-6 text-[#8C9BAC] transition-transform"
+          />
+        </div>
+      </PopoverTrigger>
+      <PopoverContent
+        align="end"
+        side="bottom"
+        className="p-0 min-w-[340px] w-auto max-w-[98vw] h-auto rounded-2xl shadow-xl border-none bg-white mt-2"
       >
-        <span className="text-[10px] text-[#8C9BAC]">{getDisplayText()}</span>
-        <ChevronDown 
-          className="w-6 h-6 text-[#8C9BAC] transition-transform"
-        />
-      </div>
-      
-      {/* Date Range Picker Dialog */}
-      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-        <DialogContent className="p-0 sm:max-w-[850px] h-auto">
-          <div className="flex flex-col md:flex-row h-full">
-            {/* Left Sidebar - Quick Range Selection */}
-            <div className="border-r border-gray-200 bg-white">
-              <div className="flex flex-col w-full md:w-48">
-                {["Custom", "Last 7 Days", "Last 30 Days", "Last 90 Days", "Last 1 Year"].map((option) => (
+        <div className="flex flex-row h-full rounded-2xl overflow-hidden">
+          {/* Left Sidebar - Quick Range Selection */}
+          <div className="bg-white p-2">
+            <div className="flex flex-col w-36 py-1">
+              {["Custom", "Last 7 Days", "Last 30 Days", "Last 90 Days", "Last 1 Year"].map((option, idx, arr) => {
+                const isActive = activeTab === option.toLowerCase().replace(/\s/g, "-");
+                const spacing = idx !== arr.length - 1 ? "mb-1" : "";
+                return (
                   <button
                     key={option}
                     className={cn(
-                      "px-4 py-3 text-left font-medium text-sm transition-colors",
-                      activeTab === option.toLowerCase().replace(/\s/g, "-")
-                        ? "bg-blue-500 text-white"
-                        : "text-gray-700 hover:bg-gray-100"
+                      "px-3 py-1.5 text-left font-medium text-[11px] transition-colors rounded-lg min-h-0",
+                      spacing,
+                      isActive
+                        ? "bg-[#EAF2FF] text-[#338FFF]"
+                        : "text-[#232D3A] hover:bg-gray-100"
                     )}
                     onClick={() => {
                       if (option === "Custom") {
                         setActiveTab("custom");
                       } else {
-                        handleQuickSelect(option);
+                        // Auto-select the range and update UI
+                        setSelectedOption(option);
+                        setActiveTab(option.toLowerCase().replace(/\s/g, "-"));
+                        const today = new Date();
+                        let fromDate: Date;
+                        const toDate = today;
+                        switch (option) {
+                          case "Last 7 Days":
+                            fromDate = new Date(today);
+                            fromDate.setDate(today.getDate() - 7);
+                            break;
+                          case "Last 30 Days":
+                            fromDate = new Date(today);
+                            fromDate.setDate(today.getDate() - 30);
+                            break;
+                          case "Last 90 Days":
+                            fromDate = new Date(today);
+                            fromDate.setDate(today.getDate() - 90);
+                            break;
+                          case "Last 1 Year":
+                            fromDate = new Date(today);
+                            fromDate.setFullYear(today.getFullYear() - 1);
+                            break;
+                          default:
+                            return;
+                        }
+                        setDateRange({ from: fromDate, to: toDate });
+                        if (onDateRangeChange) {
+                          onDateRangeChange(fromDate, toDate);
+                        }
                       }
                     }}
                   >
                     {option}
                   </button>
-                ))}
-              </div>
+                );
+              })}
             </div>
+          </div>
 
-            {/* Right Panel - Calendar View */}
-            <div className="flex-1 p-4 bg-white">
-              <div className="flex flex-col space-y-4">
-                {/* Dual Calendar */}
-                <div className="flex flex-col sm:flex-row sm:space-x-4 justify-center">
-                  <Calendar
-                    mode="range"
-                    selected={dateRange}
-                    onSelect={handleSelect}
-                    month={monthsToShow[0]}
-                    onMonthChange={(month) => {
-                      setMonthsToShow([month, addMonths(month, 1)]);
-                    }}
-                    numberOfMonths={1}
-                    className="border rounded-md"
-                  />
-                  <Calendar
-                    mode="range"
-                    selected={dateRange}
-                    onSelect={handleSelect}
-                    month={monthsToShow[1]}
-                    onMonthChange={(month) => {
-                      setMonthsToShow([addMonths(month, -1), month]);
-                    }}
-                    numberOfMonths={1}
-                    className="border rounded-md"
-                  />
-                </div>
+          {/* Right Panel - Calendar View */}
+          <div className="flex-1 p-3 bg-white">
+            <div className="flex flex-col space-y-3">
+              {/* Dual Calendar */}
+              <div className="flex flex-row space-x-1 justify-center text-[11px]">
+                <Calendar
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={handleSelect}
+                  month={monthsToShow[0]}
+                  onMonthChange={(month) => {
+                    setMonthsToShow([month, addMonths(month, 1)]);
+                  }}
+                  numberOfMonths={1}
+                  className="border rounded-md text-[11px] min-w-[180px] "
+                  classNames={{
+                    caption_label: "text-xs font-medium py-1",
+                    head_cell: "text-[10px] w-7 h-7",
+                    cell: "h-7 w-7 text-center text-[11px] p-0",
+                    day: "h-7 w-7 p-0 text-[11px]",
+                  }}
+                  components={{
+                    IconLeft: (props) => <ChevronLeft {...props} className="h-3 w-3" />, 
+                    IconRight: () => null // Hide right arrow
+                  }}
+                />
+                <Calendar
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={handleSelect}
+                  month={monthsToShow[1]}
+                  onMonthChange={(month) => {
+                    setMonthsToShow([addMonths(month, -1), month]);
+                  }}
+                  numberOfMonths={1}
+                  className="border rounded-md text-[11px] min-w-[180px] "
+                  classNames={{
+                    caption_label: "text-xs font-medium py-1",
+                    head_cell: "text-[10px] w-7 h-7",
+                    cell: "h-7 w-7 text-center text-[11px] p-0",
+                    day: "h-7 w-7 p-0 text-[11px]",
+                    
+                  }}
+                  components={{
+                    IconLeft: () => null, // Hide left arrow
+                    IconRight: (props) => <ChevronRight {...props} className="h-3 w-3" />
+                  }}
+                />
+              </div>
 
-                {/* Date Input Fields */}
-                <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0 sm:space-x-4">
-                  <div className="flex items-center space-x-4 w-full">
-                    <div className="w-full sm:w-1/2">
-                      <div className="px-4 py-2 bg-gray-100 rounded-full text-sm">
-                        {dateRange.from ? format(dateRange.from, "MMM d, yyyy") : "Start Date"}
-                      </div>
+              {/* Date Input Fields */}
+              <div className="flex flex-col sm:flex-row justify-between items-center space-y-1 sm:space-y-0 sm:space-x-2 text-[11px]">
+                <div className="flex items-center space-x-1 w-full">
+                  <div className="w-full sm:w-1/2">
+                    <div className="px-2 py-1 bg-gray-100 rounded-full">
+                      {dateRange.from ? format(dateRange.from, "MMM d, yyyy") : "Start Date"}
                     </div>
-                    <span>—</span>
-                    <div className="w-full sm:w-1/2">
-                      <div className="px-4 py-2 bg-gray-100 rounded-full text-sm">
-                        {dateRange.to ? format(dateRange.to, "MMM d, yyyy") : "End Date"}
-                      </div>
+                  </div>
+                  <span>—</span>
+                  <div className="w-full sm:w-1/2">
+                    <div className="px-2 py-1 bg-gray-100 rounded-full">
+                      {dateRange.to ? format(dateRange.to, "MMM d, yyyy") : "End Date"}
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Action Buttons */}
-                <div className="flex justify-end space-x-2 mt-4">
-                  <DialogClose asChild>
-                    <button className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors">
-                      Cancel
-                    </button>
-                  </DialogClose>
-                  <button
-                    onClick={handleUpdate}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                  >
-                    Update
-                  </button>
-                </div>
+              {/* Action Buttons */}
+              <div className="flex justify-end space-x-1 mt-2">
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="px-2 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors text-[11px] min-h-0"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUpdate}
+                  className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-[11px] min-h-0"
+                >
+                  Update
+                </button>
               </div>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 
