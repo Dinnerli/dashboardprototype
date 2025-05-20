@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -15,8 +14,8 @@ const learningCategoryData = {
     title: "Library",
     uploads: { value: 50, trend: 40, increasing: true },
     timeSpent: { value: 25, trend: 40, increasing: false },
-    assigned: { value: 48, trend: 25.3, increasing: true },
-    completed: { value: 63, trend: 14, increasing: true },
+    assigned: { value: 18, trend: 25.3, increasing: true },
+    completed: { value: 93, trend: 14, increasing: true },
     enrolled: { value: 37, trend: 31, increasing: false }
   },
   exams: {
@@ -79,6 +78,37 @@ const HighchartsCard = ({
     return () => timers.forEach(timer => clearTimeout(timer));
   }, []);
 
+  // Color palettes for active/inactive arcs
+  const arcColors = {
+    active: ["#CDE4FF", "#338FFF", "#003072"], // assigned, completed, enrolled
+    inactive: ["#E5E7EA", "#D1D5DB", "#B0B6BE"]
+  };
+
+  // Utility to describe an SVG arc segment
+  function describeArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number) {
+    const start = polarToCartesian(cx, cy, r, endAngle);
+    const end = polarToCartesian(cx, cy, r, startAngle);
+    const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+    return [
+      "M", start.x, start.y,
+      "A", r, r, 0, largeArcFlag, 0, end.x, end.y
+    ].join(" ");
+  }
+
+  function polarToCartesian(cx: number, cy: number, r: number, angle: number) {
+    const rad = (angle - 90) * Math.PI / 180.0;
+    return {
+      x: cx + r * Math.cos(rad),
+      y: cy + r * Math.sin(rad)
+    };
+  }
+
+  // Add hoveredArc state to the component
+  const [hoveredArc, setHoveredArc] = useState<{
+    category: keyof typeof learningCategoryData | null;
+    metric: "assigned" | "completed" | "enrolled" | null;
+  } | null>(null);
+
   return (
     <Card className="w-full h-[555px] shadow-sm animate-slide-in-up font-poppins px-6" style={{
       animationDelay: '0.4s'
@@ -88,178 +118,105 @@ const HighchartsCard = ({
         <div className="flex flex-col lg:flex-row p-6 gap-6">
           {/* Interactive Chart */}
           <div className="flex-1 flex justify-center items-center">
-            <svg 
-              width="400" 
-              height="400" 
-              viewBox="0 0 400 401" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg" 
+            <svg
+              width="400"
+              height="400"
+              viewBox="0 0 400 400"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
               className="max-w-full h-auto"
             >
-              {/* Library Ring - Outermost */}
-              <path 
-                d="M199.882 13.2917C236.927 13.2917 273.141 24.2659 303.943 44.8266C334.745 65.3872 358.752 94.6109 372.928 128.802C387.105 162.993 390.814 200.616 383.587 236.913C376.36 273.21 358.521 306.551 332.326 332.72C306.131 358.888 272.757 376.71 236.423 383.929C200.09 391.149 162.429 387.444 128.204 373.281C93.9788 359.119 64.726 335.136 44.1448 304.364C23.5637 273.593 12.5785 237.416 12.5786 200.408" 
-                stroke={activeSegment === "library" ? "#338FFF" : "#E5E7EA"}
-                strokeWidth="20" 
-                strokeLinecap="round"
-                style={{
-                  opacity: segments.library ? "1" : "0",
-                  strokeDasharray: "1000",
-                  strokeDashoffset: segments.library ? "0" : "1000",
-                  transition: "stroke-dashoffset 1.2s ease-out, opacity 0.3s ease-in, stroke 0.3s ease-in-out",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("library")}
-              />
-              <text 
-                fill={activeSegment === "library" ? "#338FFF" : "#8C9BAC"}
-                fontFamily="Poppins" 
-                fontSize="16" 
-                fontWeight="600" 
-                letterSpacing="0em" 
-                style={{ 
-                  whiteSpace: "pre",
-                  opacity: segments.library ? "1" : "0",
-                  transition: "opacity 0.5s ease-out, fill 0.3s ease-in-out",
-                  transitionDelay: "0.2s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("library")}
-              >
-                <tspan x="125.023" y="18.6">Library</tspan>
-              </text>
-              
-              {/* Exams Ring */}
-              <path 
-                d="M199.882 46.0371C230.444 46.0371 260.32 55.0908 285.732 72.0534C311.144 89.0159 330.95 113.125 342.645 141.333C354.341 169.541 357.401 200.58 351.439 230.525C345.476 260.47 330.759 287.976 309.148 309.565C287.537 331.154 260.004 345.857 230.028 351.813C200.053 357.77 168.983 354.713 140.748 343.028C112.512 331.344 88.3782 311.558 71.3988 286.172C54.4193 260.786 45.3566 230.94 45.3567 200.408" 
-                stroke={activeSegment === "exams" ? "#338FFF" : "#E5E7EA"}
-                strokeWidth="20" 
-                strokeLinecap="round"
-                style={{
-                  opacity: segments.exams ? "1" : "0",
-                  strokeDasharray: "900",
-                  strokeDashoffset: segments.exams ? "0" : "900",
-                  transition: "stroke-dashoffset 1.1s ease-out, opacity 0.3s ease-in, stroke 0.3s ease-in-out",
-                  transitionDelay: "0.2s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("exams")}
-              />
-              <text 
-                fill={activeSegment === "exams" ? "#338FFF" : "#8C9BAC"}
-                fontFamily="Poppins" 
-                fontSize="16" 
-                fontWeight="600" 
-                letterSpacing="0em" 
-                style={{ 
-                  whiteSpace: "pre",
-                  opacity: segments.exams ? "1" : "0",
-                  transition: "opacity 0.5s ease-out, fill 0.3s ease-in-out",
-                  transitionDelay: "0.4s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("exams")}
-              >
-                <tspan x="127.648" y="51.1">Exams</tspan>
-              </text>
-              
-              {/* ILT/VILT Ring */}
-              <path 
-                d="M199.881 78.7825C223.961 78.7825 247.499 85.9157 267.521 99.2801C287.542 112.645 303.147 131.64 312.361 153.864C321.576 176.088 323.987 200.543 319.289 224.136C314.592 247.729 302.996 269.401 285.97 286.411C268.943 303.42 247.25 315.004 223.633 319.697C200.016 324.39 175.537 321.981 153.291 312.776C131.044 303.57 112.03 287.981 98.652 267.98C85.2743 247.978 78.134 224.463 78.134 200.408" 
-                stroke={activeSegment === "iltvilt" ? "#338FFF" : "#E5E7EA"}
-                strokeWidth="20" 
-                strokeLinecap="round"
-                style={{
-                  opacity: segments.iltvilt ? "1" : "0",
-                  strokeDasharray: "800",
-                  strokeDashoffset: segments.iltvilt ? "0" : "800",
-                  transition: "stroke-dashoffset 1s ease-out, opacity 0.3s ease-in, stroke 0.3s ease-in-out",
-                  transitionDelay: "0.4s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("iltvilt")}
-              />
-              <text 
-                fill={activeSegment === "iltvilt" ? "#338FFF" : "#8C9BAC"}
-                fontFamily="Poppins" 
-                fontSize="16" 
-                fontWeight="600" 
-                letterSpacing="0em" 
-                style={{ 
-                  whiteSpace: "pre",
-                  opacity: segments.iltvilt ? "1" : "0",
-                  transition: "opacity 0.5s ease-out, fill 0.3s ease-in-out",
-                  transitionDelay: "0.6s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("iltvilt")}
-              >
-                <tspan x="119.913" y="83.6">ILT/VILT</tspan>
-              </text>
-              
-              {/* Courses Ring - Split into three sections for progressive reveal */}
-              <path 
-                d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.237 250.826 262.794 263.256C250.352 275.686 234.499 284.151 217.24 287.581" 
-                stroke={activeSegment === "courses" ? "#338FFF" : "#E5E7EA"}
-                strokeWidth="20" 
-                strokeLinecap="round"
-                style={{
-                  opacity: segments.courses ? "1" : "0",
-                  strokeDasharray: "400",
-                  strokeDashoffset: segments.courses ? "0" : "400",
-                  transition: "stroke-dashoffset 0.9s ease-out, opacity 0.3s ease-in, stroke 0.3s ease-in-out",
-                  transitionDelay: "0.6s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("courses")}
-              />
-              <path 
-                d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395" 
-                stroke={activeSegment === "courses" ? "#CDE4FF" : "#E5E7EA"}
-                strokeWidth="20" 
-                strokeLinecap="round"
-                style={{
-                  opacity: segments.courses ? "1" : "0",
-                  strokeDasharray: "200",
-                  strokeDashoffset: segments.courses ? "0" : "200",
-                  transition: "stroke-dashoffset 0.7s ease-out, opacity 0.3s ease-in, stroke 0.3s ease-in-out",
-                  transitionDelay: "0.8s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("courses")}
-              />
-              <path 
-                d="M199.883 111.528C217.48 111.528 234.681 116.741 249.312 126.507C263.943 136.273 275.346 150.154 282.08 166.395C288.814 182.636 290.576 200.507 287.143 217.748C283.71 234.989 275.236 250.826 262.794 263.256C250.351 275.686 234.498 284.151 217.24 287.581C199.982 291.01 182.093 289.25 165.836 282.523C149.579 275.796 135.684 264.404 125.908 249.787C116.132 235.171 110.914 217.987 110.914 200.408" 
-                stroke={activeSegment === "courses" ? "#003072" : "#E5E7EA"}
-                strokeWidth="20" 
-                strokeLinecap="round"
-                style={{
-                  opacity: segments.courses ? "1" : "0",
-                  strokeDasharray: "700",
-                  strokeDashoffset: segments.courses ? "0" : "700",
-                  transition: "stroke-dashoffset 1s ease-out, opacity 0.3s ease-in, stroke 0.3s ease-in-out",
-                  transitionDelay: "0.8s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("courses")}
-              />
-              <text 
-                fill={activeSegment === "courses" ? "#338FFF" : "#8C9BAC"}
-                fontFamily="Poppins" 
-                fontSize="16" 
-                fontWeight="600" 
-                letterSpacing="0em" 
-                style={{ 
-                  whiteSpace: "pre",
-                  opacity: segments.courses ? "1" : "0",
-                  transition: "opacity 0.5s ease-out, fill 0.3s ease-in-out",
-                  transitionDelay: "1s",
-                  cursor: "pointer"
-                }}
-                onClick={() => handleSegmentClick("courses")}
-              >
-                <tspan x="114.288" y="121.1">Courses</tspan>
-              </text>
+              {Object.entries(learningCategoryData).map(([key, cat], idx) => {
+                // Arc geometry
+                const arcWidth = 20;
+                const arcSpacing = 18;
+                const baseRadius = 160;
+                const r = baseRadius - idx * (arcWidth + arcSpacing);
+                const cx = 200, cy = 200;
+                // Data breakdown
+                const assigned = cat.assigned.value;
+                const completed = cat.completed.value;
+                const enrolled = cat.enrolled.value;
+                const total = assigned + completed + enrolled;
+                // Proportions
+                const assignedPct = assigned / total;
+                const completedPct = completed / total;
+                const enrolledPct = enrolled / total;
+                // Angles (270deg arc)
+                const startAngle = 0;
+                const assignedEnd = startAngle + assignedPct * 270;
+                const completedEnd = assignedEnd + completedPct * 270;
+                const endAngle = startAngle + 270;
+                // Colors
+                const isActive = activeSegment === key;
+                const colors = isActive ? arcColors.active : arcColors.inactive;
+                // Label font
+                const labelFont = {
+                  fontFamily: 'Poppins',
+                  fontWeight: 600,
+                  fontSize: 13,
+                };
+                // Helper to get label position at arc start
+                function getLabelPos(angle: number, radius: number, offset: number = 0) {
+                  const rad = (angle - 90) * Math.PI / 180.0;
+                  return {
+                    x: cx + (radius + offset) * Math.cos(rad),
+                    y: cy + (radius + offset) * Math.sin(rad)
+                  };
+                }
+                // Label positions (slightly outside arc for clarity)
+                const labelOffset = 16;
+                const assignedLabel = getLabelPos(startAngle, r, labelOffset);
+                const completedLabel = getLabelPos(assignedEnd, r, labelOffset);
+                const enrolledLabel = getLabelPos(completedEnd, r, labelOffset);
+                // Render three proportional segments
+                return (
+                  <g key={key} className="cursor-pointer"
+                    onClick={() => handleSegmentClick(key as keyof typeof learningCategoryData)}
+                  >
+                    {/* Assigned Segment */}
+                    <path
+                      d={describeArc(cx, cy, r, startAngle, assignedEnd)}
+                      stroke={colors[0]}
+                      strokeWidth={arcWidth}
+                      strokeLinecap="round"
+                      fill="none"
+                      className={`transition-all duration-400 ${segments[key as keyof typeof segments] ? 'opacity-100' : 'opacity-0'}`}
+                    />
+                    {/* Completed Segment */}
+                    <path
+                      d={describeArc(cx, cy, r, assignedEnd, completedEnd)}
+                      stroke={colors[1]}
+                      strokeWidth={arcWidth}
+                      strokeLinecap="butt"
+                      fill="none"
+                      className={`transition-all duration-400 ${segments[key as keyof typeof segments] ? 'opacity-100' : 'opacity-0'}`}
+                    />
+                    {/* Enrolled Segment */}
+                    <path
+                      d={describeArc(cx, cy, r, completedEnd, endAngle)}
+                      stroke={colors[2]}
+                      strokeWidth={arcWidth}
+                      strokeLinecap="butt"
+                      fill="none"
+                      className={`transition-all duration-400 ${segments[key as keyof typeof segments] ? 'opacity-100' : 'opacity-0'}`}
+                    />
+                    {/* Category label (centered above arc) */}
+                    <text
+                      x={cx}
+                      y={cy - r - 18}
+                      textAnchor="middle"
+                      fill={isActive ? "#338FFF" : "#8C9BAC"}
+                      fontFamily="Poppins"
+                      fontSize="16"
+                      fontWeight="600"
+                      className={`transition-all duration-500 ${segments[key as keyof typeof segments] ? 'opacity-100' : 'opacity-0'} cursor-pointer`}
+                    >
+                      {cat.title}
+                    </text>
+                  </g>
+                );
+              })}
             </svg>
           </div>
 
