@@ -14,6 +14,7 @@ import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitie
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
 import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
 import CarouselCardRow from '@/components/dashboard/CarouselCardRow';
+import CompetencyCard from '@/components/dashboard/CompetencyCard';
 
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -32,7 +33,8 @@ const Index = () => {
     <DevicesCard key="devices" />,
     <AdminActivityCard key="admin" />,
     <LeaderboardCard key="leaderboard" />,
-    <RewardsCard key="rewards" />
+    <RewardsCard key="rewards" />,
+    <CompetencyCard key="competency" />
   ];
 
   return (
