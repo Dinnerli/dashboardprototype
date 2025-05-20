@@ -191,7 +191,7 @@ const RewardsCard = () => {
                     })}
                     
                     {/* Inner circle (white space) */}
-                    <circle cx="50" cy="50" r="26" fill="white" />
+                    <circle cx="50" cy="50" r="32" fill="white" />
                   </svg>
                   
                   {/* Medal icon in center */}
