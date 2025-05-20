@@ -114,24 +114,20 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
   }
 });
 
-// Update chart options based on tab type
-export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.Options): Highcharts.Options => {
+// Update chart options based on tab type and selected stat
+export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.Options, selectedStat?: string | null): Highcharts.Options => {
   const newOptions = { ...prevOptions };
-  
   if (newOptions.series && Array.isArray(newOptions.series) && newOptions.series.length >= 2) {
-    // Need to cast series to any to modify data
-    const activeSeries = newOptions.series[0] as any;
-    const newUsersSeries = newOptions.series[1] as any;
-    
+    // Use Highcharts.SeriesAreasplineOptions for type safety
+    const activeSeries = newOptions.series[0] as Highcharts.SeriesAreasplineOptions;
+    const newUsersSeries = newOptions.series[1] as Highcharts.SeriesAreasplineOptions;
     // Update series data
     if (activeSeries) {
       activeSeries.data = chartData[chartType].active;
     }
-    
     if (newUsersSeries) {
       newUsersSeries.data = chartData[chartType].new;
     }
-  
     // Update series name based on tab
     if (chartType === 'user') {
       if (activeSeries) activeSeries.name = 'Active Users';
@@ -143,8 +139,25 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
       if (activeSeries) activeSeries.name = 'Completed';
       if (newUsersSeries) newUsersSeries.name = 'In Progress';
     }
+    // Show only the selected stat's series, or both if none selected
+    if (selectedStat) {
+      if (activeSeries && activeSeries.name === selectedStat) {
+        activeSeries.visible = true;
+        newUsersSeries.visible = false;
+      } else if (newUsersSeries && newUsersSeries.name === selectedStat) {
+        newUsersSeries.visible = true;
+        activeSeries.visible = false;
+      } else {
+        // fallback: show both
+        activeSeries.visible = true;
+        newUsersSeries.visible = true;
+      }
+    } else {
+      // If no stat selected, show both
+      activeSeries.visible = true;
+      newUsersSeries.visible = true;
+    }
   }
-  
   return newOptions;
 };
 

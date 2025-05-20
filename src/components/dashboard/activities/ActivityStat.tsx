@@ -21,7 +21,7 @@ const ActivityStat = ({
   return (
     <div 
       className={`flex items-center gap-2.5 p-1.5 px-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
-        isActive ? 'bg-[#F5F6F8] shadow-md' : ''
+        isActive ? 'bg-[#F5F6F8] ' : ''
       }`}
       onClick={onClick}
     >
@@ -34,7 +34,7 @@ const ActivityStat = ({
       </div>
       <div className="flex flex-col">
         <div className="flex items-center gap-2.5 ">
-          <span className={`text-md font-medium transition-colors duration-200 ${
+          <span className={`text-sm font-medium transition-colors duration-200 ${
             isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
           }`}>
             {title}
@@ -43,7 +43,7 @@ const ActivityStat = ({
         </div>
         <div className="flex items-center px-2.5">
           <div>
-            <span className="text-xl font-bold text-[#4F5A69]">{value}</span>
+            <span className="text-lg font-bold text-[#4F5A69]">{value}</span>
           </div>
           <div className="w-[66px] flex justify-end items-center">
             <StatIndicator value={percentage} isPositive={isPositive} />

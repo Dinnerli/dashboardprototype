@@ -1,4 +1,3 @@
-
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { TabType } from "./ActivityTabs";
@@ -6,10 +5,11 @@ import { useChartOptions } from './useChartOptions';
 
 interface ActivityChartProps {
   chartType: TabType;
+  selectedStat: string | null;
 }
 
-const ActivityChart = ({ chartType }: ActivityChartProps) => {
-  const chartOptions = useChartOptions(chartType);
+const ActivityChart = ({ chartType, selectedStat }: ActivityChartProps) => {
+  const chartOptions = useChartOptions(chartType, selectedStat);
 
   return (
     <div className="p-2.5 w-full">

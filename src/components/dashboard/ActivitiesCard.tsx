@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardTitle } from "@/components/ui/card";
 import ActivityTabs, { TabType } from "./activities/ActivityTabs";
 import ActivityStat from "./activities/ActivityStat";
@@ -33,8 +33,14 @@ const tabData = {
 
 const ActivitiesCard = () => {
   const [activeTab, setActiveTab] = useState<TabType>('user');
-  const [selectedStat, setSelectedStat] = useState<string | null>(null);
+  // Select the first stat by default for the current tab
+  const [selectedStat, setSelectedStat] = useState<string>(tabData['user'].stats[0].title);
   const currentData = tabData[activeTab];
+
+  // Update selectedStat when tab changes
+  useEffect(() => {
+    setSelectedStat(tabData[activeTab].stats[0].title);
+  }, [activeTab]);
 
   const handleStatClick = (title: string) => {
     setSelectedStat(selectedStat === title ? null : title);
@@ -73,7 +79,7 @@ const ActivitiesCard = () => {
           </div>
 
           {/* Chart */}
-          <ActivityChart chartType={currentData.chartType} />
+          <ActivityChart chartType={currentData.chartType} selectedStat={selectedStat} />
         </div>
       </div>
     </Card>

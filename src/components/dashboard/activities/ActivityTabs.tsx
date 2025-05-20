@@ -13,8 +13,8 @@ const ActivityTab = ({ title, isActive, onClick }: ActivityTabProps) => {
       className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 pt-0 cursor-pointer"
       onClick={onClick}
     >
-      <div className={`h-1 w-full ${isActive ? 'bg-[#338FFF]' : 'bg-transparent'}`}></div>
-      <span className={`text-sm ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'} font-medium font-poppins`}>
+      <div className={`border-b-2 w-full ${isActive ? 'border-[#338FFF]' : 'border-transparent'}`}></div>
+      <span className={`text-xs ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'} font-medium font-poppins`}>
         {title}
       </span>
     </div>
