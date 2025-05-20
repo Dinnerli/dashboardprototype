@@ -5,6 +5,7 @@ import ActivityStat from "./activities/ActivityStat";
 import ActivityChart from "./activities/ActivityChart";
 import ActivityFilters from "./activities/ActivityFilters";
 import ViewReportButton from "./ViewReportButton";
+import CardHeader from "./CardHeader";
 
 // Different data for each tab
 const tabData = {
@@ -49,15 +50,7 @@ const ActivitiesCard = () => {
   return (
     <Card className="w-full animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
       <div className="w-full">
-        {/* Header */}
-        <div className="flex justify-between items-center w-full p-6  border-b border-[#B3B3B3]">
-          <div className="flex items-center gap-2.5 px-2.5 flex-1">
-            <CardTitle>Activity Overview </CardTitle>
-          </div>
-          <div className="flex items-center">
-        <ViewReportButton/>
-      </div>
-        </div>
+        <CardHeader title="Activity Overview" rightContent={<ViewReportButton />} />
 
         {/* Tabs */}
         <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
