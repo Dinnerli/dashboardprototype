@@ -164,11 +164,7 @@ const HighchartsCard = ({
                     y: cy + (radius + offset) * Math.sin(rad)
                   };
                 }
-                // Label positions (slightly outside arc for clarity)
-                const labelOffset = 16;
-                const assignedLabel = getLabelPos(startAngle, r, labelOffset);
-                const completedLabel = getLabelPos(assignedEnd, r, labelOffset);
-                const enrolledLabel = getLabelPos(completedEnd, r, labelOffset);
+             
                 // Render three proportional segments
                 return (
                   <g key={key} className="cursor-pointer"
@@ -203,7 +199,7 @@ const HighchartsCard = ({
                     />
                     {/* Category label (centered above arc) */}
                     <text
-                      x={cx}
+                      x={cx - 50}
                       y={cy - r - 18}
                       textAnchor="middle"
                       fill={isActive ? "#338FFF" : "#8C9BAC"}
