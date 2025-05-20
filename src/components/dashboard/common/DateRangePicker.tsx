@@ -19,7 +19,7 @@ type DateRange = {
 
 const DateRangePicker = ({
   onDateRangeChange,
-  defaultValue = "Last 60 Days",
+  defaultValue = "last-7-days",
 }: DateRangePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultValue);
@@ -28,8 +28,8 @@ const DateRangePicker = ({
   // Initialize with the default option's date range
   const today = new Date();
   const defaultFrom = new Date(today);
-  defaultFrom.setDate(today.getDate() - 60); // Default is Last 60 Days
-  
+  defaultFrom.setDate(today.getDate() - 7); // Default is Last 7 Days
+
   const [dateRange, setDateRange] = useState<DateRange>({
     from: defaultFrom,
     to: today,
@@ -41,9 +41,11 @@ const DateRangePicker = ({
   ]);
   
   // Set active tab based on defaultValue
-  const [activeTab, setActiveTab] = useState<string>(
-    defaultValue.toLowerCase().replace(/\s/g, "-")
-  );
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    const presetTabs = ["last-7-days", "last-30-days", "last-90-days", "last-1-year"];
+    const tab = defaultValue.toLowerCase().replace(/\s/g, "-");
+    return presetTabs.includes(tab) ? tab : "custom";
+  });
 
   // Handle popover open state
   const handleOpenChange = (open: boolean) => {
@@ -117,6 +119,7 @@ const DateRangePicker = ({
     if (dateRange.from && dateRange.to && onDateRangeChange) {
       onDateRangeChange(dateRange.from, dateRange.to);
     }
+    setActiveTab("custom");
     setIsOpen(false);
   };
 
@@ -269,7 +272,10 @@ const DateRangePicker = ({
               {/* Action Buttons */}
               <div className="flex justify-end space-x-1 mt-2">
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setActiveTab("custom");
+                    setIsOpen(false);
+                  }}
                   className="px-2 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors text-[11px] min-h-0"
                 >
                   Cancel

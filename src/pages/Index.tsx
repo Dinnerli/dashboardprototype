@@ -42,10 +42,11 @@ const Index = () => {
         <Navigation />
          
         <div className="px-3 sm:px-4 md:px-6 bg-slate-200">
-          <div className='flex flex-row items-center gap-4 sm:gap-6 pt-4 sm:pt-6'>
-          <div className='border-b w-[80%]'></div>
-          <div className='justify-end'> <ActivityFilters /></div>
-         
+          <div className="flex flex-row items-center gap-4 sm:gap-6 pt-4 sm:pt-6">
+            <div className="border-b flex-1"></div>
+            <div className="w-auto">
+              <ActivityFilters />
+            </div>
           </div>
           
           <Dashboard />
