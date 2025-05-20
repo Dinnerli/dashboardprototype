@@ -20,7 +20,7 @@ const ActivityStat = ({
 }: ActivityStatProps) => {
   return (
     <div 
-      className={`flex items-center gap-2.5 p-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
+      className={`flex items-center gap-2.5 p-1.5 px-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
         isActive ? 'bg-[#F5F6F8] shadow-md' : ''
       }`}
       onClick={onClick}
@@ -33,7 +33,7 @@ const ActivityStat = ({
         />
       </div>
       <div className="flex flex-col">
-        <div className="flex items-center gap-2.5 px-2.5">
+        <div className="flex items-center gap-2.5 ">
           <span className={`text-md font-medium transition-colors duration-200 ${
             isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
           }`}>
