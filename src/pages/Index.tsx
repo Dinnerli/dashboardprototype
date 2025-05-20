@@ -38,7 +38,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white font-poppins flex flex-col">
+    <div className="min-h-screen max-w-full bg-white font-poppins flex flex-col">
       <Header />
       <main className="flex-1 flex flex-col">
         <Navigation />

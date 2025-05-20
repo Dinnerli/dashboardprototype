@@ -8,11 +8,11 @@ const Header = () => {
     // Handle switch to user functionality
     console.log('Switching to user view');
   };
-  return <header className="animate-fade-in">
+  return <header className="animate-fade-in max-w-full">
       <div className="flex flex-col w-full">
         
         
-        <div className="w-full h-auto p-2 flex justify-between border-b m-2">
+        <div className="max-w-full h-auto p-2 flex justify-between border-b m-2">
 <div>
 <img src="/layup_logo.png" alt="Logo" className="h-8 " />
 </div>
