@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import StatsCard from './StatsCard';
 
@@ -9,7 +10,7 @@ const OverviewContent = () => {
   };
 
   return (
-    <div className="flex overflow-x-auto pb-4 justify-between gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8]" style={{ animationDelay: '0.1s' }}>
+    <div className="flex overflow-x-auto pb-4 gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8] scroll-smooth" style={{ animationDelay: '0.1s' }}>
       <StatsCard
         title="Training Data"
         value="17"

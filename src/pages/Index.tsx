@@ -9,11 +9,11 @@ import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
 import RewardsCard from '@/components/dashboard/RewardsCard';
-import DashboardCardGrid from '@/components/dashboard/DashboardCardGrid';
 import HighchartsCard from '@/components/dashboard/HighchartsCard';
 import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
 import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
+import CarouselCardRow from '@/components/dashboard/CarouselCardRow';
 
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -27,12 +27,12 @@ const Index = () => {
     });
   }, []);
 
-  // Updated cards configuration with fixed height
+  // Cards to be displayed in the horizontal carousel
   const dashboardCards = [
-    { id: 1, component: <DevicesCard /> },
-    { id: 2, component: <AdminActivityCard /> },
-    { id: 3, component: <LeaderboardCard /> },
-    { id: 4, component: <RewardsCard /> },
+    <DevicesCard key="devices" />,
+    <AdminActivityCard key="admin" />,
+    <LeaderboardCard key="leaderboard" />,
+    <RewardsCard key="rewards" />
   ];
 
   return (
@@ -62,8 +62,8 @@ const Index = () => {
             <EngagementActivitiesCard />
           </div>
           
-          {/* Draggable cards grid - using fixed height cards with responsive columns */}
-          <DashboardCardGrid initialCards={dashboardCards} />
+          {/* Horizontal scrollable card row - replacing the previous draggable grid */}
+          <CarouselCardRow items={dashboardCards} />
         </div>
       </main>
     </div>
