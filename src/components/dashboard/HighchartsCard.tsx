@@ -1,7 +1,8 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
+import CardHeader from "./CardHeader";
+import ViewReportButton from "./ViewReportButton";
 
 interface HighchartsCardProps {
   title?: string;
@@ -30,12 +31,10 @@ const HighchartsCard = ({
   }, []);
 
   return (
-    <Card className="w-full h-[555px] shadow-sm animate-slide-in-up font-poppins" style={{
+    <Card className="w-full h-[555px] shadow-sm animate-slide-in-up font-poppins px-6" style={{
       animationDelay: '0.4s'
     }}>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-      </CardHeader>
+      <CardHeader title={title} rightContent={<ViewReportButton />}/>
       <CardContent className="p-6">
         <div className="flex flex-col lg:flex-row p-6 gap-6">
           {/* Chart with loading animation */}

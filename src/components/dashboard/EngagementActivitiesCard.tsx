@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Info, ChevronDown, ArrowUp, ArrowDown } from "lucide-react";
 import FilterDropdown from "./common/FilterDropdown";
+import CardHeader from "./CardHeader";
+import ViewReportButton from "./ViewReportButton";
 
 const EngagementActivitiesCard = () => {
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
@@ -22,32 +24,12 @@ const EngagementActivitiesCard = () => {
   };
 
   return (
-    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm overflow-hidden bg-white p-6" style={{
+    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm overflow-hidden bg-white px-6" style={{
       animationDelay: '0.3s'
     }}>
+      <CardHeader title="Engagement Activities" rightContent={<ViewReportButton />}/>
       <div className="w-full h-full flex flex-col">
-        {/* Header */}
-        <div className="flex justify-between items-center w-full pb-6 border-b border-[#E5E7EB]">
-          <h3 className="text-lg font-semibold text-[#233143] font-poppins">Engagement Activities</h3>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-[#8C9BAC]">Filter by:</span>
-              <FilterDropdown 
-                options={timeOptions} 
-                defaultValue="Last 60 Days" 
-                size="md"
-              />
-              <FilterDropdown 
-                options={typeOptions} 
-                defaultValue="All" 
-                size="md"
-              />
-            </div>
-            <div className="cursor-pointer">
-              <span className="text-xs text-[#4F5A69] hover:text-[#338FFF] transition-colors">View Report</span>
-            </div>
-          </div>
-        </div>
+        
 
         {/* Stats Section */}
         <div className="grid grid-cols-4 gap-4 py-6">

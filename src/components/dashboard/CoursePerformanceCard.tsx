@@ -4,6 +4,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CourseTabContent from "./course-performance/CourseTabContent";
 import { useCourseData } from "./course-performance/useCourseData";
 import FilterDropdown from "./common/FilterDropdown";
+import CardHeader from "./CardHeader";
+import ViewReportButton from "./ViewReportButton";
 
 const CoursePerformanceCard = () => {
   const { activeTab, setActiveTab, courseData, tabContents, handleStatClick } = useCourseData();
@@ -11,37 +13,9 @@ const CoursePerformanceCard = () => {
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
 
   return (
-    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm" style={{ animationDelay: '0.3s' }}>
+    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm px-6" style={{ animationDelay: '0.3s' }}>
       <div className="w-full h-full flex flex-col">
-        {/* Header */}
-        <div className="flex justify-between items-center w-full px-8 py-6 border-b border-[#E5E7EB]">
-          <h3 className="text-lg font-semibold text-[#233143] font-poppins">Course Performance</h3>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-[#8C9BAC]">Filter by:</span>
-              <FilterDropdown 
-                options={timeOptions} 
-                defaultValue="Last 60 Days" 
-                size="md"
-              />
-              <FilterDropdown 
-                options={typeOptions} 
-                defaultValue="All" 
-                size="md"
-              />
-            </div>
-            <div className="cursor-pointer">
-              <span 
-                className="text-xs text-[#4F5A69] hover:text-[#338FFF] transition-colors border-b border-transparent hover:border-[#338FFF]"
-                onClick={() => {
-                  console.log('View Report clicked');
-                }}
-              >
-                View Report
-              </span>
-            </div>
-          </div>
-        </div>
+        <CardHeader title="Course Performance" rightContent={<ViewReportButton />} />
 
         {/* Tabs with top indicator */}
         <Tabs defaultValue="top-performers" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">

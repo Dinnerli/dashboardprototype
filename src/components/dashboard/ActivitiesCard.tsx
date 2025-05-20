@@ -48,7 +48,7 @@ const ActivitiesCard = () => {
   };
 
   return (
-    <Card className="w-full animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+    <Card className="w-full animate-slide-in-up px-6" style={{ animationDelay: '0.2s' }}>
       <div className="w-full">
         <CardHeader title="Activity Overview" rightContent={<ViewReportButton />} />
 
