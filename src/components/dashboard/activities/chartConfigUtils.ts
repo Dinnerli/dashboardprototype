@@ -20,13 +20,20 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
     labels: {
       style: {
-        color: '#CDD1D7',
+        color: '#E5E7EB',
         fontSize: '10px',
         fontFamily: 'Poppins, sans-serif'
       }
     },
     lineWidth: 0,
-    tickWidth: 0
+    tickWidth: 0,
+    startOnTick: true,
+    endOnTick: false,
+    alignTicks: false,
+    min: 0,
+    minPadding: 0,
+    tickmarkPlacement: 'on', // aligns ticks with categories
+    // Remove pointPlacement from xAxis, set it in plotOptions instead
   },
   yAxis: {
     title: {
@@ -34,7 +41,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     },
     labels: {
       style: {
-        color: '#CDD1D7',
+        color: '#E5E7EB',
         fontSize: '10px',
         fontFamily: 'Poppins, sans-serif'
       },
@@ -44,7 +51,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
         return this.value + '';
       }
     },
-    gridLineColor: '#CDD1D7',
+    gridLineColor: '#E5E7EB',
     gridLineDashStyle: 'Dot',
     gridLineWidth: 0.5,
     min: 0,
@@ -59,7 +66,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     shared: true,
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderWidth: 1,
-    borderColor: '#CDD1D7',
+    borderColor: '#E5E7EB',
     shadow: true,
     style: {
       fontFamily: 'Poppins, sans-serif',
@@ -69,7 +76,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
   plotOptions: {
     areaspline: {
       fillOpacity: 0.2,
-      lineWidth: 2,
+      lineWidth: 1,
       marker: {
         enabled: false,
         symbol: 'circle',
@@ -82,7 +89,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
       },
       states: {
         hover: {
-          lineWidth: 3
+          lineWidth: 1
         }
       },
       animation: {
@@ -100,7 +107,8 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
           [0, 'rgba(51, 143, 255, 0.8)'],
           [1, 'rgba(205, 228, 255, 0)']
         ]
-      }
+      },
+      pointPlacement: 'on', // Ensures first point is at axis origin
     },
     series: {
       animation: {
@@ -154,7 +162,7 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
         };
         activeSeries.lineWidth = 1;
         activeSeries.enableMouseTracking = true;
-        activeSeries.states = { hover: { enabled: true, lineWidth: 2 } };
+        activeSeries.states = { hover: { enabled: true, lineWidth: 1 } };
         activeSeries.className = 'active-path';
         activeSeries.zIndex = 2; // Ensure active is on top
         // Inactive path
@@ -177,15 +185,15 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
             [1, 'rgba(205, 228, 255, 0)']
           ]
         };
-        newUsersSeries.lineWidth = 2;
+        newUsersSeries.lineWidth = 1;
         newUsersSeries.enableMouseTracking = true;
         newUsersSeries.states = { hover: { enabled: true, lineWidth: 1 } };
         newUsersSeries.className = 'active-path';
         newUsersSeries.zIndex = 2;
         // Inactive path
-        activeSeries.color = '#E5E7EB';
+        activeSeries.color = '#F2F3F5';
         activeSeries.fillColor = 'rgba(0,0,0,0)';
-        activeSeries.lineWidth = 2;
+        activeSeries.lineWidth = 1;
         activeSeries.enableMouseTracking = false;
         activeSeries.states = { hover: { enabled: false } };
         activeSeries.className = 'inactive-path';
@@ -195,17 +203,17 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
         // fallback: both muted gray border, no fill
         activeSeries.visible = true;
         newUsersSeries.visible = true;
-        activeSeries.color = '#E5E7EB';
+        activeSeries.color = '#F2F3F5';
         activeSeries.fillColor = 'rgba(0,0,0,0)';
-        activeSeries.lineWidth = 2;
+        activeSeries.lineWidth = 1;
         activeSeries.enableMouseTracking = false;
         activeSeries.states = { hover: { enabled: false } };
         activeSeries.className = 'inactive-path';
         activeSeries.opacity = 0.7;
         activeSeries.zIndex = 1;
-        newUsersSeries.color = '#E5E7EB';
+        newUsersSeries.color = '#F2F3F5';
         newUsersSeries.fillColor = 'rgba(0,0,0,0)';
-        newUsersSeries.lineWidth = 2;
+        newUsersSeries.lineWidth = 1;
         newUsersSeries.enableMouseTracking = false;
         newUsersSeries.states = { hover: { enabled: false } };
         newUsersSeries.className = 'inactive-path';
@@ -218,10 +226,10 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
       newUsersSeries.visible = true;
       activeSeries.color = '#F2F3F5';
       activeSeries.fillColor = 'rgba(0,0,0,0)';
-      activeSeries.lineWidth = 2;
+      activeSeries.lineWidth = 1;
       newUsersSeries.color = '#F2F3F5';
       newUsersSeries.fillColor = 'rgba(0,0,0,0)';
-      newUsersSeries.lineWidth = 2;
+      newUsersSeries.lineWidth = 1;
     }
     // Tooltip: only show active series
     newOptions.tooltip = {
