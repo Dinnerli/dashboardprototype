@@ -27,19 +27,16 @@ const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBa
       </div>
       <div className="flex h-[10px] items-center gap-[2px] flex-1">
         <div 
-          className="h-full bg-[#338FFF] rounded-[10px] transition-all duration-1000 ease-out" 
-          style={{ 
-            width: isAnimated ? `${completedPercentage}%` : '0%',
-            transitionDelay: '0.2s'
-          }}
-        ></div>
-        <div 
-          className="h-full bg-[#CDE4FF] rounded-[5px] transition-all duration-1000 ease-out" 
-          style={{ 
-            width: isAnimated ? `${inProgressPercentage}%` : '0%',
-            transitionDelay: '0.4s'
-          }}
-        ></div>
+          className="relative h-full w-full bg-[#CDE4FF] rounded-[5px] overflow-hidden transition-all duration-1000 ease-out"
+        >
+          <div
+            className="absolute left-0 top-0 h-full bg-[#338FFF] rounded-[10px] transition-all duration-1000 ease-out"
+            style={{
+              width: isAnimated ? `${completedPercentage}%` : '0%',
+              transitionDelay: '0.2s',
+            }}
+          ></div>
+        </div>
         <div className="flex-1 h-full bg-transparent"></div>
       </div>
     </div>
