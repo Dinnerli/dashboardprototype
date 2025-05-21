@@ -16,7 +16,7 @@ const competencyData = [
 
 const CompetencyCard = () => {
   return (
-    <Card className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
+    <Card className="bg-white rounded-lg  border border-gray-200 flex flex-col">
       <CardHeader className="pb-2 border-b border-gray-100">
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold text-[#233143]">Competency</h3>

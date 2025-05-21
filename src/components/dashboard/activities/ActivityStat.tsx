@@ -20,7 +20,7 @@ const ActivityStat = ({
 }: ActivityStatProps) => {
   return (
     <div 
-      className={`flex items-center gap-2.5 p-1.5 px-2 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-md ${
+      className={`flex items-center gap-2.5 p-1.5 px-2 rounded-lg cursor-pointer transition-all duration-200  ${
         isActive ? 'bg-[#F5F6F8] ' : ''
       }`}
       onClick={onClick}

@@ -45,7 +45,7 @@ const RewardsCard = () => {
   const segmentAngle = 360 / rankData.length;
 
   return (
-    <Card className="w-full h-[450px] animate-slide-in-up shadow-sm overflow-hidden" style={{
+    <Card className="w-full h-[450px] animate-slide-in-up  overflow-hidden" style={{
       animationDelay: '0.4s'
     }}>
       <CardHeader title="Rewards" rightContent={<ViewReportButton />} />

@@ -46,7 +46,7 @@ const DevicesCard = () => {
   const mobileStart = donutSize * (1 - (mobileTotal / 100));
 
   return (
-    <Card className="w-auto h-full px-4 pb-4 shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-auto h-full px-4 pb-4  animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
       <CardHeader title="Devices" rightContent={<ViewReportButton />} />
       <div className="flex flex-col h-full">
         {/* Device options section - reduced padding */}

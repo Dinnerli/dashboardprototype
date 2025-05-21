@@ -90,7 +90,7 @@
 
 @layer components {
   .dashboard-card {
-    @apply bg-white rounded-lg shadow-sm p-5 transition-all duration-300 hover:shadow-md;
+    @apply bg-white rounded-lg  p-5 transition-all duration-300 hover:shadow-md;
   }
   
   .nav-item {

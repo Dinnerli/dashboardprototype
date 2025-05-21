@@ -45,7 +45,7 @@ const StatCard: React.FC<StatCardProps> = ({
     "rounded-lg",
     "p-3",
     "bg-white",
-    hoverEffect ? "hover:shadow-md hover:scale-[1.02] transition-all duration-200 cursor-pointer" : "",
+    hoverEffect ? " hover:scale-[1.02] transition-all duration-200 cursor-pointer" : "",
     active ? "bg-[#F5F6F8]" : "",
     className,
   ].join(" ");

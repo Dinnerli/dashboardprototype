@@ -29,7 +29,7 @@ const StatsCard = ({
         transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]
         ${isSelected 
           ? 'border-2 border-[#338FFF] shadow-md shadow-[#338FFF]/20' 
-          : 'hover:border hover:border-[#338FFF]/50 hover:shadow-sm'
+          : 'hover:border hover:border-[#338FFF]/50 hover:'
         }`}
       onClick={onClick}
     >

@@ -19,7 +19,7 @@ const AdminActivityCard = () => {
   ];
 
   return (
-    <Card className="w-full h-full shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-full h-full  animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
       <CardHeader title="Admin Activity" rightContent={<ViewReportButton />} />
       <div className="flex flex-col ">
         {/* Stats section - not clickable, color line instead of dot, no space below */}

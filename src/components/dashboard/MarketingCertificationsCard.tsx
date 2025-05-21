@@ -3,7 +3,7 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 
 const MarketingCertificationsCard = () => {
   return (
-    <Card className="w-[455px] h-[555px] animate-slide-in-up shadow-sm" style={{
+    <Card className="w-[455px] h-[555px] animate-slide-in-up " style={{
       animationDelay: '0.4s'
     }}>
       <div className="flex px-6 py-6 justify-between items-center border-b border-[#CDD1D7]">

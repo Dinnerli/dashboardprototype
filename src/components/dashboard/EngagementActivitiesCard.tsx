@@ -44,7 +44,7 @@ const EngagementActivitiesCard = () => {
   };
 
   return (
-    <Card className="w-full h-auto animate-slide-in-up shadow-sm overflow-hidden bg-white px-6" style={{
+    <Card className="w-full h-auto animate-slide-in-up  overflow-hidden bg-white px-6" style={{
       animationDelay: '0.3s'
     }}>
       <CardHeader title="Engagement Activities" rightContent={<ViewReportButton />}/>

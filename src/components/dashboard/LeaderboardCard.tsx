@@ -48,7 +48,7 @@ const LeaderboardCard = () => {
   ];
   
   return (
-    <Card className="w-full h-full animate-slide-in-up shadow-sm overflow-hidden flex flex-col" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-full h-full animate-slide-in-up  overflow-hidden flex flex-col" style={{ animationDelay: '0.4s' }}>
       <CardHeader title="Leaderboard" rightContent={<ViewReportButton />} />
       
       {/* Leaders list - using flex-1 to take remaining space */}
