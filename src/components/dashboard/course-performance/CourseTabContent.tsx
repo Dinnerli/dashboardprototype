@@ -29,9 +29,9 @@ type CourseTabContentProps = {
 
 const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentProps) => {
   return (
-    <div className="px-8 py-4 h-full flex flex-col">
+    <div className="px-8 py-4 h-full flex flex-col justify-center">
       {/* Stats Row */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-4">
+      <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
         <ActivityStat 
           title={stats.firstStat.title}
           value={stats.firstStat.value}
