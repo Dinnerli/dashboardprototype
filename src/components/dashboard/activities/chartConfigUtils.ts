@@ -139,24 +139,101 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
       if (activeSeries) activeSeries.name = 'Completed';
       if (newUsersSeries) newUsersSeries.name = 'In Progress';
     }
-    // Show only the selected stat's series, or both if none selected
+    // Always show both series, but only the selected stat is colored, the other is just a muted gray border (no fill)
     if (selectedStat) {
       if (activeSeries && activeSeries.name === selectedStat) {
         activeSeries.visible = true;
-        newUsersSeries.visible = false;
-      } else if (newUsersSeries && newUsersSeries.name === selectedStat) {
         newUsersSeries.visible = true;
-        activeSeries.visible = false;
-      } else {
-        // fallback: show both
+        activeSeries.color = '#338FFF';
+        activeSeries.fillColor = {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, 'rgba(51, 143, 255, 0.8)'],
+            [1, 'rgba(205, 228, 255, 0)']
+          ]
+        };
+        activeSeries.lineWidth = 1;
+        activeSeries.enableMouseTracking = true;
+        activeSeries.states = { hover: { enabled: true, lineWidth: 2 } };
+        activeSeries.className = 'active-path';
+        activeSeries.zIndex = 2; // Ensure active is on top
+        // Inactive path
+        newUsersSeries.color = '#E5E7EB'; // Muted gray
+        newUsersSeries.fillColor = 'rgba(0,0,0,0)';
+        newUsersSeries.lineWidth = 2;
+        newUsersSeries.enableMouseTracking = false;
+        newUsersSeries.states = { hover: { enabled: false } };
+        newUsersSeries.className = 'inactive-path';
+        newUsersSeries.opacity = 0.7;
+        newUsersSeries.zIndex = 1;
+      } else if (newUsersSeries && newUsersSeries.name === selectedStat) {
         activeSeries.visible = true;
         newUsersSeries.visible = true;
+        newUsersSeries.color = '#338FFF';
+        newUsersSeries.fillColor = {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, 'rgba(51, 143, 255, 0.8)'],
+            [1, 'rgba(205, 228, 255, 0)']
+          ]
+        };
+        newUsersSeries.lineWidth = 2;
+        newUsersSeries.enableMouseTracking = true;
+        newUsersSeries.states = { hover: { enabled: true, lineWidth: 1 } };
+        newUsersSeries.className = 'active-path';
+        newUsersSeries.zIndex = 2;
+        // Inactive path
+        activeSeries.color = '#E5E7EB';
+        activeSeries.fillColor = 'rgba(0,0,0,0)';
+        activeSeries.lineWidth = 2;
+        activeSeries.enableMouseTracking = false;
+        activeSeries.states = { hover: { enabled: false } };
+        activeSeries.className = 'inactive-path';
+        activeSeries.opacity = 0.7;
+        activeSeries.zIndex = 1;
+      } else {
+        // fallback: both muted gray border, no fill
+        activeSeries.visible = true;
+        newUsersSeries.visible = true;
+        activeSeries.color = '#E5E7EB';
+        activeSeries.fillColor = 'rgba(0,0,0,0)';
+        activeSeries.lineWidth = 2;
+        activeSeries.enableMouseTracking = false;
+        activeSeries.states = { hover: { enabled: false } };
+        activeSeries.className = 'inactive-path';
+        activeSeries.opacity = 0.7;
+        activeSeries.zIndex = 1;
+        newUsersSeries.color = '#E5E7EB';
+        newUsersSeries.fillColor = 'rgba(0,0,0,0)';
+        newUsersSeries.lineWidth = 2;
+        newUsersSeries.enableMouseTracking = false;
+        newUsersSeries.states = { hover: { enabled: false } };
+        newUsersSeries.className = 'inactive-path';
+        newUsersSeries.opacity = 0.7;
+        newUsersSeries.zIndex = 1;
       }
     } else {
-      // If no stat selected, show both
+      // If no stat selected, both muted gray border, no fill
       activeSeries.visible = true;
       newUsersSeries.visible = true;
+      activeSeries.color = '#F2F3F5';
+      activeSeries.fillColor = 'rgba(0,0,0,0)';
+      activeSeries.lineWidth = 2;
+      newUsersSeries.color = '#F2F3F5';
+      newUsersSeries.fillColor = 'rgba(0,0,0,0)';
+      newUsersSeries.lineWidth = 2;
     }
+    // Tooltip: only show active series
+    newOptions.tooltip = {
+      ...newOptions.tooltip,
+      shared: false,
+      formatter: function() {
+        if (this.series && this.series.options.className === 'active-path') {
+          return `<b>${this.series.name}</b><br/>${this.x}: <b>${this.y}</b>`;
+        }
+        return false;
+      }
+    };
   }
   return newOptions;
 };
