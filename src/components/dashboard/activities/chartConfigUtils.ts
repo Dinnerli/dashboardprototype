@@ -67,7 +67,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderWidth: 1,
     borderColor: '#E5E7EB',
-    shadow: true,
+    shadow: false,
     style: {
       fontFamily: 'Poppins, sans-serif',
       fontSize: '12px'

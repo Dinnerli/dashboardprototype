@@ -7,8 +7,8 @@ interface CardHeaderProps {
 }
 
 const CardHeader: FC<CardHeaderProps> = ({ title, rightContent }) => (
-  <div className="flex justify-between items-center w-full p-6 border-b border-[#B3B3B3]">
-    <div className="flex items-center gap-2.5 px-2.5 flex-1">
+  <div className="flex justify-between items-center w-full  border-b border-[#B3B3B3]">
+    <div className="flex items-center gap-2.5 px-2.5 pb-6 flex-1">
       <CardTitle>{title}</CardTitle>
     </div>
     <div className="flex items-center">
