@@ -13,6 +13,24 @@ const EngagementActivitiesCard = () => {
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
   const [isAnimated, setIsAnimated] = useState(false);
 
+  const chartData: Record<string, { path: string }> = {
+    'Active Users': {
+      path: 'M0 200L160 250L320 80L480 280L640 50L800 220',
+    },
+    'Posts': {
+      path: 'M0 180L160 120L320 200L480 100L640 180L800 80',
+    },
+    'Comments': {
+      path: 'M0 120L160 200L320 80L480 180L640 120L800 150',
+    },
+    'Reactions': {
+      path: 'M0 150L160 180L320 120L480 200L640 80L800 180',
+    },
+    'default': {
+      path: 'M0 200L160 250L320 80L480 280L640 50L800 220',
+    },
+  };
+
   useEffect(() => {
     // Trigger animation after a small delay to ensure the component is mounted
     const timer = setTimeout(() => {
@@ -34,7 +52,7 @@ const EngagementActivitiesCard = () => {
         
 
         {/* Stats Section */}
-        <div className="grid grid-cols-4  py-6">
+        <div className="grid grid-cols-4 gap-1 py-6">
           <EngagementStat
             title="Active Users"
             value={237}
@@ -101,7 +119,7 @@ const EngagementActivitiesCard = () => {
                 
                 {/* Main blue line with animation */}
                 <path 
-                  d="M0 200L160 250L320 80L480 280L640 50L800 220" 
+                  d={chartData[selectedStat || 'default'].path}
                   stroke="#338FFF" 
                   strokeWidth="2" 
                   fill="none"
