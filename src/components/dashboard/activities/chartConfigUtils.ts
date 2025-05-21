@@ -125,124 +125,27 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
 // Update chart options based on tab type and selected stat
 export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.Options, selectedStat?: string | null): Highcharts.Options => {
   const newOptions = { ...prevOptions };
-  if (newOptions.series && Array.isArray(newOptions.series) && newOptions.series.length >= 2) {
-    // Use Highcharts.SeriesAreasplineOptions for type safety
-    const activeSeries = newOptions.series[0] as Highcharts.SeriesAreasplineOptions;
-    const newUsersSeries = newOptions.series[1] as Highcharts.SeriesAreasplineOptions;
-    // Update series data
-    if (activeSeries) {
-      activeSeries.data = chartData[chartType].active;
-    }
-    if (newUsersSeries) {
-      newUsersSeries.data = chartData[chartType].new;
-    }
-    // Update series name based on tab
-    if (chartType === 'user') {
-      if (activeSeries) activeSeries.name = 'Active Users';
-      if (newUsersSeries) newUsersSeries.name = 'New Users';
-    } else if (chartType === 'usage') {
-      if (activeSeries) activeSeries.name = 'Total Usage';
-      if (newUsersSeries) newUsersSeries.name = 'Avg. Time';
-    } else if (chartType === 'course') {
-      if (activeSeries) activeSeries.name = 'Completed';
-      if (newUsersSeries) newUsersSeries.name = 'In Progress';
-    }
-    // Always show both series, but only the selected stat is colored, the other is just a muted gray border (no fill)
-    if (selectedStat) {
-      if (activeSeries && activeSeries.name === selectedStat) {
-        activeSeries.visible = true;
-        newUsersSeries.visible = true;
-        activeSeries.color = '#338FFF';
-        activeSeries.fillColor = {
+  // Get all stat names for the current tab
+  const statNames = Object.keys(chartData[chartType]);
+  newOptions.series = statNames.map((stat) => ({
+    name: stat,
+    data: chartData[chartType][stat],
+    color: stat === selectedStat ? '#338FFF' : '#E5E7EB',
+    type: 'areaspline',
+    fillColor: stat === selectedStat
+      ? {
           linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
             [0, 'rgba(51, 143, 255, 0.8)'],
             [1, 'rgba(205, 228, 255, 0)']
           ]
-        };
-        activeSeries.lineWidth = 1;
-        activeSeries.enableMouseTracking = true;
-        activeSeries.states = { hover: { enabled: true, lineWidth: 1 } };
-        activeSeries.className = 'active-path';
-        activeSeries.zIndex = 2; // Ensure active is on top
-        // Inactive path
-        newUsersSeries.color = '#E5E7EB'; // Muted gray
-        newUsersSeries.fillColor = 'rgba(0,0,0,0)';
-        newUsersSeries.lineWidth = 2;
-        newUsersSeries.enableMouseTracking = false;
-        newUsersSeries.states = { hover: { enabled: false } };
-        newUsersSeries.className = 'inactive-path';
-        newUsersSeries.opacity = 0.7;
-        newUsersSeries.zIndex = 1;
-      } else if (newUsersSeries && newUsersSeries.name === selectedStat) {
-        activeSeries.visible = true;
-        newUsersSeries.visible = true;
-        newUsersSeries.color = '#338FFF';
-        newUsersSeries.fillColor = {
-          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-          stops: [
-            [0, 'rgba(51, 143, 255, 0.8)'],
-            [1, 'rgba(205, 228, 255, 0)']
-          ]
-        };
-        newUsersSeries.lineWidth = 1;
-        newUsersSeries.enableMouseTracking = true;
-        newUsersSeries.states = { hover: { enabled: true, lineWidth: 1 } };
-        newUsersSeries.className = 'active-path';
-        newUsersSeries.zIndex = 2;
-        // Inactive path
-        activeSeries.color = '#F2F3F5';
-        activeSeries.fillColor = 'rgba(0,0,0,0)';
-        activeSeries.lineWidth = 1;
-        activeSeries.enableMouseTracking = false;
-        activeSeries.states = { hover: { enabled: false } };
-        activeSeries.className = 'inactive-path';
-        activeSeries.opacity = 0.7;
-        activeSeries.zIndex = 1;
-      } else {
-        // fallback: both muted gray border, no fill
-        activeSeries.visible = true;
-        newUsersSeries.visible = true;
-        activeSeries.color = '#F2F3F5';
-        activeSeries.fillColor = 'rgba(0,0,0,0)';
-        activeSeries.lineWidth = 1;
-        activeSeries.enableMouseTracking = false;
-        activeSeries.states = { hover: { enabled: false } };
-        activeSeries.className = 'inactive-path';
-        activeSeries.opacity = 0.7;
-        activeSeries.zIndex = 1;
-        newUsersSeries.color = '#F2F3F5';
-        newUsersSeries.fillColor = 'rgba(0,0,0,0)';
-        newUsersSeries.lineWidth = 1;
-        newUsersSeries.enableMouseTracking = false;
-        newUsersSeries.states = { hover: { enabled: false } };
-        newUsersSeries.className = 'inactive-path';
-        newUsersSeries.opacity = 0.7;
-        newUsersSeries.zIndex = 1;
-      }
-    } else {
-      // If no stat selected, both muted gray border, no fill
-      activeSeries.visible = true;
-      newUsersSeries.visible = true;
-      activeSeries.color = '#F2F3F5';
-      activeSeries.fillColor = 'rgba(0,0,0,0)';
-      activeSeries.lineWidth = 1;
-      newUsersSeries.color = '#F2F3F5';
-      newUsersSeries.fillColor = 'rgba(0,0,0,0)';
-      newUsersSeries.lineWidth = 1;
-    }
-    // Tooltip: only show active series
-    newOptions.tooltip = {
-      ...newOptions.tooltip,
-      shared: false,
-      formatter: function() {
-        if (this.series && this.series.options.className === 'active-path') {
-          return `<b>${this.series.name}</b><br/>${this.x}: <b>${this.y}</b>`;
         }
-        return false;
-      }
-    };
-  }
+      : 'rgba(229, 231, 235, 0.2)', // muted gray fill
+    lineWidth: stat === selectedStat ? 2 : 1,
+    marker: { enabled: false },
+    zIndex: stat === selectedStat ? 2 : 1,
+    opacity: stat === selectedStat ? 1 : 0.7
+  }));
   return newOptions;
 };
 
@@ -250,15 +153,8 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
 export const createInitialSeries = (): Highcharts.SeriesOptionsType[] => [
   {
     name: 'Active Users',
-    data: chartData['user'].active,
+    data: chartData['user']['Active Users'],
     color: '#338FFF',
     type: 'areaspline'
-  },
-  {
-    name: 'New Users',
-    data: chartData['user'].new,
-    color: '#F5F6F8',
-    type: 'areaspline',
-    visible: false
   }
 ];
