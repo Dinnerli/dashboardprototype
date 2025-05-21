@@ -184,7 +184,7 @@ const HighchartsCard = ({
                       d={describeArc(cx, cy, r, assignedEnd, completedEnd)}
                       stroke={colors[1]}
                       strokeWidth={arcWidth}
-                      strokeLinecap="butt"
+                      strokeLinecap="round"
                       fill="none"
                       className={`transition-all duration-400 ${segments[key as keyof typeof segments] ? 'opacity-100' : 'opacity-0'}`}
                     />
@@ -193,7 +193,7 @@ const HighchartsCard = ({
                       d={describeArc(cx, cy, r, completedEnd, endAngle)}
                       stroke={colors[2]}
                       strokeWidth={arcWidth}
-                      strokeLinecap="butt"
+                      strokeLinecap="round"
                       fill="none"
                       className={`transition-all duration-400 ${segments[key as keyof typeof segments] ? 'opacity-100' : 'opacity-0'}`}
                     />
@@ -223,8 +223,8 @@ const HighchartsCard = ({
             </div>
             
             {/* First row */}
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-wrap gap-4 ">
+              <div className="flex items-center justify-between  gap-4 w-full lg:w-1/2">
                 <div className="flex items-center">
                   <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
