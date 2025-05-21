@@ -11,22 +11,22 @@ import CardHeader from "./CardHeader";
 const tabData = {
   user: {
     stats: [
-      { title: "Active Users", value: "237", percentage: "40%", isPositive: true },
-      { title: "New Users", value: "8", percentage: "40%", isPositive: false }
+      { title: "Active Users", value: "237", percentage: "40%", isPositive: true, tooltip: "The number of users who have logged into the platform within the selected timeframe." },
+      { title: "New Users", value: "8", percentage: "40%", isPositive: false, tooltip: "The number of new users who have registered to the platform within that time range" }
     ],
     chartType: 'user' as TabType
   },
   usage: {
     stats: [
-      { title: "Total Usage", value: "1,243", percentage: "15%", isPositive: true },
-      { title: "Avg. Time", value: "45m", percentage: "5%", isPositive: true }
+      { title: "Total Usage", value: "1,243", percentage: "15%", isPositive: true, tooltip: "Total Number of Hours spent on the platform by users" },
+      { title: "Avg. Time", value: "45m", percentage: "5%", isPositive: true, tooltip: "Average time spent on the platform by users" }
     ],
     chartType: 'usage' as TabType
   },
   course: {
     stats: [
-      { title: "Completed", value: "89", percentage: "12%", isPositive: false },
-      { title: "In Progress", value: "156", percentage: "32%", isPositive: true }
+      { title: "Completed", value: "89", percentage: "12%", isPositive: false, tooltip: "Number of learners who completed Courses" },
+      { title: "In Progress", value: "156", percentage: "32%", isPositive: true, tooltip: "Number of learners assigned for Courses" }
     ],
     chartType: 'course' as TabType
   }
@@ -67,6 +67,7 @@ const ActivitiesCard = () => {
                 isActive={selectedStat === stat.title}
                 isPositive={stat.isPositive}
                 onClick={() => handleStatClick(stat.title)}
+                tooltip={stat.tooltip}
               />
             ))}
           </div>

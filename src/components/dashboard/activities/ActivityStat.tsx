@@ -1,5 +1,6 @@
 import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 type ActivityStatProps = { 
   title: string; 
@@ -8,6 +9,7 @@ type ActivityStatProps = {
   isActive: boolean;
   isPositive: boolean;
   onClick: () => void;
+  tooltip?: string;
 };
 
 const ActivityStat = ({ 
@@ -16,7 +18,8 @@ const ActivityStat = ({
   percentage, 
   isActive,
   isPositive,
-  onClick
+  onClick,
+  tooltip
 }: ActivityStatProps) => {
   return (
     <div 
@@ -39,7 +42,20 @@ const ActivityStat = ({
           }`}>
             {title}
           </span>
-          <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
+          {tooltip ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span tabIndex={0} onClick={e => e.stopPropagation()}>
+                  <Info className="w-4 h-4 text-[#8C9BAC] cursor-help" stroke="#8C9BAC" />
+                </span>
+              </TooltipTrigger>
+              <TooltipContent side="top" align="center">
+                {tooltip}
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
+          )}
         </div>
         <div className="flex items-center px-2.5">
           <div>
