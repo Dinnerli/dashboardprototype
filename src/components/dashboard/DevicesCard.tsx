@@ -67,6 +67,19 @@ const DevicesCard = () => {
             </div>
           ))}
         </div>
+        {/* Color indicator legend for mobile (above chart) */}
+        {selectedDevice === 'mobile' && (
+          <div className="flex justify-center gap-4 pb-2">
+            <div className="flex items-center gap-1">
+              <span className="inline-block w-3 h-3 rounded-full bg-[#338FFF]"></span>
+              <span className="text-xs text-[#233143]">Browser</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="inline-block w-3 h-3 rounded-full bg-[#003072]"></span>
+              <span className="text-xs text-[#233143]">App</span>
+            </div>
+          </div>
+        )}
         {/* Circle Graph */}
         <div className="flex justify-center items-center flex-1 px-4 pb-4">
           <div className="w-48 h-48 relative">
