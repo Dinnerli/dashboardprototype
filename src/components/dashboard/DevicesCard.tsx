@@ -3,6 +3,7 @@ import { Info } from "lucide-react";
 import { useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
+import TrendIndicator from "./common/TrendIndicator";
 
 const DevicesCard = () => {
   const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile' | null>(null);
@@ -38,13 +39,7 @@ const DevicesCard = () => {
                 {/* Stats row */}
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-xl text-[#233143]">77%</span>
-                  <div className="flex items-center gap-0.5">
-                    <span className="text-[#00D764] text-xs font-medium">40%</span>
-                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12.0467 6.38004L8.00001 2.33337L3.95334 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
+                  <TrendIndicator value="40%" isPositive={true} />
                 </div>
               </div>
             </div>
@@ -75,13 +70,7 @@ const DevicesCard = () => {
                 {/* Stats row */}
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-xl text-[#233143]">23%</span>
-                  <div className="flex items-center gap-0.5">
-                    <span className="text-[#ED5158] text-xs font-medium">40%</span>
-                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12.0467 9.61996L8.00001 13.6666L3.95334 9.61996" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
+                  <TrendIndicator value="40%" isPositive={false} />
                 </div>
               </div>
             </div>

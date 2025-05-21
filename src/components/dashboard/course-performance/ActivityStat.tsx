@@ -1,6 +1,6 @@
 import React from "react";
 import { Info } from "lucide-react";
-import StatIndicator from "./StatIndicator";
+import TrendIndicator from "../common/TrendIndicator";
 
 type ActivityStatProps = { 
   title: string; 
@@ -8,6 +8,7 @@ type ActivityStatProps = {
   percentage: string;
   isActive: boolean;
   isSelected: boolean;
+  isPositive: boolean;
   onClick: () => void;
   icon?: React.ReactNode;
 };
@@ -18,6 +19,7 @@ const ActivityStat = ({
   percentage, 
   isActive,
   isSelected,
+  isPositive,
   onClick,
   icon
 }: ActivityStatProps) => {
@@ -48,7 +50,7 @@ const ActivityStat = ({
         </div>
         <div className="flex px-2.5 justify-end items-center gap-2.5 flex-1">
           <span className="text-2xl font-bold text-[#4F5A69]">{value}</span>
-          <StatIndicator value={percentage} isPositive={true} />
+          <TrendIndicator value={percentage} isPositive={isPositive} />
         </div>
       </div>
     </div>

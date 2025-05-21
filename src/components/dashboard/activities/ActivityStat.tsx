@@ -1,5 +1,5 @@
 import { Info } from "lucide-react";
-import StatIndicator from "./StatIndicator";
+import TrendIndicator from "../common/TrendIndicator";
 
 type ActivityStatProps = { 
   title: string; 
@@ -46,7 +46,7 @@ const ActivityStat = ({
             <span className="text-lg font-bold text-[#4F5A69]">{value}</span>
           </div>
           <div className="w-[66px] flex justify-end items-center">
-            <StatIndicator value={percentage} isPositive={isPositive} />
+            <TrendIndicator value={percentage} isPositive={isPositive} />
           </div>
         </div>
       </div>

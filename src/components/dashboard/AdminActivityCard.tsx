@@ -3,6 +3,7 @@ import { Info } from "lucide-react";
 import { useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
+import TrendIndicator from "./common/TrendIndicator";
 
 const AdminActivityCard = () => {
   const months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
@@ -39,11 +40,7 @@ const AdminActivityCard = () => {
                   <span className="font-poppins text-[16px] font-bold text-[#4F5A69]">237</span>
                 </div>
                 <div className="flex justify-end items-center ml-1">
-                  <span className="text-[#00D764] text-right font-poppins text-[12px]">40%</span>
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.0466 6.38004L7.99998 2.33337L3.95331 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                    <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                  </svg>
+                  <TrendIndicator value="40%" isPositive={true} />
                 </div>
               </div>
             </div>
@@ -73,11 +70,7 @@ const AdminActivityCard = () => {
                   <span className="font-poppins text-[16px] font-bold text-[#4F5A69]">237</span>
                 </div>
                 <div className="flex justify-end items-center ml-1">
-                  <span className="text-[#00D764] text-right font-poppins text-[12px]">40%</span>
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.0466 6.38004L7.99998 2.33337L3.95331 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                    <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                  </svg>
+                  <TrendIndicator value="40%" isPositive={true} />
                 </div>
               </div>
             </div>
@@ -107,11 +100,7 @@ const AdminActivityCard = () => {
                   <span className="font-poppins text-[16px] font-bold text-[#4F5A69]">237</span>
                 </div>
                 <div className="flex justify-end items-center ml-1">
-                  <span className="text-[#00D764] text-right font-poppins text-[12px]">40%</span>
-                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.0466 6.38004L7.99998 2.33337L3.95331 6.38004" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                    <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                  </svg>
+                  <TrendIndicator value="40%" isPositive={true} />
                 </div>
               </div>
             </div>

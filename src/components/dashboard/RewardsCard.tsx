@@ -1,4 +1,3 @@
-
 import { Card, CardTitle } from "@/components/ui/card";
 import { ArrowUp, ArrowDown, Trophy, Medal } from "lucide-react";
 import { useState } from "react";
@@ -7,6 +6,7 @@ import ViewReportButton from "./ViewReportButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { ChartContainer } from "@/components/ui/chart";
+import TrendIndicator from "./common/TrendIndicator";
 
 // Rank data for the Rank Lobby tab
 type Rank = {
@@ -91,17 +91,7 @@ const RewardsCard = () => {
                       <span className="text-[#4F5A69] font-bold text-base">237</span>
                     </div>
                     <div className="flex justify-end items-center">
-                      {index % 2 === 0 ? (
-                        <>
-                          <span className="text-[#00D764] text-right text-[10px]">40%</span>
-                          <ArrowUp className="w-3 h-3 text-[#00D764]" />
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-[#ED5158] text-right text-[10px]">40%</span>
-                          <ArrowDown className="w-3 h-3 text-[#ED5158]" />
-                        </>
-                      )}
+                      <TrendIndicator value="40%" isPositive={index % 2 === 0} />
                     </div>
                   </div>
                 </div>
@@ -139,17 +129,7 @@ const RewardsCard = () => {
 
                     {/* Change indicator */}
                     <div className="flex justify-end items-center">
-                      {rank.change > 0 ? (
-                        <div className="flex items-center">
-                          <span className="text-[#00D764] text-right text-[10px]">{Math.abs(rank.change)}%</span>
-                          <ArrowUp className="w-3 h-3 text-[#00D764]" />
-                        </div>
-                      ) : (
-                        <div className="flex items-center">
-                          <span className="text-[#ED5158] text-right text-[10px]">{Math.abs(rank.change)}%</span>
-                          <ArrowDown className="w-3 h-3 text-[#ED5158]" />
-                        </div>
-                      )}
+                      <TrendIndicator value={Math.abs(rank.change) + '%'} isPositive={rank.change > 0} />
                     </div>
                   </div>
                 ))}

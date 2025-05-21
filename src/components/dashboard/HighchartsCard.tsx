@@ -3,6 +3,7 @@ import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
+import TrendIndicator from "./common/TrendIndicator";
 
 interface HighchartsCardProps {
   title?: string;
@@ -241,18 +242,7 @@ const HighchartsCard = ({
                     <div className="flex items-center gap-2">
                       <span className="text-xl font-bold text-[#4F5A69]">{activeData.uploads.value}</span>
                       <div className="flex items-center">
-                        <span className={`text-xs ${activeData.uploads.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.uploads.trend}%</span>
-                        {activeData.uploads.increasing ? (
-                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>
-                        ) : (
-                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>
-                        )}
+                        <TrendIndicator value={activeData.uploads.trend + '%'} isPositive={activeData.uploads.increasing} />
                       </div>
                     </div>
                   </div>
@@ -274,18 +264,7 @@ const HighchartsCard = ({
                     <div className="flex items-center gap-2">
                       <span className="text-xl font-bold text-[#4F5A69]">{activeData.timeSpent.value}</span>
                       <div className="flex items-center">
-                        <span className={`text-xs ${activeData.timeSpent.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.timeSpent.trend}%</span>
-                        {activeData.timeSpent.increasing ? (
-                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>
-                        ) : (
-                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>
-                        )}
+                        <TrendIndicator value={activeData.timeSpent.trend + '%'} isPositive={activeData.timeSpent.increasing} />
                       </div>
                     </div>
                   </div>
@@ -340,18 +319,7 @@ const HighchartsCard = ({
                   <span className="text-xl font-bold text-[#4F5A69] text-right min-w-[32px]">{item.value}</span>
                   {/* Trend */}
                   <div className="flex items-center justify-end min-w-[48px]">
-                    <span className={`text-xs ${item.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{item.trend}%</span>
-                    {item.increasing ? (
-                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                      </svg>
-                    ) : (
-                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                      </svg>
-                    )}
+                    <TrendIndicator value={item.trend + '%'} isPositive={item.increasing} />
                   </div>
                 </div>
               ))}

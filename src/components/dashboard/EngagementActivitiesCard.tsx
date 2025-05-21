@@ -4,6 +4,7 @@ import { Info, ChevronDown, ArrowUp, ArrowDown } from "lucide-react";
 import FilterDropdown from "./common/FilterDropdown";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
+import TrendIndicator from "./common/TrendIndicator";
 
 const EngagementActivitiesCard = () => {
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
@@ -59,8 +60,7 @@ const EngagementActivitiesCard = () => {
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">237</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-[#00D764]">40%</span>
-                  <ArrowUp className="w-4 h-4 text-[#00D764]" />
+                  <TrendIndicator value="40%" isPositive={true} />
                 </div>
               </div>
             </div>
@@ -92,8 +92,7 @@ const EngagementActivitiesCard = () => {
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">8</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-[#ED5158]">40%</span>
-                  <ArrowDown className="w-4 h-4 text-[#ED5158]" />
+                  <TrendIndicator value="40%" isPositive={false} />
                 </div>
               </div>
             </div>
@@ -125,8 +124,7 @@ const EngagementActivitiesCard = () => {
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">8</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-[#ED5158]">40%</span>
-                  <ArrowDown className="w-4 h-4 text-[#ED5158]" />
+                  <TrendIndicator value="40%" isPositive={false} />
                 </div>
               </div>
             </div>
@@ -158,8 +156,7 @@ const EngagementActivitiesCard = () => {
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold text-[#4F5A69]">8</span>
                 <div className="flex items-center gap-1">
-                  <span className="text-[#ED5158]">40%</span>
-                  <ArrowDown className="w-4 h-4 text-[#ED5158]" />
+                  <TrendIndicator value="40%" isPositive={false} />
                 </div>
               </div>
             </div>
