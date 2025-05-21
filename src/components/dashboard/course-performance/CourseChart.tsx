@@ -1,4 +1,3 @@
-
 import React from "react";
 import CourseBar from "./CourseBar";
 
@@ -18,9 +17,9 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
   }
 
   return (
-    <div className="w-full flex-1 flex flex-col font-poppins">
+    <div className="w-full h-auto flex-1 flex flex-col font-poppins">
       {/* Course bars with more vertical spacing */}
-      <div className="flex flex-col gap-4 mb-6 flex-1">
+      <div className="flex flex-col gap-4 mb-6 ">
         {courseData.map((course, index) => (
           <CourseBar
             key={index}
@@ -36,7 +35,7 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
         <div className="w-[100px]"></div>
         <div className="flex-1 h-[1px] bg-[#CDD1D7]"></div>
       </div>
-      <div className="flex pl-[105px] justify-between items-center w-full">
+      <div className="flex pl-[100px] justify-between items-center w-full">
         {percentageMarkers.map((percentage, index) => (
           <div 
             key={index} 

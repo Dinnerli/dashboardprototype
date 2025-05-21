@@ -44,7 +44,7 @@ const EngagementActivitiesCard = () => {
   };
 
   return (
-    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm overflow-hidden bg-white px-6" style={{
+    <Card className="w-full h-auto animate-slide-in-up shadow-sm overflow-hidden bg-white px-6" style={{
       animationDelay: '0.3s'
     }}>
       <CardHeader title="Engagement Activities" rightContent={<ViewReportButton />}/>
@@ -88,20 +88,22 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Chart Section */}
-        <div className="flex-1 relative overflow-hidden pt-2 px-2">
+        <div className="flex-1 relative overflow-hidden pt-0 px-2">
           {/* Y-axis labels */}
-          <div className="absolute left-0 top-4 h-[calc(100%-100px)] flex flex-col justify-between text-xs text-[#8C9BAC]">
-            <div className="h-5 flex items-center">500</div>
-            <div className="h-5 flex items-center">400</div>
-            <div className="h-5 flex items-center">300</div>
-            <div className="h-5 flex items-center">200</div>
-            <div className="h-5 flex items-center">100</div>
+          <div className="absolute left-0 top-2 h-[180px] flex flex-col justify-between text-xs text-[#8C9BAC]">
+            <div className="h-5 flex items-center">180</div>
+            <div className="h-5 flex items-center">150</div>
+            <div className="h-5 flex items-center">120</div>
+            <div className="h-5 flex items-center">90</div>
+            <div className="h-5 flex items-center">60</div>
+            <div className="h-5 flex items-center">30</div>
             <div className="h-5 flex items-center">0</div>
           </div>
           
           {/* Chart grid lines */}
-          <div className="ml-8 h-[calc(100%-100px)] relative mt-4 mr-4">
+          <div className="ml-8 h-[180px] relative mt-2 mr-4">
             <div className="absolute w-full h-full flex flex-col justify-between">
+              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
               <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
               <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
               <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
@@ -112,14 +114,14 @@ const EngagementActivitiesCard = () => {
             
             {/* Chart SVG */}
             <div className="absolute inset-0">
-              <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 800 300">
+              <svg width="100%" height="180" preserveAspectRatio="none" viewBox="0 0 800 180">
                 {/* Background lines - darker gray */}
-                <path d="M0 150L160 180L320 120L480 200L640 80L800 180" stroke="#E5E7EB" strokeWidth="2" fill="none" />
-                <path d="M0 120L160 200L320 80L480 180L640 120L800 150" stroke="#E5E7EB" strokeWidth="2" fill="none" />
+                <path d="M0 90L160 108L320 72L480 120L640 48L800 108" stroke="#E5E7EB" strokeWidth="2" fill="none" />
+                <path d="M0 72L160 120L320 48L480 108L640 72L800 90" stroke="#E5E7EB" strokeWidth="2" fill="none" />
                 
                 {/* Main blue line with animation */}
                 <path 
-                  d={chartData[selectedStat || 'default'].path}
+                  d={chartData[selectedStat || 'default'].path.replace(/(\d+)(?=L|$)/g, n => Math.round(Number(n) * 0.6).toString())}
                   stroke="#338FFF" 
                   strokeWidth="2" 
                   fill="none"
@@ -137,7 +139,7 @@ const EngagementActivitiesCard = () => {
           </div>
           
           {/* X-axis labels */}
-          <div className="absolute bottom-6 left-8 right-4 flex justify-between text-xs text-[#8C9BAC]">
+          <div className="absolute bottom-2 left-8 right-4 flex justify-between text-xs text-[#8C9BAC]">
             <div>Jan</div>
             <div>Feb</div>
             <div>Mar</div>

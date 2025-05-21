@@ -13,7 +13,7 @@ const CoursePerformanceCard = () => {
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
 
   return (
-    <Card className="w-full h-[555px] animate-slide-in-up shadow-sm px-6" style={{ animationDelay: '0.3s' }}>
+    <Card className="w-full h-auto animate-slide-in-up shadow-sm px-6" style={{ animationDelay: '0.3s' }}>
       <div className="w-full h-full flex flex-col">
         <CardHeader title="Course Performance" rightContent={<ViewReportButton />} />
 
