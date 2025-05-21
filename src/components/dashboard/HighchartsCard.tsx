@@ -226,7 +226,7 @@ const HighchartsCard = ({
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-2">
                 <div className="flex items-center">
-                  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -235,20 +235,20 @@ const HighchartsCard = ({
                   
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-bold text-[#8C9BAC]">Uploads</span>
-                      <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
+                      <span className="text-sm font-medium text-[#8C9BAC]">Uploads</span>
+                      <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-[#4F5A69]">{activeData.uploads.value}</span>
+                      <span className="text-xl font-bold text-[#4F5A69]">{activeData.uploads.value}</span>
                       <div className="flex items-center">
-                        <span className={`text-sm ${activeData.uploads.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.uploads.trend}%</span>
+                        <span className={`text-xs ${activeData.uploads.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.uploads.trend}%</span>
                         {activeData.uploads.increasing ? (
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                             <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                           </svg>
                         ) : (
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                             <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                           </svg>
@@ -261,27 +261,27 @@ const HighchartsCard = ({
                 <div className="w-px h-8 bg-[#F5F6F8]"></div>
                 
                 <div className="flex items-center">
-                  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                   </svg>
                   
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
-                      <span className="text-base font-bold text-[#8C9BAC]">Time Spent</span>
-                      <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
+                      <span className="text-sm font-medium text-[#8C9BAC]">Time </span>
+                      <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-bold text-[#4F5A69]">{activeData.timeSpent.value}</span>
+                      <span className="text-xl font-bold text-[#4F5A69]">{activeData.timeSpent.value}</span>
                       <div className="flex items-center">
-                        <span className={`text-sm ${activeData.timeSpent.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.timeSpent.trend}%</span>
+                        <span className={`text-xs ${activeData.timeSpent.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.timeSpent.trend}%</span>
                         {activeData.timeSpent.increasing ? (
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                             <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                           </svg>
                         ) : (
-                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                             <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
                           </svg>
@@ -295,92 +295,66 @@ const HighchartsCard = ({
             
             {/* Key metrics that update based on selection */}
             <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-4 p-2.5 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="flex items-center justify-center p-2.5">
-                  <div className="w-0.5 h-[35px] bg-[#CDE4FF]"></div>
-                </div>
-                <div className="flex flex-col flex-1">
-                  <div className="flex items-center gap-2.5 px-2.5">
-                    <span className="text-base font-bold text-[#8C9BAC]">Assigned</span>
-                    <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
+              {/* Status rows: Assigned, Completed, Enrolled */}
+              {[{
+                label: "Assigned",
+                color: "#CDE4FF",
+                value: activeData.assigned.value,
+                trend: activeData.assigned.trend,
+                increasing: activeData.assigned.increasing
+              }, {
+                label: "Completed",
+                color: "#338FFF",
+                value: activeData.completed.value,
+                trend: activeData.completed.trend,
+                increasing: activeData.completed.increasing
+              }, {
+                label: "Enrolled",
+                color: "#003072",
+                value: activeData.enrolled.value,
+                trend: activeData.enrolled.trend,
+                increasing: activeData.enrolled.increasing
+              }].map((item, idx) => (
+                <div
+                  key={item.label}
+                  className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg hover:bg-blue-50 transition-colors"
+                >
+                  {/* Vertical colored line */}
+                  <div className={`flex items-center justify-center`}>
+                    <div
+                      className={`w-0.5 h-[35px] ${
+                        item.label === "Assigned"
+                          ? "bg-[#CDE4FF]"
+                          : item.label === "Completed"
+                          ? "bg-[#338FFF]"
+                          : "bg-[#003072]"
+                      }`}
+                    ></div>
                   </div>
-                  <div className="flex justify-between items-center px-2.5">
-                    <span className="text-2xl font-bold text-[#4F5A69]">{activeData.assigned.value}</span>
-                    <div className="flex items-center">
-                      <span className={`text-sm ${activeData.assigned.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.assigned.trend}%</span>
-                      {activeData.assigned.increasing ? (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      ) : (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      )}
-                    </div>
+                  {/* Status label */}
+                  <div className="flex items-center gap-1">
+                    <span className="text-sm font-bold text-[#8C9BAC]">{item.label}</span>
+                    <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
                   </div>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4 p-2.5 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="flex items-center justify-center p-2.5">
-                  <div className="w-0.5 h-[35px] bg-[#338FFF]"></div>
-                </div>
-                <div className="flex flex-col flex-1">
-                  <div className="flex items-center gap-2.5 px-2.5">
-                    <span className="text-base font-bold text-[#8C9BAC]">Completed</span>
-                    <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
-                  </div>
-                  <div className="flex justify-between items-center px-2.5">
-                    <span className="text-2xl font-bold text-[#4F5A69]">{activeData.completed.value}</span>
-                    <div className="flex items-center">
-                      <span className={`text-sm ${activeData.completed.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.completed.trend}%</span>
-                      {activeData.completed.increasing ? (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      ) : (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4 p-2.5 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="flex items-center justify-center p-2.5">
-                  <div className="w-0.5 h-[35px] bg-[#003072]"></div>
-                </div>
-                <div className="flex flex-col flex-1">
-                  <div className="flex items-center gap-2.5 px-2.5">
-                    <span className="text-base font-bold text-[#8C9BAC]">Enrolled</span>
-                    <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
-                  </div>
-                  <div className="flex justify-between items-center px-2.5">
-                    <span className="text-2xl font-bold text-[#4F5A69]">{activeData.enrolled.value}</span>
-                    <div className="flex items-center">
-                      <span className={`text-sm ${activeData.enrolled.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{activeData.enrolled.trend}%</span>
-                      {activeData.enrolled.increasing ? (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      ) : (
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      )}
-                    </div>
+                  {/* Value */}
+                  <span className="text-xl font-bold text-[#4F5A69] text-right min-w-[32px]">{item.value}</span>
+                  {/* Trend */}
+                  <div className="flex items-center justify-end min-w-[48px]">
+                    <span className={`text-xs ${item.increasing ? "text-[#00D764]" : "text-[#ED5158]"}`}>{item.trend}%</span>
+                    {item.increasing ? (
+                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.0467 6.37998L8.00004 2.33331L3.95337 6.37998" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M8 13.6667V2.44666" stroke="#00D764" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    ) : (
+                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.0467 9.62002L8.00004 13.6667L3.95337 9.62002" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M8 2.33334V13.5533" stroke="#ED5158" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    )}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
