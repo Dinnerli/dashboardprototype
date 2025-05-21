@@ -1,7 +1,7 @@
-
 import React, { useRef, useState } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import StatCard from "./common/StatCard";
 
 interface CarouselCardRowProps {
   items: React.ReactNode[];
@@ -69,7 +69,7 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
       {/* Scrollable container */}
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto gap-5 pb-4 px-4 pt-1 hide-scrollbar cursor-grab"
+        className="flex flex-nowrap overflow-x-auto gap-5 pb-4 px-4 pt-1 hide-scrollbar cursor-grab"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
@@ -79,7 +79,7 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
           <div 
             key={index} 
             className="flex-shrink-0"
-            style={{ minWidth: '280px', maxWidth: '320px' }}
+            style={{ minWidth: '280px' }}
           >
             {item}
           </div>

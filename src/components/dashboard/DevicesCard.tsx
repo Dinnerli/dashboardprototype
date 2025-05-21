@@ -4,85 +4,74 @@ import { useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
+import ActivityStat from "./activities/ActivityStat";
 
 const DevicesCard = () => {
   const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile' | null>(null);
 
+  // Device stats data
+  const deviceStats = [
+    {
+      key: 'desktop',
+      title: 'Desktop',
+      value: '77%',
+      percentage: '40%',
+      isPositive: true
+    },
+    {
+      key: 'mobile',
+      title: 'Mobile',
+      value: '23%',
+      percentage: '40%',
+      isPositive: false
+    }
+  ];
+
+  // For mobile, split into browser/app
+  const mobileBrowser = 14; // percent
+  const mobileApp = 9; // percent
+  const mobileTotal = mobileBrowser + mobileApp; // 23
+
+  // Colors
+  const desktopColor = '#338FFF';
+  const mobileBrowserColor = '#338FFF';
+  const mobileAppColor = '#003072';
+  const bgColor = '#F8F9FA';
+
+  // Donut chart config
+  const donutSize = 251.2; // circumference for r=40
+  const desktopOffset = donutSize * (1 - 0.77); // 77% arc
+  const mobileBrowserOffset = donutSize * (1 - mobileBrowser / 100);
+  const mobileAppOffset = donutSize * (1 - (mobileApp / 100));
+  const mobileStart = donutSize * (1 - (mobileTotal / 100));
+
   return (
-    <Card className="w-full h-[450px] shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-auto h-full px-4 pb-4 shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
       <CardHeader title="Devices" rightContent={<ViewReportButton />} />
       <div className="flex flex-col h-full">
         {/* Device options section - reduced padding */}
         <div className="flex gap-2 px-4 py-3">
-          {/* Desktop Option */}
-          <div 
-            className={`bg-[#F8F9FA] rounded-lg p-3 flex-1 cursor-pointer transition-all duration-200 hover:shadow-md ${
-              selectedDevice === 'desktop' ? 'shadow-md border border-[#338FFF]' : ''
-            }`}
-            onClick={() => setSelectedDevice('desktop')}
-          >
-            <div className="flex items-start gap-2">
-              {/* Blue vertical indicator - only show when selected */}
-              <div className={`w-1 h-10 rounded-full self-center transition-colors duration-200 ${
-                selectedDevice === 'desktop' ? 'bg-[#338FFF]' : 'bg-transparent'
-              }`}></div>
-              
-              <div className="flex-1">
-                {/* Title row */}
-                <div className="flex items-center gap-1">
-                  <span className={`font-semibold text-sm transition-colors duration-200 ${
-                    selectedDevice === 'desktop' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-                  }`}>Desktop</span>
-                  <Info size={12} className="text-[#8C9BAC]" />
-                </div>
-                
-                {/* Stats row */}
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-[#233143]">77%</span>
-                  <TrendIndicator value="40%" isPositive={true} />
-                </div>
-              </div>
+          {deviceStats.map((stat) => (
+            <div
+              key={stat.key}
+              className={`flex-1`}
+            >
+              <ActivityStat
+                title={stat.title}
+                value={stat.value}
+                percentage={stat.percentage}
+                isActive={selectedDevice === stat.key}
+                isPositive={stat.isPositive}
+                onClick={() => setSelectedDevice(stat.key as 'desktop' | 'mobile')}
+              />
             </div>
-          </div>
-          
-          {/* Mobile Option */}
-          <div 
-            className={`bg-[#F8F9FA] rounded-lg p-3 flex-1 cursor-pointer transition-all duration-200 hover:shadow-md ${
-              selectedDevice === 'mobile' ? 'shadow-md border border-[#338FFF]' : ''
-            }`}
-            onClick={() => setSelectedDevice('mobile')}
-          >
-            <div className="flex items-start gap-2">
-              {/* Blue vertical indicator - only show when selected */}
-              <div className={`w-1 h-10 rounded-full self-center transition-colors duration-200 ${
-                selectedDevice === 'mobile' ? 'bg-[#338FFF]' : 'bg-transparent'
-              }`}></div>
-              
-              <div className="flex-1">
-                {/* Title row */}
-                <div className="flex items-center gap-1">
-                  <span className={`font-semibold text-sm transition-colors duration-200 ${
-                    selectedDevice === 'mobile' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-                  }`}>Mobile</span>
-                  <Info size={12} className="text-[#8C9BAC]" />
-                </div>
-                
-                {/* Stats row */}
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-xl text-[#233143]">23%</span>
-                  <TrendIndicator value="40%" isPositive={false} />
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-        
         {/* Circle Graph */}
         <div className="flex justify-center items-center flex-1 px-4 pb-4">
           <div className="w-48 h-48 relative">
             {/* White circle background to ensure the middle is white */}
             <div className="w-full h-full rounded-full bg-white absolute"></div>
-            
             {/* Light gray background circle */}
             <svg viewBox="0 0 100 100" className="w-full h-full absolute">
               <circle
@@ -90,32 +79,74 @@ const DevicesCard = () => {
                 cy="50"
                 r="40"
                 fill="none"
-                stroke="#F8F9FA"
+                stroke={bgColor}
                 strokeWidth="15"
               />
             </svg>
-            
-            {/* Blue donut segment (approximately 77% coverage) */}
-            <svg viewBox="0 0 100 100" className="w-full h-full absolute">
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                fill="none"
-                stroke="#338FFF"
-                strokeWidth="15"
-                strokeDasharray="251.2 251.2"
-                strokeDashoffset="58"
-                strokeLinecap="round"
-                transform="rotate(-90 50 50)"
-                className="animate-[dash_1.5s_ease-in-out]"
-              />
-            </svg>
-            
+            {/* Donut segments */}
+            {selectedDevice === 'mobile' ? (
+              <svg viewBox="0 0 100 100" className="w-full h-full absolute">
+                {/* Browser segment */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke={mobileBrowserColor}
+                  strokeWidth="15"
+                  strokeDasharray={`${donutSize * (mobileBrowser / mobileTotal)} ${donutSize}`}
+                  strokeDashoffset={mobileStart}
+                  strokeLinecap="round"
+                  transform="rotate(-90 50 50)"
+                />
+                {/* App segment */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke={mobileAppColor}
+                  strokeWidth="15"
+                  strokeDasharray={`${donutSize * (mobileApp / mobileTotal)} ${donutSize}`}
+                  strokeDashoffset={mobileStart + donutSize * (mobileBrowser / mobileTotal)}
+                  strokeLinecap="round"
+                  transform="rotate(-90 50 50)"
+                />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 100 100" className="w-full h-full absolute">
+                {/* Desktop segment */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="40"
+                  fill="none"
+                  stroke={desktopColor}
+                  strokeWidth="15"
+                  strokeDasharray={`${donutSize} ${donutSize}`}
+                  strokeDashoffset={desktopOffset}
+                  strokeLinecap="round"
+                  transform="rotate(-90 50 50)"
+                />
+              </svg>
+            )}
             {/* White center circle to create donut hole */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] bg-white rounded-full"></div>
           </div>
         </div>
+        {/* Color indicator legend for mobile */}
+        {selectedDevice === 'mobile' && (
+          <div className="flex justify-center gap-4 pb-2">
+            <div className="flex items-center gap-1">
+              <span className="inline-block w-3 h-3 rounded-full bg-[#338FFF]"></span>
+              <span className="text-xs text-[#233143]">Browser</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span className="inline-block w-3 h-3 rounded-full bg-[#003072]"></span>
+              <span className="text-xs text-[#233143]">App</span>
+            </div>
+          </div>
+        )}
       </div>
     </Card>
   );
