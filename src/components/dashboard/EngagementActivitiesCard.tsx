@@ -5,6 +5,7 @@ import FilterDropdown from "./common/FilterDropdown";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
+import EngagementStat from "./EngagementStat";
 
 const EngagementActivitiesCard = () => {
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
@@ -33,134 +34,39 @@ const EngagementActivitiesCard = () => {
         
 
         {/* Stats Section */}
-        <div className="grid grid-cols-4 gap-4 py-6">
-          {/* Active Users Stat */}
-          <div 
-            className={`bg-[#F8F9FA] rounded-lg p-4 relative cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]
-              ${selectedStat === 'Active Users' 
-                ? 'border-2 border-[#338FFF] shadow-md shadow-[#338FFF]/20' 
-                : 'hover:border hover:border-[#338FFF]/50 hover:shadow-sm'
-              }`}
+        <div className="grid grid-cols-4  py-6">
+          <EngagementStat
+            title="Active Users"
+            value={237}
+            percentage="40%"
+            isPositive={true}
+            isActive={selectedStat === 'Active Users'}
             onClick={() => handleStatClick('Active Users')}
-          >
-            <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r transition-colors duration-300
-              ${selectedStat === 'Active Users' ? 'bg-[#338FFF]' : 'bg-transparent'}`}
-            ></div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1 mb-2">
-                <span className={`font-medium transition-colors duration-300
-                  ${selectedStat === 'Active Users' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                >
-                  Active Users
-                </span>
-                <Info className={`w-4 h-4 transition-colors duration-300
-                  ${selectedStat === 'Active Users' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-[#4F5A69]">237</span>
-                <div className="flex items-center gap-1">
-                  <TrendIndicator value="40%" isPositive={true} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Posts Stat */}
-          <div 
-            className={`bg-white rounded-lg p-4 relative cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]
-              ${selectedStat === 'Posts' 
-                ? 'border-2 border-[#338FFF] shadow-md shadow-[#338FFF]/20' 
-                : 'hover:border hover:border-[#338FFF]/50 hover:shadow-sm'
-              }`}
+          />
+          <EngagementStat
+            title="Posts"
+            value={8}
+            percentage="40%"
+            isPositive={false}
+            isActive={selectedStat === 'Posts'}
             onClick={() => handleStatClick('Posts')}
-          >
-            <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r transition-colors duration-300
-              ${selectedStat === 'Posts' ? 'bg-[#338FFF]' : 'bg-transparent'}`}
-            ></div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1 mb-2">
-                <span className={`font-medium transition-colors duration-300
-                  ${selectedStat === 'Posts' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                >
-                  Posts
-                </span>
-                <Info className={`w-4 h-4 transition-colors duration-300
-                  ${selectedStat === 'Posts' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-[#4F5A69]">8</span>
-                <div className="flex items-center gap-1">
-                  <TrendIndicator value="40%" isPositive={false} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Comments Stat */}
-          <div 
-            className={`bg-white rounded-lg p-4 relative cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]
-              ${selectedStat === 'Comments' 
-                ? 'border-2 border-[#338FFF] shadow-md shadow-[#338FFF]/20' 
-                : 'hover:border hover:border-[#338FFF]/50 hover:shadow-sm'
-              }`}
+          />
+          <EngagementStat
+            title="Comments"
+            value={8}
+            percentage="40%"
+            isPositive={false}
+            isActive={selectedStat === 'Comments'}
             onClick={() => handleStatClick('Comments')}
-          >
-            <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r transition-colors duration-300
-              ${selectedStat === 'Comments' ? 'bg-[#338FFF]' : 'bg-transparent'}`}
-            ></div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1 mb-2">
-                <span className={`font-medium transition-colors duration-300
-                  ${selectedStat === 'Comments' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                >
-                  Comments
-                </span>
-                <Info className={`w-4 h-4 transition-colors duration-300
-                  ${selectedStat === 'Comments' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-[#4F5A69]">8</span>
-                <div className="flex items-center gap-1">
-                  <TrendIndicator value="40%" isPositive={false} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Reactions Stat */}
-          <div 
-            className={`bg-white rounded-lg p-4 relative cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]
-              ${selectedStat === 'Reactions' 
-                ? 'border-2 border-[#338FFF] shadow-md shadow-[#338FFF]/20' 
-                : 'hover:border hover:border-[#338FFF]/50 hover:shadow-sm'
-              }`}
+          />
+          <EngagementStat
+            title="Reactions"
+            value={8}
+            percentage="40%"
+            isPositive={false}
+            isActive={selectedStat === 'Reactions'}
             onClick={() => handleStatClick('Reactions')}
-          >
-            <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r transition-colors duration-300
-              ${selectedStat === 'Reactions' ? 'bg-[#338FFF]' : 'bg-transparent'}`}
-            ></div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1 mb-2">
-                <span className={`font-medium transition-colors duration-300
-                  ${selectedStat === 'Reactions' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                >
-                  Reactions
-                </span>
-                <Info className={`w-4 h-4 transition-colors duration-300
-                  ${selectedStat === 'Reactions' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-[#4F5A69]">8</span>
-                <div className="flex items-center gap-1">
-                  <TrendIndicator value="40%" isPositive={false} />
-                </div>
-              </div>
-            </div>
-          </div>
+          />
         </div>
 
         {/* Chart Section */}
