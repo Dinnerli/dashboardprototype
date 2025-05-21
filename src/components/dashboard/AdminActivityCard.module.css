@@ -1,0 +1,4 @@
+.admin-activity-bar { height: 128px; width: 0.75rem; display: flex; flex-direction: column; justify-content: flex-end; }
+.admin-activity-bar-light { background: #CDE4FF; border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem; }
+.admin-activity-bar-medium { background: #338FFF; }
+.admin-activity-bar-dark { background: #003072; border-bottom-left-radius: 0.375rem; border-bottom-right-radius: 0.375rem; }

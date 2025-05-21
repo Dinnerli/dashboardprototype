@@ -1,38 +1,37 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { Info } from "lucide-react";
-import { useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
+import styles from "./AdminActivityCard.module.css";
 
 const AdminActivityCard = () => {
   const months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
-  const [selectedStat, setSelectedStat] = useState<'course' | 'user' | 'group' | null>(null);
   
+  // Data object for each month with 3 percentages (should sum to 1 or 100%)
+  const barData = [
+    { light: 0.35, medium: 0.33, dark: 0.32 }, // Oct
+    { light: 0.30, medium: 0.40, dark: 0.30 }, // Nov
+    { light: 0.25, medium: 0.45, dark: 0.30 }, // Dec
+    { light: 0.40, medium: 0.30, dark: 0.30 }, // Jan
+    { light: 0.32, medium: 0.38, dark: 0.30 }, // Feb
+    { light: 0.28, medium: 0.36, dark: 0.36 }, // Mar
+  ];
+
   return (
-    <Card className="w-full h-[450px] shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-full h-full shadow-sm animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
       <CardHeader title="Admin Activity" rightContent={<ViewReportButton />} />
-      <div className="flex flex-col h-full">
-        
-        {/* Stats section - updated to match the new design */}
-        <div className="flex justify-between items-center p-2">
+      <div className="flex flex-col ">
+        {/* Stats section - not clickable, color line instead of dot, no space below */}
+        <div className="flex justify-between items-center p-2 pb-0">
           {/* Course Assigned */}
-          <div 
-            className={`flex items-start cursor-pointer transition-all duration-200 hover:shadow-md rounded-lg p-2 ${
-              selectedStat === 'course' ? 'shadow-md border border-[#338FFF]' : ''
-            }`}
-            onClick={() => setSelectedStat('course')}
-          >
-            <div className="flex p-[6px_4px_4px_4px] flex-col justify-center items-center">
-              <div className={`w-[8px] h-[8px] rounded-full transition-colors duration-200 ${
-                selectedStat === 'course' ? 'bg-[#338FFF]' : 'bg-[#003072]'
-              }`}></div>
+          <div className="flex items-start rounded-lg p-2">
+            <div className="flex flex-col justify-center items-center mr-2">
+              <div className="w-1 h-8 rounded bg-[#003072]" />
             </div>
             <div className="flex flex-col justify-center items-start">
               <div className="flex px-[0px_4px] items-center gap-1">
-                <span className={`font-poppins text-[10px] transition-colors duration-200 ${
-                  selectedStat === 'course' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-                }`}>Course Assigned</span>
+                <span className="font-poppins text-[10px] text-[#8C9BAC]">Course Assigned</span>
                 <Info className="w-[8px] h-[8px] text-[#8C9BAC]" />
               </div>
               <div className="flex px-[0px_4px] items-center">
@@ -45,24 +44,14 @@ const AdminActivityCard = () => {
               </div>
             </div>
           </div>
-          
           {/* User Creation */}
-          <div 
-            className={`flex items-start cursor-pointer transition-all duration-200 hover:shadow-md rounded-lg p-2 ${
-              selectedStat === 'user' ? 'shadow-md border border-[#338FFF]' : ''
-            }`}
-            onClick={() => setSelectedStat('user')}
-          >
-            <div className="flex p-[6px_4px_4px_4px] flex-col justify-center items-center">
-              <div className={`w-[8px] h-[8px] rounded-full transition-colors duration-200 ${
-                selectedStat === 'user' ? 'bg-[#338FFF]' : 'bg-[#F5F6F8]'
-              }`}></div>
+          <div className="flex items-start rounded-lg p-2">
+            <div className="flex flex-col justify-center items-center mr-2">
+              <div className="w-1 h-8 rounded bg-[#F5F6F8]" />
             </div>
             <div className="flex flex-col justify-center items-start">
               <div className="flex px-[0px_4px] items-center gap-1">
-                <span className={`font-poppins text-[10px] transition-colors duration-200 ${
-                  selectedStat === 'user' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-                }`}>User Creation</span>
+                <span className="font-poppins text-[10px] text-[#8C9BAC]">User Creation</span>
                 <Info className="w-[8px] h-[8px] text-[#8C9BAC]" />
               </div>
               <div className="flex px-[0px_4px] items-center">
@@ -75,24 +64,14 @@ const AdminActivityCard = () => {
               </div>
             </div>
           </div>
-          
           {/* Group Assigned */}
-          <div 
-            className={`flex items-start cursor-pointer transition-all duration-200 hover:shadow-md rounded-lg p-2 ${
-              selectedStat === 'group' ? 'shadow-md border border-[#338FFF]' : ''
-            }`}
-            onClick={() => setSelectedStat('group')}
-          >
-            <div className="flex p-[6px_4px_4px_4px] flex-col justify-center items-center">
-              <div className={`w-[8px] h-[8px] rounded-full transition-colors duration-200 ${
-                selectedStat === 'group' ? 'bg-[#338FFF]' : 'bg-[#CDE4FF]'
-              }`}></div>
+          <div className="flex items-start rounded-lg p-2">
+            <div className="flex flex-col justify-center items-center mr-2">
+              <div className="w-1 h-8 rounded bg-[#CDE4FF]" />
             </div>
             <div className="flex flex-col justify-center items-start">
               <div className="flex px-[0px_4px] items-center gap-1">
-                <span className={`font-poppins text-[10px] transition-colors duration-200 ${
-                  selectedStat === 'group' ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-                }`}>Group Assigned</span>
+                <span className="font-poppins text-[10px] text-[#8C9BAC]">Group Assigned</span>
                 <Info className="w-[8px] h-[8px] text-[#8C9BAC]" />
               </div>
               <div className="flex px-[0px_4px] items-center">
@@ -106,25 +85,22 @@ const AdminActivityCard = () => {
             </div>
           </div>
         </div>
-        
-        {/* Chart */}
+        {/* Chart - three stacked bars per month, matching the design, using Tailwind for spacing */}
         <div className="flex-1 px-4 pb-4 flex items-end">
           <div className="w-full h-[200px] flex items-end justify-between">
-            {months.map((month, index) => (
-              <div key={month} className="flex flex-col items-center justify-end h-full">
-                {/* Light blue bar */}
-                <div className="w-2 bg-[#CDE4FF] rounded-t-sm" style={{ height: `${30 + Math.random() * 20}px` }}></div>
-                
-                {/* Medium blue bar */}
-                <div className="w-2 bg-[#338FFF] rounded-none" style={{ height: `${40 + Math.random() * 30}px`, marginTop: '2px' }}></div>
-                
-                {/* Dark blue bar */}
-                <div className="w-2 bg-[#0054A6] rounded-none" style={{ height: `${50 + Math.random() * 40}px`, marginTop: '2px' }}></div>
-                
-                {/* Month label */}
-                <span className="text-[10px] text-[#8C9BAC] mt-2">{month}</span>
-              </div>
-            ))}
+            {months.map((month, index) => {
+              const { light, medium, dark } = barData[index];
+              return (
+                <div key={month} className="flex flex-col items-center justify-end h-full">
+                  <div className={styles["admin-activity-bar"]}>
+                    <div className={styles["admin-activity-bar-light"]} style={{ height: `${128 * light}px` }}></div>
+                    <div className={styles["admin-activity-bar-medium"]} style={{ height: `${128 * medium}px` }}></div>
+                    <div className={styles["admin-activity-bar-dark"]} style={{ height: `${128 * dark}px` }}></div>
+                  </div>
+                  <span className="text-[10px] text-[#8C9BAC] mt-2">{month}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
