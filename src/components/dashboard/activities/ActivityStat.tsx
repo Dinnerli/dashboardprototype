@@ -1,6 +1,7 @@
+
 import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 type ActivityStatProps = { 
   title: string; 
@@ -42,20 +43,22 @@ const ActivityStat = ({
           }`}>
             {title}
           </span>
-          {tooltip ? (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                  <Info className="w-4 h-4 text-[#8C9BAC] cursor-help" stroke="#8C9BAC" />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent side="top" align="center">
-                {tooltip}
-              </TooltipContent>
-            </Tooltip>
-          ) : (
-            <Info className="w-4 h-4 text-[#8C9BAC]" stroke="#8C9BAC" />
-          )}
+          <TooltipProvider>
+            {tooltip ? (
+              <Tooltip delayDuration={300}>
+                <TooltipTrigger asChild>
+                  <span tabIndex={0} onClick={e => e.stopPropagation()}>
+                    <Info className="w-3.5 h-3.5 text-[#8C9BAC] cursor-help" stroke="#8C9BAC" />
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                  {tooltip}
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
+            )}
+          </TooltipProvider>
         </div>
         <div className="flex items-center px-2.5">
           <div>
