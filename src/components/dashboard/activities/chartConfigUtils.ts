@@ -20,7 +20,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
     labels: {
       style: {
-        color: '#E5E7EB',
+        color: '##CDD1D7',
         fontSize: '10px',
         fontFamily: 'Poppins, sans-serif'
       }
@@ -125,27 +125,57 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
 // Update chart options based on tab type and selected stat
 export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.Options, selectedStat?: string | null): Highcharts.Options => {
   const newOptions = { ...prevOptions };
-  // Get all stat names for the current tab
   const statNames = Object.keys(chartData[chartType]);
-  newOptions.series = statNames.map((stat) => ({
-    name: stat,
-    data: chartData[chartType][stat],
-    color: stat === selectedStat ? '#338FFF' : '#E5E7EB',
-    type: 'areaspline',
-    fillColor: stat === selectedStat
-      ? {
-          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-          stops: [
-            [0, 'rgba(51, 143, 255, 0.8)'],
-            [1, 'rgba(205, 228, 255, 0)']
-          ]
+  newOptions.series = statNames.map((stat) => {
+    const isActive = stat === selectedStat;
+    return {
+      name: stat,
+      data: chartData[chartType][stat],
+      color: isActive ? '#338FFF' : '#E5E7EB',
+      type: 'areaspline',
+      fillColor: isActive
+        ? {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+              [0, 'rgba(51, 143, 255, 0.8)'],
+              [1, 'rgba(205, 228, 255, 0)']
+            ]
+          }
+        : 'rgba(0,0,0,0)', // No fill for inactive
+      lineWidth: isActive ? 1 : 1,
+      marker: { enabled: false },
+      zIndex: isActive ? 2 : 1,
+      opacity: isActive ? 1 : 0.7,
+      enableMouseTracking: isActive, // No hover/tooltip for inactive
+      states: {
+        hover: {
+          enabled: isActive,
+          lineWidth: isActive ? 2 : 1.5
         }
-      : 'rgba(229, 231, 235, 0.2)', // muted gray fill
-    lineWidth: stat === selectedStat ? 2 : 1,
-    marker: { enabled: false },
-    zIndex: stat === selectedStat ? 2 : 1,
-    opacity: stat === selectedStat ? 1 : 0.7
-  }));
+      },
+      className: isActive ? 'active-path' : 'inactive-path',
+      showInLegend: false
+    };
+  });
+  // Only show tooltip for active series
+  newOptions.tooltip = {
+    ...newOptions.tooltip,
+    shared: false,
+    borderWidth: 1,
+    shadow: false,
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    style: {
+      fontFamily: 'Poppins, sans-serif',
+      fontSize: '12px',
+      color: '#222'
+    },
+    formatter: function() {
+      if (this.series && this.series.options.className === 'active-path') {
+        return `<b>${this.series.name}</b><br/>${this.x}: <b>${this.y}</b>`;
+      }
+      return false;
+    }
+  };
   return newOptions;
 };
 

@@ -13,7 +13,7 @@ const ActivityChart = ({ chartType, selectedStat }: ActivityChartProps) => {
 
   return (
     <div className="p-2.5 w-full">
-      <div className="h-[287px] w-full">
+      <div className="w-full">
         <HighchartsReact
           highcharts={Highcharts}
           options={chartOptions}
