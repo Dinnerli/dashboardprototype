@@ -43,7 +43,7 @@ const Index = () => {
       <main className="flex-1 flex flex-col">
         <Navigation />
          
-        <div className="px-3 sm:px-4 md:px-6 bg-slate-200">
+        <div className="px-3 sm:px-4 md:px-5 bg-slate-200">
           <div className="flex flex-row items-center gap-4 sm:gap-6 pt-4 sm:pt-6">
             <div className="border-b flex-1"></div>
             <div className="w-auto">
@@ -53,7 +53,7 @@ const Index = () => {
           
           <Dashboard />
           {/* Cards row - stack on mobile, side by side on larger screens */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-4 sm:pb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-5 sm:pb-6">
             <ActivitiesCard />
             <HighchartsCard />
           </div>
