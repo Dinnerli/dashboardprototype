@@ -64,9 +64,8 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
   },
   tooltip: {
     shared: true,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
+    backgroundColor: '#F2F3F5',
+    borderWidth: 0,
     shadow: false,
     style: {
       fontFamily: 'Poppins, sans-serif',
@@ -161,13 +160,14 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
   newOptions.tooltip = {
     ...newOptions.tooltip,
     shared: false,
-    borderWidth: 1,
-    shadow: false,
-    backgroundColor: 'rgba(255,255,255,0.95)',
+    shadow: false, 
+    backgroundColor: '#F2F3F5',
+    borderWidth: 0,
     style: {
       fontFamily: 'Poppins, sans-serif',
-      fontSize: '12px',
-      color: '#222'
+      fontSize: '11px',
+      color: '#222',
+      borderRadius: 28,
     },
     formatter: function() {
       if (this.series && this.series.options.className === 'active-path') {
@@ -177,7 +177,7 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
         if (typeof this.index === 'number' && months[this.index]) {
           monthLabel = months[this.index];
         }
-        return `<b>${this.series.name}</b><br/>${monthLabel}: <b>${this.y}</b>`;
+        return `<span class="font-medium">${monthLabel}</span>: ${this.y}`;
       }
       return false;
     }
