@@ -3,15 +3,16 @@ import { TabType } from "./ActivityTabs";
 import { chartData } from './chartData';
 
 // Create base chart options
-export const createBaseChartOptions = (): Highcharts.Options => ({
-  chart: {
+export const createBaseChartOptions = (): Highcharts.Options => ({  chart: {
     type: 'areaspline',
     animation: true,
     backgroundColor: 'transparent',
     style: {
       fontFamily: 'Poppins, sans-serif'
     },
-    spacing: [10, 10, 10, 10]
+    spacing: [15, 10, 15, 10],
+    marginTop: 30,
+    marginBottom: 30
   },
   title: {
     text: undefined
@@ -34,8 +35,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     minPadding: 0,
     tickmarkPlacement: 'on', // aligns ticks with categories
     // Remove pointPlacement from xAxis, set it in plotOptions instead
-  },
-  yAxis: {
+  },  yAxis: {
     title: {
       text: null
     },
@@ -55,7 +55,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     gridLineDashStyle: 'Dot',
     gridLineWidth: 0.7,
     min: 0,
-    max: 800,
+    max: 500,
     tickAmount: 6,
     tickPositions: [0, 100, 200, 300, 400, 500]
   },
