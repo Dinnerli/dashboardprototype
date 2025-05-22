@@ -46,7 +46,7 @@
       "name": "ILT",
       "stats": [
         {
-          "statName": "Ongoing Session",
+          "statName": "Ongoing",
           "tooltip": "Total number of Ongoing Sessions",
           "value": 20,
           "trendPercentage": "0.5%",

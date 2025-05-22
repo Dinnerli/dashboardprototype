@@ -15,8 +15,8 @@ interface LearningActivityCardProps {
 // Map activity names to keys for donut chart logic
 const activityKeyMap: Record<string, string> = {
   "Courses": "courses",
-  "ILT": "ilt",
-  "VILT": "vilt",
+  "ILT": "ilt_vilt",
+  "VILT": "ilt_vilt",
   "Exams": "exams",
   "Library": "library"
 };
@@ -24,8 +24,8 @@ const activityKeyMap: Record<string, string> = {
 type Activity = typeof learningActivities.activities[number];
 type ActivityData = Activity["data"][number];
 
-type DonutKey = "library" | "exams" | "ilt" | "vilt" | "courses";
-const donutKeys: DonutKey[] = ["library", "exams", "ilt", "vilt", "courses"];
+type DonutKey = "library" | "exams" | "ilt_vilt" | "courses";
+const donutKeys: DonutKey[] = ["library", "exams", "ilt_vilt", "courses"];
 
 const LearningActivityCard = ({
   title = "Learning Activities"
@@ -35,11 +35,17 @@ const LearningActivityCard = ({
   // Find first available activity for initial state
   const initialKey = activityKeyMap[activities[0]?.name] || "courses";
   const [activeSegment, setActiveSegment] = useState<string>(initialKey);
+  const [iltViltTab, setIltViltTab] = useState<'ILT' | 'VILT'>('ILT');
   const [segments, setSegments] = useState<Record<string, boolean>>({});
 
   const isMobile = useIsMobile();
   // Find the active activity data
-  const activeActivity = activities.find(a => activityKeyMap[a.name] === activeSegment) || activities[0];
+  let activeActivity: Activity;
+  if (activeSegment === 'ilt_vilt') {
+    activeActivity = activities.find(a => a.name === iltViltTab) || activities.find(a => a.name === 'ILT') || activities[0];
+  } else {
+    activeActivity = activities.find(a => activityKeyMap[a.name] === activeSegment) || activities[0];
+  }
 
   useEffect(() => {
     // Staggered animation to reveal each segment
@@ -91,7 +97,7 @@ const LearningActivityCard = ({
 
   return (
     <Card
-      className={`w-full h-full animate-slide-in-up ${isMobile ? 'px-4 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
+      className={`w-full h-full animate-slide-in-up ${isMobile ? 'px-4 pb-6 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
       style={{ animationDelay: isMobile ? '0.2s' : '0.4s' }}
     >
       <div className="w-full">
@@ -99,7 +105,7 @@ const LearningActivityCard = ({
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
           <div className={`flex ${isMobile ? 'flex-col gap-2.5' : 'flex-col lg:flex-row'} w-full h-full`}>
             {/* Interactive Chart */}
-            <div className={isMobile ? 'w-full h-[220px] mb-2' : 'flex-1 h-full'}>
+            <div className={isMobile ? 'w-full  mb-2' : 'flex-1 h-full'}>
               <svg
                 width="100%"
                 height={isMobile ? 220 : '100%'}
@@ -109,9 +115,18 @@ const LearningActivityCard = ({
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full"
               >
-                {activities.map((activity, idx) => {
-                  const key = activityKeyMap[activity.name];
-                  if (!key) return null;
+                {donutKeys.map((key, idx) => {
+                  let activity: Activity | undefined;
+                  let label = '';
+                  if (key === 'ilt_vilt') {
+                    label = 'ILT/VILT';
+                    // Use ILT for chart data, but could sum both if needed
+                    activity = activities.find(a => a.name === 'ILT');
+                  } else {
+                    activity = activities.find(a => activityKeyMap[a.name] === key);
+                    label = activity?.name || '';
+                  }
+                  if (!activity) return null;
                   const arcWidth = 18;
                   const arcSpacing = 11;
                   const baseRadius = 160;
@@ -173,7 +188,7 @@ const LearningActivityCard = ({
                         fontWeight="600"
                         className={`transition-all duration-500 ${segments[key] ? 'opacity-100' : 'opacity-0'} cursor-pointer`}
                       >
-                        {activity.name}
+                        {label}
                       </text>
                     </g>
                   );
@@ -183,8 +198,25 @@ const LearningActivityCard = ({
 
             {/* Stats Section - updates based on selected segment */}
             <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5' : 'gap-4'}`}>
-              <div className={isMobile ? 'm-2 mb-1' : 'm-4'}>
-                <h4 className={`text-xl font-bold text-[#338FFF] ${isMobile ? 'text-sm' : ''}`}>{activeActivity.name}</h4>
+              <div className={isMobile ? 'mb-3' : 'm-3'}>
+                {activeSegment === 'ilt_vilt' ? (
+                  <div className="flex gap-1">
+                    <button
+                      className={`px-3 py-1 rounded-md font-bold text-sm ${iltViltTab === 'ILT' ? 'bg-[#F2F3F5] text-[#338FFF]' : ' text-[#B0B6BE]'}`}
+                      onClick={() => setIltViltTab('ILT')}
+                    >
+                      ILT
+                    </button>
+                    <button
+                      className={`px-3 py-1 rounded-md font-bold text-sm ${iltViltTab === 'VILT' ? 'bg-[#F2F3F5] text-[#338FFF]' : ' text-[#B0B6BE]'}`}
+                      onClick={() => setIltViltTab('VILT')}
+                    >
+                      VILT
+                    </button>
+                  </div>
+                ) : (
+                  <h4 className={`text-xl font-bold text-[#338FFF] ${isMobile ? 'text-sm' : ''}`}>{activeActivity.name}</h4>
+                )}
               </div>
               {/* First row: stats[] */}
               <TooltipProvider>
