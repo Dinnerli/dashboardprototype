@@ -24,31 +24,31 @@ const ActivityStat = ({
 }: ActivityStatProps) => {
   return (
     <div 
-      className={`flex items-center gap-2.5 p-1.5 px-2 rounded-lg cursor-pointer transition-all duration-200  ${
+      className={`flex items-center gap-2.5  py-2 px-3 rounded-lg cursor-pointer transition-all duration-200  ${
         isActive ? 'bg-[#F5F6F8] ' : ''
       }`}
       onClick={onClick}
     >
-      <div className="flex flex-col items-center justify-center p-2.5">
+      <div className="flex flex-col items-center justify-center p-2">
         <div 
-          className={`w-0.5 h-[35px] transition-colors duration-200 ${
-            isActive ? 'bg-[#338FFF]' : 'bg-[#CDD1D7]'
+          className={`border b-2 h-8 p-0 transition-colors duration-200 ${
+            isActive ? 'border-[#338FFF]' : 'border-[#F2F3F5]'
           }`}
         />
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-0.5">
         <div className="flex items-center gap-2.5 ">
-          <span className={`text-sm font-medium transition-colors duration-200 ${
+          <span className={`text-xs font-medium transition-colors duration-200 ${
             isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
           }`}>
             {title}
           </span>
           <TooltipProvider>
             {tooltip ? (
-              <Tooltip delayDuration={300}>
+              <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
                   <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                    <Info className="w-3.5 h-3.5 text-[#8C9BAC] cursor-help" stroke="#8C9BAC" />
+                    <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
                   </span>
                 </TooltipTrigger>
                 <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
@@ -60,9 +60,9 @@ const ActivityStat = ({
             )}
           </TooltipProvider>
         </div>
-        <div className="flex items-center px-2.5">
+        <div className="flex items-center">
           <div>
-            <span className="text-lg font-bold text-[#4F5A69]">{value}</span>
+            <span className="text-xl font-bold  text-[#4F5A69]">{value}</span>
           </div>
           <div className="w-[66px] flex justify-end items-center">
             <TrendIndicator value={percentage} isPositive={isPositive} />
