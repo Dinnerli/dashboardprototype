@@ -171,7 +171,13 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
     },
     formatter: function() {
       if (this.series && this.series.options.className === 'active-path') {
-        return `<b>${this.series.name}</b><br/>${this.x}: <b>${this.y}</b>`;
+        // Map index to month name for tooltip
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'];
+        let monthLabel: string = this.x.toString();
+        if (typeof this.index === 'number' && months[this.index]) {
+          monthLabel = months[this.index];
+        }
+        return `<b>${this.series.name}</b><br/>${monthLabel}: <b>${this.y}</b>`;
       }
       return false;
     }
