@@ -111,13 +111,14 @@ const HighchartsCard = ({
   } | null>(null);
 
   return (
-    <Card className="w-full h-full  animate-slide-in-up font-poppins " style={{
+    <Card className="w-full h-full px-6  animate-slide-in-up font-poppins " style={{
       animationDelay: '0.4s'
     }}>      <CardHeader title={title} rightContent={<ViewReportButton />}/>
-      <CardContent className=" py-4 px-6">        <div className="flex flex-col lg:flex-row h-full">
+      <CardContent className=" py-4">        <div className="flex flex-col lg:flex-row h-full">
           {/* Interactive Chart */}
           <div className="flex-1 flex justify-center items-center h-full"><svg
               width="100%"
+              height="100%"
               viewBox="0 0 400 400"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -215,14 +216,14 @@ const HighchartsCard = ({
 
           {/* Stats Section - updates based on selected segment */}
           <div className="flex-1 flex flex-col gap-4">
-            <div className="mb-4">
-              <h4 className="text-[20px] font-bold text-[#338FFF]">{activeData.title}</h4>
+            <div className="m-4">
+              <h4 className="text-base font-bold text-[#338FFF]">{activeData.title}</h4>
             </div>
             
             {/* First row */}
             <div className="flex flex-wrap gap-4 ">
-              <div className="flex items-center justify-between  gap-4 w-full lg:w-1/2">
-                <div className="flex items-center">
+              <div className="flex items-center justify-center  gap-3 w-full">
+                <div className="flex items-center gap-2">
                   <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -230,13 +231,13 @@ const HighchartsCard = ({
                     <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                   </svg>
                   
-                  <div className="flex flex-col">
+                  <div className="flex flex-col ">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-[#8C9BAC]">Uploads</span>
                       <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl font-bold text-[#4F5A69]">{activeData.uploads.value}</span>
+                    <div className="flex items-center gap-4">
+                      <span className="text-lg font-bold text-[#4F5A69]">{activeData.uploads.value}</span>
                       <div className="flex items-center">
                         <TrendIndicator value={activeData.uploads.trend + '%'} isPositive={activeData.uploads.increasing} />
                       </div>
@@ -244,9 +245,9 @@ const HighchartsCard = ({
                   </div>
                 </div>
                 
-                <div className="w-px h-8 bg-[#F5F6F8]"></div>
+                <div className="w-px h-8  bg-[#F5F6F8]"></div>
                 
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                   <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                     <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -254,11 +255,11 @@ const HighchartsCard = ({
                   
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-[#8C9BAC]">Time </span>
+                      <span className="text-sm font-medium text-[#8C9BAC]">Time Spent </span>
                       <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xl font-bold text-[#4F5A69]">{activeData.timeSpent.value}</span>
+                      <span className="text-lg font-bold text-[#4F5A69]">{activeData.timeSpent.value}</span>
                       <div className="flex items-center">
                         <TrendIndicator value={activeData.timeSpent.trend + '%'} isPositive={activeData.timeSpent.increasing} />
                       </div>
@@ -292,12 +293,12 @@ const HighchartsCard = ({
               }].map((item, idx) => (
                 <div
                   key={item.label}
-                  className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg hover:bg-blue-50 transition-colors"
+                  className="grid grid-cols-[18px_1fr_auto_auto] items-center  gap-x-2 p-2.5 rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   {/* Vertical colored line */}
                   <div className={`flex items-center justify-center`}>
                     <div
-                      className={`w-0.5 h-[35px] ${
+                      className={`w-0.5 h-6 ${
                         item.label === "Assigned"
                           ? "bg-[#CDE4FF]"
                           : item.label === "Completed"
@@ -308,7 +309,7 @@ const HighchartsCard = ({
                   </div>
                   {/* Status label */}
                   <div className="flex items-center gap-1">
-                    <span className="text-sm font-bold text-[#8C9BAC]">{item.label}</span>
+                    <span className="text-xs font-medium  text-[#8C9BAC]">{item.label}</span>
                     <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
                   </div>
                   {/* Value */}
