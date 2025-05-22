@@ -55,7 +55,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     gridLineDashStyle: 'Dot',
     gridLineWidth: 0.7,
     min: 0,
-    max: 500,
+    max: 800,
     tickAmount: 6,
     tickPositions: [0, 100, 200, 300, 400, 500]
   },

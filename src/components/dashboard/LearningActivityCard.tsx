@@ -107,8 +107,6 @@ const LearningActivityCard = ({
             {/* Interactive Chart */}
             <div className={isMobile ? 'w-full  mb-2' : 'flex-1 h-full'}>
               <svg
-                width="100%"
-                height={isMobile ? 220 : '100%'}
                 viewBox="0 0 400 400"
                 preserveAspectRatio="xMidYMid meet"
                 fill="none"
@@ -202,26 +200,26 @@ const LearningActivityCard = ({
                 {activeSegment === 'ilt_vilt' ? (
                   <div className="flex gap-1">
                     <button
-                      className={`px-3 py-1 rounded-md font-bold text-sm ${iltViltTab === 'ILT' ? 'bg-[#F2F3F5] text-[#338FFF]' : ' text-[#B0B6BE]'}`}
+                      className={`px-3 py-1 rounded-md font-bold text-base ${iltViltTab === 'ILT' ? 'bg-[#F2F3F5] text-[#338FFF]' : ' text-[#B0B6BE]'}`}
                       onClick={() => setIltViltTab('ILT')}
                     >
                       ILT
                     </button>
                     <button
-                      className={`px-3 py-1 rounded-md font-bold text-sm ${iltViltTab === 'VILT' ? 'bg-[#F2F3F5] text-[#338FFF]' : ' text-[#B0B6BE]'}`}
+                      className={`px-3 py-1 rounded-md font-bold text-base ${iltViltTab === 'VILT' ? 'bg-[#F2F3F5] text-[#338FFF]' : ' text-[#B0B6BE]'}`}
                       onClick={() => setIltViltTab('VILT')}
                     >
                       VILT
                     </button>
                   </div>
                 ) : (
-                  <h4 className={`text-xl font-bold text-[#338FFF] ${isMobile ? 'text-sm' : ''}`}>{activeActivity.name}</h4>
+                  <h4 className={`text-2xl font-bold text-[#338FFF] ${isMobile ? 'text-base' : ''}`}>{activeActivity.name}</h4>
                 )}
               </div>
               {/* First row: stats[] */}
               <TooltipProvider>
                 <div className={`flex flex-wrap gap-1`}> 
-                  <div className={`flex items-center justify-center w-full gap-1`}>
+                  <div className={`flex items-center justify-between w-full gap-1`}>
                     {activeActivity.stats.map((stat, idx) => (
                       <>
                         <div key={stat.statName} className="flex items-center gap-1">
@@ -250,7 +248,7 @@ const LearningActivityCard = ({
                           )}
                           <div className="flex flex-col">
                             <div className="flex items-center gap-2">
-                              <span className="text-xs font-medium truncate text-[#8C9BAC]">{stat.statName}</span>
+                              <span className="text-sm font-medium truncate text-[#8C9BAC]">{stat.statName}</span>
                               {stat.tooltip && (
                                 <Tooltip delayDuration={300}>
                                   <TooltipTrigger asChild>
@@ -304,7 +302,7 @@ const LearningActivityCard = ({
                       </div>
                       {/* Status label with tooltip */}
                       <div className="flex items-center gap-1">
-                        <span className="text-xs font-medium text-[#8C9BAC]">{item.name}</span>
+                        <span className="text-sm font-medium text-[#8C9BAC]">{item.name}</span>
                         {item.tooltip && (
                           <Tooltip delayDuration={300}>
                             <TooltipTrigger asChild>

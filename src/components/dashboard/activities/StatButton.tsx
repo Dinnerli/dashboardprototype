@@ -1,4 +1,3 @@
-
 import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
@@ -38,9 +37,7 @@ const StatButton = ({
       </div>
       <div className="flex flex-col gap-0.5">
         <div className="flex items-center gap-2.5 ">
-          <span className={`text-xs font-medium transition-colors duration-200 ${
-            isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-          }`}>
+          <span className={`text-sm font-medium transition-colors duration-200 truncate max-w-[120px] whitespace-nowrap ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}>
             {title}
           </span>
           <TooltipProvider>
@@ -62,7 +59,7 @@ const StatButton = ({
         </div>
         <div className="flex items-center">
           <div>
-            <span className="text-xl font-bold  text-[#4F5A69]">{value}</span>
+            <span className="text-2xl font-bold  text-[#4F5A69]">{value}</span>
           </div>
           <div className="w-[66px] flex justify-end items-center">
             <TrendIndicator value={percentage} isPositive={isPositive} />
