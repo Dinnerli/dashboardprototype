@@ -154,4 +154,8 @@
   .draggable-item-drop-target {
     @apply scale-105 shadow-md;
   }
+
+  .animate-dnd-zoom {
+    transition: transform 0.15s cubic-bezier(0.4,0,0.2,1), opacity 0.15s cubic-bezier(0.4,0,0.2,1);
+  }
 }

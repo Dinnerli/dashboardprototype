@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import { GripVertical } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DraggableCardProps {
@@ -39,8 +37,8 @@ const DraggableCard = ({
   return (
     <div 
       className={cn(
-        "relative w-full transition-opacity duration-200", 
-        isDragging ? "opacity-50" : "opacity-100",
+        "relative w-full transition-opacity duration-200 select-none",
+        isDragging ? "opacity-50 scale-105 z-20 cursor-grabbing animate-dnd-zoom" : "opacity-100 cursor-grab",
         className
       )}
       draggable
@@ -49,9 +47,6 @@ const DraggableCard = ({
       onDragOver={onDragOver}
       onDrop={handleDrop}
     >
-      <div className="absolute top-2 right-2 cursor-grab z-10 p-1 rounded-md hover:bg-gray-100 transition-colors">
-        <GripVertical size={16} className="text-gray-400" />
-      </div>
       {children}
     </div>
   );
