@@ -40,15 +40,12 @@ const OverviewContent = () => {
   ];
 
   return (
-    <div
-      className="flex overflow-x-auto pb-4 gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8] scroll-smooth snap-x snap-mandatory"
-      data-animation-delay="0.1s"
-    >
+    <div className="flex overflow-x-auto pb-4 gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8] scroll-smooth snap-x snap-mandatory" data-animation-delay="0.1s">
       {stats.map((stat, idx) => (
         <StatsCard
           key={stat.title}
           {...stat}
-          className="snap-start w-[75vw] min-w-[75vw] lg:w-64 lg:min-w-[16rem] "
+          className="snap-start w-[75vw] min-w-[75vw] sm:w-64 sm:min-w-[16rem]"
         />
       ))}
     </div>
