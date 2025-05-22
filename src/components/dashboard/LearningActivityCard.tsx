@@ -184,61 +184,68 @@ const LearningActivityCard = ({
             {/* Stats Section - updates based on selected segment */}
             <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5' : 'gap-4'}`}>
               <div className={isMobile ? 'm-2 mb-1' : 'm-4'}>
-                <h4 className={`text-base font-bold text-[#338FFF] ${isMobile ? 'text-sm' : ''}`}>{activeActivity.name}</h4>
+                <h4 className={`text-xl font-bold text-[#338FFF] ${isMobile ? 'text-sm' : ''}`}>{activeActivity.name}</h4>
               </div>
               {/* First row: stats[] */}
               <TooltipProvider>
-                <div className={`flex flex-wrap ${isMobile ? 'gap-2.5' : 'gap-4'}`}> 
-                  <div className={`flex items-center justify-center w-full ${isMobile ? 'gap-2.5' : 'gap-3'}`}>
+                <div className={`flex flex-wrap gap-1`}> 
+                  <div className={`flex items-center justify-center w-full gap-1`}>
                     {activeActivity.stats.map((stat, idx) => (
-                      <div key={stat.statName} className="flex items-center gap-2">
-                        {/* Always show an icon: first is blue, second is yellow, rest blue */}
-                        {idx === 0 && (
-                          <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>
-                        )}
-                        {idx === 1 && (
-                          <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>
-                        )}
-                        {idx > 1 && (
-                          <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          </svg>
-                        )}
-                        <div className="flex flex-col">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-[#8C9BAC]">{stat.statName}</span>
-                            {stat.tooltip && (
-                              <Tooltip delayDuration={300}>
-                                <TooltipTrigger asChild>
-                                  <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                                    <Info className="w-3.5 h-3.5 text-[#8C9BAC] cursor-help" stroke="#8C9BAC" />
-                                  </span>
-                                </TooltipTrigger>
-                                <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                                  {stat.tooltip}
-                                </TooltipContent>
-                              </Tooltip>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <span className="text-lg font-bold text-[#4F5A69]">{stat.value}</span>
-                            <div className="flex items-center">
-                              <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
+                      <>
+                        <div key={stat.statName} className="flex items-center gap-1">
+                          {/* Always show an icon: first is blue, second is yellow, rest blue */}
+                          {idx === 0 && (
+                            <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                              <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                              <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                              <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            </svg>
+                          )}
+                          {idx === 1 && (
+                            <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                              <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            </svg>
+                          )}
+                          {idx > 1 && (
+                            <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                              <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                              <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                              <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            </svg>
+                          )}
+                          <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-medium truncate text-[#8C9BAC]">{stat.statName}</span>
+                              {stat.tooltip && (
+                                <Tooltip delayDuration={300}>
+                                  <TooltipTrigger asChild>
+                                    <span tabIndex={0} onClick={e => e.stopPropagation()}>
+                                      <Info className="w-3.5 h-3.5 text-[#8C9BAC] " stroke="#8C9BAC" />
+                                    </span>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                                    {stat.tooltip}
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-xl font-bold text-[#4F5A69]">{stat.value}</span>
+                              <div className="flex items-center">
+                                <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                        {idx < activeActivity.stats.length - 1 && (
+                          <div className="w-5 h-5 mx-2 flex items-center justify-center">
+                            <div className="w-px h-8 bg-[#F2F3F5] min-h-[32px]" />
+                          </div>
+                        )}
+                      </>
                     ))}
                   </div>
                 </div>
@@ -249,7 +256,7 @@ const LearningActivityCard = ({
                   {getDonutData(activeActivity).map((item, idx) => (
                     <div
                       key={item.name}
-                      className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg hover:bg-blue-50 transition-colors"
+                      className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg  transition-colors"
                     >
                       {/* Vertical colored line */}
                       <div className="flex items-center justify-center">
@@ -270,7 +277,7 @@ const LearningActivityCard = ({
                           <Tooltip delayDuration={300}>
                             <TooltipTrigger asChild>
                               <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                                <Info className="w-3 h-3 text-[#8C9BAC] cursor-help" stroke="#8C9BAC" />
+                                <Info className="w-3 h-3 text-[#8C9BAC] " stroke="#8C9BAC" />
                               </span>
                             </TooltipTrigger>
                             <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
