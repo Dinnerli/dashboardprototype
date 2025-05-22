@@ -111,26 +111,22 @@ const HighchartsCard = ({
   } | null>(null);
 
   return (
-    <Card className="w-full h-full  animate-slide-in-up font-poppins px-6" style={{
+    <Card className="w-full h-full  animate-slide-in-up font-poppins " style={{
       animationDelay: '0.4s'
-    }}>
-      <CardHeader title={title} rightContent={<ViewReportButton />}/>
-      <CardContent className="p-6">
-        <div className="flex flex-col lg:flex-row p-6 gap-6">
+    }}>      <CardHeader title={title} rightContent={<ViewReportButton />}/>
+      <CardContent className=" py-4 px-6">        <div className="flex flex-col lg:flex-row h-full">
           {/* Interactive Chart */}
-          <div className="flex-1 flex justify-center items-center">
-            <svg
-              width="400"
-              height="400"
+          <div className="flex-1 flex justify-center items-center h-full"><svg
+              width="100%"
               viewBox="0 0 400 400"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="max-w-full h-auto"
+              className="w-full h-full"
             >
               {Object.entries(learningCategoryData).map(([key, cat], idx) => {
                 // Arc geometry
-                const arcWidth = 20;
-                const arcSpacing = 18;
+                const arcWidth = 18;
+                const arcSpacing = 11;
                 const baseRadius = 160;
                 const r = baseRadius - idx * (arcWidth + arcSpacing);
                 const cx = 200, cy = 200;
@@ -201,7 +197,7 @@ const HighchartsCard = ({
                     {/* Category label (centered above arc) */}
                     <text
                       x={cx - 50}
-                      y={cy - r - 18}
+                      y={cy - r}
                       textAnchor="middle"
                       fill={isActive ? "#338FFF" : "#8C9BAC"}
                       fontFamily="Poppins"
