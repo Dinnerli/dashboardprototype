@@ -7,8 +7,8 @@ interface StatsCardProps {
   percentChange: number;
   isValueSuffixed?: boolean;
   valueSuffix?: string;
-  isSelected?: boolean;
   onClick?: () => void;
+  className?: string; // Add className prop for custom width
 }
 
 const StatsCard = ({ 
@@ -17,28 +17,21 @@ const StatsCard = ({
   percentChange, 
   isValueSuffixed = false,
   valueSuffix = '',
-  isSelected = false,
-  onClick
-}: StatsCardProps) => {
+  onClick,
+  className = '',
+}: Omit<StatsCardProps, 'isSelected'> & { className?: string }) => {
   const isPositive = percentChange >= 0;
   const formattedChange = `${Math.abs(percentChange)}%`;
   
   return (
     <div 
-      className={`flex h-auto px-5 py-2.5 flex-col justify-center items-start flex-[1_0_0] rounded-[10px] bg-white cursor-pointer 
-        transition-all duration-300 ease-in-out transform hover:scale-[1.02] active:scale-[0.98]
-        ${isSelected 
-          ? 'border-2 border-[#338FFF] shadow-md shadow-[#338FFF]/20' 
-          : 'hover:border hover:border-[#338FFF]/50 hover:'
-        }`}
+      className={`flex h-auto px-5 py-2.5 flex-col justify-center items-start flex-[1_0_0] rounded-[10px] bg-white w-full max-w-full ${className}`}
       onClick={onClick}
     >
-      <div className="flex flex-col justify-center items-start gap-2.5 w-full">
+      <div className="flex flex-col justify-center items-start gap-2.5 w-full max-w-full">
         {/* Title row */}
-        <div className="flex items-center gap-2.5 w-full">
-          <div className={`font-poppins font-medium text-xs transition-colors duration-300 ${
-            isSelected ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-          }`}>
+        <div className="flex items-center gap-2.5 w-full min-w-0">
+          <div className="font-poppins font-medium text-xs text-[#8C9BAC] truncate">
             {title}
           </div>
           <svg 
@@ -47,9 +40,7 @@ const StatsCard = ({
             viewBox="0 0 16 17" 
             fill="none" 
             xmlns="http://www.w3.org/2000/svg" 
-            className={`flex w-4 h-4 justify-center items-center transition-colors duration-300 ${
-              isSelected ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
-            }`}
+            className="flex w-4 h-4 justify-center items-center text-[#8C9BAC]"
           >
             <path 
               d="M8 1.83334C11.6667 1.83334 14.6667 4.83334 14.6667 8.5C14.6667 12.1667 11.6667 15.1667 8 15.1667C4.33333 15.1667 1.33333 12.1667 1.33333 8.5C1.33333 4.83334 4.33333 1.83334 8 1.83334Z" 
@@ -88,7 +79,7 @@ const StatsCard = ({
           </div>
           
           <div className="flex justify-end items-center">
-            <div className={`text-right font-poppins text-xs font-medium transition-colors duration-300 ${
+            <div className={`text-right font-poppins text-xs font-medium ${
               isPositive ? 'text-[#00D764]' : 'text-[#ED5158]'
             }`}>
               {formattedChange}
@@ -99,7 +90,7 @@ const StatsCard = ({
               viewBox="0 0 17 17" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg" 
-              className={`flex w-4 h-4 justify-center items-center flex-shrink-0 transition-transform duration-300 ${
+              className={`flex w-4 h-4 justify-center items-center flex-shrink-0 ${
               isPositive ? 'text-[#00D764]' : 'text-[#ED5158] rotate-180'
               }`}
             >
