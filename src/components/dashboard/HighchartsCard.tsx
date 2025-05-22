@@ -109,17 +109,17 @@ const HighchartsCard = ({
     category: keyof typeof learningCategoryData | null;
     metric: "assigned" | "completed" | "enrolled" | null;
   } | null>(null);
-
   return (
-    <Card className="w-full h-full px-6  animate-slide-in-up font-poppins " style={{
+    <Card className="w-full h-full px-6 animate-slide-in-up font-poppins" style={{
       animationDelay: '0.4s'
     }}>      <CardHeader title={title} rightContent={<ViewReportButton />}/>
-      <CardContent className=" py-4">        <div className="flex flex-col lg:flex-row h-full">
+      <CardContent className="p-0">        <div className="flex flex-col lg:flex-row h-full">
           {/* Interactive Chart */}
-          <div className="flex-1 flex justify-center items-center h-full"><svg
+          <div className="flex-1 h-full"><svg
               width="100%"
               height="100%"
               viewBox="0 0 400 400"
+              preserveAspectRatio="xMidYMid meet"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className="w-full h-full"
