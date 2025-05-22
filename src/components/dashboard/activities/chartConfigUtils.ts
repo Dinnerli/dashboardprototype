@@ -20,7 +20,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
     labels: {
       style: {
-        color: '##CDD1D7',
+        color: '#CDD1D7',
         fontSize: '10px',
         fontFamily: 'Poppins, sans-serif'
       }
@@ -53,7 +53,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({
     },
     gridLineColor: '#E5E7EB',
     gridLineDashStyle: 'Dot',
-    gridLineWidth: 0.5,
+    gridLineWidth: 0.7,
     min: 0,
     max: 500,
     tickAmount: 6,

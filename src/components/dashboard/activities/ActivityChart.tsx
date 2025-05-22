@@ -10,10 +10,9 @@ interface ActivityChartProps {
 
 const ActivityChart = ({ chartType, selectedStat }: ActivityChartProps) => {
   const chartOptions = useChartOptions(chartType, selectedStat);
-
   return (
     <div className="p-2.5 w-full">
-      <div className="w-full">
+      <div className="w-full" style={{ height: '200px' }}>
         <HighchartsReact
           highcharts={Highcharts}
           options={chartOptions}
