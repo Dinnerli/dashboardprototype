@@ -41,7 +41,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({  chart: {
     },
     labels: {
       style: {
-        color: '#E5E7EB',
+        color: '#CDD1D7',
         fontSize: '10px',
         fontFamily: 'Poppins, sans-serif'
       },
@@ -51,7 +51,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({  chart: {
         return this.value + '';
       }
     },
-    gridLineColor: '#E5E7EB',
+    gridLineColor: '#CDD1D7',
     gridLineDashStyle: 'Dot',
     gridLineWidth: 0.7,
     min: 0,
@@ -65,7 +65,7 @@ export const createBaseChartOptions = (): Highcharts.Options => ({  chart: {
   tooltip: {
     shared: true,
     backgroundColor: '#F2F3F5',
-    borderWidth: 0,
+    borderWidth: 0.5,
     shadow: false,
     style: {
       fontFamily: 'Poppins, sans-serif',
@@ -161,7 +161,7 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
     ...newOptions.tooltip,
     shared: false,
     shadow: false, 
-    backgroundColor: '#F2F3F5',
+    backgroundColor: '#CDD1D7',
     borderWidth: 0,
     style: {
       fontFamily: 'Poppins, sans-serif',
