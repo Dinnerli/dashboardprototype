@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type ActivityTabProps = {
   title: string;
@@ -10,11 +10,11 @@ type ActivityTabProps = {
 const ActivityTab = ({ title, isActive, onClick }: ActivityTabProps) => {
   return (
     <div 
-      className="flex flex-col items-center justify-center gap-2.5 py-5 px-2.5 pt-0 cursor-pointer"
+      className="flex flex-col items-center justify-center gap-2.5 py-5  pt-0 cursor-pointer w-full"
       onClick={onClick}
     >
       <div className={`border-b-2 w-full ${isActive ? 'border-[#338FFF]' : 'border-transparent'}`}></div>
-      <span className={`text-xs ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'} font-medium font-poppins`}>
+      <span className={`text-xs px-2 ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'} font-medium font-poppins w-full text-center`}>
         {title}
       </span>
     </div>
@@ -30,27 +30,42 @@ interface ActivityTabsProps {
 }
 
 const ActivityTabs = ({ activeTab, setActiveTab }: ActivityTabsProps) => {
+  const isMobile = useIsMobile();
+  // Detect tab view (width <= 960px)
+  const isTab = typeof window !== 'undefined' && window.innerWidth <= 960 && window.innerWidth > 600;
   const handleTabClick = (tab: TabType) => {
     setActiveTab(tab);
   };
 
+  // Only show one word for mobile or tab view
+  const singleWord = isMobile || isTab;
+
+  const tabTitles = [
+    { key: 'user', label: singleWord ? 'User' : 'User Activity' },
+    { key: 'usage', label: singleWord ? 'Usage' : 'Usage Activity' },
+    { key: 'course', label: singleWord ? 'Course' : 'Course Activity' }
+  ];
+
   return (
-    <div className="flex items-center gap-5 px-2.5 w-full pt-0 mt-0 bg-white overflow-x-auto">
-      <ActivityTab 
-        title="User Activity" 
-        isActive={activeTab === 'user'} 
-        onClick={() => handleTabClick('user')}
-      />
-      <ActivityTab 
-        title="Usage Activities" 
-        isActive={activeTab === 'usage'} 
-        onClick={() => handleTabClick('usage')}
-      />
-      <ActivityTab 
-        title="Course Activities" 
-        isActive={activeTab === 'course'} 
-        onClick={() => handleTabClick('course')}
-      />
+    <div className={`flex items-center w-full pt-0 mt-0 bg-white overflow-x-auto gap-0`}>
+      {tabTitles.map((tab, idx) => (
+        <div
+          className={
+            isMobile
+              ? 'flex-1'
+              : idx === 0
+                ? '' // No margin for the first tab
+                : 'ml-5' // Add left margin for desktop tabs except the first
+          }
+          key={tab.key}
+        >
+          <ActivityTab 
+            title={tab.label}
+            isActive={activeTab === tab.key}
+            onClick={() => handleTabClick(tab.key as TabType)}
+          />
+        </div>
+      ))}
     </div>
   );
 };

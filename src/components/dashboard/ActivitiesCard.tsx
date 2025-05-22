@@ -6,6 +6,7 @@ import ActivityChart from "./activities/ActivityChart";
 import ActivityFilters from "./activities/ActivityFilters";
 import ViewReportButton from "./ViewReportButton";
 import CardHeader from "./CardHeader";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Different data for each tab
 const tabData = {
@@ -35,6 +36,7 @@ const tabData = {
 };
 
 const ActivitiesCard = () => {
+  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState<TabType>('user');
   // Select the first stat by default for the current tab
   const [selectedStat, setSelectedStat] = useState<string>(tabData['user'].stats[0].title);
@@ -52,7 +54,7 @@ const ActivitiesCard = () => {
   return (
     <Card className="w-full h-full animate-slide-in-up px-6" style={{ animationDelay: '0.2s' }}>
       <div className="w-full">
-        <CardHeader title="Activity Overview" rightContent={<ViewReportButton />} />
+        <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
 
         {/* Tabs */}
         <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
