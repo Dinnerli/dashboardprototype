@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
@@ -22,7 +21,15 @@ const TooltipContent = React.forwardRef<
       className
     )}
     {...props}
-  />
+  >
+    {props.children}
+    <TooltipPrimitive.Arrow 
+      className="fill-[#1A1F2C] -mt-1" 
+      width={20} 
+      height={10} 
+      style={{ boxShadow: 'none', border: 'none', display: 'block' }}
+    />
+  </TooltipPrimitive.Content>
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
