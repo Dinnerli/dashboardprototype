@@ -7,6 +7,7 @@ import ViewReportButton from "./ViewReportButton";
 import CardHeader from "./CardHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
 import StatButton from "./activities/ActivityStat";
+import styles from './StatButton.module.css';
 
 // Different data for each tab
 const tabData = {
@@ -61,7 +62,9 @@ const ActivitiesCard = () => {
 
         <div className="flex flex-col gap-2.5 w-full">
           {/* Stats Row */}
-          <div className="flex items-center gap-5 p-2.5 h-20 w-full flex-wrap">
+          <div
+            className={`stat-row flex items-center gap-5 p-2.5 h-20 w-full flex-wrap md:flex-nowrap md:overflow-visible ${styles['stat-row']}`}
+          >
             {currentData.stats.map((stat, index) => (
               <StatButton 
                 key={index}

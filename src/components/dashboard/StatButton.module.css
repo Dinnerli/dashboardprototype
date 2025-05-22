@@ -1,0 +1,16 @@
+.stat-row {
+  /* Desktop styles remain unchanged, only mobile styles below */
+}
+
+@media (max-width: 768px) {
+  .stat-row {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap !important;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  .stat-row::-webkit-scrollbar {
+    display: none;
+  }
+}
