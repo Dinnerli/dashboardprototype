@@ -1,0 +1,214 @@
+{
+  "activities": [
+    {
+      "name": "Courses",
+      "stats": [
+        {
+          "statName": "Uploads",
+          "tooltip": "Total number of course uploaded",
+          "value": 230,
+          "trendPercentage": "2.5%",
+          "isRising": true
+        },
+        {
+          "statName": "Time Spent",
+          "tooltip": "Overall time learners spent engaging with course content",
+          "value": "1,350 hrs",
+          "trendPercentage": "1.1%",
+          "isRising": false
+        }
+      ],
+      "data": [
+        {
+          "name": "Assigned",
+          "value": 980,
+          "tooltip": "Number of learners assigned for courses",
+          "trend": "4.0%",
+          "isRising": true
+        },
+        {
+          "name": "Enrolled",
+          "value": 740,
+          "tooltip": "Number of learners who self-enrolled in courses",
+          "trend": "3.6%",
+          "isRising": true
+        },
+        {
+          "name": "Completed",
+          "value": 720,
+          "tooltip": "Number of learners who finished all course components, regardless of whether they passed the assessments",
+          "trend": "2.0%",
+          "isRising": false
+        }
+      ]
+    },
+    {
+      "name": "ILT",
+      "stats": [
+        {
+          "statName": "Ongoing Session",
+          "tooltip": "Total number of Ongoing Sessions",
+          "value": 20,
+          "trendPercentage": "0.5%",
+          "isRising": true
+        },
+        {
+          "statName": "Total Session",
+          "tooltip": "Total number of Sessions Uploads",
+          "value": 100,
+          "trendPercentage": "1.0%",
+          "isRising": false
+        }
+      ],
+      "data": [
+        {
+          "name": "Assigned",
+          "value": 380,
+          "tooltip": "Number of learners assigned for Sessions",
+          "trend": "1.2%",
+          "isRising": true
+        },
+        {
+          "name": "Enrolled",
+          "value": 300,
+          "tooltip": "Number of learners who self-enrolled in sessions",
+          "trend": "0.9%",
+          "isRising": false
+        },
+        {
+          "name": "Completed",
+          "value": 270,
+          "tooltip": "Number of learners who completed the sessions",
+          "trend": "2.4%",
+          "isRising": true
+        }
+      ]
+    },
+    {
+      "name": "VILT",
+      "stats": [
+        {
+          "statName": "Ongoing",
+          "tooltip": "Total number of Ongoing Sessions",
+          "value": 15,
+          "trendPercentage": "1.5%",
+          "isRising": true
+        },
+        {
+          "statName": "Total Session",
+          "tooltip": "Total number of Sessions Uploads",
+          "value": 75,
+          "trendPercentage": "0.8%",
+          "isRising": false
+        }
+      ],
+      "data": [
+        {
+          "name": "Assigned",
+          "value": 260,
+          "tooltip": "Number of learners assigned for Sessions",
+          "trend": "3.1%",
+          "isRising": true
+        },
+        {
+          "name": "Enrolled",
+          "value": 210,
+          "tooltip": "Number of learners who self-enrolled in sessions",
+          "trend": "2.0%",
+          "isRising": false
+        },
+        {
+          "name": "Completed",
+          "value": 190,
+          "tooltip": "Number of learners who completed the sessions",
+          "trend": "1.7%",
+          "isRising": true
+        }
+      ]
+    },
+    {
+      "name": "Exams",
+      "stats": [
+        {
+          "statName": "Ongoing",
+          "tooltip": "Total number of Ongoing Exams",
+          "value": 10,
+          "trendPercentage": "1.0%",
+          "isRising": true
+        },
+        {
+          "statName": "Participants",
+          "tooltip": "Overall time learners spent engaging with Exams content",
+          "value": 580,
+          "trendPercentage": "2.2%",
+          "isRising": true
+        }
+      ],
+      "data": [
+        {
+          "name": "Assigned",
+          "value": 520,
+          "tooltip": "Number of learners assigned for Exams",
+          "trend": "2.8%",
+          "isRising": true
+        },
+        {
+          "name": "Enrolled",
+          "value": 430,
+          "tooltip": "Number of learners who achieved a passing score",
+          "trend": "1.9%",
+          "isRising": false
+        },
+        {
+          "name": "Completed",
+          "value": 480,
+          "tooltip": "Number of learners who finished the exams regardless of whether they passed the assessments",
+          "trend": "3.3%",
+          "isRising": true
+        }
+      ]
+    },
+    {
+      "name": "Library",
+      "stats": [
+        {
+          "statName": "Uploads",
+          "tooltip": "Total number of Library Groups Uploads",
+          "value": 95,
+          "trendPercentage": "0.6%",
+          "isRising": false
+        },
+        {
+          "statName": "Time Spent",
+          "tooltip": "Overall time learners spent engaging with course content",
+          "value": "1,350 hrs",
+          "trendPercentage": "1.1%",
+          "isRising": false
+        }
+      ],
+      "data": [
+{
+          "name": "Items Uploaded",
+          "value": 280,
+          "tooltip": "Total number of Items Uploads",
+          "trend": "0.8%",
+          "isRising": false
+        },
+        {
+          "name": "Assigned",
+          "value": 390,
+          "tooltip": "Number of learners assigned for Items",
+          "trend": "1.0%",
+          "isRising": true
+        },
+        {
+          "name": "Viewed",
+          "value": 365,
+          "tooltip": "Number of learners viewed the Items",
+          "trend": "2.5%",
+          "isRising": false
+        }
+      ]
+    }
+  ]
+}
