@@ -3,12 +3,12 @@ import { useMediaQuery } from '@mui/material';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
-import ActivitiesCard from '@/components/dashboard/StatButton';
+import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
 import RewardsCard from '@/components/dashboard/RewardsCard';
-import HighchartsCard from '@/components/dashboard/HighchartsCard';
+import LearningActivityCard from '@/components/dashboard/LearningActivityCard';
 import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
 import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
 import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
@@ -41,7 +41,7 @@ const Index = () => {
   // DND for first 4 cards in 2x2 grid
   const initialDndCards = [
     { id: 0, component: <ActivitiesCard /> },
-    { id: 1, component: <HighchartsCard /> },
+    { id: 1, component: <LearningActivityCard /> },
     { id: 2, component: <CoursePerformanceCard /> },
     { id: 3, component: <EngagementActivitiesCard /> },
   ];

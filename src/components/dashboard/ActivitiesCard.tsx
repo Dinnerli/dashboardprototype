@@ -6,7 +6,7 @@ import ActivityFilters from "./activities/ActivityFilters";
 import ViewReportButton from "./ViewReportButton";
 import CardHeader from "./CardHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
-import StatButton from "./activities/ActivityStat";
+import StatButton from "./activities/StatButton";
 import styles from './StatButton.module.css';
 
 // Different data for each tab
