@@ -13,7 +13,7 @@
         {
           "statName": "Time Spent",
           "tooltip": "Overall time learners spent engaging with course content",
-          "value": "1,350 hrs",
+          "value": "1,350",
           "trendPercentage": "1.1%",
           "isRising": false
         }
@@ -181,7 +181,7 @@
         {
           "statName": "Time Spent",
           "tooltip": "Overall time learners spent engaging with course content",
-          "value": "1,350 hrs",
+          "value": "1,350",
           "trendPercentage": "1.1%",
           "isRising": false
         }

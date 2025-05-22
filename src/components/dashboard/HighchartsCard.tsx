@@ -6,6 +6,7 @@ import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
 import learningActivities from "@/Data/LearningActivities.json";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HighchartsCardProps {
   title?: string;
@@ -36,6 +37,7 @@ const HighchartsCard = ({
   const [activeSegment, setActiveSegment] = useState<string>(initialKey);
   const [segments, setSegments] = useState<Record<string, boolean>>({});
 
+  const isMobile = useIsMobile();
   // Find the active activity data
   const activeActivity = activities.find(a => activityKeyMap[a.name] === activeSegment) || activities[0];
 
@@ -89,7 +91,7 @@ const HighchartsCard = ({
 
   return (
     <Card className="w-full h-full px-6 animate-slide-in-up font-poppins" style={{ animationDelay: '0.4s' }}>
-      <CardHeader title={title} rightContent={<ViewReportButton />} />
+      <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
       <CardContent className="p-0">
         <div className="flex flex-col lg:flex-row h-full">
           {/* Interactive Chart */}
