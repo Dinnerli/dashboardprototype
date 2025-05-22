@@ -111,7 +111,7 @@ const HighchartsCard = ({
   } | null>(null);
 
   return (
-    <Card className="w-full h-[555px]  animate-slide-in-up font-poppins px-6" style={{
+    <Card className="w-full h-full  animate-slide-in-up font-poppins px-6" style={{
       animationDelay: '0.4s'
     }}>
       <CardHeader title={title} rightContent={<ViewReportButton />}/>
