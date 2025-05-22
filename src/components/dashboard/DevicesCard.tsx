@@ -4,7 +4,7 @@ import { useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
-import ActivityStat from "./activities/ActivityStat";
+import StatButton from "./activities/ActivityStat";
 
 const DevicesCard = () => {
   const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile' | null>(null);
@@ -56,7 +56,7 @@ const DevicesCard = () => {
               key={stat.key}
               className={`flex-1`}
             >
-              <ActivityStat
+              <StatButton
                 title={stat.title}
                 value={stat.value}
                 percentage={stat.percentage}

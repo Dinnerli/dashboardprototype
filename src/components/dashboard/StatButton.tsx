@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Card, CardTitle } from "@/components/ui/card";
 import ActivityTabs, { TabType } from "./activities/ActivityTabs";
-import ActivityStat from "./activities/ActivityStat";
 import ActivityChart from "./activities/ActivityChart";
 import ActivityFilters from "./activities/ActivityFilters";
 import ViewReportButton from "./ViewReportButton";
 import CardHeader from "./CardHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
+import StatButton from "./activities/ActivityStat";
 
 // Different data for each tab
 const tabData = {
@@ -63,7 +63,7 @@ const ActivitiesCard = () => {
           {/* Stats Row */}
           <div className="flex items-center gap-5 p-2.5 h-20 w-full flex-wrap">
             {currentData.stats.map((stat, index) => (
-              <ActivityStat 
+              <StatButton 
                 key={index}
                 title={stat.title} 
                 value={stat.value} 

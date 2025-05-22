@@ -3,7 +3,7 @@ import { useMediaQuery } from '@mui/material';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
-import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
+import ActivitiesCard from '@/components/dashboard/StatButton';
 import DevicesCard from '@/components/dashboard/DevicesCard';
 import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
 import LeaderboardCard from '@/components/dashboard/LeaderboardCard';

@@ -3,7 +3,7 @@ import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
-type ActivityStatProps = { 
+type StatButtonProps = { 
   title: string; 
   value: string; 
   percentage: string;
@@ -13,7 +13,7 @@ type ActivityStatProps = {
   tooltip?: string;
 };
 
-const ActivityStat = ({ 
+const StatButton = ({ 
   title, 
   value, 
   percentage, 
@@ -21,7 +21,7 @@ const ActivityStat = ({
   isPositive,
   onClick,
   tooltip
-}: ActivityStatProps) => {
+}: StatButtonProps) => {
   return (
     <div 
       className={`flex items-center gap-2.5  py-2 px-3 rounded-lg cursor-pointer transition-all duration-200  ${
@@ -73,4 +73,4 @@ const ActivityStat = ({
   );
 };
 
-export default ActivityStat;
+export default StatButton;
