@@ -7,10 +7,10 @@ interface CardHeaderProps {
 }
 
 const CardHeader: FC<CardHeaderProps> = ({ title, rightContent }) => (
-  <div className="flex justify-between items-center w-full  border-b border-[#B3B3B3]">
-    <div className="flex items-center gap-2.5 px-4 p-6 flex-1">
-      <CardTitle>{title}</CardTitle>
-    </div>
+  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full border-b border-[#B3B3B3]">
+  <div className="flex items-start sm:items-center gap-2.5 px-4 py-4 sm:py-6 flex-1">
+    <CardTitle>{title}</CardTitle>
+  </div>
     <div className="flex items-center">
       {rightContent}
     </div>

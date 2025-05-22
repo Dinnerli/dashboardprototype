@@ -31,8 +31,15 @@ interface ActivityTabsProps {
 
 const ActivityTabs = ({ activeTab, setActiveTab }: ActivityTabsProps) => {
   const isMobile = useIsMobile();
-  // Detect tab view (width <= 960px)
-  const isTab = typeof window !== 'undefined' && window.innerWidth <= 960 && window.innerWidth > 600;
+  // Detect tab view (width between 600px and 960px)
+  const [isTab, setIsTab] = React.useState(typeof window !== 'undefined' && window.innerWidth <= 960 && window.innerWidth > 600);
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsTab(window.innerWidth <= 960 && window.innerWidth > 600);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const handleTabClick = (tab: TabType) => {
     setActiveTab(tab);
   };
