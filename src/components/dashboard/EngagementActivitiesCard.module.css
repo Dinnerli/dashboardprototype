@@ -1,0 +1,20 @@
+.engagement-tooltip {
+  background-color: #F2F3F5;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 8px #0001;
+}
+.engagement-tooltip-label {
+  color: #4F5A69;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.engagement-tooltip-value {
+  color: #338FFF;
+  font-weight: 600;
+  font-size: 16px;
+}
+.engagement-tooltip-title {
+  color: #8C9BAC;
+  font-size: 12px;
+}

@@ -161,7 +161,7 @@ export const updateChartOptions = (chartType: TabType, prevOptions: Highcharts.O
     ...newOptions.tooltip,
     shared: false,
     shadow: false, 
-    backgroundColor: '#CDD1D7',
+    backgroundColor: '#F2F3F5',
     borderWidth: 0,
     style: {
       fontFamily: 'Poppins, sans-serif',
