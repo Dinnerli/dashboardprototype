@@ -63,19 +63,20 @@ const ActivitiesCard = () => {
         <div className="flex flex-col gap-2.5 w-full">
           {/* Stats Row */}
           <div
-            className={`stat-row flex items-center gap-5 p-2.5 h-20 w-full flex-wrap md:flex-nowrap md:overflow-visible ${styles['stat-row']}`}
+            className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}
           >
             {currentData.stats.map((stat, index) => (
-              <StatButton 
-                key={index}
-                title={stat.title} 
-                value={stat.value} 
-                percentage={stat.percentage} 
-                isActive={selectedStat === stat.title}
-                isPositive={stat.isPositive}
-                onClick={() => handleStatClick(stat.title)}
-                tooltip={stat.tooltip}
-              />
+              <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+                <StatButton
+                  title={stat.title}
+                  value={stat.value}
+                  percentage={stat.percentage}
+                  isActive={selectedStat === stat.title}
+                  isPositive={stat.isPositive}
+                  onClick={() => handleStatClick(stat.title)}
+                  tooltip={stat.tooltip}
+                />
+              </div>
             ))}
           </div>
 
