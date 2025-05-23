@@ -44,7 +44,7 @@ const ActivityStat = ({
 
   return (
     <div
-      className="grid flex-1 grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg  transition-colors"
+      className="grid flex-1 grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg transition-colors"
       onClick={onClick}
     >
       {/* Vertical colored line */}
@@ -53,12 +53,13 @@ const ActivityStat = ({
       </div>
       {/* Status label */}
       <div className="flex items-center gap-1">
-        <span className="text-base font-semibold text-[#8C9BAC]">{title}</span>        {tooltip && (
+        <span className="text-sm sm:text-base font-semibold text-[#8C9BAC]">{title}</span>
+        {tooltip && (
           <InfoTooltip tooltip={tooltip} iconProps={{ className: 'w-3 h-3 text-[#8C9BAC]' }} />
         )}
       </div>
       {/* Value */}
-      <span className="text-2xl font-bold text-[#4F5A69] text-right min-w-[32px]">{value}</span>
+      <span className="text-xl sm:text-2xl font-bold text-[#4F5A69] text-right min-w-[32px]">{value}</span>
       {/* Trend */}
       <div className="flex items-center justify-end min-w-[48px]">
         <TrendIndicator value={percentage} isPositive={isPositive} />

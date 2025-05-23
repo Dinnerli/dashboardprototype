@@ -14,7 +14,7 @@ const ActivityTab = ({ title, isActive, onClick }: ActivityTabProps) => {
       onClick={onClick}
     >
       <div className={`border-b-2 w-full ${isActive ? 'border-[#338FFF]' : 'border-transparent'}`}></div>
-      <span className={`text-sm px-2 ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'} font-medium font-poppins w-full text-center`}>
+      <span className={`text-sm md:text-base px-2 ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'} font-medium font-poppins w-full text-center`}>
         {title}
       </span>
     </div>

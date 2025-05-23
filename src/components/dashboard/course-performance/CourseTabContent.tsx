@@ -11,6 +11,7 @@ type CourseTabContentProps = {
       isActive: boolean;
       isSelected: boolean;
       tooltip: string;
+      rising: boolean;
     };
     secondStat: {
       title: string;
@@ -19,6 +20,7 @@ type CourseTabContentProps = {
       isActive: boolean;
       isSelected: boolean;
       tooltip: string;
+      rising: boolean;
     };
   };
   courseData: Array<{
@@ -40,7 +42,7 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
             isActive={stats.firstStat.isActive}
             tooltip={stats.firstStat.tooltip}
             isSelected={stats.firstStat.isSelected}
-            isPositive={!stats.firstStat.percentage.startsWith('-')}
+            isPositive={!stats.firstStat.rising}
             onClick={() => onStatClick(stats.firstStat.title)}
           />
           <ActivityStat 
@@ -50,7 +52,7 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
             tooltip={stats.secondStat.tooltip}
             isActive={stats.secondStat.isActive}
             isSelected={stats.secondStat.isSelected}
-            isPositive={!stats.secondStat.percentage.startsWith('-')}
+            isPositive={!stats.secondStat.rising}
             onClick={() => onStatClick(stats.secondStat.title)}
           />
 

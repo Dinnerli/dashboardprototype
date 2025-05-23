@@ -27,7 +27,7 @@ const CoursePerformanceCard = () => {
               <TabsTrigger
                 key={tab.id}
                 value={tab.id}
-                className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
+                className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
               >
                 {activeTab === tab.id && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
                 {tab.name}

@@ -9,7 +9,7 @@
             "value": 210,
             "trend": 12,
             "tooltip": "Percentage learners who met the passing criteria for the course",
-            "rising": true
+            "rising": false
           },
           {
             "name": "Passed",
@@ -52,17 +52,17 @@
         "stats": [
           {
             "name": "Completed",
-            "value": 210,
+            "value": 150,
             "trend": 12,
             "tooltip": "Percentage learners who met the passing criteria for the course",
             "rising": true
           },
           {
             "name": "Passed",
-            "value": 185,
+            "value": 225,
             "trend": 8,
             "tooltip": "Percentage of  learners who finished all course components",
-            "rising": true
+            "rising": false
           }
         ],
         "data": [
