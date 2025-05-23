@@ -6,6 +6,7 @@ import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
 import EngagementStat from "./EngagementStat";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const EngagementActivitiesCard = () => {
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
@@ -13,6 +14,7 @@ const EngagementActivitiesCard = () => {
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
   const [isAnimated, setIsAnimated] = useState(false);
 
+  const isMobile = useIsMobile();
   const chartData: Record<string, { path: string }> = {
     'Active Users': {
       path: 'M0 200L160 250L320 80L480 280L640 50L800 220',
@@ -44,10 +46,10 @@ const EngagementActivitiesCard = () => {
   };
 
   return (
-    <Card className="w-full h-auto animate-slide-in-up  overflow-hidden bg-white px-6" style={{
-      animationDelay: '0.3s'
-    }}>
-      <CardHeader title="Engagement Activities" rightContent={<ViewReportButton />}/>
+     <Card className="w-full h-full animate-slide-in-up px-4 sm:px-5 md:px-6" style={{ animationDelay: '0.2s' }}>
+   
+      <CardHeader title="Engagement Activities" rightContent={isMobile ? null : <ViewReportButton />} />
+
       <div className="w-full h-full flex flex-col">
         
 
