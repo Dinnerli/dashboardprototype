@@ -20,7 +20,7 @@ const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBa
   return (
     <div className="flex items-center gap-1 w-full">
       <div className="flex w-[100px] justify-end items-center gap-[5px]">
-        <div className="w-[90px] text-right text-[10px] text-[#4F5A69] font-normal truncate">
+        <div className="w-[90px] text-right text-[10px] text-[#4F5A69] font-medium truncate">
           {name}
         </div>
         <div className="w-[4px] h-[1px] bg-[#4F5A69]"></div>

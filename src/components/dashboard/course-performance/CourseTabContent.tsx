@@ -29,31 +29,32 @@ type CourseTabContentProps = {
 
 const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentProps) => {
   return (
-    <div className="px-8 py-4 h-full flex flex-col justify-center">
+    <div className="  h-full flex flex-col justify-center">
       {/* Stats Row */}
-      <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
-        <ActivityStat 
-          title={stats.firstStat.title}
-          value={stats.firstStat.value}
-          percentage={stats.firstStat.percentage}
-          isActive={stats.firstStat.isActive}
-          isSelected={stats.firstStat.isSelected}
-          isPositive={!stats.firstStat.percentage.startsWith('-')}
-          onClick={() => onStatClick(stats.firstStat.title)}
-        />
-        <ActivityStat 
-          title={stats.secondStat.title}
-          value={stats.secondStat.value}
-          percentage={stats.secondStat.percentage}
-          isActive={stats.secondStat.isActive}
-          isSelected={stats.secondStat.isSelected}
-          isPositive={!stats.secondStat.percentage.startsWith('-')}
-          onClick={() => onStatClick(stats.secondStat.title)}
-        />
+      <div className="flex flex-col sm:flex-row justify-between gap-4 py-2 mb-4">
+          <ActivityStat 
+            title={stats.firstStat.title}
+            value={stats.firstStat.value}
+            percentage={stats.firstStat.percentage}
+            isActive={stats.firstStat.isActive}
+            isSelected={stats.firstStat.isSelected}
+            isPositive={!stats.firstStat.percentage.startsWith('-')}
+            onClick={() => onStatClick(stats.firstStat.title)}
+          />
+          <ActivityStat 
+            title={stats.secondStat.title}
+            value={stats.secondStat.value}
+            percentage={stats.secondStat.percentage}
+            isActive={stats.secondStat.isActive}
+            isSelected={stats.secondStat.isSelected}
+            isPositive={!stats.secondStat.percentage.startsWith('-')}
+            onClick={() => onStatClick(stats.secondStat.title)}
+          />
+
       </div>
 
       {/* Chart - taking remaining space */}
-      <div className="flex-1 flex pt-4">
+      <div className="flex-1 flex ">
         <CourseChart courseData={courseData} />
       </div>
     </div>

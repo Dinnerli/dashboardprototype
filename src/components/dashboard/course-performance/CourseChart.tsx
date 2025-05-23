@@ -19,7 +19,7 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
   return (
     <div className="w-full h-auto flex-1 flex flex-col font-poppins">
       {/* Course bars with more vertical spacing */}
-      <div className="flex flex-col gap-4 mb-6 ">
+      <div className="flex flex-col gap-6 mb-6 ">
         {courseData.map((course, index) => (
           <CourseBar
             key={index}
@@ -39,7 +39,7 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
         {percentageMarkers.map((percentage, index) => (
           <div 
             key={index} 
-            className="text-[#CDD1D7] text-[10px] font-normal"
+            className="text-[#CDD1D7] text-[10px] font-medium"
           >
             {percentage}{index === percentageMarkers.length - 1 ? ' %' : ''}
           </div>

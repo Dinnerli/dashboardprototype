@@ -6,30 +6,33 @@ import { useCourseData } from "./course-performance/useCourseData";
 import FilterDropdown from "./common/FilterDropdown";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const CoursePerformanceCard = () => {
   const { activeTab, setActiveTab, courseData, tabContents, handleStatClick } = useCourseData();
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
-
+const isMobile = useIsMobile();
   return (
-    <Card className="w-full h-auto animate-slide-in-up  px-6" style={{ animationDelay: '0.3s' }}>
-      <div className="w-full h-full flex flex-col">
-        <CardHeader title="Course Performance" rightContent={<ViewReportButton />} />
+    <Card  className={`w-full pb-6 h-auto animate-slide-in-up ${isMobile ? 'px-4 pb-6 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
+      style={{ animationDelay: isMobile ? '0.2s' : '0.4s' }}
+   >
+      <div className="w-full">
+       <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
 
         {/* Tabs with top indicator */}
         <Tabs defaultValue="top-performers" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
-          <TabsList className="flex h-auto w-full bg-white rounded-none p-0">
+          <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
             <TabsTrigger 
               value="top-performers"
-              className="flex-1 px-8 py-4 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-sm font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0"
+              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? "flex-1" : ""}`}
             >
               {activeTab === "top-performers" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
               Top Performers
             </TabsTrigger>
             <TabsTrigger 
               value="underperformers"
-              className="flex-1 px-8 py-4 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-sm font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0"
+              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? "flex-1" : ""}`}
             >
               {activeTab === "underperformers" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
               Underperformers
