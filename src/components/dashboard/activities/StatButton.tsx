@@ -1,6 +1,7 @@
 import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import React, { useState, useEffect } from "react";  // added imports for state and effect
 
 type StatButtonProps = { 
   title: string; 
@@ -21,6 +22,15 @@ const StatButton = ({
   onClick,
   tooltip
 }: StatButtonProps) => {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const touch = typeof navigator !== "undefined" &&
+      (navigator.maxTouchPoints > 0 || 'ontouchstart' in window);
+    setIsMobile(touch);
+  }, []);
+
   return (
     <div 
       className={`flex items-center gap-2.5  py-2 px-3 rounded-lg cursor-pointer transition-all duration-200  ${
@@ -42,16 +52,35 @@ const StatButton = ({
           </span>
           <TooltipProvider>
             {tooltip ? (
-              <Tooltip delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                    <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
-                  </span>
-                </TooltipTrigger>
-                <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                  {tooltip}
-                </TooltipContent>
-              </Tooltip>
+              isMobile ? (
+                <Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen} delayDuration={0}>
+                  <TooltipTrigger asChild>
+                    <span
+                      tabIndex={0}
+                      onClick={e => {
+                        e.stopPropagation();
+                        setTooltipOpen(o => !o);
+                      }}
+                    >
+                      <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                    {tooltip}
+                  </TooltipContent>
+                </Tooltip>
+              ) : (
+                <Tooltip delayDuration={0}>
+                  <TooltipTrigger asChild>
+                    <span tabIndex={0} onClick={e => e.stopPropagation()}>
+                      <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                    {tooltip}
+                  </TooltipContent>
+                </Tooltip>
+              )
             ) : (
               <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
             )}

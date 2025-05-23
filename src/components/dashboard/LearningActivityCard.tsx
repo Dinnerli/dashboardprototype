@@ -39,6 +39,9 @@ const LearningActivityCard = ({
   const [segments, setSegments] = useState<Record<string, boolean>>({});
 
   const isMobile = useIsMobile();
+  const [statsTooltipOpen, setStatsTooltipOpen] = useState<Record<number, boolean>>({});
+  const [itemTooltipOpen, setItemTooltipOpen] = useState<Record<number, boolean>>({});
+
   // Find the active activity data
   let activeActivity: Activity;
   if (activeSegment === 'ilt_vilt') {
@@ -252,16 +255,29 @@ const LearningActivityCard = ({
                             <div className="flex items-center gap-2">
                               <span className="text-base font-semibold truncate text-[#8C9BAC]">{stat.statName}</span>
                               {stat.tooltip && (
-                                <Tooltip delayDuration={300}>
-                                  <TooltipTrigger asChild>
-                                    <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                                      <Info className="w-3.5 h-3.5 text-[#8C9BAC] " stroke="#8C9BAC" />
-                                    </span>
-                                  </TooltipTrigger>
-                                  <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                                    {stat.tooltip}
-                                  </TooltipContent>
-                                </Tooltip>
+                                isMobile ? (
+                                  <Tooltip open={statsTooltipOpen[idx]} onOpenChange={open => setStatsTooltipOpen(prev => ({...prev, [idx]: open}))} delayDuration={0}>
+                                    <TooltipTrigger asChild>
+                                      <span tabIndex={0} onClick={e => { e.stopPropagation(); setStatsTooltipOpen(prev => ({...prev, [idx]: !prev[idx]})); }}>
+                                        <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
+                                      </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                                      {stat.tooltip}
+                                    </TooltipContent>
+                                  </Tooltip>
+                                ) : (
+                                  <Tooltip delayDuration={300}>
+                                    <TooltipTrigger asChild>
+                                      <span tabIndex={0} onClick={e => e.stopPropagation()}>
+                                        <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
+                                      </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                                      {stat.tooltip}
+                                    </TooltipContent>
+                                  </Tooltip>
+                                )
                               )}
                             </div>
                             <div className="flex items-center gap-3">
@@ -306,16 +322,29 @@ const LearningActivityCard = ({
                       <div className="flex items-center gap-1">
                         <span className="text-base font-semibold text-[#8C9BAC]">{item.name}</span>
                         {item.tooltip && (
-                          <Tooltip delayDuration={300}>
-                            <TooltipTrigger asChild>
-                              <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                                <Info className="w-3 h-3 text-[#8C9BAC] " stroke="#8C9BAC" />
-                              </span>
-                            </TooltipTrigger>
-                            <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                              {item.tooltip}
-                            </TooltipContent>
-                          </Tooltip>
+                          isMobile ? (
+                            <Tooltip open={itemTooltipOpen[idx]} onOpenChange={open => setItemTooltipOpen(prev => ({...prev, [idx]: open}))} delayDuration={0}>
+                              <TooltipTrigger asChild>
+                                <span tabIndex={0} onClick={e => { e.stopPropagation(); setItemTooltipOpen(prev => ({...prev, [idx]: !prev[idx]})); }}>
+                                  <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
+                                </span>
+                              </TooltipTrigger>
+                              <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                                {item.tooltip}
+                              </TooltipContent>
+                            </Tooltip>
+                          ) : (
+                            <Tooltip delayDuration={300}>
+                              <TooltipTrigger asChild>
+                                <span tabIndex={0} onClick={e => e.stopPropagation()}>
+                                  <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
+                                </span>
+                              </TooltipTrigger>
+                              <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+                                {item.tooltip}
+                              </TooltipContent>
+                            </Tooltip>
+                          )
                         )}
                       </div>
                       {/* Value */}
