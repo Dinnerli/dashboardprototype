@@ -1,6 +1,6 @@
 import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import InfoTooltip from "@/components/ui/InfoTooltip";
 import React, { useState, useEffect } from "react";  // added imports for state and effect
 
 type StatButtonProps = { 
@@ -50,41 +50,11 @@ const StatButton = ({
           <span className={`text-sm font-medium transition-colors duration-200 truncate max-w-[120px] whitespace-nowrap ${isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'}`}>
             {title}
           </span>
-          <TooltipProvider>
-            {tooltip ? (
-              isMobile ? (
-                <Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen} delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <span
-                      tabIndex={0}
-                      onClick={e => {
-                        e.stopPropagation();
-                        setTooltipOpen(o => !o);
-                      }}
-                    >
-                      <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                    {tooltip}
-                  </TooltipContent>
-                </Tooltip>
-              ) : (
-                <Tooltip delayDuration={0}>
-                  <TooltipTrigger asChild>
-                    <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                      <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                    {tooltip}
-                  </TooltipContent>
-                </Tooltip>
-              )
-            ) : (
-              <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
-            )}
-          </TooltipProvider>
+          <InfoTooltip
+            tooltip={tooltip}
+            delayDuration={0}
+            iconProps={{ className: 'w-3.5 h-3.5 text-[#8C9BAC]', stroke: '#8C9BAC' }}
+          />
         </div>
         <div className="flex items-center">
           <div>

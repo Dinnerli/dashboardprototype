@@ -5,7 +5,7 @@ import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
 import learningActivities from "@/Data/LearningActivities.json";
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import InfoTooltip from "@/components/ui/InfoTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LearningActivityCardProps {
@@ -39,8 +39,6 @@ const LearningActivityCard = ({
   const [segments, setSegments] = useState<Record<string, boolean>>({});
 
   const isMobile = useIsMobile();
-  const [statsTooltipOpen, setStatsTooltipOpen] = useState<Record<number, boolean>>({});
-  const [itemTooltipOpen, setItemTooltipOpen] = useState<Record<number, boolean>>({});
 
   // Find the active activity data
   let activeActivity: Activity;
@@ -222,141 +220,97 @@ const LearningActivityCard = ({
                 )}
               </div>
               {/* First row: stats[] */}
-              <TooltipProvider>
-                <div className={`flex flex-wrap gap-1 pb-6`}> 
-                  <div className={`flex items-center justify-center w-full gap-1`}>
-                    {activeActivity.stats.map((stat, idx) => (
-                      <>
-                        <div key={stat.statName} className="flex items-center gap-1">
-                          {/* Always show an icon: first is blue, second is yellow, rest blue */}
-                          {idx === 0 && (
-                            <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                              <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                              <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                              <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            </svg>
+              <div className={`flex flex-wrap gap-1 pb-6`}> 
+                <div className={`flex items-center justify-center w-full gap-1`}>
+                  {activeActivity.stats.map((stat, idx) => (
+                    <div key={stat.statName} className="flex items-center gap-1">
+                      {/* Icon rendering unchanged */}
+                      {idx === 0 && (
+                        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                        </svg>
+                      )}
+                      {idx === 1 && (
+                        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                        </svg>
+                      )}
+                      {idx > 1 && (
+                        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                        </svg>
+                      )}
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-2">
+                          <span className="text-base font-semibold truncate text-[#8C9BAC]">{stat.statName}</span>
+                          {stat.tooltip && (
+                            <InfoTooltip
+                              tooltip={stat.tooltip}
+                              iconProps={{ className: 'w-3.5 h-3.5 text-[#8C9BAC]', stroke: '#8C9BAC' }}
+                            />
                           )}
-                          {idx === 1 && (
-                            <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                              <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            </svg>
-                          )}
-                          {idx > 1 && (
-                            <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                              <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                              <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                              <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                            </svg>
-                          )}
-                          <div className="flex flex-col">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base font-semibold truncate text-[#8C9BAC]">{stat.statName}</span>
-                              {stat.tooltip && (
-                                isMobile ? (
-                                  <Tooltip open={statsTooltipOpen[idx]} onOpenChange={open => setStatsTooltipOpen(prev => ({...prev, [idx]: open}))} delayDuration={0}>
-                                    <TooltipTrigger asChild>
-                                      <span tabIndex={0} onClick={e => { e.stopPropagation(); setStatsTooltipOpen(prev => ({...prev, [idx]: !prev[idx]})); }}>
-                                        <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
-                                      </span>
-                                    </TooltipTrigger>
-                                    <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                                      {stat.tooltip}
-                                    </TooltipContent>
-                                  </Tooltip>
-                                ) : (
-                                  <Tooltip delayDuration={300}>
-                                    <TooltipTrigger asChild>
-                                      <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                                        <Info className="w-3.5 h-3.5 text-[#8C9BAC]" stroke="#8C9BAC" />
-                                      </span>
-                                    </TooltipTrigger>
-                                    <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                                      {stat.tooltip}
-                                    </TooltipContent>
-                                  </Tooltip>
-                                )
-                              )}
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <span className="text-2xl font-bold text-[#4F5A69]">{stat.value}</span>
-                              <div className="flex items-center">
-                                <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
-                              </div>
-                            </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl font-bold text-[#4F5A69]">{stat.value}</span>
+                          <div className="flex items-center">
+                            <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
                           </div>
                         </div>
-                        {idx < activeActivity.stats.length - 1 && (
-                          <div className="w-5 h-5 mx-2 flex items-center justify-center">
-                            <div className="w-px h-8 bg-[#F2F3F5] min-h-[32px]" />
-                          </div>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </div>
-              </TooltipProvider>
-              {/* Key metrics that update based on selection: Assigned, Completed, Enrolled/Viewed */}
-              <TooltipProvider>
-                <div className={`flex flex-col ${isMobile ? 'gap-1.5' : 'gap-9'}`}>
-                  {getDonutData(activeActivity).map((item, idx) => (
-                    <div
-                      key={item.name}
-                      className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg  transition-colors"
-                    >
-                      {/* Vertical colored line */}
-                      <div className="flex items-center justify-center">
-                        <div
-                          className={`w-0.5 h-6 ${
-                            idx === 0
-                              ? "bg-[#CDE4FF]"
-                              : idx === 1
-                              ? "bg-[#338FFF]"
-                              : "bg-[#003072]"
-                          }`}
-                        ></div>
                       </div>
-                      {/* Status label with tooltip */}
-                      <div className="flex items-center gap-1">
-                        <span className="text-base font-semibold text-[#8C9BAC]">{item.name}</span>
-                        {item.tooltip && (
-                          isMobile ? (
-                            <Tooltip open={itemTooltipOpen[idx]} onOpenChange={open => setItemTooltipOpen(prev => ({...prev, [idx]: open}))} delayDuration={0}>
-                              <TooltipTrigger asChild>
-                                <span tabIndex={0} onClick={e => { e.stopPropagation(); setItemTooltipOpen(prev => ({...prev, [idx]: !prev[idx]})); }}>
-                                  <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
-                                </span>
-                              </TooltipTrigger>
-                              <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                                {item.tooltip}
-                              </TooltipContent>
-                            </Tooltip>
-                          ) : (
-                            <Tooltip delayDuration={300}>
-                              <TooltipTrigger asChild>
-                                <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                                  <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
-                                </span>
-                              </TooltipTrigger>
-                              <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                                {item.tooltip}
-                              </TooltipContent>
-                            </Tooltip>
-                          )
-                        )}
-                      </div>
-                      {/* Value */}
-                      <span className="text-2xl font-bold text-[#4F5A69] text-right min-w-[32px]">{item.value}</span>
-                      {/* Trend */}
-                      <div className="flex items-center justify-end min-w-[48px]">
-                        <TrendIndicator value={item.trend} isPositive={item.isRising} />
-                      </div>
+                      {idx < activeActivity.stats.length - 1 && (
+                        <div className="w-5 h-5 mx-2 flex items-center justify-center">
+                          <div className="w-px h-8 bg-[#F2F3F5] min-h-[32px]" />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
-              </TooltipProvider>
+              </div>
+              {/* Key metrics that update based on selection: Assigned, Completed, Enrolled/Viewed */}
+              <div className={`flex flex-col ${isMobile ? 'gap-1.5' : 'gap-9'}`}>
+                {getDonutData(activeActivity).map((item, idx) => (
+                  <div
+                    key={item.name}
+                    className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg  transition-colors"
+                  >
+                    {/* Vertical colored line */}
+                    <div className="flex items-center justify-center">
+                      <div
+                        className={`w-0.5 h-6 ${
+                          idx === 0
+                            ? "bg-[#CDE4FF]"
+                            : idx === 1
+                            ? "bg-[#338FFF]"
+                            : "bg-[#003072]"
+                        }`}
+                      ></div>
+                    </div>
+                    {/* Status label with tooltip */}
+                    <div className="flex items-center gap-1">
+                      <span className="text-base font-semibold text-[#8C9BAC]">{item.name}</span>
+                      {item.tooltip && (
+                        <InfoTooltip
+                          tooltip={item.tooltip}
+                          iconProps={{ className: 'w-3 h-3 text-[#8C9BAC]', stroke: '#8C9BAC' }}
+                        />
+                      )}
+                    </div>
+                    {/* Value */}
+                    <span className="text-2xl font-bold text-[#4F5A69] text-right min-w-[32px]">{item.value}</span>
+                    {/* Trend */}
+                    <div className="flex items-center justify-end min-w-[48px]">
+                      <TrendIndicator value={item.trend} isPositive={item.isRising} />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </CardContent>
