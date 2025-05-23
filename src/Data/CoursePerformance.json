@@ -8,12 +8,14 @@
             "name": "Completed",
             "value": 210,
             "trend": 12,
+            "tooltip": "Percentage learners who met the passing criteria for the course",
             "rising": true
           },
           {
             "name": "Passed",
             "value": 185,
             "trend": 8,
+            "tooltip": "Percentage of  learners who finished all course components",
             "rising": true
           }
         ],
@@ -49,15 +51,17 @@
         "name": "Underperformers",
         "stats": [
           {
-            "name": "Incomplete",
+            "name": "Completed",
             "value": 210,
-            "trend": 20,
+            "trend": 12,
+            "tooltip": "Percentage learners who met the passing criteria for the course",
             "rising": true
           },
           {
-            "name": "Failed",
-            "value":12,
-            "trend": 15,
+            "name": "Passed",
+            "value": 185,
+            "trend": 8,
+            "tooltip": "Percentage of  learners who finished all course components",
             "rising": true
           }
         ],

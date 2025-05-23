@@ -2,6 +2,7 @@ import React from "react";
 import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import InfoTooltip from "@/components/ui/InfoTooltip";
 
 type ActivityStatProps = { 
   title: string; 
@@ -52,23 +53,9 @@ const ActivityStat = ({
       </div>
       {/* Status label */}
       <div className="flex items-center gap-1">
-        <span className="text-base font-semibold text-[#8C9BAC]">{title}</span>
-        <TooltipProvider>
-          {tooltip ? (
-            <Tooltip delayDuration={0}>
-              <TooltipTrigger asChild>
-                <span tabIndex={0} onClick={e => e.stopPropagation()}>
-                  <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
-                </span>
-              </TooltipTrigger>
-              <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
-                {tooltip}
-              </TooltipContent>
-            </Tooltip>
-          ) : (
-            <Info className="w-3 h-3 text-[#8C9BAC]" stroke="#8C9BAC" />
-          )}
-        </TooltipProvider>
+        <span className="text-base font-semibold text-[#8C9BAC]">{title}</span>        {tooltip && (
+          <InfoTooltip tooltip={tooltip} iconProps={{ className: 'w-3 h-3 text-[#8C9BAC]' }} />
+        )}
       </div>
       {/* Value */}
       <span className="text-2xl font-bold text-[#4F5A69] text-right min-w-[32px]">{value}</span>

@@ -10,6 +10,7 @@ type CourseTabContentProps = {
       percentage: string;
       isActive: boolean;
       isSelected: boolean;
+      tooltip: string;
     };
     secondStat: {
       title: string;
@@ -17,6 +18,7 @@ type CourseTabContentProps = {
       percentage: string;
       isActive: boolean;
       isSelected: boolean;
+      tooltip: string;
     };
   };
   courseData: Array<{
@@ -31,13 +33,12 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
   return (
     <div className="  h-full flex flex-col justify-center">
       {/* Stats Row */}
-      <div className="flex flex-col sm:flex-row justify-between gap-4 py-2 mb-4">
-          <ActivityStat 
+      <div className="flex flex-col sm:flex-row justify-between gap-4 py-2 mb-4">          <ActivityStat 
             title={stats.firstStat.title}
             value={stats.firstStat.value}
             percentage={stats.firstStat.percentage}
             isActive={stats.firstStat.isActive}
-            tooltip="Click to view details"
+            tooltip={stats.firstStat.tooltip}
             isSelected={stats.firstStat.isSelected}
             isPositive={!stats.firstStat.percentage.startsWith('-')}
             onClick={() => onStatClick(stats.firstStat.title)}
@@ -46,7 +47,7 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
             title={stats.secondStat.title}
             value={stats.secondStat.value}
             percentage={stats.secondStat.percentage}
-            tooltip="Click to view details"
+            tooltip={stats.secondStat.tooltip}
             isActive={stats.secondStat.isActive}
             isSelected={stats.secondStat.isSelected}
             isPositive={!stats.secondStat.percentage.startsWith('-')}

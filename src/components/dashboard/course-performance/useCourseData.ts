@@ -20,6 +20,7 @@ export const useCourseData = () => {
       isActive:
         id === "top-performers" ? idx === 1 : idx === 0,
       isSelected: selectedStat === stat.name,
+      tooltip: stat.tooltip,
     }));
     const data = tab.data.map((course) => ({
       name: course.name,
