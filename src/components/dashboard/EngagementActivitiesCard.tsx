@@ -52,43 +52,53 @@ const EngagementActivitiesCard = () => {
   <div className="flex flex-col h-full">
     
     {/* Stats Section */}
-     <div className="grid grid-cols-4 gap-1 py-6">
-          <EngagementStat
-        title="Active Users"
-        value={237}
-        percentage="40%"
-        isPositive={true}
-        isActive={selectedStat === 'Active Users'}
-        onClick={() => handleStatClick('Active Users')}
-      />
-      <EngagementStat
-        title="Posts"
-        value={8}
-        percentage="40%"
-        isPositive={false}
-        isActive={selectedStat === 'Posts'}
-        onClick={() => handleStatClick('Posts')}
-      />
-      <EngagementStat
-        title="Comments"
-        value={8}
-        percentage="40%"
-        isPositive={false}
-        isActive={selectedStat === 'Comments'}
-        onClick={() => handleStatClick('Comments')}
-      />
-      <EngagementStat
-        title="Reactions"
-        value={8}
-        percentage="40%"
-        isPositive={false}
-        isActive={selectedStat === 'Reactions'}
-        onClick={() => handleStatClick('Reactions')}
-      />
+    <div
+      className={`stat-row flex items-center  gap-2.5  p-5 h-auto w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto`}
+    >
+      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+        <EngagementStat
+          title="Active Users"
+          value={237}
+          percentage="40%"
+          isPositive={true}
+          isActive={selectedStat === 'Active Users'}
+          onClick={() => handleStatClick('Active Users')}
+        />
+      </div>
+      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+        <EngagementStat
+          title="Posts"
+          value={8}
+          percentage="40%"
+          isPositive={false}
+          isActive={selectedStat === 'Posts'}
+          onClick={() => handleStatClick('Posts')}
+        />
+      </div>
+      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+        <EngagementStat
+          title="Comments"
+          value={8}
+          percentage="40%"
+          isPositive={false}
+          isActive={selectedStat === 'Comments'}
+          onClick={() => handleStatClick('Comments')}
+        />
+      </div>
+      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+        <EngagementStat
+          title="Reactions"
+          value={8}
+          percentage="40%"
+          isPositive={false}
+          isActive={selectedStat === 'Reactions'}
+          onClick={() => handleStatClick('Reactions')}
+        />
+      </div>
     </div>
 
     {/* Chart Section */}
-    <div className="h-[200px] relative overflow-hidden px-1 sm:px-2 pb-2">
+    <div className="h-[200px] relative  px-1 sm:px-2 pb-2">
       {/* Y-axis labels */}
       <div className="absolute left-0 top-2 h-full flex flex-col justify-between text-xs text-[#8C9BAC] z-10">
         {[500, 400, 300, 200, 100, 0].map((label) => (
