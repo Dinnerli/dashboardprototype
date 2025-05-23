@@ -46,112 +46,96 @@ const EngagementActivitiesCard = () => {
   };
 
   return (
-     <Card className="w-full h-full animate-slide-in-up px-4 sm:px-5 md:px-6" style={{ animationDelay: '0.2s' }}>
-   
-      <CardHeader title="Engagement Activities" rightContent={isMobile ? null : <ViewReportButton />} />
+     <Card className="w-full h-full max-h-[500px] min-h-[420px] px-4 sm:px-5 md:px-6 overflow-hidden animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+  <CardHeader title="Engagement Activities" rightContent={isMobile ? null : <ViewReportButton />} />
 
-      <div className="w-full h-full flex flex-col">
-        
+  <div className="flex flex-col h-full">
+    
+    {/* Stats Section */}
+     <div className="grid grid-cols-4 gap-1 py-6">
+          <EngagementStat
+        title="Active Users"
+        value={237}
+        percentage="40%"
+        isPositive={true}
+        isActive={selectedStat === 'Active Users'}
+        onClick={() => handleStatClick('Active Users')}
+      />
+      <EngagementStat
+        title="Posts"
+        value={8}
+        percentage="40%"
+        isPositive={false}
+        isActive={selectedStat === 'Posts'}
+        onClick={() => handleStatClick('Posts')}
+      />
+      <EngagementStat
+        title="Comments"
+        value={8}
+        percentage="40%"
+        isPositive={false}
+        isActive={selectedStat === 'Comments'}
+        onClick={() => handleStatClick('Comments')}
+      />
+      <EngagementStat
+        title="Reactions"
+        value={8}
+        percentage="40%"
+        isPositive={false}
+        isActive={selectedStat === 'Reactions'}
+        onClick={() => handleStatClick('Reactions')}
+      />
+    </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-4 gap-1 py-6">
-          <EngagementStat
-            title="Active Users"
-            value={237}
-            percentage="40%"
-            isPositive={true}
-            isActive={selectedStat === 'Active Users'}
-            onClick={() => handleStatClick('Active Users')}
-          />
-          <EngagementStat
-            title="Posts"
-            value={8}
-            percentage="40%"
-            isPositive={false}
-            isActive={selectedStat === 'Posts'}
-            onClick={() => handleStatClick('Posts')}
-          />
-          <EngagementStat
-            title="Comments"
-            value={8}
-            percentage="40%"
-            isPositive={false}
-            isActive={selectedStat === 'Comments'}
-            onClick={() => handleStatClick('Comments')}
-          />
-          <EngagementStat
-            title="Reactions"
-            value={8}
-            percentage="40%"
-            isPositive={false}
-            isActive={selectedStat === 'Reactions'}
-            onClick={() => handleStatClick('Reactions')}
-          />
+    {/* Chart Section */}
+    <div className="h-[200px] relative overflow-hidden px-1 sm:px-2 pb-2">
+      {/* Y-axis labels */}
+      <div className="absolute left-0 top-2 h-full flex flex-col justify-between text-xs text-[#8C9BAC] z-10">
+        {[500, 400, 300, 200, 100, 0].map((label) => (
+          <div key={label} className="h-5 flex items-center">{label}</div>
+        ))}
+      </div>
+
+      {/* Chart Grid and SVG */}
+      <div className="ml-8 h-full relative mt-2 mr-4">
+        <div className="absolute w-full h-full flex flex-col justify-between">
+          {Array.from({ length: 7 }).map((_, i) => (
+            <div key={i} className="w-full h-[1px] bg-[#F2F3F5]"></div>
+          ))}
         </div>
 
-        {/* Chart Section */}
-        <div className="flex-1 relative overflow-hidden pt-0 px-2">
-          {/* Y-axis labels */}
-          <div className="absolute left-0 top-2 h-[180px] flex flex-col justify-between text-xs text-[#8C9BAC]">
-            <div className="h-5 flex items-center">180</div>
-            <div className="h-5 flex items-center">150</div>
-            <div className="h-5 flex items-center">120</div>
-            <div className="h-5 flex items-center">90</div>
-            <div className="h-5 flex items-center">60</div>
-            <div className="h-5 flex items-center">30</div>
-            <div className="h-5 flex items-center">0</div>
-          </div>
-          
-          {/* Chart grid lines */}
-          <div className="ml-8 h-[180px] relative mt-2 mr-4">
-            <div className="absolute w-full h-full flex flex-col justify-between">
-              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
-              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
-              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
-              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
-              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
-              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
-              <div className="w-full h-[1px] bg-[#F2F3F5]"></div>
-            </div>
-            
-            {/* Chart SVG */}
-            <div className="absolute inset-0">
-              <svg width="100%" height="180" preserveAspectRatio="none" viewBox="0 0 800 180">
-                {/* Background lines - darker gray */}
-                <path d="M0 90L160 108L320 72L480 120L640 48L800 108" stroke="#E5E7EB" strokeWidth="2" fill="none" />
-                <path d="M0 72L160 120L320 48L480 108L640 72L800 90" stroke="#E5E7EB" strokeWidth="2" fill="none" />
-                
-                {/* Main blue line with animation */}
-                <path 
-                  d={chartData[selectedStat || 'default'].path.replace(/(\d+)(?=L|$)/g, n => Math.round(Number(n) * 0.6).toString())}
-                  stroke="#338FFF" 
-                  strokeWidth="2" 
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{
-                    strokeDasharray: "1000",
-                    strokeDashoffset: isAnimated ? "0" : "1000",
-                    transition: "stroke-dashoffset 1.5s ease-out",
-                    transitionDelay: "0.3s"
-                  }}
-                />
-              </svg>
-            </div>
-          </div>
-          
-          {/* X-axis labels */}
-          <div className="absolute bottom-2 left-8 right-4 flex justify-between text-xs text-[#8C9BAC]">
-            <div>Jan</div>
-            <div>Feb</div>
-            <div>Mar</div>
-            <div>Apr</div>
-            <div>May</div>
-            <div>June</div>
-          </div>
+        <div className="absolute inset-0">
+          <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 800 180">
+            <path d="M0 90L160 108L320 72L480 120L640 48L800 108" stroke="#E5E7EB" strokeWidth="2" fill="none" />
+            <path d="M0 72L160 120L320 48L480 108L640 72L800 90" stroke="#E5E7EB" strokeWidth="2" fill="none" />
+            <path
+              d={chartData[selectedStat || 'default'].path.replace(/(\d+)(?=L|$)/g, n => Math.round(Number(n) * 0.6).toString())}
+              stroke="#338FFF"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                strokeDasharray: "1000",
+                strokeDashoffset: isAnimated ? "0" : "1000",
+                transition: "stroke-dashoffset 1.5s ease-out",
+                transitionDelay: "0.3s"
+              }}
+            />
+          </svg>
         </div>
       </div>
-    </Card>
+
+      {/* X-axis labels */}
+      <div className="flex justify-between text-xs text-[#8C9BAC] px-8 pt-2">
+        {["Jan", "Feb", "Mar", "Apr", "May", "June"].map((month) => (
+          <div key={month}>{month}</div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Card>
+
   );
 };
 
