@@ -8,6 +8,7 @@ interface EngagementStatProps {
   title: string;
   value: string | number;
   percentage: string;
+  tooltip: string;
   isPositive: boolean;
   isActive: boolean;
   onClick: () => void;
@@ -17,6 +18,7 @@ const EngagementStat: React.FC<EngagementStatProps> = ({
   title,
   value,
   percentage,
+  tooltip,
   isPositive,
   isActive,
   onClick,
@@ -46,7 +48,7 @@ const EngagementStat: React.FC<EngagementStatProps> = ({
             {title}
           </span>
           <InfoTooltip
-            tooltip="sample tooltip text"
+            tooltip={tooltip}
             delayDuration={0}
             iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
           />
