@@ -7,31 +7,17 @@ import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
 import EngagementStat from "./EngagementStat";
 import { useIsMobile } from "@/hooks/use-mobile";
+import engagementActivitiesData from "@/Data/EngagementActivities.json";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const EngagementActivitiesCard = () => {
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
-  const [selectedStat, setSelectedStat] = useState<string | null>(null);
+  const activities = engagementActivitiesData.engagementActivities;
+  const [selectedStat, setSelectedStat] = useState<string | null>(activities[0].title);
   const [isAnimated, setIsAnimated] = useState(false);
 
   const isMobile = useIsMobile();
-  const chartData: Record<string, { path: string }> = {
-    'Active Users': {
-      path: 'M0 200L160 250L320 80L480 280L640 50L800 220',
-    },
-    'Posts': {
-      path: 'M0 180L160 120L320 200L480 100L640 180L800 80',
-    },
-    'Comments': {
-      path: 'M0 120L160 200L320 80L480 180L640 120L800 150',
-    },
-    'Reactions': {
-      path: 'M0 150L160 180L320 120L480 200L640 80L800 180',
-    },
-    'default': {
-      path: 'M0 200L160 250L320 80L480 280L640 50L800 220',
-    },
-  };
 
   useEffect(() => {
     // Trigger animation after a small delay to ensure the component is mounted
@@ -55,93 +41,50 @@ const EngagementActivitiesCard = () => {
     <div
       className={`stat-row flex items-center  gap-2.5  p-5 h-auto w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto`}
     >
-      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
-        <EngagementStat
-          title="Active Users"
-          value={237}
-          percentage="40%"
-          isPositive={true}
-          isActive={selectedStat === 'Active Users'}
-          onClick={() => handleStatClick('Active Users')}
-        />
-      </div>
-      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
-        <EngagementStat
-          title="Posts"
-          value={8}
-          percentage="40%"
-          isPositive={false}
-          isActive={selectedStat === 'Posts'}
-          onClick={() => handleStatClick('Posts')}
-        />
-      </div>
-      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
-        <EngagementStat
-          title="Comments"
-          value={8}
-          percentage="40%"
-          isPositive={false}
-          isActive={selectedStat === 'Comments'}
-          onClick={() => handleStatClick('Comments')}
-        />
-      </div>
-      <div className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
-        <EngagementStat
-          title="Reactions"
-          value={8}
-          percentage="40%"
-          isPositive={false}
-          isActive={selectedStat === 'Reactions'}
-          onClick={() => handleStatClick('Reactions')}
-        />
-      </div>
+      {activities.map((activity) => (
+        <div key={activity.title} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+          <EngagementStat
+            title={activity.title}
+            value={activity.value}
+            percentage={activity.trend}
+            isPositive={activity.rising}
+            isActive={selectedStat === activity.title}
+            onClick={() => handleStatClick(activity.title)}
+          />
+        </div>
+      ))}
     </div>
 
     {/* Chart Section */}
-    <div className="h-[200px] relative  px-1 sm:px-2 pb-2">
-      {/* Y-axis labels */}
-      <div className="absolute left-0 top-2 h-full flex flex-col justify-between text-xs text-[#8C9BAC] z-10">
-        {[500, 400, 300, 200, 100, 0].map((label) => (
-          <div key={label} className="h-5 flex items-center">{label}</div>
-        ))}
-      </div>
+    <div className="h-[250px] relative  ">
+      
 
-      {/* Chart Grid and SVG */}
-      <div className="ml-8 h-full relative mt-2 mr-4">
-        <div className="absolute w-full h-full flex flex-col justify-between">
-          {Array.from({ length: 7 }).map((_, i) => (
-            <div key={i} className="w-full h-[1px] bg-[#F2F3F5]"></div>
-          ))}
-        </div>
-
+      {/* Chart Grid and LineChart */}
+    
+       
         <div className="absolute inset-0">
-          <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 800 180">
-            <path d="M0 90L160 108L320 72L480 120L640 48L800 108" stroke="#E5E7EB" strokeWidth="2" fill="none" />
-            <path d="M0 72L160 120L320 48L480 108L640 72L800 90" stroke="#E5E7EB" strokeWidth="2" fill="none" />
-            <path
-              d={chartData[selectedStat || 'default'].path.replace(/(\d+)(?=L|$)/g, n => Math.round(Number(n) * 0.6).toString())}
-              stroke="#338FFF"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{
-                strokeDasharray: "1000",
-                strokeDashoffset: isAnimated ? "0" : "1000",
-                transition: "stroke-dashoffset 1.5s ease-out",
-                transitionDelay: "0.3s"
-              }}
-            />
-          </svg>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={activities.find((a) => a.title === selectedStat)?.data || activities[0].data}
+              margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis dataKey="month" tick={{ fill: '#8C9BAC', fontSize: 12 }} />
+              <YAxis domain={[0, 500]} tick={{ fill: '#8C9BAC', fontSize: 12 }} ticks={[0, 100, 200, 300, 400, 500]} width={30} />
+              <Tooltip
+                contentStyle={{ backgroundColor: "#F2F3F5", border: "none", borderRadius: "8px" }}
+                itemStyle={{ color: "#4F5A69", fontSize: 12 }}
+                
+                formatter={(value: number) => {
+                  return [`${value}`, "Engagement Activities"];
+                }}
+              />
+              <Line type="linear" dataKey="value" stroke="#338FFF" strokeWidth={2} dot={false} isAnimationActive={isAnimated} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
-      </div>
-
-      {/* X-axis labels */}
-      <div className="flex justify-between text-xs text-[#8C9BAC] px-8 pt-2">
-        {["Jan", "Feb", "Mar", "Apr", "May", "June"].map((month) => (
-          <div key={month}>{month}</div>
-        ))}
-      </div>
+      
+      {/* X-axis labels removed, handled by recharts XAxis */}
     </div>
   </div>
 </Card>
