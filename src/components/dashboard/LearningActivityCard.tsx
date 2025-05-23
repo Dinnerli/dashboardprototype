@@ -103,7 +103,9 @@ const LearningActivityCard = ({
       <div className="w-full">
         <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
-          <div className={`flex ${isMobile ? 'flex-col gap-2.5' : 'flex-col lg:flex-row'} w-full h-full`}>
+       <div className="flex flex-col gap-4 w-full h-full xl:flex-row">
+
+
             {/* Interactive Chart */}
             <div className={isMobile ? 'w-full  mb-2' : 'flex-1 h-full'}>
               <svg
