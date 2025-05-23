@@ -50,41 +50,42 @@
         "stats": [
           {
             "name": "Incomplete",
-            "value": 124,
+            "value": 210,
             "trend": 20,
             "rising": true
           },
           {
             "name": "Failed",
-            "value": 89,
+            "value":12,
             "trend": 15,
             "rising": true
           }
         ],
         "data": [
+          
           {
-            "name": "UAT",
-            "value1": 50,
+            "name": "Client Communication",
+            "value1": 82,
             "value2": 100
           },
           {
-            "name": "Legal",
-            "value1": 50,
+            "name": "Strategic Thinking",
+            "value1": 88,
+            "value2": 100
+          },
+           {
+            "name": "Leadership 101",
+            "value1": 85,
             "value2": 100
           },
           {
-            "name": "Pricing 101",
-            "value1": 50,
+            "name": "Advanced Sales",
+            "value1": 78,
             "value2": 100
           },
           {
-            "name": "Orientation",
-            "value1": 50,
-            "value2": 100
-          },
-          {
-            "name": "Presentation Skills",
-            "value1": 50,
+            "name": "Time Management",
+            "value1": 90,
             "value2": 100
           }
         ]

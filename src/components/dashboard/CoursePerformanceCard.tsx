@@ -9,10 +9,10 @@ import ViewReportButton from "./ViewReportButton";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const CoursePerformanceCard = () => {
-  const { activeTab, setActiveTab, courseData, tabContents, handleStatClick } = useCourseData();
+  const { tabs, activeTab, setActiveTab, handleStatClick } = useCourseData();
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
-const isMobile = useIsMobile();
+  const isMobile = useIsMobile();
   return (
     <Card  className={`w-full pb-6 h-auto animate-slide-in-up ${isMobile ? 'px-4 pb-6 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
       style={{ animationDelay: isMobile ? '0.2s' : '0.4s' }}
@@ -21,39 +21,28 @@ const isMobile = useIsMobile();
        <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
 
         {/* Tabs with top indicator */}
-        <Tabs defaultValue="top-performers" value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
-            <TabsTrigger 
-              value="top-performers"
-              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? "flex-1" : ""}`}
-            >
-              {activeTab === "top-performers" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
-              Top Performers
-            </TabsTrigger>
-            <TabsTrigger 
-              value="underperformers"
-              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? "flex-1" : ""}`}
-            >
-              {activeTab === "underperformers" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
-              Underperformers
-            </TabsTrigger>
+            {tabs.map((tab) => (
+              <TabsTrigger
+                key={tab.id}
+                value={tab.id}
+                className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
+              >
+                {activeTab === tab.id && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
+                {tab.name}
+              </TabsTrigger>
+            ))}
           </TabsList>
-          
-          <TabsContent value="top-performers" className="mt-0 flex-1 px-0">
-            <CourseTabContent 
-              stats={tabContents["top-performers"].stats}
-              courseData={courseData}
-              onStatClick={handleStatClick}
-            />
-          </TabsContent>
-          
-          <TabsContent value="underperformers" className="mt-0 flex-1 px-0">
-            <CourseTabContent 
-              stats={tabContents["underperformers"].stats}
-              courseData={courseData}
-              onStatClick={handleStatClick}
-            />
-          </TabsContent>
+          {tabs.map((tab) => (
+            <TabsContent key={tab.id} value={tab.id} className="mt-0 flex-1 px-0">
+              <CourseTabContent
+                stats={{ firstStat: tab.stats[0], secondStat: tab.stats[1] }}
+                courseData={tab.data}
+                onStatClick={handleStatClick}
+              />
+            </TabsContent>
+          ))}
         </Tabs>
       </div>
     </Card>

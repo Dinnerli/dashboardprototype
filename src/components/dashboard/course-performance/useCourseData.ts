@@ -1,67 +1,37 @@
 import { useState } from "react";
+import coursePerformance from "../../../Data/CoursePerformance.json";
 
-// Mock course data - this could be fetched from an API in a real application
-const courseData = [
-  { name: "UAT", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Legal", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Pricing 101", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Orientation", completedPercentage: 50, inProgressPercentage: 30 },
-  { name: "Presentation Skills", completedPercentage: 50, inProgressPercentage: 30 },
-];
-
+// Build hooks for course performance data from JSON
 export const useCourseData = () => {
-  const [activeTab, setActiveTab] = useState("top-performers");
+  const rawTabs = coursePerformance.coursePerformers.tabs;
+  const [activeTab, setActiveTab] = useState(
+    rawTabs[0]?.name.toLowerCase().replace(/\s+/g, "-") || ""
+  );
   const [selectedStat, setSelectedStat] = useState<string | null>(null);
-  
+
+  // Map JSON tabs to internal structure
+  const tabs = rawTabs.map((tab) => {
+    const id = tab.name.toLowerCase().replace(/\s+/g, "-");
+    const stats = tab.stats.map((stat, idx) => ({
+      title: stat.name,
+      value: String(stat.value),
+      percentage: `${stat.trend}%`,
+      isPositive: stat.rising,
+      isActive:
+        id === "top-performers" ? idx === 1 : idx === 0,
+      isSelected: selectedStat === stat.name,
+    }));
+    const data = tab.data.map((course) => ({
+      name: course.name,
+      completedPercentage: course.value1,
+      inProgressPercentage: course.value2 - course.value1,
+    }));
+    return { id, name: tab.name, stats, data };
+  });
+
   const handleStatClick = (statName: string) => {
     setSelectedStat(selectedStat === statName ? null : statName);
   };
-  
-  const tabContents = {
-    "top-performers": {
-      stats: {
-        firstStat: {
-          title: "Completed",
-          value: "237",
-          percentage: "40%",
-          isActive: false,
-          isSelected: selectedStat === "Completed"
-        },
-        secondStat: {
-          title: "Passed",
-          value: "237",
-          percentage: "40%",
-          isActive: true,
-          isSelected: selectedStat === "Passed"
-        }
-      }
-    },
-    "underperformers": {
-      stats: {
-        firstStat: {
-          title: "Incomplete",
-          value: "124",
-          percentage: "20%",
-          isActive: true,
-          isSelected: selectedStat === "Incomplete"
-        },
-        secondStat: {
-          title: "Failed",
-          value: "89",
-          percentage: "15%",
-          isActive: false,
-          isSelected: selectedStat === "Failed"
-        }
-      }
-    }
-  };
-  
-  return {
-    activeTab,
-    setActiveTab,
-    courseData,
-    tabContents,
-    selectedStat,
-    handleStatClick
-  };
+
+  return { tabs, activeTab, setActiveTab, handleStatClick };
 };
