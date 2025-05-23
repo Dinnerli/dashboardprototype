@@ -14,7 +14,7 @@ const CoursePerformanceCard = () => {
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
   const isMobile = useIsMobile();
   return (
-    <Card  className={`w-full pb-6 h-auto animate-slide-in-up ${isMobile ? 'px-4 pb-6 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
+    <Card  className={`w-full pb-6 h-full animate-slide-in-up ${isMobile ? 'px-4 pb-6 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
       style={{ animationDelay: isMobile ? '0.2s' : '0.4s' }}
    >
       <div className="w-full">
