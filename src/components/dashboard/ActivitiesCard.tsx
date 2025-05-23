@@ -1,57 +1,84 @@
 import { useState, useEffect } from "react";
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import ActivityTabs, { TabType } from "./activities/ActivityTabs";
 import ActivityChart from "./activities/ActivityChart";
-import ActivityFilters from "./activities/ActivityFilters";
 import ViewReportButton from "./ViewReportButton";
 import CardHeader from "./CardHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
 import StatButton from "./activities/StatButton";
 import styles from './StatButton.module.css';
+import activityOverview from '@/Data/ActivityOverview.json';
 
-// Different data for each tab
-const tabData = {
-  user: {
-    stats: [
-       { title: "Active Users", value: "237", percentage: "40%", isPositive: true, tooltip: "The number of users who have logged into the platform within the selected timeframe." },
-       { title: "Signups", value: "8", percentage: "40%",  isPositive: true, tooltip: "The number of new users who have registered to the platform within that time range" }
-      ],
-    chartType: 'user' as TabType
-  },
-  usage: {
-    stats: [
-      { title: "Platform", value: "1,243h", percentage: "15%", isPositive: true, tooltip: "Total Number of Hours spent on the platform by users" },
-      { title: "Course", value: "789h", percentage: "8%", isPositive: true, tooltip: "Total Number of Hours spent on Courses by users" },
-      { title: "Library", value: "412h", percentage: "5%", isPositive: false, tooltip: "Total Number of Hours spent on Courses by users" }
-    ],
-    chartType: 'usage' as TabType
-  },
-  course: {
-    stats: [
-      { title: "Assigned", value: "200", percentage: "18%", isPositive: true, tooltip: "Number of learners assigned for Courses" },
-      { title: "Passed", value: "134", percentage: "9%", isPositive: true, tooltip: "Number of learners who achieved a passing score" },
-      { title: "Completed", value: "89", percentage: "12%", isPositive: false, tooltip: "Number of learners who completed Courses" }
-    ],
-    chartType: 'course' as TabType
-  }
+// Map JSON tab names to TabType keys
+const tabKeyMap: Record<string, TabType> = {
+  "User": "user",
+  "Usage": "usage",
+  "Course": "course"
 };
+
+// Prepare tab data from JSON
+const tabsFromJson = activityOverview.ActivityOverview.map((tab) => {
+  const key = tabKeyMap[tab.name];
+  return {
+    key,
+    label: tab.name,
+    stats: tab.stats.map((stat) => ({
+      title: stat.name,
+      value: stat.value,
+      percentage: stat.trend,
+      isPositive: stat.isPositive,
+      tooltip: stat.tooltip,
+      data: stat.data // <-- include chart data for each stat
+    })),
+    chartType: key
+  };
+});
+
+const tabKeyList: TabType[] = tabsFromJson.map(tab => tab.key);
 
 const ActivitiesCard = () => {
   const isMobile = useIsMobile();
-  const [activeTab, setActiveTab] = useState<TabType>('user');
+  const [activeTab, setActiveTab] = useState<TabType>(tabKeyList[0]);
   // Select the first stat by default for the current tab
-  const [selectedStat, setSelectedStat] = useState<string>(tabData['user'].stats[0].title);
-  const currentData = tabData[activeTab];
+  const [selectedStat, setSelectedStat] = useState<string>(tabsFromJson[0].stats[0].title);
+  const currentTabData = tabsFromJson.find(tab => tab.key === activeTab)!;
+
+  // Find the stat object for the selected stat
+  const selectedStatObj = currentTabData.stats.find(stat => stat.title === selectedStat) || currentTabData.stats[0];
 
   // Update selectedStat when tab changes
   useEffect(() => {
-    setSelectedStat(tabData[activeTab].stats[0].title);
+    setSelectedStat(currentTabData.stats[0].title);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   const handleStatClick = (title: string) => {
     setSelectedStat(selectedStat === title ? null : title);
   };
 
+  // Prepare chart data for the current tab and selected stat
+  const chartSeries = [
+    {
+      name: selectedStatObj.title,
+      data: selectedStatObj.data.map((point: { month: string; value: number }) => point.value),
+      color: '#338FFF',
+      type: 'areaspline',
+      fillColor: {
+        linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+        stops: [
+          [0, 'rgba(51, 143, 255, 0.8)'],
+          [1, 'rgba(205, 228, 255, 0)']
+        ]
+      },
+      marker: { enabled: false },
+      zIndex: 2,
+      opacity: 1,
+      className: 'active-path',
+      showInLegend: false
+    }
+  ];
+
+  // Pass chartSeries as prop to ActivityChart
   return (
     <Card className="w-full h-full animate-slide-in-up px-4 sm:px-5 md:px-6" style={{ animationDelay: '0.2s' }}>
       <div className="w-full">
@@ -65,7 +92,7 @@ const ActivitiesCard = () => {
           <div
             className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}
           >
-            {currentData.stats.map((stat, index) => (
+            {currentTabData.stats.map((stat, index) => (
               <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
                 <StatButton
                   title={stat.title}
@@ -81,7 +108,7 @@ const ActivitiesCard = () => {
           </div>
 
           {/* Chart */}
-          <ActivityChart chartType={currentData.chartType} selectedStat={selectedStat} />
+          <ActivityChart chartType={currentTabData.chartType} selectedStat={selectedStat} chartSeries={chartSeries} />
         </div>
       </div>
     </Card>
