@@ -35,7 +35,8 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
   return (
     <div className="  h-full flex flex-col justify-center">
       {/* Stats Row */}
-      <div className="flex flex-col sm:flex-row justify-between gap-4 py-2 mb-4">          <ActivityStat 
+      <div className="flex flex-col sm:flex-row justify-between gap-4 py-2 mb-4">          
+        <ActivityStat 
             title={stats.firstStat.title}
             value={stats.firstStat.value}
             percentage={stats.firstStat.percentage}
