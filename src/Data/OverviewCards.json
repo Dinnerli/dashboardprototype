@@ -1,0 +1,46 @@
+{
+  "overviewCards": [
+    {
+      "name": "Total training hours",
+      "value": "1,235 hrs",
+      "trend": 5,
+      "rising": true,
+      "tooltip": "Total number of hours spent by learners on learning activities"
+    },
+    {
+      "name": "Avg. Daily Usage",
+      "value": "2.4 hrs",
+      "trend": 3,
+      "rising": true,
+      "tooltip": "Average number of hours spent by learners daily on learning activities"
+    },
+    {
+      "name": "ILT Enrolled Rate",
+      "value": "76%",
+      "trend": 4,
+      "rising": true,
+      "tooltip": "Percentage of learners who have enrolled in Instructor-Led Training (ILT) session"
+    },
+    {
+      "name": "ILT Dropout Rate",
+      "value": "12%",
+      "trend": 2,
+      "rising": false,
+      "tooltip": "Percentage of learners who enrolled in Instructor-Led Training (ILT) sessions but did not complete them."
+    },
+    {
+      "name": "VILT Enrolled Rate",
+      "value": "68%",
+      "trend": 6,
+      "rising": true,
+      "tooltip": "Percentage of learners who have enrolled in Instructor-Led Training (ILT) session"
+    },
+    {
+      "name": "VILT Dropout Rate",
+      "value": "9%",
+      "trend": 1,
+      "rising": false,
+      "tooltip": "Percentage of learners who enrolled in Instructor-Led Training (ILT) sessions but did not complete them."
+    }
+  ]
+}

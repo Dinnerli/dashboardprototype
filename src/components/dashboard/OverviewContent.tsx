@@ -1,43 +1,17 @@
 import { useState } from 'react';
 import StatsCard from './StatsCard';
+import overviewData from '../../Data/OverviewCards.json';
 
 const OverviewContent = () => {
-  const stats = [
-    {
-      title: 'Training Data',
-      value: '17',
-      valueSuffix: 'hrs',
-      isValueSuffixed: true,
-      percentChange: 25.3,
-    },
-    {
-      title: 'Avg. Daily Usage',
-      value: '8',
-      valueSuffix: 'hrs',
-      isValueSuffixed: true,
-      percentChange: -25.3,
-    },
-    {
-      title: 'ILT Enrolled Rate',
-      value: '15%',
-      percentChange: 25.3,
-    },
-    {
-      title: 'ILT Dropout Rate',
-      value: '35%',
-      percentChange: -25.3,
-    },
-    {
-      title: 'VILT Enrolled Rate',
-      value: '6%',
-      percentChange: 25.3,
-    },
-    {
-      title: 'VILT Dropout Rate',
-      value: '35%',
-      percentChange: -25.3,
-    },
-  ];
+  const stats = overviewData.overviewCards.map(card => ({
+    title: card.name,
+    value: card.value,
+    percentChange: card.trend,
+    isValueSuffixed: false,
+    valueSuffix: '',
+    tooltip: card.tooltip,
+    rising: card.rising,
+  }));
 
   return (
     <div className="flex overflow-x-auto pb-4 gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8] scroll-smooth snap-x snap-mandatory" data-animation-delay="0.1s">

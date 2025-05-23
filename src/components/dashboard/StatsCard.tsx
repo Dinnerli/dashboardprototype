@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { InfoIcon } from 'lucide-react';
+import InfoTooltip from '../ui/InfoTooltip';
 
 interface StatsCardProps {
   title: string;
@@ -9,6 +10,7 @@ interface StatsCardProps {
   valueSuffix?: string;
   onClick?: () => void;
   className?: string; // Add className prop for custom width
+  tooltip?: string; // Tooltip string from JSON
 }
 
 const StatsCard = ({ 
@@ -19,6 +21,7 @@ const StatsCard = ({
   valueSuffix = '',
   onClick,
   className = '',
+  tooltip,
 }: Omit<StatsCardProps, 'isSelected'> & { className?: string }) => {
   const isPositive = percentChange >= 0;
   const formattedChange = `${Math.abs(percentChange)}%`;
@@ -34,33 +37,37 @@ const StatsCard = ({
           <div className="font-poppins font-medium text-xs text-[#8C9BAC] truncate">
             {title}
           </div>
-          <svg 
-            width="16" 
-            height="17" 
-            viewBox="0 0 16 17" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="flex w-4 h-4 justify-center items-center text-[#8C9BAC]"
-          >
-            <path 
-              d="M8 1.83334C11.6667 1.83334 14.6667 4.83334 14.6667 8.5C14.6667 12.1667 11.6667 15.1667 8 15.1667C4.33333 15.1667 1.33333 12.1667 1.33333 8.5C1.33333 4.83334 4.33333 1.83334 8 1.83334Z" 
-              stroke="currentColor" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            />
-            <path 
-              d="M8 11.1667V7.83334" 
-              stroke="currentColor" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            />
-            <path 
-              d="M7.99634 5.83333H8.00233" 
-              stroke="currentColor" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            />
-          </svg>
+          {tooltip ? (
+            <InfoTooltip tooltip={tooltip} iconProps={{ className: 'flex w-4 h-4 justify-center items-center text-[#8C9BAC]' }} />
+          ) : (
+            <svg 
+              width="16" 
+              height="17" 
+              viewBox="0 0 16 17" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="flex w-4 h-4 justify-center items-center text-[#8C9BAC]"
+            >
+              <path 
+                d="M8 1.83334C11.6667 1.83334 14.6667 4.83334 14.6667 8.5C14.6667 12.1667 11.6667 15.1667 8 15.1667C4.33333 15.1667 1.33333 12.1667 1.33333 8.5C1.33333 4.83334 4.33333 1.83334 8 1.83334Z" 
+                stroke="currentColor" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              />
+              <path 
+                d="M8 11.1667V7.83334" 
+                stroke="currentColor" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              />
+              <path 
+                d="M7.99634 5.83333H8.00233" 
+                stroke="currentColor" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
         </div>
 
         {/* Value row */}
