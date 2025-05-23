@@ -37,6 +37,7 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
             value={stats.firstStat.value}
             percentage={stats.firstStat.percentage}
             isActive={stats.firstStat.isActive}
+            tooltip="Click to view details"
             isSelected={stats.firstStat.isSelected}
             isPositive={!stats.firstStat.percentage.startsWith('-')}
             onClick={() => onStatClick(stats.firstStat.title)}
@@ -45,6 +46,7 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
             title={stats.secondStat.title}
             value={stats.secondStat.value}
             percentage={stats.secondStat.percentage}
+            tooltip="Click to view details"
             isActive={stats.secondStat.isActive}
             isSelected={stats.secondStat.isSelected}
             isPositive={!stats.secondStat.percentage.startsWith('-')}

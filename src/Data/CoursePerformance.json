@@ -1,0 +1,94 @@
+{
+  "coursePerformers": {
+    "tabs": [
+      {
+        "name": "Top Performers",
+        "stats": [
+          {
+            "name": "Completed",
+            "value": 210,
+            "trend": 12,
+            "rising": true
+          },
+          {
+            "name": "Passed",
+            "value": 185,
+            "trend": 8,
+            "rising": true
+          }
+        ],
+        "data": [
+          {
+            "name": "Leadership 101",
+            "value1": 85,
+            "value2": 100
+          },
+          {
+            "name": "Advanced Sales",
+            "value1": 78,
+            "value2": 100
+          },
+          {
+            "name": "Time Management",
+            "value1": 90,
+            "value2": 100
+          },
+          {
+            "name": "Client Communication",
+            "value1": 82,
+            "value2": 100
+          },
+          {
+            "name": "Strategic Thinking",
+            "value1": 88,
+            "value2": 100
+          }
+        ]
+      },
+      {
+        "name": "Underperformers",
+        "stats": [
+          {
+            "name": "Incomplete",
+            "value": 124,
+            "trend": 20,
+            "rising": true
+          },
+          {
+            "name": "Failed",
+            "value": 89,
+            "trend": 15,
+            "rising": true
+          }
+        ],
+        "data": [
+          {
+            "name": "UAT",
+            "value1": 50,
+            "value2": 100
+          },
+          {
+            "name": "Legal",
+            "value1": 50,
+            "value2": 100
+          },
+          {
+            "name": "Pricing 101",
+            "value1": 50,
+            "value2": 100
+          },
+          {
+            "name": "Orientation",
+            "value1": 50,
+            "value2": 100
+          },
+          {
+            "name": "Presentation Skills",
+            "value1": 50,
+            "value2": 100
+          }
+        ]
+      }
+    ]
+  }
+}
