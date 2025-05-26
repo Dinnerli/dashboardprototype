@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
-import { 
-  DndContext, 
-  closestCenter, 
+import {
+  DndContext,
+  closestCenter,
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
@@ -28,25 +28,26 @@ import CarouselCardRow from '@/components/dashboard/CarouselCardRow';
 import CompetencyCard from '@/components/dashboard/CompetencyCard';
 import SortableCard from '@/components/dashboard/SortableCard';
 
-const Index = () => {  const isMobile = useMediaQuery('(max-width:600px)');
+const Index = () => {
+  const isMobile = useMediaQuery('(max-width:600px)');
   const isTablet = useMediaQuery('(max-width:960px)');
-  
+
   // Enhanced sensors for better touch and mouse support
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, // Minimum distance before drag starts
     },
   });
-  
+
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
       delay: 250, // Delay before drag starts on touch
       tolerance: 5, // Touch movement tolerance
     },
   });
-  
+
   const sensors = useSensors(mouseSensor, touchSensor);
-  
+
   // Smooth scroll to top when component mounts
   useEffect(() => {
     window.scrollTo({
@@ -70,7 +71,7 @@ const Index = () => {  const isMobile = useMediaQuery('(max-width:600px)');
     { id: '2', component: <CoursePerformanceCard /> },
     { id: '3', component: <EngagementActivitiesCard /> },
   ];
-    const [cards, setCards] = useState(initialDndCards);
+  const [cards, setCards] = useState(initialDndCards);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -79,13 +80,13 @@ const Index = () => {  const isMobile = useMediaQuery('(max-width:600px)');
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    
+
     if (active.id !== over?.id) {
       const oldIndex = cards.findIndex(item => item.id === active.id);
       const newIndex = cards.findIndex(item => item.id === over?.id);
       setCards(arrayMove(cards, oldIndex, newIndex));
     }
-    
+
     setActiveId(null);
   };
 
@@ -94,7 +95,7 @@ const Index = () => {  const isMobile = useMediaQuery('(max-width:600px)');
       <Header />
       <main className="flex-1 flex flex-col">
         <Navigation />
-         
+
         <div className="px-3 sm:px-4 md:px-5 bg-slate-200">
           <div className="flex flex-row items-center gap-4 sm:gap-6 pt-4 sm:pt-6">
             <div className="border-b flex-1"></div>
@@ -102,16 +103,16 @@ const Index = () => {  const isMobile = useMediaQuery('(max-width:600px)');
               <ActivityFilters />
             </div>
           </div>
-            <Dashboard />
-            {/* DND Cards row - 2x2 grid, draggable using @dnd-kit */}
-          <DndContext 
-            collisionDetection={closestCenter} 
+          <Dashboard />
+          {/* DND Cards row */}
+          <DndContext
+            collisionDetection={closestCenter}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             sensors={sensors}
           >
-            <SortableContext 
-              items={cards.map(item => item.id)} 
+            <SortableContext
+              items={cards.map(item => item.id)}
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-5 sm:pb-6">
@@ -121,17 +122,15 @@ const Index = () => {  const isMobile = useMediaQuery('(max-width:600px)');
                   </SortableCard>
                 ))}
               </div>
-            </SortableContext>
-            
-            <DragOverlay>
+            </SortableContext>            <DragOverlay>
               {activeId ? (
-                <div className="bg-white rounded-lg shadow-2xl rotate-3 scale-105 opacity-90">
+                <div className="bg-white rounded-lg shadow-2xl rotate-1 scale-105 border ">
                   {cards.find(item => item.id === activeId)?.component}
                 </div>
               ) : null}
             </DragOverlay>
           </DndContext>
-          
+
           {/* Horizontal scrollable card row - replacing the previous draggable grid */}
           {/* <CarouselCardRow items={dashboardCards} /> */}
         </div>
