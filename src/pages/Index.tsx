@@ -1,5 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
+import { 
+  DndContext, 
+  closestCenter, 
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  TouchSensor,
+  MouseSensor,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import { SortableContext, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/navigation/Navigation';
 import Dashboard from '@/components/dashboard/Dashboard';
@@ -14,12 +26,26 @@ import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard'
 import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
 import CarouselCardRow from '@/components/dashboard/CarouselCardRow';
 import CompetencyCard from '@/components/dashboard/CompetencyCard';
-import DraggableCard from '@/components/dashboard/DraggableCard';
-import { useDragDrop } from '@/hooks/useDragDrop';
+import SortableCard from '@/components/dashboard/SortableCard';
 
-const Index = () => {
-  const isMobile = useMediaQuery('(max-width:600px)');
+const Index = () => {  const isMobile = useMediaQuery('(max-width:600px)');
   const isTablet = useMediaQuery('(max-width:960px)');
+  
+  // Enhanced sensors for better touch and mouse support
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: {
+      distance: 10, // Minimum distance before drag starts
+    },
+  });
+  
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 250, // Delay before drag starts on touch
+      tolerance: 5, // Touch movement tolerance
+    },
+  });
+  
+  const sensors = useSensors(mouseSensor, touchSensor);
   
   // Smooth scroll to top when component mounts
   useEffect(() => {
@@ -37,15 +63,31 @@ const Index = () => {
     <RewardsCard key="rewards" />,
     <CompetencyCard key="competency" />
   ];
-
-  // DND for first 4 cards in 2x2 grid
+  // DND for first 4 cards in 2x2 grid using @dnd-kit
   const initialDndCards = [
-    { id: 0, component: <ActivitiesCard /> },
-    { id: 1, component: <LearningActivityCard /> },
-    { id: 2, component: <CoursePerformanceCard /> },
-    { id: 3, component: <EngagementActivitiesCard /> },
+    { id: '0', component: <ActivitiesCard /> },
+    { id: '1', component: <LearningActivityCard /> },
+    { id: '2', component: <CoursePerformanceCard /> },
+    { id: '3', component: <EngagementActivitiesCard /> },
   ];
-  const { items: dndCards, handleDragStart, handleDragOver, handleDrop } = useDragDrop(initialDndCards);
+    const [cards, setCards] = useState(initialDndCards);
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id.toString());
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (active.id !== over?.id) {
+      const oldIndex = cards.findIndex(item => item.id === active.id);
+      const newIndex = cards.findIndex(item => item.id === over?.id);
+      setCards(arrayMove(cards, oldIndex, newIndex));
+    }
+    
+    setActiveId(null);
+  };
 
   return (
     <div className="min-h-screen max-w-full bg-white font-poppins flex flex-col">
@@ -60,23 +102,35 @@ const Index = () => {
               <ActivityFilters />
             </div>
           </div>
-          
-          <Dashboard />
-          {/* DND Cards row - 2x2 grid, draggable */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-5 sm:pb-6">
-            {dndCards.map((item, idx) => (
-              <DraggableCard
-                key={item.id}
-                index={idx}
-                onDragStart={handleDragStart}
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
-                
-              >
-                {item.component}
-              </DraggableCard>
-            ))}
-          </div>
+            <Dashboard />
+            {/* DND Cards row - 2x2 grid, draggable using @dnd-kit */}
+          <DndContext 
+            collisionDetection={closestCenter} 
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            sensors={sensors}
+          >
+            <SortableContext 
+              items={cards.map(item => item.id)} 
+              strategy={rectSortingStrategy}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-5 sm:pb-6">
+                {cards.map((item) => (
+                  <SortableCard key={item.id} id={item.id.toString()}>
+                    {item.component}
+                  </SortableCard>
+                ))}
+              </div>
+            </SortableContext>
+            
+            <DragOverlay>
+              {activeId ? (
+                <div className="bg-white rounded-lg shadow-2xl rotate-3 scale-105 opacity-90">
+                  {cards.find(item => item.id === activeId)?.component}
+                </div>
+              ) : null}
+            </DragOverlay>
+          </DndContext>
           
           {/* Horizontal scrollable card row - replacing the previous draggable grid */}
           {/* <CarouselCardRow items={dashboardCards} /> */}
