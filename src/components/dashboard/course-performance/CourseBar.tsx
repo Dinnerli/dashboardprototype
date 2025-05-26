@@ -18,28 +18,32 @@ const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBa
   }, []);
 
   return (
-    <div className="flex items-center gap-1 w-full">
-      <div className="flex w-[100px] justify-end items-center gap-[5px]">
-        <div className="w-[90px] text-right text-[10px] text-[#4F5A69] font-medium truncate">
-          {name}
-        </div>
-        <div className="w-[4px] h-[1px] bg-[#4F5A69]"></div>
-      </div>
-      <div className="flex h-[10px] items-center gap-[2px] flex-1">
-        <div 
-          className="relative h-full w-full bg-[#CDE4FF] rounded-[5px] overflow-hidden transition-all duration-1000 ease-out"
-        >
-          <div
-            className="absolute left-0 top-0 h-full bg-[#338FFF] rounded-[10px] transition-all duration-1000 ease-out"
-            style={{
-              width: isAnimated ? `${completedPercentage}%` : '0%',
-              transitionDelay: '0.2s',
-            }}
-          ></div>
-        </div>
-        <div className="flex-1 h-full bg-transparent"></div>
-      </div>
+   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 w-full">
+  {/* Name section */}
+  <div className="flex w-full sm:w-[100px] justify-start sm:justify-end items-center gap-[5px]">
+    <div className="w-full sm:w-[90px] text-left sm:text-right text-[10px] text-[#4F5A69] font-medium truncate">
+      {name}
     </div>
+    <div className="hidden sm:block w-[4px] h-[1px] bg-[#4F5A69]"></div>
+  </div>
+
+  {/* Bar chart section */}
+  <div className="flex h-[10px] min-h-[10px] items-center gap-[2px] w-full flex-1">
+    <div 
+      className="relative h-full w-full bg-[#CDE4FF] rounded-[5px] overflow-hidden transition-all duration-1000 ease-out"
+    >
+      <div
+        className="absolute left-0 top-0 h-full bg-[#338FFF] rounded-[10px] transition-all duration-1000 ease-out"
+        style={{
+          width: isAnimated ? `${completedPercentage}%` : '0%',
+          transitionDelay: '0.2s',
+        }}
+      ></div>
+    </div>
+    <div className="flex-1 h-full bg-transparent"></div>
+  </div>
+</div>
+
   );
 };
 

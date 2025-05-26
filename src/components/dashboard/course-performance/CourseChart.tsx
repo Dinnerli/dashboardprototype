@@ -30,21 +30,24 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
         ))}
       </div>
       
-      {/* Percentage scale at the bottom */}
-      <div className="flex items-center w-full">
-        <div className="w-[100px]"></div>
-        <div className="flex-1 h-[1px] bg-[#CDD1D7]"></div>
-      </div>
-      <div className="flex pl-[100px] justify-between items-center w-full">
-        {percentageMarkers.map((percentage, index) => (
-          <div 
-            key={index} 
-            className="text-[#CDD1D7] text-[10px] font-medium"
-          >
-            {percentage}{index === percentageMarkers.length - 1 ? ' %' : ''}
-          </div>
-        ))}
-      </div>
+      {/* Percentage scale line */}
+<div className="flex items-center w-full">
+  <div className="hidden sm:block w-[100px]"></div>
+  <div className="flex-1 h-[1px] bg-[#CDD1D7]"></div>
+</div>
+
+{/* Percentage labels */}
+<div className="flex w-full justify-between items-center pl-0 sm:pl-[100px]">
+  {percentageMarkers.map((percentage, index) => (
+    <div 
+      key={index} 
+      className="text-[#CDD1D7] text-[10px] font-medium"
+    >
+      {percentage}{index === percentageMarkers.length - 1 ? ' %' : ''}
+    </div>
+  ))}
+</div>
+
     </div>
   );
 };
