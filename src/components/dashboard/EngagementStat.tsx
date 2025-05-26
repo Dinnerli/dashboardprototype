@@ -26,9 +26,10 @@ const EngagementStat: React.FC<EngagementStatProps> = ({
   const isMobile = useIsMobile();
   return (
     <div
-      className={`flex items-center gap-2.5 py-2.5 px-1.5 rounded-sm cursor-pointer transition-all duration-200  ${
-        isActive ? "bg-[#F5F6F8] " : ""
-      }`}
+      className={`flex items-center gap-2.5 py-2.5 px-1.5 rounded-sm cursor-pointer transition-all duration-200  
+        ${        isActive ? "bg-[#F5F6F8] " : ""      }
+                  ${isMobile ? 'border border-[#F5F6F8]' : ''}
+                  `}
       onClick={onClick}
     >
       <div className="flex flex-col items-center justify-center w-2.5">

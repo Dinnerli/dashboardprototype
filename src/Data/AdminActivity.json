@@ -1,0 +1,51 @@
+{
+  "AdminActivity": {
+    "stats": [
+      {
+        "name": "Course Updates",
+        "tooltip": "Total number of admins who made course updates",
+        "value": 112,
+        "trend": "18%",
+        "isRising": true,
+        "data": [
+          { "month": "Jan", "value": 80 },
+          { "month": "Feb", "value": 90 },
+          { "month": "Mar", "value": 100 },
+          { "month": "Apr", "value": 108 },
+          { "month": "May", "value": 110 },
+          { "month": "Jun", "value": 112 }
+        ]
+      },
+      {
+        "name": "User Updates",
+        "tooltip": "Total number of admins who made user updates",
+        "value": 95,
+        "trend": "10%",
+        "isRising": false,
+        "data": [
+          { "month": "Jan", "value": 100 },
+          { "month": "Feb", "value": 98 },
+          { "month": "Mar", "value": 96 },
+          { "month": "Apr", "value": 94 },
+          { "month": "May", "value": 93 },
+          { "month": "Jun", "value": 95 }
+        ]
+      },
+      {
+        "name": "Grouped Assigned",
+        "tooltip": "Total number of admins who made group updates",
+        "value": 134,
+        "trend": "21%",
+        "isRising": true,
+        "data": [
+          { "month": "Jan", "value": 110 },
+          { "month": "Feb", "value": 115 },
+          { "month": "Mar", "value": 120 },
+          { "month": "Apr", "value": 125 },
+          { "month": "May", "value": 130 },
+          { "month": "Jun", "value": 134 }
+        ]
+      }
+    ]
+  }
+}

@@ -33,9 +33,10 @@ const StatButton = ({
 
   return (
     <div 
-      className={`flex items-center gap-2.5 py-2 px-3 rounded-lg cursor-pointer transition-all duration-200 ${
-      isActive ? 'bg-[#F5F6F8] ' : ''
-      }`}
+      className={`flex items-center gap-2.5 py-2 px-3  rounded-lg cursor-pointer transition-all duration-200 
+        ${isActive ? 'bg-[#F5F6F8] ' : ''}
+        ${isMobile ? 'border border-[#F5F6F8]' : ''}
+      `}
       onClick={onClick}
     >
       <div className="flex flex-col items-center justify-center p-2">

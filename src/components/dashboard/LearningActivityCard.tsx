@@ -221,7 +221,7 @@ const LearningActivityCard = ({
               </div>
               {/* First row: stats[] */}
               <div className={`flex flex-wrap gap-1 pb-6`}> 
-                <div className={`flex items-center justify-center w-full gap-1`}>
+                <div className={`flex items-center justify-between w-full gap-1`}>
                   {activeActivity.stats.map((stat, idx) => (
                     <div key={stat.statName} className="flex items-center gap-1">
                       {/* Icon rendering unchanged */}

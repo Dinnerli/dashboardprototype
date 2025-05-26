@@ -1,0 +1,39 @@
+{
+  "Leaderboard": [
+    {
+      "id": 1,
+      "name": "Ava Thompson",
+      "email": "ava.thompson@example.com",
+      "points": 1240,
+      "profileImage": "https://i.pravatar.cc/150?img=1"
+    },
+    {
+      "id": 2,
+      "name": "Liam Johnson",
+      "email": "liam.johnson@example.com",
+      "points": 1185,
+      "profileImage": "https://i.pravatar.cc/150?img=2"
+    },
+    {
+      "id": 3,
+      "name": "Mia Rodriguez",
+      "email": "mia.rodriguez@example.com",
+      "points": 1120,
+      "profileImage": "https://i.pravatar.cc/150?img=3"
+    },
+    {
+      "id": 4,
+      "name": "Noah Lee",
+      "email": "noah.lee@example.com",
+      "points": 1095,
+      "profileImage": "https://i.pravatar.cc/150?img=4"
+    },
+    {
+      "id": 5,
+      "name": "Sophia Patel",
+      "email": "sophia.patel@example.com",
+      "points": 1042,
+      "profileImage": "https://i.pravatar.cc/150?img=5"
+    }
+  ]
+}
