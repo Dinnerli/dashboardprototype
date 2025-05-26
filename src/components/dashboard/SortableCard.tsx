@@ -33,7 +33,7 @@ const SortableCard = ({ id, children, className }: SortableCardProps) => {
                 "hover:shadow-lg rounded-lg",
                 isDragging
                     ? "opacity-60 scale-105 z-50 rotate-2 shadow-xl border border-blue-600"
-                    : "opacity-100 hover:scale-[1.02] shadow-md",
+                    : "opacity-100  shadow-md",
                 className
             )}
         >
