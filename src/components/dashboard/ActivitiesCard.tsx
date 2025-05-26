@@ -53,7 +53,9 @@ const ActivitiesCard = () => {
   }, [activeTab]);
 
   const handleStatClick = (title: string) => {
-    setSelectedStat(selectedStat === title ? null : title);
+    if (selectedStat !== title) {
+      setSelectedStat(title);
+    }
   };
 
   // Prepare chart data for the current tab and selected stat

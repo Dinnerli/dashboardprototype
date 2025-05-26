@@ -11,7 +11,7 @@ const EngagementActivitiesCard = () => {
   const timeOptions = ["Last 60 Days", "Last 30 Days", "Last 15 Days", "Last 7 Days"];
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
   const activities = engagementActivitiesData.engagementActivities;
-  const [selectedStat, setSelectedStat] = useState<string | null>(activities[0].title);
+  const [selectedStat, setSelectedStat] = useState<string>(activities[0].title);
   const [isAnimated, setIsAnimated] = useState(false);
 
   const isMobile = useIsMobile();
@@ -25,7 +25,9 @@ const EngagementActivitiesCard = () => {
   }, []);
 
   const handleStatClick = (statName: string) => {
-    setSelectedStat(selectedStat === statName ? null : statName);
+    if (selectedStat !== statName) {
+      setSelectedStat(statName);
+    }
   };
   interface ChartDataPoint {
     month: string;

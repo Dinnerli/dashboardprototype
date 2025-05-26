@@ -79,7 +79,7 @@ const Index = () => {
           </div>
           
           {/* Horizontal scrollable card row - replacing the previous draggable grid */}
-          <CarouselCardRow items={dashboardCards} />
+          {/* <CarouselCardRow items={dashboardCards} /> */}
         </div>
       </main>
     </div>
