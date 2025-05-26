@@ -148,7 +148,7 @@ const LearningActivityCard = ({
                   const isActive = activeSegment === key;
                   const colors = isActive ? arcColors.active : arcColors.inactive;
                   return (
-                    <g key={key} className="cursor-pointer"
+                    <g key={key} className="cursor-pointer "
                       onClick={() => setActiveSegment(key)}
                     >
                       {/* Assigned Segment */}
@@ -198,7 +198,7 @@ const LearningActivityCard = ({
             </div>
 
             {/* Stats Section - updates based on selected segment */}
-            <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5 pb-4' : 'gap-4'}`}>
+            <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5 pb-4' : 'gap-4 p-5'}`}>
               <div className={isMobile ? 'mb-3' : 'm-3'}>
                 {activeSegment === 'ilt_vilt' ? (
                   <div className="flex gap-1">
@@ -218,58 +218,59 @@ const LearningActivityCard = ({
                 ) : (
                   <h4 className={`text-xl font-bold text-[#338FFF] ${isMobile ? 'text-base' : ''}`}>{activeActivity.name}</h4>
                 )}
-              </div>
-              {/* First row: stats[] */}
-              <div className={`flex flex-wrap gap-1 pb-6`}> 
-                <div className={`flex items-center justify-between w-full gap-1`}>
+              </div>              {/* First row: stats[] */}
+              <div className={`flex flex-wrap gap-1 pb-6 ${isMobile ? 'justify-between' : 'justify-start p-2.5'}`}> 
+                <div className={`flex items-center justify-between w-full`}>
                   {activeActivity.stats.map((stat, idx) => (
-                    <div key={stat.statName} className="flex items-center gap-1">
-                      {/* Icon rendering unchanged */}
-                      {idx === 0 && (
-                        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      )}
-                      {idx === 1 && (
-                        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      )}
-                      {idx > 1 && (
-                        <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                          <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                      )}
-                        <div className="flex flex-col">
-                        <div className="flex items-center gap-2">
-                          <span className={`font-semibold truncate text-[#8C9BAC] ${isMobile ? 'text-sm' : 'text-base'}`}>{stat.statName}</span>
-                          {stat.tooltip && (
-                          <InfoTooltip
-                            tooltip={stat.tooltip}
-                            iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
-                          />
-                          )}
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>{stat.value}</span>
-                          <div className="flex items-center">
-                          <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
+                    <>
+                      <div key={stat.statName} className="flex items-center gap-1">
+                        {/* Icon rendering unchanged */}
+                        {idx === 0 && (
+                          <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          </svg>
+                        )}
+                        {idx === 1 && (
+                          <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M32 22C32 27.52 27.52 32 22 32C16.48 32 12 27.52 12 22C12 16.48 16.48 12 22 12C27.52 12 32 16.48 32 22Z" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M25.71 25.18L22.61 23.33C22.07 23.01 21.63 22.24 21.63 21.61V17.51" stroke="#FDB533" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          </svg>
+                        )}
+                        {idx > 1 && (
+                          <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 27V21L17 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M19 21L21 23" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M32 20V25C32 30 30 32 25 32H19C14 32 12 30 12 25V19C12 14 14 12 19 12H24" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                            <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                          </svg>
+                        )}
+                          <div className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                            <span className={`font-semibold truncate text-[#8C9BAC] ${isMobile ? 'text-sm' : 'text-base'}`}>{stat.statName}</span>
+                            {stat.tooltip && (
+                            <InfoTooltip
+                              tooltip={stat.tooltip}
+                              iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
+                            />
+                            )}
                           </div>
-                        </div>
-                        </div>
+                          <div className="flex items-center gap-3">
+                            <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>{stat.value}</span>
+                            <div className="flex items-center">
+                            <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
+                            </div>
+                          </div>
+                          </div>
+                      </div>
                       {idx < activeActivity.stats.length - 1 && (
-                        <div className="w-2 h-5 mx-2 flex items-center justify-center">
-                          <div className="w-px h-8 bg-[#F2F3F5] min-h-[32px]" />
+                        <div className="flex items-center justify-center">
+                          <div className="h-[32px] w-px bg-[#F2F3F5]" />
                         </div>
                       )}
-                    </div>
+                    </>
                   ))}
                 </div>
               </div>
