@@ -49,9 +49,21 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground font-poppins;
+  }
+  /* Adjust base font size for high zoom levels (above 100%) */
+  @media screen and (min-resolution: 1.1dppx) {
+    html {
+      font-size: 14px;
+    }
+  }
+
+  /* Alternative approach using device pixel ratio for better browser support */
+  @media screen and (-webkit-min-device-pixel-ratio: 1.1) {
+    html {
+      font-size: 14px;
+    }
   }
   
   /* Typography classes based on the provided design */
