@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import ActivityTabs, { TabType } from "./activities/ActivityTabs";
 import ActivityChart from "./activities/ActivityChart";
 import ViewReportButton from "./ViewReportButton";
@@ -82,37 +82,35 @@ const ActivitiesCard = () => {
 
   // Pass chartSeries as prop to ActivityChart
   return (
-    <Card className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-      <div className="w-full">
-        <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
+    <Card className="w-full  animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
 
-        {/* Tabs */}
-        <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
 
-        <div className="flex flex-col gap-2.5 w-full">
-          {/* Stats Row */}
-          <div
-            className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}
-          >
-            {currentTabData.stats.map((stat, index) => (
-              <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
-                <StatButton
-                  title={stat.title}
-                  value={stat.value}
-                  percentage={stat.percentage}
-                  isActive={selectedStat === stat.title}
-                  isPositive={stat.isPositive}
-                  onClick={() => handleStatClick(stat.title)}
-                  tooltip={stat.tooltip}
-                />
-              </div>
-            ))}
-          </div>
+      {/* Tabs */}
+      <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          {/* Chart */}
-          <ActivityChart chartType={currentTabData.chartType} selectedStat={selectedStat} chartSeries={chartSeries} />
+      <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full flex flex-col justify-between'}>
+        {/* Stats Row */}
+        <div className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}>
+          {currentTabData.stats.map((stat, index) => (
+            <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+              <StatButton
+                title={stat.title}
+                value={stat.value}
+                percentage={stat.percentage}
+                isActive={selectedStat === stat.title}
+                isPositive={stat.isPositive}
+                onClick={() => handleStatClick(stat.title)}
+                tooltip={stat.tooltip}
+              />
+            </div>
+          ))}
         </div>
-      </div>
+
+        {/* Chart */}
+        <ActivityChart chartType={currentTabData.chartType} selectedStat={selectedStat} chartSeries={chartSeries} />
+      </CardContent>
+
     </Card>
   );
 };

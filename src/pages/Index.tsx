@@ -115,7 +115,7 @@ const Index = () => {
               items={cards.map(item => item.id)}
               strategy={rectSortingStrategy}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pb-5 sm:pb-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 pb-5 sm:pb-6">
                 {cards.map((item) => (
                   <SortableCard key={item.id} id={item.id.toString()}>
                     {item.component}

@@ -187,7 +187,7 @@
         }
       ],
       "data": [
-{
+        {
           "name": "Items Uploaded",
           "value": 280,
           "tooltip": "Total number of Items Uploads",
@@ -196,7 +196,7 @@
         },
         {
           "name": "Assigned",
-          "value": 390,
+          "value": 290,
           "tooltip": "Number of learners assigned for Items",
           "trend": "1.0%",
           "isRising": true

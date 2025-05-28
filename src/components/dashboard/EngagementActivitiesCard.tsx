@@ -80,10 +80,10 @@ const EngagementActivitiesCard = () => {
             <LineChart
               data={mergedChartData()}
               margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="month" tick={{ fill: '#8C9BAC', fontSize: 12 }} />
-              <YAxis domain={[0, 500]} tick={{ fill: '#8C9BAC', fontSize: 12 }} ticks={[0, 100, 200, 300, 400, 500]} width={30} />
+              
+            >              <CartesianGrid strokeDasharray="3 3" vertical={false} />
+              <XAxis dataKey="month" tick={{ fill: '#CDD1D7', fontSize: 12 }} axisLine={{ stroke: '#CDD1D7' }} tickLine={{ stroke: '#CDD1D7' }} />
+              <YAxis domain={[0, 500]} tick={{ fill: '#CDD1D7', fontSize: 12 }} ticks={[0, 100, 200, 300, 400, 500]} width={30} axisLine={{ stroke: '#CDD1D7' }} tickLine={{ stroke: '#CDD1D7' }} />
               <Tooltip
                 contentStyle={{ backgroundColor: "#F2F3F5", border: "none", borderRadius: "8px" }}
                 itemStyle={{ color: "#4F5A69", fontSize: 12 }}

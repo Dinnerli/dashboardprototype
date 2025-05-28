@@ -97,14 +97,13 @@ const LearningActivityCard = ({
   } | null>(null);
 
   return (
-    <Card
-    className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}
-    >
-      <div className="w-full">
+    <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+    
         <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
-        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
-       <div className="flex flex-col gap-4 w-full h-full xl:flex-row items-center justify-center">            {/* Interactive Chart */}
-            <div className={isMobile ? 'w-full mb-2' : 'flex-1 h-full max-w-xs items-center justify-center'}>
+        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 '}>
+          <div className="flex flex-col gap-4 w-full h-full md:flex-row items-center justify-center">
+            {/* Interactive Chart */}
+            <div className={isMobile ? 'w-full mb-2 flex items-center justify-center' : 'flex-1 h-full max-w-xs flex items-center justify-center'}>
               <svg
                 viewBox="0 0 300 300"
                 preserveAspectRatio="xMidYMid meet"
@@ -123,7 +122,7 @@ const LearningActivityCard = ({
                     activity = activities.find(a => activityKeyMap[a.name] === key);
                     label = activity?.name || '';
                   }
-                  if (!activity) return null;                  const arcWidth = 14;
+                  if (!activity) return null; const arcWidth = 14;
                   const arcSpacing = 8;
                   const baseRadius = 120;
                   const r = baseRadius - idx * (arcWidth + arcSpacing);
@@ -193,7 +192,7 @@ const LearningActivityCard = ({
             </div>
 
             {/* Stats Section - updates based on selected segment */}
-            <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5 pb-4 justify-between w-full' : 'justify-between p-5'}`}>
+            <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5 pb-4 justify-between w-full' : 'justify-between p-2.5'}`}>
               <div className={isMobile ? 'mb-3' : 'm-3'}>
                 {activeSegment === 'ilt_vilt' ? (
                   <div className="flex gap-1">
@@ -214,7 +213,7 @@ const LearningActivityCard = ({
                   <h4 className={`text-xl font-bold text-[#338FFF] ${isMobile ? 'text-base' : ''}`}>{activeActivity.name}</h4>
                 )}
               </div>              {/* First row: stats[] */}
-              <div className={`flex flex-wrap gap-1 pb-6 ${isMobile ? 'justify-between' : 'justify-start p-2.5'}`}> 
+              <div className={`flex flex-wrap gap-1 pb-6 ${isMobile ? 'justify-between' : 'justify-start p-2.5'}`}>
                 <div className={`flex items-center justify-between w-full`}>
                   {activeActivity.stats.map((stat, idx) => (
                     <>
@@ -242,23 +241,23 @@ const LearningActivityCard = ({
                             <path d="M32 20H28C25 20 24 19 24 16V12L32 20Z" stroke="#338FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                           </svg>
                         )}
-                          <div className="flex flex-col">
+                        <div className="flex flex-col">
                           <div className="flex items-center gap-2">
                             <span className={`font-semibold truncate text-[#8C9BAC] ${isMobile ? 'text-sm' : 'text-base'}`}>{stat.statName}</span>
                             {stat.tooltip && (
-                            <InfoTooltip
-                              tooltip={stat.tooltip}
-                              iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
-                            />
+                              <InfoTooltip
+                                tooltip={stat.tooltip}
+                                iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
+                              />
                             )}
                           </div>
                           <div className="flex items-center gap-3">
                             <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>{stat.value}</span>
                             <div className="flex items-center">
-                            <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
+                              <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
                             </div>
                           </div>
-                          </div>
+                        </div>
                       </div>
                       {idx < activeActivity.stats.length - 1 && (
                         <div className="flex items-center justify-center">
@@ -272,30 +271,29 @@ const LearningActivityCard = ({
               {/* Key metrics that update based on selection: Assigned, Completed, Enrolled/Viewed */}
               <div className={`flex flex-col ${isMobile ? 'gap-1.5' : 'gap-6'}`}>
                 {getDonutData(activeActivity).map((item, idx) => (
-                    <div
+                  <div
                     key={item.name}
                     className="grid grid-cols-[18px_1fr_auto_auto] items-center gap-x-2 p-2.5 rounded-lg transition-colors"
-                    >
+                  >
                     {/* Vertical colored line */}
                     <div className="flex items-center justify-center">
                       <div
-                      className={`w-0.5 h-6 ${
-                        idx === 0
-                        ? "bg-[#CDE4FF]"
-                        : idx === 1
-                        ? "bg-[#338FFF]"
-                        : "bg-[#003072]"
-                      }`}
+                        className={`w-0.5 h-6 ${idx === 0
+                            ? "bg-[#CDE4FF]"
+                            : idx === 1
+                              ? "bg-[#338FFF]"
+                              : "bg-[#003072]"
+                          }`}
                       ></div>
                     </div>
                     {/* Status label with tooltip */}
                     <div className="flex items-center gap-1">
                       <span className={`${isMobile ? 'text-sm' : 'text-base'} font-semibold text-[#8C9BAC]`}>{item.name}</span>
                       {item.tooltip && (
-                      <InfoTooltip
-                        tooltip={item.tooltip}
-                        iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
-                      />
+                        <InfoTooltip
+                          tooltip={item.tooltip}
+                          iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
+                        />
                       )}
                     </div>
                     {/* Value */}
@@ -304,13 +302,13 @@ const LearningActivityCard = ({
                     <div className="flex items-center justify-end min-w-[48px]">
                       <TrendIndicator value={item.trend} isPositive={item.isRising} />
                     </div>
-                    </div>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
         </CardContent>
-      </div>
+      
     </Card>
   );
 };
