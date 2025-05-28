@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Info } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CourseTabContent from "./course-performance/CourseTabContent";
@@ -14,12 +14,11 @@ const CoursePerformanceCard = () => {
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
   const isMobile = useIsMobile();
   return (
-    <Card  className={`w-full pb-6 h-full animate-slide-in-up ${isMobile ? 'px-4 pb-6 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
-      style={{ animationDelay: isMobile ? '0.2s' : '0.4s' }}
+    <Card   className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}
    >
       <div className="w-full">
        <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
-
+ <CardContent className={isMobile ? 'p-0 ' : 'p-0'}>
         {/* Tabs with top indicator */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
@@ -44,6 +43,7 @@ const CoursePerformanceCard = () => {
             </TabsContent>
           ))}
         </Tabs>
+        </CardContent>
       </div>
     </Card>
   );

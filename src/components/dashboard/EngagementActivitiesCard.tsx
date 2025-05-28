@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import engagementActivitiesData from "@/Data/EngagementActivities.json";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useEffect, useState } from "react";
@@ -50,10 +50,10 @@ const EngagementActivitiesCard = () => {
   };
 
   return (
-    <Card className="w-full h-full  px-4 sm:px-5 md:px-6 overflow-hidden animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+    <Card className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
       <CardHeader title="Engagement Activities" rightContent={isMobile ? null : <ViewReportButton />} />
-
-      <div className="flex flex-col h-full">
+      <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
+        <div className="flex flex-col justify-between h-full gap-6 ">
 
         {/* Stats Section */}
         <div
@@ -75,7 +75,7 @@ const EngagementActivitiesCard = () => {
         </div>
 
         {/* Chart Grid and LineChart */}
-        <div className="w-full h-[180px] sm:h-[250px] flex items-center justify-center"> {/* Fixed height for mobile and desktop */}
+        <div className="w-full h-[250px] sm:h-[250px] flex items-end justify-center"> {/* Fixed height for mobile and desktop */}
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={mergedChartData()}
@@ -132,6 +132,7 @@ const EngagementActivitiesCard = () => {
           </ResponsiveContainer>
         </div>
       </div>
+      </CardContent>
     </Card>
   );
 };

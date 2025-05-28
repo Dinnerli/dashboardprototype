@@ -55,9 +55,9 @@ const ActivityChart = ({ chartType, selectedStat, chartSeries }: ActivityChartPr
       gridLineDashStyle: 'Dot',
       gridLineWidth: 0.7,
       min: 0,
-      max: 500,
+      max: 400,
       tickAmount: 6,
-      tickPositions: [0, 100, 200, 300, 400, 500]
+      tickPositions: [0, 100, 200, 300, 400]
     },
     legend: { enabled: false },
     tooltip: {

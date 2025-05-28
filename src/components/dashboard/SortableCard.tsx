@@ -30,10 +30,10 @@ const SortableCard = ({ id, children, className }: SortableCardProps) => {
             className={cn(
                 "relative w-full transition-all duration-300 ease-in-out select-none touch-action-none",
                 "cursor-grab active:cursor-grabbing",
-                "hover:shadow-lg rounded-lg",
+                " rounded-lg",
                 isDragging
-                    ? "opacity-60 scale-105 z-50 rotate-2 shadow-xl border border-blue-600"
-                    : "opacity-100  shadow-md",
+                    ? "opacity-60 scale-105 z-50 rotate-2  border border-blue-600"
+                    : "opacity-100  ",
                 className
             )}
         >

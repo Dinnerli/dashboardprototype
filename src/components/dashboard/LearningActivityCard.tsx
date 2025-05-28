@@ -98,23 +98,19 @@ const LearningActivityCard = ({
 
   return (
     <Card
-      className={`w-full h-full animate-slide-in-up ${isMobile ? 'px-4 pb-6 sm:px-5 md:px-6' : 'px-6'} font-poppins`}
-      style={{ animationDelay: isMobile ? '0.2s' : '0.4s' }}
+    className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}
     >
       <div className="w-full">
         <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
-       <div className="flex flex-col gap-4 w-full h-full xl:flex-row">
-
-
-            {/* Interactive Chart */}
-            <div className={isMobile ? 'w-full  mb-2' : 'flex-1 h-full'}>
+       <div className="flex flex-col gap-4 w-full h-full xl:flex-row items-center justify-center">            {/* Interactive Chart */}
+            <div className={isMobile ? 'w-full mb-2' : 'flex-1 h-full max-w-xs items-center justify-center'}>
               <svg
-                viewBox="0 0 400 400"
+                viewBox="0 0 300 300"
                 preserveAspectRatio="xMidYMid meet"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
+                className="w-full h-auto max-h-80"
               >
                 {donutKeys.map((key, idx) => {
                   let activity: Activity | undefined;
@@ -127,12 +123,11 @@ const LearningActivityCard = ({
                     activity = activities.find(a => activityKeyMap[a.name] === key);
                     label = activity?.name || '';
                   }
-                  if (!activity) return null;
-                  const arcWidth = 18;
-                  const arcSpacing = 11;
-                  const baseRadius = 160;
+                  if (!activity) return null;                  const arcWidth = 14;
+                  const arcSpacing = 8;
+                  const baseRadius = 120;
                   const r = baseRadius - idx * (arcWidth + arcSpacing);
-                  const cx = 200, cy = 200;
+                  const cx = 150, cy = 150;
                   const donutData = getDonutData(activity);
                   const total = donutData.reduce((sum, d) => sum + (typeof d.value === 'number' ? d.value : 0), 0);
                   const assigned = donutData[0]?.value || 0;
@@ -198,7 +193,7 @@ const LearningActivityCard = ({
             </div>
 
             {/* Stats Section - updates based on selected segment */}
-            <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5 pb-4' : 'gap-4 p-5'}`}>
+            <div className={`flex-1 flex flex-col ${isMobile ? 'gap-2.5 pb-4 justify-between w-full' : 'justify-between p-5'}`}>
               <div className={isMobile ? 'mb-3' : 'm-3'}>
                 {activeSegment === 'ilt_vilt' ? (
                   <div className="flex gap-1">
@@ -275,7 +270,7 @@ const LearningActivityCard = ({
                 </div>
               </div>
               {/* Key metrics that update based on selection: Assigned, Completed, Enrolled/Viewed */}
-              <div className={`flex flex-col ${isMobile ? 'gap-1.5' : 'gap-9'}`}>
+              <div className={`flex flex-col ${isMobile ? 'gap-1.5' : 'gap-6'}`}>
                 {getDonutData(activeActivity).map((item, idx) => (
                     <div
                     key={item.name}
