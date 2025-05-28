@@ -18,9 +18,9 @@ const CoursePerformanceCard = () => {
    >
       <div className="w-full">
        <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
- <CardContent className={isMobile ? 'p-0 ' : 'p-0'}>
+ <CardContent className={isMobile ? 'p-0 ' : 'p-0 h-full'}>
         {/* Tabs with top indicator */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex-1 flex flex-col">
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
             {tabs.map((tab) => (
               <TabsTrigger
@@ -34,7 +34,7 @@ const CoursePerformanceCard = () => {
             ))}
           </TabsList>
           {tabs.map((tab) => (
-            <TabsContent key={tab.id} value={tab.id} className="mt-0 flex-1 px-0">
+            <TabsContent key={tab.id} value={tab.id} className="mt-0 flex-1 px-0 h-full flex flex-col justify-between">
               <CourseTabContent
                 stats={{ firstStat: tab.stats[0], secondStat: tab.stats[1] }}
                 courseData={tab.data}
