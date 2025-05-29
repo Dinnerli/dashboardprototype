@@ -27,9 +27,9 @@
           "isRising": true
         },
         {
-          "name": "Enrolled",
+          "name": "Passed",
           "value": 40,
-          "tooltip": "Number of learners who self-enrolled in courses",
+          "tooltip": "Number of learners who achieved a passing score",
           "trend": "3.6%",
           "isRising": true
         },
@@ -153,7 +153,7 @@
           "isRising": true
         },
         {
-          "name": "Enrolled",
+          "name": "Passed",
           "value": 230,
           "tooltip": "Number of learners who achieved a passing score",
           "trend": "1.9%",

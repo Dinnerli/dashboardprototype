@@ -39,7 +39,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({ tooltip, delayDuration = 300,
       ) : (
         <Tooltip delayDuration={delayDuration}>
           <TooltipTrigger asChild>
-            <span tabIndex={0} onClick={e => e.stopPropagation()}>
+            <span tabIndex={0} onClick={e => e.stopPropagation()} className='cursor-pointer'>
               <Info {...iconProps} />
             </span>
           </TooltipTrigger>
