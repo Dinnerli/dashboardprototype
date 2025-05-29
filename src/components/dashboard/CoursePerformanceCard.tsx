@@ -31,22 +31,25 @@ const CoursePerformanceCard = () => {
               Underperforming
             </TabsTrigger>
           </TabsList>
+            {activeTab === "top-performers" && (
+            <TabsContent value="top-performers" className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
+              <CourseTabContent
+                stats={{ firstStat: tabs[0]?.stats[0], secondStat: tabs[0]?.stats[1] }}
+                courseData={tabs[0]?.data || []}
+                onStatClick={handleStatClick}
+              />
+            </TabsContent>
+          )}
           
-          <TabsContent value="top-performers" className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
-            <CourseTabContent
-              stats={{ firstStat: tabs[0]?.stats[0], secondStat: tabs[0]?.stats[1] }}
-              courseData={tabs[0]?.data || []}
-              onStatClick={handleStatClick}
-            />
-          </TabsContent>
-          
-          <TabsContent value="underperformers" className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
-            <CourseTabContent
-              stats={{ firstStat: tabs[1]?.stats[0], secondStat: tabs[1]?.stats[1] }}
-              courseData={tabs[1]?.data || []}
-              onStatClick={handleStatClick}
-            />
-          </TabsContent>
+          {activeTab === "underperformers" && (
+            <TabsContent value="underperformers" className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
+              <CourseTabContent
+                stats={{ firstStat: tabs[1]?.stats[0], secondStat: tabs[1]?.stats[1] }}
+                courseData={tabs[1]?.data || []}
+                onStatClick={handleStatClick}
+              />
+            </TabsContent>
+          )}
         </Tabs>
 
    </div>
