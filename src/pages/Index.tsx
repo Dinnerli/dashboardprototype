@@ -115,7 +115,7 @@ const Index = () => {
               items={cards.map(item => item.id)}
               strategy={rectSortingStrategy}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 pb-5 sm:pb-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
                 {cards.map((item) => (
                   <SortableCard key={item.id} id={item.id.toString()}>
                     {item.component}
@@ -132,7 +132,9 @@ const Index = () => {
           </DndContext>
 
           {/* Horizontal scrollable card row - replacing the previous draggable grid */}
-          {/* <CarouselCardRow items={dashboardCards} /> */}
+          <div className="mt-6">
+          <CarouselCardRow items={dashboardCards} />
+          </div>
         </div>
       </main>
     </div>
