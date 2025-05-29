@@ -33,7 +33,7 @@ type CourseTabContentProps = {
 
 const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentProps) => {
   return (
-    <div className="flex flex-col justify-between gap-6  h-full ">
+    <div className="flex flex-col justify-between gap-6  h-full">
       {/* Stats Row */}
       <div className="flex flex-col sm:flex-row justify-between gap-6 py-2 mb-4">          
         <ActivityStat 

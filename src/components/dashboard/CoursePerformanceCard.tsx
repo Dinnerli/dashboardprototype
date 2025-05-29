@@ -14,11 +14,9 @@ const CoursePerformanceCard = () => {
   const typeOptions = ["All", "Completed", "In Progress", "Not Started"];
   const isMobile = useIsMobile();
   return (
-    <Card   className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}
-   >
-      <div className="w-full">
+    <Card   className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
        <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
- <CardContent className={isMobile ? 'p-0 ' : 'p-0 h-full'}>
+        <CardContent className={isMobile ? 'p-0 ' : 'p-0 h-full'}>
         {/* Tabs with top indicator */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex-1 flex flex-col">
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
@@ -44,7 +42,7 @@ const CoursePerformanceCard = () => {
           ))}
         </Tabs>
         </CardContent>
-      </div>
+   
     </Card>
   );
 };

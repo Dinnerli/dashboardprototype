@@ -100,10 +100,10 @@ const LearningActivityCard = ({
     <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
     
         <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
-        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 '}>
+        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
           <div className="flex flex-col gap-4 w-full h-full md:flex-row items-center justify-center">
             {/* Interactive Chart */}
-            <div className={isMobile ? 'w-full mb-2 flex items-center justify-center' : 'flex-1 h-full max-w-xs flex items-center justify-center'}>
+            <div className={isMobile ? 'w-full mb-2 flex items-center justify-center' : 'flex-1 h-full max-w-sm flex items-center justify-center'}>
               <svg
                 viewBox="0 0 300 300"
                 preserveAspectRatio="xMidYMid meet"
@@ -213,11 +213,11 @@ const LearningActivityCard = ({
                   <h4 className={`text-xl font-bold text-[#338FFF] ${isMobile ? 'text-base' : ''}`}>{activeActivity.name}</h4>
                 )}
               </div>              {/* First row: stats[] */}
-              <div className={`flex flex-wrap gap-1 pb-6 ${isMobile ? 'justify-between' : 'justify-start p-2.5'}`}>
+              <div className={`flex flex-wrap gap-1 pb-6 ${isMobile ? 'justify-between' : 'justify-center p-2.5'}`}>
                 <div className={`flex items-center justify-between w-full`}>
                   {activeActivity.stats.map((stat, idx) => (
                     <>
-                      <div key={stat.statName} className="flex items-center gap-1">
+                      <div key={stat.statName} className="flex items-center gap-1 me-2">
                         {/* Icon rendering unchanged */}
                         {idx === 0 && (
                           <svg width="42" height="42" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
