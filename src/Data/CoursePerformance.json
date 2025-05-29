@@ -1,109 +1,147 @@
 {
-  "coursePerformers": {
-    "tabs": [
+  "coursePerformance": {
+    "performing": [
       {
-        "name": "Top Performers",
-        "stats": [
-            {
-            "name": "Passed",
-            "value": 185,
-            "trend": 8,
-            "tooltip": "Percentage of  learners who finished all course components",
-            "rising": true
-          },
-          {
-            "name": "Completed",
-            "value": 210,
-            "trend": 12,
-            "tooltip": "Percentage learners who met the passing criteria for the course",
-            "rising": false
-          }
-        
-        ],
-        "data": [
-          {
-            "name": "Leadership 101",
-            "all": 1000,
-            "completed": 600,
-            "passed": 200
-          },
-          {
-            "name": "Advanced Sales",
-            "all": 780,
-            "completed": 100,
-            "passed": 85
-          },
-          {
-            "name": "Time Management",
-            "all": 400,
-            "completed": 60,
-            "passed": 100
-          },
-          {
-            "name": "Client Communication",
-            "all": 800,
-            "completed": 100,
-            "passed": 100
-          },
-          {
-            "name": "Strategic Thinking",
-            "all": 500,
-            "completed": 20,
-            "passed": 100
-          }
-        ]
+        "courseName": "Effective Communication",
+        "all": 120,
+        "completed": {
+          "value": 100,
+          "rising": false,
+          "trend": "3.2%"
+        },
+        "pass": {
+          "value": 95,
+          "rising": true,
+          "trend": "2.8%"
+        }
       },
       {
-        "name": "Underperformers",
-        "stats": [
-         
-          {
-            "name": "Passed",
-            "value": 225,
-            "trend": 8,
-            "tooltip": "Percentage of  learners who finished all course components",
-            "rising": false
-          }, {
-            "name": "Completed",
-            "value": 150,
-            "trend": 12,
-            "tooltip": "Percentage learners who met the passing criteria for the course",
-            "rising": true
-          }
-        ],
-        "data": [
-          
-          {
-            "name": "Client Communication",
-            "all": 820,
-            "completed": 100,
-             "passed": 10
-          },
-          {
-            "name": "Strategic Thinking",
-            "all": 880,
-            "completed": 100,
-             "passed": 10
-          },
-           {
-            "name": "Leadership 101",
-            "all": 8500,
-            "completed": 100,
-            "passed": 10
-          },
-          {
-            "name": "Advanced Sales",
-            "all": 780,
-            "completed": 100,
-            "passed": 10
-          },
-          {
-            "name": "Time Management",
-            "all": 900,
-            "completed": 700,
-             "passed": 10
-          }
-        ]
+        "courseName": "Project Management Basics",
+        "all": 98,
+        "completed": {
+          "value": 90,
+          "rising": true,
+          "trend": "1.9%"
+        },
+        "pass": {
+          "value": 85,
+          "rising": true,
+          "trend": "2.1%"
+        }
+      },
+      {
+        "courseName": "Advanced Excel Skills",
+        "all": 150,
+        "completed": {
+          "value": 130,
+          "rising": true,
+          "trend": "4.5%"
+        },
+        "pass": {
+          "value": 125,
+          "rising": true,
+          "trend": "4.2%"
+        }
+      },
+      {
+        "courseName": "Time Management",
+        "all": 110,
+        "completed": {
+          "value": 95,
+          "rising": true,
+          "trend": "2.7%"
+        },
+        "pass": {
+          "value": 92,
+          "rising": true,
+          "trend": "3.0%"
+        }
+      },
+      {
+        "courseName": "Cybersecurity Essentials",
+        "all": 105,
+        "completed": {
+          "value": 100,
+          "rising": true,
+          "trend": "3.8%"
+        },
+        "pass": {
+          "value": 98,
+          "rising": true,
+          "trend": "3.5%"
+        }
+      }
+    ],
+    "underperforming": [
+      {
+        "courseName": "Workplace Ethics",
+        "all": 80,
+        "completed": {
+          "value": 40,
+          "rising": false,
+          "trend": "-1.5%"
+        },
+        "pass": {
+          "value": 30,
+          "rising": false,
+          "trend": "-2.0%"
+        }
+      },
+      {
+        "courseName": "Customer Service Training",
+        "all": 95,
+        "completed": {
+          "value": 50,
+          "rising": false,
+          "trend": "-1.2%"
+        },
+        "pass": {
+          "value": 42,
+          "rising": false,
+          "trend": "-1.7%"
+        }
+      },
+      {
+        "courseName": "Introduction to Data Analysis",
+        "all": 100,
+        "completed": {
+          "value": 60,
+          "rising": false,
+          "trend": "-2.4%"
+        },
+        "pass": {
+          "value": 48,
+          "rising": false,
+          "trend": "-2.9%"
+        }
+      },
+      {
+        "courseName": "Conflict Resolution",
+        "all": 85,
+        "completed": {
+          "value": 38,
+          "rising": false,
+          "trend": "-3.1%"
+        },
+        "pass": {
+          "value": 32,
+          "rising": false,
+          "trend": "-2.5%"
+        }
+      },
+      {
+        "courseName": "Introduction to Leadership",
+        "all": 90,
+        "completed": {
+          "value": 45,
+          "rising": false,
+          "trend": "-1.9%"
+        },
+        "pass": {
+          "value": 37,
+          "rising": false,
+          "trend": "-2.3%"
+        }
       }
     ]
   }

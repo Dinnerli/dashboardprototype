@@ -22,17 +22,24 @@ type CourseTabContentProps = {
       isSelected: boolean;
       tooltip: string;
       rising: boolean;
-    };
-  };  courseData: Array<{
+    };  };
+  courseData: Array<{
     name: string;
     passedPercentage: number;
     completedButNotPassedPercentage: number;
     notCompletedPercentage: number;
-  }>;
+    rawData?: {
+      courseName: string;
+      all: number;
+      completed: { value: number; rising: boolean; trend: string };
+      pass: { value: number; rising: boolean; trend: string };
+    };  }>;
   onStatClick: (statName: string) => void;
+  onCourseClick?: (courseName: string) => void;
+  selectedCourse?: string | null;
 };
 
-const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentProps) => {
+const CourseTabContent = ({ stats, courseData, onStatClick, onCourseClick, selectedCourse }: CourseTabContentProps) => {
   const isMobile = useIsMobile();
 
   return (
@@ -46,25 +53,28 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
           isActive={stats.firstStat.isActive}
           tooltip={stats.firstStat.tooltip}
           isSelected={stats.firstStat.isSelected}
-          isPositive={!stats.firstStat.rising}
-            onClick={() => onStatClick(stats.firstStat.title)}
-          />
-          <ActivityStat 
-            title={stats.secondStat.title}
-            value={stats.secondStat.value}
-            percentage={stats.secondStat.percentage}
-            tooltip={stats.secondStat.tooltip}
-            isActive={stats.secondStat.isActive}
-            isSelected={stats.secondStat.isSelected}
-            isPositive={!stats.secondStat.rising}
-            onClick={() => onStatClick(stats.secondStat.title)}
-          />
-
+          isPositive={stats.firstStat.rising}
+          onClick={() => onStatClick(stats.firstStat.title)}
+        />
+        <ActivityStat 
+          title={stats.secondStat.title}
+          value={stats.secondStat.value}
+          percentage={stats.secondStat.percentage}
+          tooltip={stats.secondStat.tooltip}
+          isActive={stats.secondStat.isActive}
+          isSelected={stats.secondStat.isSelected}
+          isPositive={stats.secondStat.rising}
+          onClick={() => onStatClick(stats.secondStat.title)}
+        />
       </div>
 
       {/* Chart - taking remaining space */}
       <div className="flex-1 flex p-2.5">
-        <CourseChart courseData={courseData} />
+        <CourseChart 
+          courseData={courseData} 
+          onCourseClick={onCourseClick}
+          selectedCourse={selectedCourse}
+        />
       </div>
     </div>
   );

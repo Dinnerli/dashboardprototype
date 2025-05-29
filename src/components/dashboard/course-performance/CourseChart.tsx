@@ -7,10 +7,18 @@ type CourseChartProps = {
     passedPercentage: number;
     completedButNotPassedPercentage: number;
     notCompletedPercentage: number;
+    rawData?: {
+      courseName: string;
+      all: number;
+      completed: { value: number; rising: boolean; trend: string };
+      pass: { value: number; rising: boolean; trend: string };
+    };
   }>;
+  onCourseClick?: (courseName: string) => void;
+  selectedCourse?: string | null;
 };
 
-const CourseChart = ({ courseData }: CourseChartProps) => {
+const CourseChart = ({ courseData, onCourseClick, selectedCourse }: CourseChartProps) => {
   // Generate percentage scale markers (0, 10, 20, etc.)
   const percentageMarkers = [];
   for (let i = 0; i <= 100; i += 10) {
@@ -27,6 +35,8 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
             passedPercentage={course.passedPercentage}
             completedButNotPassedPercentage={course.completedButNotPassedPercentage}
             notCompletedPercentage={course.notCompletedPercentage}
+            onClick={onCourseClick}
+            isSelected={selectedCourse === course.name}
           />
         ))}
       </div>

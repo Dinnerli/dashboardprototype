@@ -8,7 +8,7 @@ import ViewReportButton from "./ViewReportButton";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const CoursePerformanceCard = () => {
-  const { tabs, activeTab, setActiveTab, handleStatClick } = useCourseData();
+  const { tabs, activeTab, setActiveTab, handleStatClick, handleCourseClick, selectedCourse } = useCourseData();
   const isMobile = useIsMobile();
   return (
     <Card   className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
@@ -30,13 +30,14 @@ const CoursePerformanceCard = () => {
               {activeTab === "underperformers" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
               Underperforming
             </TabsTrigger>
-          </TabsList>
-            {activeTab === "top-performers" && (
+          </TabsList>            {activeTab === "top-performers" && (
             <TabsContent value="top-performers" className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
               <CourseTabContent
                 stats={{ firstStat: tabs[0]?.stats[0], secondStat: tabs[0]?.stats[1] }}
                 courseData={tabs[0]?.data || []}
                 onStatClick={handleStatClick}
+                onCourseClick={handleCourseClick}
+                selectedCourse={selectedCourse}
               />
             </TabsContent>
           )}
@@ -47,6 +48,8 @@ const CoursePerformanceCard = () => {
                 stats={{ firstStat: tabs[1]?.stats[0], secondStat: tabs[1]?.stats[1] }}
                 courseData={tabs[1]?.data || []}
                 onStatClick={handleStatClick}
+                onCourseClick={handleCourseClick}
+                selectedCourse={selectedCourse}
               />
             </TabsContent>
           )}
