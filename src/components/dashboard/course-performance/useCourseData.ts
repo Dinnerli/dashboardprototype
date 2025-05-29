@@ -102,9 +102,8 @@ export const useCourseData = () => {
     // For now, just toggle selection - not changing the behavior much
     setSelectedCourse(null);
   };
-
   const handleCourseClick = (courseName: string) => {
-    setSelectedCourse(selectedCourse === courseName ? null : courseName);
+    setSelectedCourse(courseName);
   };
 
   // Update stats to show selected course data if a course is selected
