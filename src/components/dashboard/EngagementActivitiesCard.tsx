@@ -60,7 +60,7 @@ const EngagementActivitiesCard = () => {
           className={`stat-row flex items-center  gap-2.5  p-5 h-auto w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto`}
         >
           {activities.map((activity) => (
-            <div key={activity.title} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+            <div key={activity.title} className="snap-start w-[70vw] min-w-[70vw]  sm:w-auto sm:min-w-0">
               <EngagementStat
                 title={activity.title}
                 value={activity.value}

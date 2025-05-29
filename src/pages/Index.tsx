@@ -31,8 +31,7 @@ import SortableCard from '@/components/dashboard/SortableCard';
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const isTablet = useMediaQuery('(max-width:960px)');
-
-  // Enhanced sensors for better touch and mouse support
+  // Enhanced sensors for better touch and mouse support - disabled on mobile
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
       distance: 10, // Minimum distance before drag starts
@@ -46,7 +45,10 @@ const Index = () => {
     },
   });
 
-  const sensors = useSensors(mouseSensor, touchSensor);
+  // Disable sensors on mobile to prevent drag and drop
+  const sensors = useSensors(
+    ...(isMobile ? [] : [mouseSensor, touchSensor])
+  );
 
   // Smooth scroll to top when component mounts
   useEffect(() => {
@@ -102,34 +104,46 @@ const Index = () => {
             <div className="w-auto">
               <ActivityFilters />
             </div>
-          </div>
-          <Dashboard />
-          {/* DND Cards row */}
-          <DndContext
-            collisionDetection={closestCenter}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            sensors={sensors}
-          >
-            <SortableContext
-              items={cards.map(item => item.id)}
-              strategy={rectSortingStrategy}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
-                {cards.map((item) => (
-                  <SortableCard key={item.id} id={item.id.toString()}>
-                    {item.component}
-                  </SortableCard>
-                ))}
-              </div>
-            </SortableContext>            <DragOverlay>
-              {activeId ? (
-                <div className="bg-white rounded-lg shadow-2xl rotate-1 scale-105 border ">
-                  {cards.find(item => item.id === activeId)?.component}
+          </div>          <Dashboard />
+          {/* DND Cards row - disabled on mobile */}
+          {isMobile ? (
+            // Static grid on mobile without drag and drop
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {cards.map((item) => (
+                <div key={item.id}>
+                  {item.component}
                 </div>
-              ) : null}
-            </DragOverlay>
-          </DndContext>
+              ))}
+            </div>
+          ) : (
+            // DND enabled on desktop/tablet
+            <DndContext
+              collisionDetection={closestCenter}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              sensors={sensors}
+            >
+              <SortableContext
+                items={cards.map(item => item.id)}
+                strategy={rectSortingStrategy}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
+                  {cards.map((item) => (
+                    <SortableCard key={item.id} id={item.id.toString()}>
+                      {item.component}
+                    </SortableCard>
+                  ))}
+                </div>
+              </SortableContext>
+              <DragOverlay>
+                {activeId ? (
+                  <div className="bg-white rounded-lg shadow-2xl rotate-1 scale-105 border ">
+                    {cards.find(item => item.id === activeId)?.component}
+                  </div>
+                ) : null}
+              </DragOverlay>
+            </DndContext>
+          )}
 
           {/* Horizontal scrollable card row - replacing the previous draggable grid */}
           <div className="mt-6">
