@@ -79,21 +79,24 @@ const LearningActivityCard = ({
       y: cy + r * Math.sin(rad)
     };
   }
-
-  // Donut chart expects three metrics: Assigned, Completed, Enrolled/Viewed
+  // Donut chart expects three metrics: different for each activity type
   function getDonutData(activity: Activity): ActivityData[] {
+    // Handle Library specifically - it has different metrics
+    if (activity.name === "Library") {
+      const itemsUploaded = activity.data.find(d => d.name === "Items Uploaded")!;
+      const assigned      = activity.data.find(d => d.name === "Assigned")!;
+      const viewed        = activity.data.find(d => d.name === "Viewed")!;
+      return [ itemsUploaded, assigned, viewed ];
+    }
+    
+    // For other activities: Assigned, Completed, Enrolled/Passed
     const assigned = activity.data.find((d) => d.name === "Assigned") || activity.data[0];
     const completed = activity.data.find((d) => d.name === "Completed") || activity.data[1];
-    // For Library Items, use "Viewed" as third metric, else "Enrolled"
+    // Use "Enrolled" for ILT/VILT, "Passed" for Exams, or fallback to third item
     let thirdMetric = activity.data.find((d) => d.name === "Enrolled");
-    if (!thirdMetric) thirdMetric = activity.data.find((d) => d.name === "Viewed");
+    if (!thirdMetric) thirdMetric = activity.data.find((d) => d.name === "Passed");
     if (!thirdMetric) thirdMetric = activity.data[2];
-     if (activity.name === "Library") {
-    const itemsUploaded = activity.data.find(d => d.name === "Items Uploaded")!;
-    const assigned      = activity.data.find(d => d.name === "Assigned")!;
-    const viewed        = activity.data.find(d => d.name === "Viewed")!;
-    return [ itemsUploaded, assigned, viewed ];
-  }
+    
     return [assigned, completed, thirdMetric];
   }
   // Add hoveredArc state to the component
