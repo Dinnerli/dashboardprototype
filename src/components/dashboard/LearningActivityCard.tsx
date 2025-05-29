@@ -88,6 +88,12 @@ const LearningActivityCard = ({
     let thirdMetric = activity.data.find((d) => d.name === "Enrolled");
     if (!thirdMetric) thirdMetric = activity.data.find((d) => d.name === "Viewed");
     if (!thirdMetric) thirdMetric = activity.data[2];
+     if (activity.name === "Library") {
+    const itemsUploaded = activity.data.find(d => d.name === "Items Uploaded")!;
+    const assigned      = activity.data.find(d => d.name === "Assigned")!;
+    const viewed        = activity.data.find(d => d.name === "Viewed")!;
+    return [ itemsUploaded, assigned, viewed ];
+  }
     return [assigned, completed, thirdMetric];
   }
   // Add hoveredArc state to the component
