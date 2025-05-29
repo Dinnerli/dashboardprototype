@@ -15,10 +15,10 @@ const CoursePerformanceCard = () => {
   const isMobile = useIsMobile();
   return (
     <Card   className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-       <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
-        <CardContent className={isMobile ? 'p-0 ' : 'p-0 h-full'}>
+<div className="h-full flex flex-col justify-between">
+     <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
         {/* Tabs with top indicator */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex-1 flex flex-col">
+        <Tabs value={activeTab} onValueChange={setActiveTab} >
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
             {tabs.map((tab) => (
               <TabsTrigger
@@ -32,17 +32,18 @@ const CoursePerformanceCard = () => {
             ))}
           </TabsList>
           {tabs.map((tab) => (
-            <TabsContent key={tab.id} value={tab.id} className="mt-0 flex-1 px-0 h-full flex flex-col justify-between">
+              <TabsContent  value={tab.id} className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'} >
               <CourseTabContent
                 stats={{ firstStat: tab.stats[0], secondStat: tab.stats[1] }}
                 courseData={tab.data}
                 onStatClick={handleStatClick}
               />
             </TabsContent>
+                   
           ))}
         </Tabs>
-        </CardContent>
-   
+
+   </div>
     </Card>
   );
 };

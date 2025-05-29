@@ -1,6 +1,7 @@
 import React from "react";
 import ActivityStat from "./ActivityStat";
 import CourseChart from "./CourseChart";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type CourseTabContentProps = {
   stats: {
@@ -32,18 +33,20 @@ type CourseTabContentProps = {
 };
 
 const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentProps) => {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="flex flex-col justify-between gap-6  h-full">
+    <div >
       {/* Stats Row */}
-      <div className="flex flex-col sm:flex-row justify-between gap-6 py-2 mb-4">          
-        <ActivityStat 
-            title={stats.firstStat.title}
-            value={stats.firstStat.value}
-            percentage={stats.firstStat.percentage}
-            isActive={stats.firstStat.isActive}
-            tooltip={stats.firstStat.tooltip}
-            isSelected={stats.firstStat.isSelected}
-            isPositive={!stats.firstStat.rising}
+      <div className="flex flex-col sm:flex-row justify-between gap-6 py-2 mb-4">
+        <ActivityStat
+          title={stats.firstStat.title}
+          value={stats.firstStat.value}
+          percentage={stats.firstStat.percentage}
+          isActive={stats.firstStat.isActive}
+          tooltip={stats.firstStat.tooltip}
+          isSelected={stats.firstStat.isSelected}
+          isPositive={!stats.firstStat.rising}
             onClick={() => onStatClick(stats.firstStat.title)}
           />
           <ActivityStat 
@@ -60,7 +63,7 @@ const CourseTabContent = ({ stats, courseData, onStatClick }: CourseTabContentPr
       </div>
 
       {/* Chart - taking remaining space */}
-      <div className="flex-1 flex ">
+      <div className="flex-1 flex p-2.5">
         <CourseChart courseData={courseData} />
       </div>
     </div>

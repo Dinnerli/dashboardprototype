@@ -82,14 +82,14 @@ const ActivitiesCard = () => {
 
   // Pass chartSeries as prop to ActivityChart
   return (
-    <Card className="w-full  animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-
+    <Card className="w-full h-full  animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+<div className="h-full ">
       <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
-
+<div className="flex flex-col w-full  justify-between mb-2">
       {/* Tabs */}
       <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full flex flex-col justify-between'}>
+      <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0  flex flex-col justify-between'}>
         {/* Stats Row */}
         <div className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}>
           {currentTabData.stats.map((stat, index) => (
@@ -110,7 +110,9 @@ const ActivitiesCard = () => {
         {/* Chart */}
         <ActivityChart chartType={currentTabData.chartType} selectedStat={selectedStat} chartSeries={chartSeries} />
       </CardContent>
-
+</div>
+   
+</div>
     </Card>
   );
 };
