@@ -4,49 +4,50 @@
       {
         "name": "Top Performers",
         "stats": [
+            {
+            "name": "Passed",
+            "value": 185,
+            "trend": 8,
+            "tooltip": "Percentage of  learners who finished all course components",
+            "rising": true
+          },
           {
             "name": "Completed",
             "value": 210,
             "trend": 12,
             "tooltip": "Percentage learners who met the passing criteria for the course",
             "rising": false
-          },
-          {
-            "name": "Passed",
-            "value": 185,
-            "trend": 8,
-            "tooltip": "Percentage of  learners who finished all course components",
-            "rising": true
           }
+        
         ],
         "data": [
           {
             "name": "Leadership 101",
-            "all": 85,
-            "completed": 100,
-            "passed": 90
+            "all": 1000,
+            "completed": 600,
+            "passed": 200
           },
           {
             "name": "Advanced Sales",
-            "all": 78,
+            "all": 780,
             "completed": 100,
             "passed": 85
           },
           {
             "name": "Time Management",
-            "all": 40,
+            "all": 400,
             "completed": 60,
             "passed": 100
           },
           {
             "name": "Client Communication",
-            "all": 80,
-            "completed": 10,
+            "all": 800,
+            "completed": 100,
             "passed": 100
           },
           {
             "name": "Strategic Thinking",
-            "all": 50,
+            "all": 500,
             "completed": 20,
             "passed": 100
           }
@@ -55,47 +56,52 @@
       {
         "name": "Underperformers",
         "stats": [
-          {
-            "name": "Completed",
-            "value": 150,
-            "trend": 12,
-            "tooltip": "Percentage learners who met the passing criteria for the course",
-            "rising": true
-          },
+         
           {
             "name": "Passed",
             "value": 225,
             "trend": 8,
             "tooltip": "Percentage of  learners who finished all course components",
             "rising": false
+          }, {
+            "name": "Completed",
+            "value": 150,
+            "trend": 12,
+            "tooltip": "Percentage learners who met the passing criteria for the course",
+            "rising": true
           }
         ],
         "data": [
           
           {
             "name": "Client Communication",
-            "all": 82,
-            "completed": 100
+            "all": 820,
+            "completed": 100,
+             "passed": 10
           },
           {
             "name": "Strategic Thinking",
-            "all": 88,
-            "completed": 100
+            "all": 880,
+            "completed": 100,
+             "passed": 10
           },
            {
             "name": "Leadership 101",
-            "all": 85,
-            "completed": 100
+            "all": 8500,
+            "completed": 100,
+            "passed": 10
           },
           {
             "name": "Advanced Sales",
-            "all": 78,
-            "completed": 100
+            "all": 780,
+            "completed": 100,
+            "passed": 10
           },
           {
             "name": "Time Management",
-            "all": 90,
-            "completed": 100
+            "all": 900,
+            "completed": 700,
+             "passed": 10
           }
         ]
       }

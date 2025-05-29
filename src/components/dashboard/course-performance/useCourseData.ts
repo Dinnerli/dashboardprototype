@@ -22,12 +22,19 @@ export const useCourseData = () => {
       isSelected: selectedStat === stat.name,
       tooltip: stat.tooltip,
       rising: stat.rising,
-    }));
-    const data = tab.data.map((course) => ({
-      name: course.name,
-      completedPercentage: course.value1,
-      inProgressPercentage: course.value2 - course.value1,
-    }));
+    }));    const data = tab.data.map((course) => {
+      // Ensure data consistency: completed and passed cannot exceed all
+      const all = Math.max(course.all, course.completed, course.passed);
+      const completed = Math.min(course.completed, all);
+      const passed = Math.min(course.passed, completed);
+      
+      return {
+        name: course.name,
+        passedPercentage: (passed / all) * 100,
+        completedButNotPassedPercentage: ((completed - passed) / all) * 100,
+        notCompletedPercentage: ((all - completed) / all) * 100,
+      };
+    });
     return { id, name: tab.name, stats, data };
   });
 

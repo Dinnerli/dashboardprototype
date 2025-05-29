@@ -23,11 +23,11 @@ type CourseTabContentProps = {
       tooltip: string;
       rising: boolean;
     };
-  };
-  courseData: Array<{
+  };  courseData: Array<{
     name: string;
-    completedPercentage: number;
-    inProgressPercentage: number;
+    passedPercentage: number;
+    completedButNotPassedPercentage: number;
+    notCompletedPercentage: number;
   }>;
   onStatClick: (statName: string) => void;
 };

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 
 export type CourseBarProps = {
   name: string;
-  completedPercentage: number;
-  inProgressPercentage: number;
+  passedPercentage: number;
+  completedButNotPassedPercentage: number;
+  notCompletedPercentage: number;
 };
 
-const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBarProps) => {
+const CourseBar = ({ name, passedPercentage, completedButNotPassedPercentage, notCompletedPercentage }: CourseBarProps) => {
   const [isAnimated, setIsAnimated] = useState(false);
 
   useEffect(() => {
@@ -26,18 +27,40 @@ const CourseBar = ({ name, completedPercentage, inProgressPercentage }: CourseBa
     </div>
     <div className="hidden sm:block w-[4px] h-[1px] bg-[#4F5A69]"></div>
   </div>
-
   {/* Bar chart section */}
   <div className="flex h-[10px] min-h-[10px] items-center gap-[2px] w-full flex-1">
-    <div 
-      className="relative h-full w-full bg-[#CDE4FF] rounded-[5px] overflow-hidden transition-all duration-1000 ease-out"
-    >
+    <div className="relative h-full w-full bg-[#E5E7EB] rounded-[5px] overflow-hidden flex">      {/* Passed segment - Dark Blue */}
       <div
-        className="absolute left-0 top-0 h-full bg-[#338FFF] rounded-[10px] transition-all duration-1000 ease-out"
+        className="h-full bg-[#338FFF] transition-all duration-1000 ease-out rounded-l-[5px]"
         style={{
-          width: isAnimated ? `${completedPercentage}%` : '0%',
+          width: isAnimated ? `${passedPercentage}%` : '0%',
+          transitionDelay: '0.1s',
+        }}
+        title={`Passed: ${passedPercentage.toFixed(1)}%`}
+        role="progressbar"
+        aria-label={`Passed: ${passedPercentage.toFixed(1)}%`}
+      ></div>
+      {/* Completed but not passed segment - Light Blue */}
+      <div
+        className="h-full bg-[#CDE4FF] transition-all duration-1000 ease-out"
+        style={{
+          width: isAnimated ? `${completedButNotPassedPercentage}%` : '0%',
           transitionDelay: '0.2s',
         }}
+        title={`Completed but not passed: ${completedButNotPassedPercentage.toFixed(1)}%`}
+        role="progressbar"
+        aria-label={`Completed but not passed: ${completedButNotPassedPercentage.toFixed(1)}%`}
+      ></div>
+      {/* Not completed segment - Gray (background handles this) */}
+      <div
+        className="h-full bg-[#E5E7EB] transition-all duration-1000 ease-out rounded-r-[5px]"
+        style={{
+          width: isAnimated ? `${notCompletedPercentage}%` : '0%',
+          transitionDelay: '0.3s',
+        }}
+        title={`Not completed: ${notCompletedPercentage.toFixed(1)}%`}
+        role="progressbar"
+        aria-label={`Not completed: ${notCompletedPercentage.toFixed(1)}%`}
       ></div>
     </div>
     <div className="flex-1 h-full bg-transparent"></div>

@@ -4,8 +4,9 @@ import CourseBar from "./CourseBar";
 type CourseChartProps = {
   courseData: Array<{
     name: string;
-    completedPercentage: number;
-    inProgressPercentage: number;
+    passedPercentage: number;
+    completedButNotPassedPercentage: number;
+    notCompletedPercentage: number;
   }>;
 };
 
@@ -19,13 +20,13 @@ const CourseChart = ({ courseData }: CourseChartProps) => {
   return (
     <div className="w-full h-auto flex-1 flex flex-col font-poppins">
       {/* Course bars with more vertical spacing */}
-      <div className="flex flex-col gap-6 mb-6 ">
-        {courseData.map((course, index) => (
+      <div className="flex flex-col gap-6 mb-6 ">        {courseData.map((course, index) => (
           <CourseBar
             key={index}
             name={course.name}
-            completedPercentage={course.completedPercentage}
-            inProgressPercentage={course.inProgressPercentage}
+            passedPercentage={course.passedPercentage}
+            completedButNotPassedPercentage={course.completedButNotPassedPercentage}
+            notCompletedPercentage={course.notCompletedPercentage}
           />
         ))}
       </div>
