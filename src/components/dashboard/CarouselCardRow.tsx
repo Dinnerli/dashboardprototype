@@ -69,7 +69,7 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
       {/* Scrollable container */}
       <div 
         ref={scrollRef}
-        className="flex flex-nowrap overflow-x-auto gap-5 pb-4 px-4 pt-1 hide-scrollbar cursor-grab h-full"
+        className="flex  flex-nowrap overflow-x-auto gap-5 pb-4  pt-1 hide-scrollbar cursor-grab h-full"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
@@ -78,8 +78,8 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
         {items.map((item, index) => (
           <div 
             key={index} 
-            className="flex-shrink-0"
-            style={{ minWidth: '280px' }}
+            className="flex-shrink-0 h-full"
+            style={{ minHeight: '555px',widows: '100%', maxWidth: '100%' }} 
           >
             {item}
           </div>

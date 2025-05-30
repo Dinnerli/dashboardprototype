@@ -146,7 +146,7 @@ const Index = () => {
           )}
 
           {/* Horizontal scrollable card row - replacing the previous draggable grid */}
-          <div className="mt-6">
+          <div className="mt-6 ">
           <CarouselCardRow items={dashboardCards} />
           </div>
         </div>

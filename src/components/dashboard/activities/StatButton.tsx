@@ -33,9 +33,9 @@ const StatButton = ({
 
   return (
     <div 
-      className={`flex items-center gap-2.5 py-2 px-3  rounded-lg cursor-pointer transition-all duration-200 
+      className={`flex items-center gap-2.5 py-2 px-3 sm:py-1 sm:px-2  rounded-lg cursor-pointer transition-all duration-200 
         ${isActive ? 'bg-[#F5F6F8] ' : ''}
-        ${isMobile ? 'border border-[#F5F6F8]' : ''}
+        ${isMobile ? 'border border-[#F5F6F8]' : 'border-none'}
       `}
       onClick={onClick}
     >
@@ -61,7 +61,7 @@ const StatButton = ({
       </div>
       <div className="flex items-center">
         <div>
-        <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-xl' : 'text-2xl'}`}>
+        <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>
           {value}
         </span>
         </div>

@@ -5,6 +5,7 @@ import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
 import StatButton from "./activities/StatButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const DevicesCard = () => {
   const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile' | null>(null);
@@ -46,16 +47,17 @@ const DevicesCard = () => {
   const mobileStart = donutSize * (1 - (mobileTotal / 100));
 
   return (
-    <Card className="w-auto h-full p-6 animate-slide-in-up bg-white overflow-hidden" 
+    <Card className="w-auto h-full min-h-[555px] p-6 animate-slide-in-up bg-white overflow-hidden" 
     style={{ animationDelay: '0.4s' }}>
-      <CardHeader title="Devices" rightContent={<ViewReportButton />} />
+       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+
       <div className="flex flex-col h-full">
         {/* Device options section - reduced padding */}
-        <div className="flex gap-2 px-2 py-6">
+        <div className="flex  py-6">
           {deviceStats.map((stat) => (
             <div
               key={stat.key}
-              className={`flex-1`}
+              className={`flex justify-between`}
             >
               <StatButton
                 title={stat.title}
