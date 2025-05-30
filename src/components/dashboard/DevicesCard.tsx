@@ -46,11 +46,12 @@ const DevicesCard = () => {
   const mobileStart = donutSize * (1 - (mobileTotal / 100));
 
   return (
-    <Card className="w-auto h-full px-4 pb-4  animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
+    <Card className="w-auto h-full p-6 animate-slide-in-up bg-white overflow-hidden" 
+    style={{ animationDelay: '0.4s' }}>
       <CardHeader title="Devices" rightContent={<ViewReportButton />} />
       <div className="flex flex-col h-full">
         {/* Device options section - reduced padding */}
-        <div className="flex gap-2 px-4 py-3">
+        <div className="flex gap-2 px-2 py-6">
           {deviceStats.map((stat) => (
             <div
               key={stat.key}
@@ -67,21 +68,9 @@ const DevicesCard = () => {
             </div>
           ))}
         </div>
-        {/* Color indicator legend for mobile (above chart) */}
-        {selectedDevice === 'mobile' && (
-          <div className="flex justify-center gap-4 pb-2">
-            <div className="flex items-center gap-1">
-              <span className="inline-block w-3 h-3 rounded-full bg-[#338FFF]"></span>
-              <span className="text-xs text-[#233143]">Browser</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="inline-block w-3 h-3 rounded-full bg-[#003072]"></span>
-              <span className="text-xs text-[#233143]">App</span>
-            </div>
-          </div>
-        )}
+        <div className="flex flex-col items-center justify-between h-full">
         {/* Circle Graph */}
-        <div className="flex justify-center items-center flex-1 px-4 pb-4">
+        <div className="flex justify-center items-center flex-1">
           <div className="w-48 h-48 relative">
             {/* White circle background to ensure the middle is white */}
             <div className="w-full h-full rounded-full bg-white absolute"></div>
@@ -146,8 +135,10 @@ const DevicesCard = () => {
             {/* White center circle to create donut hole */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] bg-white rounded-full"></div>
           </div>
-        </div>
-        {/* Color indicator legend for mobile */}
+          {/* Color indicator legend for mobile */}
+       
+        </div> 
+        
         {selectedDevice === 'mobile' && (
           <div className="flex justify-center gap-4 pb-2">
             <div className="flex items-center gap-1">
@@ -160,6 +151,8 @@ const DevicesCard = () => {
             </div>
           </div>
         )}
+        </div>
+       
       </div>
     </Card>
   );

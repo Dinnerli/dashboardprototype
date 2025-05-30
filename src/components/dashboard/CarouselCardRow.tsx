@@ -58,7 +58,7 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
 
   return (
     <div 
-      className="relative group w-full pb-4 sm:pb-6 "
+      className="relative group w-full h-full pb-4 sm:pb-6 "
     >
       {/* Left fade overlay */}
       <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#F5F6F8] to-transparent z-10 pointer-events-none opacity-0 sm:opacity-100" />
@@ -69,7 +69,7 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
       {/* Scrollable container */}
       <div 
         ref={scrollRef}
-        className="flex flex-nowrap overflow-x-auto gap-5 pb-4 px-4 pt-1 hide-scrollbar cursor-grab"
+        className="flex flex-nowrap overflow-x-auto gap-5 pb-4 px-4 pt-1 hide-scrollbar cursor-grab h-full"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
