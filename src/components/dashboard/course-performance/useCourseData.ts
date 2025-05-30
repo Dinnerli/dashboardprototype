@@ -74,15 +74,13 @@ export const useCourseData = () => {
     }, 0) / data.length;
 
     const mostCompletedRising = data.filter(course => course.completed.rising).length > data.length / 2;
-    const mostPassedRising = data.filter(course => course.pass.rising).length > data.length / 2;
-
-    return [
+    const mostPassedRising = data.filter(course => course.pass.rising).length > data.length / 2;    return [
       {
         title: "Completed",
         value: totalCompleted.toString(),
         percentage: `${avgCompletedTrend.toFixed(1)}%`,
         isActive: selectedCourse === null,
-        isSelected: false,
+        isSelected: selectedCourse === null,
         tooltip: "Total completed courses across all learners",
         rising: mostCompletedRising,
       },
@@ -91,16 +89,22 @@ export const useCourseData = () => {
         value: totalPassed.toString(),
         percentage: `${avgPassedTrend.toFixed(1)}%`,
         isActive: selectedCourse === null,
-        isSelected: false,
+        isSelected: selectedCourse === null,
         tooltip: "Total passed courses across all learners",
         rising: mostPassedRising,
       }
     ];
-  }
-
-  const handleStatClick = (statName: string) => {
-    // For now, just toggle selection - not changing the behavior much
-    setSelectedCourse(null);
+  }  const handleStatClick = (statName: string) => {
+    // Always ensure a course is selected when clicking stats
+    if (!selectedCourse) {
+      const firstCourse = activeTab === "top-performers" 
+        ? coursePerformance.coursePerformance.performing[0]?.courseName 
+        : coursePerformance.coursePerformance.underperforming[0]?.courseName;
+      if (firstCourse) {
+        setSelectedCourse(firstCourse);
+      }
+    }
+    // If a course is already selected, keep it selected
   };
   const handleCourseClick = (courseName: string) => {
     setSelectedCourse(courseName);
