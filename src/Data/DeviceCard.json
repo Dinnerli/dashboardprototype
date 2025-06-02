@@ -11,7 +11,7 @@
         "name": "Mobile",
         "value": 300,
         "trend": "22%",
-        "isRising": true,
+        "isRising": false,
         "subValues": {
           "browser": {
             "label": "Browser",
