@@ -55,6 +55,86 @@
       "points": 900,
       "profileImage": "https://i.pravatar.cc/150?img=7",
       "position": 7
+    },
+    {
+      "id": 8,
+      "name": "John Smith",
+      "email": "john.smith@getlayup.com",
+      "points": 850,
+      "profileImage": "https://i.pravatar.cc/150?img=8",
+      "position": 8
+    },
+    {
+      "id": 9,
+      "name": "John Johnson",
+      "email": "john.johnson@getlayup.com",
+      "points": 820,
+      "profileImage": "https://i.pravatar.cc/150?img=9",
+      "position": 9
+    },
+    {
+      "id": 10,
+      "name": "John Williams",
+      "email": "john.williams@getlayup.com",
+      "points": 780,
+      "profileImage": "https://i.pravatar.cc/150?img=10",
+      "position": 10
+    },
+    {
+      "id": 11,
+      "name": "John Davis",
+      "email": "john.davis@getlayup.com",
+      "points": 750,
+      "profileImage": "https://i.pravatar.cc/150?img=11",
+      "position": 11
+    },
+    {
+      "id": 12,
+      "name": "John Brown",
+      "email": "john.brown@getlayup.com",
+      "points": 720,
+      "profileImage": "https://i.pravatar.cc/150?img=12",
+      "position": 12
+    },
+    {
+      "id": 13,
+      "name": "John Miller",
+      "email": "john.miller@getlayup.com",
+      "points": 690,
+      "profileImage": "https://i.pravatar.cc/150?img=13",
+      "position": 13
+    },
+    {
+      "id": 14,
+      "name": "John Wilson",
+      "email": "john.wilson@getlayup.com",
+      "points": 660,
+      "profileImage": "https://i.pravatar.cc/150?img=14",
+      "position": 14
+    },
+    {
+      "id": 15,
+      "name": "John Taylor",
+      "email": "john.taylor@getlayup.com",
+      "points": 630,
+      "profileImage": "https://i.pravatar.cc/150?img=15",
+      "position": 15
+    },
+    {
+      "id": 16,
+      "name": "John Anderson",
+      "email": "john.anderson@getlayup.com",
+      "points": 600,
+      "profileImage": "https://i.pravatar.cc/150?img=16",
+      "position": 16
+    },
+    {
+      "id": 17,
+      "name": "John Thomas",
+      "email": "john.thomas@getlayup.com",
+      "points": 570,
+      "profileImage": "https://i.pravatar.cc/150?img=17",
+      "position": 17
     }
   ]
 }
