@@ -74,9 +74,9 @@ export const DeviceCard = () => {
 
   const onPieEnter = (_, index) => setActiveIndex(index);
 
-  const chartSize = isMobile ? 240 : 330;
-  const innerRadius = isMobile ? 50 : 100;
-  const outerRadius = isMobile ? 80 : 150;
+  const chartSize = isMobile ? 330 : 330;
+  const innerRadius = isMobile ? 100 : 100;
+  const outerRadius = isMobile ? 140 : 150;
   return (
     <Card
       className={`
