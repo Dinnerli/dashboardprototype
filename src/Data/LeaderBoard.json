@@ -2,38 +2,59 @@
   "Leaderboard": [
     {
       "id": 1,
-      "name": "Ava Thompson",
-      "email": "ava.thompson@example.com",
-      "points": 1240,
-      "profileImage": "https://i.pravatar.cc/150?img=1"
+      "name": "James De Silva",
+      "email": "james@getlayup.com",
+      "points": 12401221,
+      "profileImage": "https://i.pravatar.cc/150?img=1",
+      "position": 1
     },
     {
       "id": 2,
-      "name": "Liam Johnson",
-      "email": "liam.johnson@example.com",
+      "name": "Lakshika Matthegoda",
+      "email": "lakshika.matthegoda@getlayup.com",
       "points": 1185,
-      "profileImage": "https://i.pravatar.cc/150?img=2"
+      "profileImage": "https://i.pravatar.cc/150?img=2",
+      "position": 2 
     },
     {
       "id": 3,
-      "name": "Mia Rodriguez",
-      "email": "mia.rodriguez@example.com",
+      "name": "Nuwan Gajanyaka",
+      "email": "nuwan.gajanyaka@getlayup.com",
       "points": 1120,
-      "profileImage": "https://i.pravatar.cc/150?img=3"
+      "profileImage": "https://i.pravatar.cc/150?img=3",
+      "position": 3
     },
     {
       "id": 4,
-      "name": "Noah Lee",
-      "email": "noah.lee@example.com",
+      "name": "Hansika Didugoda",
+      "email": "hansika.didugoda@getlayup.com",
       "points": 1095,
-      "profileImage": "https://i.pravatar.cc/150?img=4"
+      "profileImage": "https://i.pravatar.cc/150?img=4",
+      "position": 4
     },
     {
       "id": 5,
-      "name": "Sophia Patel",
-      "email": "sophia.patel@example.com",
+      "name": "James de Silva",
+      "email": "james.de.silva@getlayup.com",
       "points": 1042,
-      "profileImage": "https://i.pravatar.cc/150?img=5"
+      "profileImage": "https://i.pravatar.cc/150?img=5",
+      "position": 5
+    },
+    {
+      "id": 6,
+      "name": "Nadeesha Perera",
+      "email": "nadeesha.perera@getlayup.com",
+      "points": 1000,
+      "profileImage": "https://i.pravatar.cc/150?img=6",
+      "position": 6
+    },
+    {
+      "id": 7,
+      "name": "Sahan Perera",
+      "email": "sahan.perera@getlayup.com",
+      "points": 900,
+      "profileImage": "https://i.pravatar.cc/150?img=7",
+      "position": 7
     }
   ]
 }

@@ -62,8 +62,9 @@ const Index = () => {
   const dashboardCards = [
     <DevicesCard key="devices" />,
     <AdminActivityCard key="admin" />,
+      <RewardsCard key="rewards" />,
     <LeaderboardCard key="leaderboard" />,
-    <RewardsCard key="rewards" />,
+  
     <CompetencyCard key="competency" />
   ];
   // DND for first 4 cards in 2x2 grid using @dnd-kit
