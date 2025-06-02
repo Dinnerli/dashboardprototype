@@ -74,8 +74,8 @@
     },
     {
       "id": 10,
-      "name": "John Williams",
-      "email": "john.williams@getlayup.com",
+      "name": "man Williams",
+      "email": "man.williams@getlayup.com",
       "points": 780,
       "profileImage": "https://i.pravatar.cc/150?img=10",
       "position": 10
@@ -90,16 +90,16 @@
     },
     {
       "id": 12,
-      "name": "John Brown",
-      "email": "john.brown@getlayup.com",
+      "name": "man Brown",
+      "email": "man.brown@getlayup.com",
       "points": 720,
       "profileImage": "https://i.pravatar.cc/150?img=12",
       "position": 12
     },
     {
       "id": 13,
-      "name": "John Miller",
-      "email": "john.miller@getlayup.com",
+      "name": "man Miller",
+      "email": "man.miller@getlayup.com",
       "points": 690,
       "profileImage": "https://i.pravatar.cc/150?img=13",
       "position": 13

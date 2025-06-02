@@ -25,12 +25,14 @@ const LeaderboardCard = () => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
+  // Get all leaders
+  const allLeaders: Leader[] = leaderboardData.Leaderboard;
   // Get only the first 5 leaders
-  const leaders: Leader[] = leaderboardData.Leaderboard.slice(0, 5);
+  const leaders: Leader[] = allLeaders.slice(0, 5);
 
   // Filter leaders by search
-  const filteredLeaders = search
-    ? leaders.filter(
+  const filteredLeaders = showSearch && search
+    ? allLeaders.filter(
         (leader) =>
           leader.name.toLowerCase().includes(search.toLowerCase()) ||
           leader.email.toLowerCase().includes(search.toLowerCase())
@@ -70,7 +72,7 @@ const LeaderboardCard = () => {
   {/* Close Button - styled like your image */}
   <button
     className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center shadow-md transition"
-    onClick={() => setShowSearch(false)}
+    onClick={() => { setShowSearch(false); setSearch(""); }}
     aria-label="Close search"
   >
     <X className="w-2.5 h-2.5 text-white" />
@@ -84,7 +86,7 @@ const LeaderboardCard = () => {
 {/* Leaders list - Scrollable content area */}
 <div className="flex-1 overflow-y-auto min-h-0">
   <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
-  {filteredLeaders.map((leader, index) => (
+    {filteredLeaders.map((leader, index) => (
           <div 
             key={leader.id} 
             className={`flex py-2.5 sm:py-2.5 px-2 sm:px-3 md:px-4 items-center border-b hover:bg-[#F5F6F8] hover:rounded-lg border-[#F5F6F8] cursor-pointer transition-all duration-200`}
