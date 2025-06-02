@@ -57,14 +57,13 @@ const ActivitiesCard = () => {
       setSelectedStat(title);
     }
   };
-
   // Prepare chart data for the current tab and selected stat
-  const chartSeries = [
+  const chartSeries: Highcharts.SeriesOptionsType[] = [
     {
       name: selectedStatObj.title,
       data: selectedStatObj.data.map((point: { month: string; value: number }) => point.value),
       color: '#338FFF',
-      type: 'areaspline',
+      type: 'areaspline' as const,
       fillColor: {
         linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
         stops: [
@@ -79,10 +78,9 @@ const ActivitiesCard = () => {
       showInLegend: false
     }
   ];
-
   // Pass chartSeries as prop to ActivityChart
   return (
-    <Card className="w-full h-full  animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+    <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[555px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`} style={{ animationDelay: '0.2s' }}>
 <div className="h-full ">
       <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
 <div className="flex flex-col w-full  justify-between mb-2">

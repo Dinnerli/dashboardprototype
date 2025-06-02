@@ -1,9 +1,12 @@
 import { Card } from "@/components/ui/card";
 import { ArrowUp, ArrowDown } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const MarketingCertificationsCard = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <Card className="w-[455px] h-[555px] animate-slide-in-up " style={{
+    <Card className={`${isMobile ? 'w-full h-auto' : 'w-[455px] h-[555px]'} animate-slide-in-up`} style={{
       animationDelay: '0.4s'
     }}>
       <div className="flex px-6 py-6 justify-between items-center border-b border-[#CDD1D7]">

@@ -30,6 +30,7 @@ const rankData: Rank[] = [
 const RewardsCard = () => {
   const [selectedTab, setSelectedTab] = useState<'certificates' | 'rank'>('certificates');
   const [activeRank, setActiveRank] = useState<string>("Rookie");
+  const isMobile = useIsMobile();
 
   // Function to get the medal icon based on rank
   const getMedalIcon = (rank: string) => {
@@ -46,9 +47,9 @@ const RewardsCard = () => {
   const segmentAngle = 360 / rankData.length;
 
   return (
-   <Card className="w-auto h-full  p-6 animate-slide-in-up bg-white overflow-hidden" 
+   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
     style={{ animationDelay: '0.4s' }}>
-       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+       <CardHeader title="Rewards" rightContent={isMobile ? null : <ViewReportButton />} />
    <div className="flex flex-col h-full">
        
 

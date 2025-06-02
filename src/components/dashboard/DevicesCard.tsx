@@ -9,6 +9,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const DevicesCard = () => {
   const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile' | null>(null);
+  const isMobile = useIsMobile();
 
   // Device stats data
   const deviceStats = [
@@ -45,11 +46,10 @@ const DevicesCard = () => {
   const mobileBrowserOffset = donutSize * (1 - mobileBrowser / 100);
   const mobileAppOffset = donutSize * (1 - (mobileApp / 100));
   const mobileStart = donutSize * (1 - (mobileTotal / 100));
-
   return (
-    <Card className="w-auto h-full  p-6 animate-slide-in-up bg-white overflow-hidden" 
+    <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`}
     style={{ animationDelay: '0.4s' }}>
-       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+       <CardHeader title="Devices" rightContent={isMobile ? null : <ViewReportButton />} />
 
       <div className="flex flex-col h-full">
         {/* Device options section - reduced padding */}

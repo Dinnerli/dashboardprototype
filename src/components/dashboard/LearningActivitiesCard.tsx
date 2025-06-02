@@ -1,9 +1,12 @@
 import { Card } from "@/components/ui/card";
 import { ChevronDown, Info } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const LearningActivitiesCard = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <Card className="w-full min-h-[300px] animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
+    <Card className={`w-full ${isMobile ? 'h-auto' : 'min-h-[300px]'} animate-slide-in-up`} style={{ animationDelay: '0.3s' }}>
       <div className="w-full flex flex-col">
         
         {/* Header */}

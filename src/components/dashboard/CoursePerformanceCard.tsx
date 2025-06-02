@@ -9,9 +9,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const CoursePerformanceCard = () => {
   const { tabs, activeTab, setActiveTab, handleStatClick, handleCourseClick, selectedCourse } = useCourseData();
-  const isMobile = useIsMobile();
-  return (
-    <Card   className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+  const isMobile = useIsMobile();  return (
+    <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[555px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`} style={{ animationDelay: '0.2s' }}>
 <div className="h-full flex flex-col ">
      <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />        {/* Tabs with top indicator */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">

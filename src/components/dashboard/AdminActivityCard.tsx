@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const AdminActivityCard = () => {
   const months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
+  const isMobile = useIsMobile();
   
   // Data object for each month with 3 percentages (should sum to 1 or 100%)
   const barData = [
@@ -20,9 +21,9 @@ const AdminActivityCard = () => {
   ];
 
   return (
-   <Card className="w-auto h-full  p-6 animate-slide-in-up bg-white overflow-hidden" 
+   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
     style={{ animationDelay: '0.4s' }}>
-       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+       <CardHeader title="Admin Activity" rightContent={isMobile ? null : <ViewReportButton />} />
    <div className="flex flex-col ">
         {/* Stats section - not clickable, color line instead of dot, no space below */}
         <div className="flex justify-between items-center p-2 pb-0">

@@ -8,7 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const LeaderboardCard = () => {
   const [selectedUser, setSelectedUser] = useState<number | null>(null);
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile = useIsMobile();
   
   const leaders = [
     { 
@@ -49,9 +49,9 @@ const LeaderboardCard = () => {
   ];
   
   return (
-   <Card className="w-auto h-full  p-6 animate-slide-in-up bg-white overflow-hidden" 
+   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
     style={{ animationDelay: '0.4s' }}>
-       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+       <CardHeader title="Leaderboard" rightContent={isMobile ? null : <ViewReportButton />} />
     
       {/* Leaders list - using flex-1 to take remaining space */}
       <div className="flex-1 overflow-y-auto">
