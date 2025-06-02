@@ -82,7 +82,7 @@ export const DeviceCard = () => {
       <CardHeader
         title="Devices"
         rightContent={isMobile ? null : <ViewReportButton />}
-      />      <div className="relative outline-none focus:outline-none flex justify-center items-center mt-4">
+      />      <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
         <PieChart 
           width={chartSize} 
           height={chartSize} 
@@ -118,7 +118,7 @@ export const DeviceCard = () => {
         {/* Center overlay with value, share %, and trend indicator */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center">
           <div className="flex justify-center items-center space-x-1">
-            <span className="text-sm font-medium text-gray-500">
+            <span className="text-base font-semibold text-[#388fff]">
               {activeEntry.name}
             </span>
             <InfoTooltip
@@ -130,11 +130,11 @@ export const DeviceCard = () => {
               }}
             />
           </div>
-          <div className="mt-1 text-2xl font-bold text-gray-900">
+          <div className="mt-1 text-4xl font-bold text-[#4F5A69] ">
             {activeEntry.value}
           </div>
-          <div className="mt-1 flex justify-center items-center space-x-1">
-            <span className="text-sm font-medium text-gray-500">
+          <div className="mt-1 flex justify-center gap-2 items-center space-x-1">
+            <span className="text-lg font-bold text-[#4F5A69]">
               {sharePercent}%
             </span>
             <TrendIndicator value={trendValue} isPositive={isPositiveTrend} />
