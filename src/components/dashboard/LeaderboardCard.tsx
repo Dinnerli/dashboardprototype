@@ -6,6 +6,8 @@ import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import leaderboardData from "@/Data/LeaderBoard.json";
+import { Input } from "@/components/ui/input";
+import { X, Search } from "lucide-react";
 
 interface Leader {
   id: number;
@@ -20,19 +22,69 @@ const LeaderboardCard = () => {
 
   const isMobile = useIsMobile();
   const [hoveredId, setHoveredId] = useState<number | null>(null);
-  
+  const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+
   // Get only the first 5 leaders
   const leaders: Leader[] = leaderboardData.Leaderboard.slice(0, 5);
-  
 
-  
-  return (
-   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
+  // Filter leaders by search
+  const filteredLeaders = search
+    ? leaders.filter(
+        (leader) =>
+          leader.name.toLowerCase().includes(search.toLowerCase()) ||
+          leader.email.toLowerCase().includes(search.toLowerCase())
+      )
+    : leaders;
+    return (
+   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white flex flex-col`} 
     style={{ animationDelay: '0.4s' }}>
-       <CardHeader title="Leaderboard" rightContent={isMobile ? null : <ViewReportButton />} />
-    
-      {/* Leaders list - using flex-1 to take remaining space */}
-      <div className="flex-1 overflow-y-auto py-2.5 flex flex-col gap-2.5">        {leaders.map((leader, index) => (
+      
+      {/* Header - Fixed at top */}
+       <CardHeader
+  title="Leaderboard"
+  rightContent={
+    <div className="flex items-center gap-2">
+      <button
+        className={`rounded-lg p-2 transition ${showSearch ? 'bg-[#F5F6F8]' : 'bg-transparent'}`}
+        onClick={() => setShowSearch((v) => !v)}
+        aria-label="Search"
+      >
+        <Search className={`w-5 h-5 ${showSearch ? 'text-[#338FFF]' : 'text-black'}`} />
+      </button>
+      {!isMobile && <ViewReportButton />}
+    </div>
+  }
+/>
+
+{/* Search bar - Fixed below header when visible */}
+{showSearch && (
+<div className="relative flex items-center mt-2 mb-4 flex-shrink-0">
+  <Input
+    className="pl-4 pr-16 py-2 rounded-lg bg-[#F5F6F8] text-[#4F5A69] placeholder:text-[#8C9BAC] border-none focus:outline-none !focus:outline-none focus:ring-0 !focus:ring-0 focus:border-none transition w-full"
+    placeholder="Search"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+  
+  {/* Close Button - styled like your image */}
+  <button
+    className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center shadow-md transition"
+    onClick={() => setShowSearch(false)}
+    aria-label="Close search"
+  >
+    <X className="w-2.5 h-2.5 text-white" />
+  </button>
+
+  {/* Search Icon */}
+  <Search className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8C9BAC]" />
+</div>
+)}
+
+{/* Leaders list - Scrollable content area */}
+<div className="flex-1 overflow-y-auto min-h-0">
+  <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
+  {filteredLeaders.map((leader, index) => (
           <div 
             key={leader.id} 
             className={`flex py-2.5 sm:py-2.5 px-2 sm:px-3 md:px-4 items-center border-b hover:bg-[#F5F6F8] hover:rounded-lg border-[#F5F6F8] cursor-pointer transition-all duration-200`}
@@ -67,11 +119,11 @@ const LeaderboardCard = () => {
               
               <span className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[8px] sm:text-[10px] font-semibold text-[#8C9BAC]">
                 {leader.position}
-              </span>
-            </div>
+              </span>            </div>
           </div>
         ))}
       </div>
+    </div>
     </Card>
   );
 };
