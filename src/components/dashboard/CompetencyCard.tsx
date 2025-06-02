@@ -43,16 +43,38 @@ const CompetencyCard = () => {
     cx: number;
     cy: number;
   }
-
   const renderPolarAngleAxis = ({ payload, x, y, cx, cy, ...rest }: PolarAngleAxisProps) => {
     const isActive = selectedCompetency.name === payload.value;
+    
+    // Calculate distance from center and angle
+    const dx = x - cx;
+    const dy = y - cy;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx);
+    
+    // Extend the distance to position labels outside the chart
+    const labelDistance = distance + 15; // Increased distance for better spacing
+    
+    // Calculate new position
+    const adjustedX = cx + Math.cos(angle) * labelDistance;
+    const adjustedY = cy + Math.sin(angle) * labelDistance;
+    
+    // Determine text anchor based on horizontal position relative to center
+    let textAnchor: "start" | "middle" | "end" = "middle";
+    if (adjustedX > cx + 5) {
+      textAnchor = "start";
+    } else if (adjustedX < cx - 5) {
+      textAnchor = "end";
+    }
+
     return (
       <g>
         <text
-          className={`cursor-pointer  transition-colors ${isActive ? 'fill-blue-500 font-semibold text-base' : 'fill-gray-500 text-xs font-medium'}`}
-          x={x}
-          y={y}
-          textAnchor="middle"
+          className={`cursor-pointer transition-colors ${isActive ? 'fill-blue-500 font-semibold text-xs' : 'fill-gray-500 text-xs font-medium'}`}
+          x={adjustedX}
+          y={adjustedY + 4} // Small vertical offset for better centering
+          textAnchor={textAnchor}
+          dominantBaseline="middle"
           onClick={() => {
             const found = competencyJsonData.competency.find(item => item.name === payload.value);
             if (found) {
@@ -67,17 +89,17 @@ const CompetencyCard = () => {
   };
   
   return (
-  <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`}
+  <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden flex flex-col justify-between`}
     style={{ animationDelay: '0.4s' }}>
        <CardHeader title="Competency" rightContent={isMobile ? null : <ViewReportButton />} />
 
         {/* Highlight section */}
-      <div className="px-6 pt-4 pb-3">
+      <div className="px-2 pt-4 pb-3">
         <div className="flex items-center gap-1 bg-gray-100 rounded-md p-3">
-          <span className="text-blue-500 font-medium mr-2">{selectedCompetency.name}</span>
+          <span className="text-blue-500 font-semibold text-base mr-2">{selectedCompetency.name}</span>
           <Info className="h-4 w-4 text-gray-400" />
           <div className="ml-auto flex items-center gap-2">
-            <span className="text-gray-800 font-bold text-xl">{selectedCompetency.present}%</span>
+            <span className="text-[#4F5A69] font-bold text-2xl">{selectedCompetency.present}%</span>
             <TrendIndicator value={`${Math.abs(selectedCompetency.trend)}%`} isPositive={selectedCompetency.rising} />
           </div>
         </div>

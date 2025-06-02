@@ -2,7 +2,7 @@
   "competency": [
     {
       "name": "Communication",
-      "present": 22,
+      "present": 82,
       "past": 79,
       "trend": 3,
       "rising": true
@@ -10,13 +10,13 @@
     {
       "name": "Soft Skills",
       "present": 75,
-      "past": 28,
+      "past": 78,
       "trend": -3,
       "rising": false
     },
     {
       "name": "Leadership",
-      "present": 48,
+      "present": 88,
       "past": 85,
       "trend": 3,
       "rising": true
@@ -24,7 +24,7 @@
     {
       "name": "Technical",
       "present": 93,
-      "past": 60,
+      "past": 90,
       "trend": 3,
       "rising": true
     },
