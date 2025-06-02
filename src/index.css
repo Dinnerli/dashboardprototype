@@ -124,14 +124,31 @@
   .nav-dropdown-active {
     @apply opacity-100 translate-y-0 visible;
   }
-  
-  .hide-scrollbar {
+    .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
   
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Smooth carousel scrolling */
+  .carousel-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Enhanced snap behavior for mobile */
+  @media (max-width: 640px) {
+    .carousel-scroll {
+      scroll-snap-type: x mandatory;
+      scroll-padding: 1rem;
+    }
+    
+    .carousel-scroll .snap-start {
+      scroll-snap-align: start;
+    }
   }
   
   /* Animation for slide in */

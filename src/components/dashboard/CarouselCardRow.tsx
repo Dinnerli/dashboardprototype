@@ -62,24 +62,19 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
     >
       {/* Left fade overlay */}
       <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#F5F6F8] to-transparent z-10 pointer-events-none opacity-0 sm:opacity-100" />
-      
-      {/* Right fade overlay */}
-      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#F5F6F8] to-transparent z-10 pointer-events-none opacity-0 sm:opacity-100" />
-      
-      {/* Scrollable container */}
+        {/* Right fade overlay */}
+      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#F5F6F8] to-transparent z-10 pointer-events-none opacity-100" />      {/* Scrollable container */}
       <div 
         ref={scrollRef}
-        className="flex  flex-nowrap overflow-x-auto gap-5 pb-4  pt-1 hide-scrollbar cursor-grab h-full"
+        className="flex flex-nowrap overflow-x-auto gap-3 sm:gap-5 pb-4 pt-1 hide-scrollbar cursor-grab h-full px-4 sm:px-0 snap-x snap-mandatory sm:snap-none carousel-scroll touch-pan-x"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-      >
-        {items.map((item, index) => (
+      >{items.map((item, index) => (
           <div 
             key={index} 
-            className="flex-shrink-0 h-full"
-            style={{ minHeight: '555px',widows: '100%', maxWidth: '100%' }} 
+            className="flex-shrink-0 h-full w-[calc(100vw-5rem)] sm:w-auto min-h-[555px] max-w-full snap-start sm:snap-align-none"
           >
             {item}
           </div>

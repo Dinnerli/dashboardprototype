@@ -14,7 +14,7 @@ const CoursePerformanceCard = () => {
     <Card   className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
 <div className="h-full flex flex-col ">
      <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />        {/* Tabs with top indicator */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} >
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
             <TabsTrigger
               value="top-performers"

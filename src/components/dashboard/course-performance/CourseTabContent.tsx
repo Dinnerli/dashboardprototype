@@ -69,7 +69,7 @@ const CourseTabContent = ({ stats, courseData, onStatClick, onCourseClick, selec
       </div>
 
       {/* Chart - taking remaining space */}
-      <div className="flex-1 flex p-2.5">
+      <div className="flex-1 flex px-2.5">
         <CourseChart 
           courseData={courseData} 
           onCourseClick={onCourseClick}
