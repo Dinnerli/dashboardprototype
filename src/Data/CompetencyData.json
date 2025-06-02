@@ -2,32 +2,37 @@
   "competency": [
     {
       "name": "Communication",
-      "value": 82,
-      "trend": 1.6,
+      "present": 22,
+      "past": 79,
+      "trend": 3,
       "rising": true
     },
     {
       "name": "Soft Skills",
-      "value": 75,
-      "trend": -0.9,
+      "present": 75,
+      "past": 28,
+      "trend": -3,
       "rising": false
     },
     {
       "name": "Leadership",
-      "value": 88,
-      "trend": 2.1,
+      "present": 48,
+      "past": 85,
+      "trend": 3,
       "rising": true
     },
     {
       "name": "Technical",
-      "value": 93,
-      "trend": 3.5,
+      "present": 93,
+      "past": 60,
+      "trend": 3,
       "rising": true
     },
     {
       "name": "Creativity",
-      "value": 79,
-      "trend": -0.5,
+      "present": 79,
+      "past": 81,
+      "trend": -2,
       "rising": false
     }
   ]
