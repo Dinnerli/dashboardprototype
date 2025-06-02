@@ -50,6 +50,8 @@ const RewardsCard = () => {
    <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
     style={{ animationDelay: '0.4s' }}>
        <CardHeader title="Rewards" rightContent={isMobile ? null : <ViewReportButton />} />
+   
+   
    <div className="flex flex-col h-full">
        
 
@@ -60,22 +62,24 @@ const RewardsCard = () => {
           onValueChange={(value) => setSelectedTab(value as 'certificates' | 'rank')}
           className="w-full"
         >
-          <TabsList className="flex bg-white border-b border-[#F5F6F8] rounded-none px-4 h-auto">
+          <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
             <TabsTrigger 
               value="certificates"
-              className={`py-2 px-2 text-xs font-semibold rounded-none border-b-2 border-transparent data-[state=active]:border-[#338FFF] data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] transition-all duration-200`}
+              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
             >
+              {selectedTab === "certificates" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
               Certificates
             </TabsTrigger>
             <TabsTrigger 
               value="rank"
-              className={`py-2 px-2 text-xs font-semibold rounded-none border-b-2 border-transparent data-[state=active]:border-[#338FFF] data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] transition-all duration-200`}
+              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
             >
+              {selectedTab === "rank" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
               Rank Lobby
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="certificates" className="m-0  overflow-y-auto">
+          <TabsContent value="certificates" className="m-0 overflow-y-auto">
             {/* Certificate list */}
             <div className="flex flex-col w-full h-full">
               {[1, 2, 3, 4, 5].map((num, index) => (

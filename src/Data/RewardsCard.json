@@ -1,0 +1,77 @@
+{
+  "certificates": [
+    {
+      "name": "Advanced React",
+      "endDate": "2025-05-30",
+      "value": 95,
+      "trend": 2.4,
+      "rising": true
+    },
+    {
+      "name": "Cloud Infrastructure",
+      "endDate": "2025-04-15",
+      "value": 88,
+      "trend": -1.2,
+      "rising": false
+    },
+    {
+      "name": "Data Visualization",
+      "endDate": "2025-06-01",
+      "value": 91,
+      "trend": 1.8,
+      "rising": true
+    },
+    {
+      "name": "Machine Learning Foundations",
+      "endDate": "2025-05-10",
+      "value": 86,
+      "trend": 0.9,
+      "rising": true
+    },
+    {
+      "name": "DevOps Essentials",
+      "endDate": "2025-03-22",
+      "value": 78,
+      "trend": -0.5,
+      "rising": false
+    }
+  ],
+  "rankLobby": [
+    {
+      "name": "Rookie",
+      "trend": 1.1,
+      "rising": true,
+      "image": "/rewards/rookie.png"
+    },
+    {
+      "name": "Chaser",
+      "trend": 0.4,
+      "rising": true,
+      "image": "/rewards/chaser.png"
+    },
+    {
+      "name": "Warrier",
+      "trend": -0.8,
+      "rising": false,
+      "image": "/rewards/warrier.png"
+    },
+    {
+      "name": "Veteran",
+      "trend": 2.2,
+      "rising": true,
+      "image": "/rewards/veteran.png"
+    },
+    {
+      "name": "Elite",
+      "trend": -1.5,
+      "rising": false,
+      "image": "/rewards/elite.png"
+    },
+    {
+      "name": "Master",
+      "trend": 3.9,
+      "rising": true,
+      "image": "/rewards/master.png"
+    }
+  ]
+}
