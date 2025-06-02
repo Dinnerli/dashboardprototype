@@ -88,14 +88,14 @@ const RewardsCard = () => {
                     <span className="w-2 p-2.5 text-[#4F5A69] text-center text-xs">{num}</span>
                   </div>
                   <div className="flex py-2.5 px-2.5  flex-col justify-center items-start flex-1">
-                    <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-sm">Marketing Certification</span>
-                    <span className="w-full text-[#8C9BAC] text-xs">End date: 18-03-26</span>
+                    <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-sm font-medium">Marketing Certification</span>
+                    <span className="w-full text-[#8C9BAC] text-xs pt-1">End date: 18-03-26</span>
                   </div>
                   <div className="flex justify-end items-center px-2.5 gap-2">
-                    <div className="flex flex-col justify-center items-end">
+                    <div className="flex flex-col justify-end items-end">
                       <span className="text-[#4F5A69] font-bold text-2xl">237</span>
                     </div>
-                    <div className="flex justify-end items-center">
+                    <div className="flex justify-end items-end">
                       <TrendIndicator value="40%" isPositive={index % 2 === 0} />
                     </div>
                   </div>
@@ -104,18 +104,18 @@ const RewardsCard = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="rank" className="m-0  overflow-hidden">
+          <TabsContent value="rank" className="mt-4  overflow-hidden">
             {/* Rank Lobby content with two sections */}
             <div className="flex h-full">
               {/* Left section - Rank levels list */}
-              <div className="w-1/2 flex flex-col h-full overflow-y-auto">
+              <div className="w-[40%] flex flex-col h-full overflow-y-auto gap-3">
                 {rankData.map((rank) => (
                   <div
                     key={rank.title}
                     onClick={() => setActiveRank(rank.title)}
                     className={cn(
-                      "flex py-3 px-4 justify-between items-center border-b border-[#F5F6F8] cursor-pointer transition-all duration-200",
-                      activeRank === rank.title ? "bg-[#F9FAFC]" : ""
+                      "flex px-2 py-1 justify-between items-center  cursor-pointer transition-all duration-200 rounded-md",
+                      activeRank === rank.title ? "bg-[#F2F3F5]" : ""
                     )}
                   >
                     <div className="flex items-center">
@@ -126,14 +126,14 @@ const RewardsCard = () => {
                       ></div>
                       
                       {/* Rank title and score */}
-                      <div className="flex flex-col">
-                        <span className="text-[#8C9BAC] text-xs">{rank.title}</span>
-                        <span className="text-[#4F5A69] font-bold text-base">{rank.score}</span>
+                      <div className="flex px-1 flex-col">
+                        <span className={cn("text-[#8C9BAC] text-xs font-medium", activeRank === rank.title ? "text-[#338FFF]" : "")}>{rank.title}</span>
+                        <span className="text-[#4F5A69] font-bold  text-xl">{rank.score}</span>
                       </div>
                     </div>
 
                     {/* Change indicator */}
-                    <div className="flex justify-end items-center">
+                    <div className="flex justify-end items-end self-end">
                       <TrendIndicator value={Math.abs(rank.change) + '%'} isPositive={rank.change > 0} />
                     </div>
                   </div>
@@ -141,11 +141,11 @@ const RewardsCard = () => {
               </div>
 
               {/* Right section - Donut chart with medal */}
-              <div className="w-1/2 flex items-center justify-center">
-                <div className="relative w-40 h-40">
+              <div className="w-[60%] flex items-center justify-center">
+                <div className="relative w-full h-full">
                   {/* SVG Donut chart with dynamic segments */}
                   <svg viewBox="0 0 100 100" className="w-full h-full">
-                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="#F5F6F8" strokeWidth="8" />
+                    <circle cx="50" cy="50" r="40" fill="transparent"  />
                     
                     {/* Render segments for each rank */}
                     {rankData.map((rank, index) => {
