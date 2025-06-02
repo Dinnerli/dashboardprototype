@@ -188,3 +188,34 @@
     transition: transform 0.15s cubic-bezier(0.4,0,0.2,1), opacity 0.15s cubic-bezier(0.4,0,0.2,1);
   }
 }
+/* Minimal scrollbar styles */
+.minimal-scrollbar::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
+  border-radius: 4px !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb {
+  background: #388fff !important;
+  border-radius: 4px !important;
+  border: none !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #388fff !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+/* For Firefox */
+.minimal-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: #388eff5c transparent !important;
+}
+

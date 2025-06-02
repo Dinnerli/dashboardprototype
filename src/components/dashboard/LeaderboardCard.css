@@ -1,0 +1,30 @@
+/* Minimal scrollbar styles */
+.minimal-scrollbar::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
+  border-radius: 4px !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(51, 143, 255, 0.4) !important;
+  border-radius: 4px !important;
+  border: none !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(51, 143, 255, 0.7) !important;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+/* For Firefox */
+.minimal-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(51, 143, 255, 0.4) transparent !important;
+}

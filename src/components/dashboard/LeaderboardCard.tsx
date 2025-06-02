@@ -9,6 +9,7 @@ import leaderboardData from "@/Data/LeaderBoard.json";
 import { Input } from "@/components/ui/input";
 import { X, Search } from "lucide-react";
 
+
 interface Leader {
   id: number;
   name: string;
@@ -84,7 +85,7 @@ const LeaderboardCard = () => {
 )}
 
 {/* Leaders list - Scrollable content area */}
-<div className="flex-1 overflow-y-auto min-h-0">
+<div className="flex-1 overflow-y-auto min-h-0 minimal-scrollbar">
   <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
     {filteredLeaders.map((leader, index) => (
           <div 
