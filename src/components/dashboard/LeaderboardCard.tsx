@@ -1,6 +1,6 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { Award } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from '@mui/material';
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
@@ -17,8 +17,9 @@ interface Leader {
 }
 
 const LeaderboardCard = () => {
-  const [selectedUser, setSelectedUser] = useState<number | null>(null);
+
   const isMobile = useIsMobile();
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
   
   // Get only the first 5 leaders
   const leaders: Leader[] = leaderboardData.Leaderboard.slice(0, 5);
@@ -34,10 +35,10 @@ const LeaderboardCard = () => {
       <div className="flex-1 overflow-y-auto py-2.5 flex flex-col gap-2.5">        {leaders.map((leader, index) => (
           <div 
             key={leader.id} 
-            className={`flex py-2.5  sm:py-2.5 px-2 sm:px-3 md:px-4 items-center border-b border-[#F5F6F8] cursor-pointer transition-all duration-200  ${
-              selectedUser === leader.id ? 'bg-[#F5F6F8] border-l-4 border-l-[#338FFF]' : ''
-            }`}
-            onClick={() => setSelectedUser(selectedUser === leader.id ? null : leader.id)}          >{/* Avatar */}
+            className={`flex py-2.5 sm:py-2.5 px-2 sm:px-3 md:px-4 items-center border-b hover:bg-[#F5F6F8] hover:rounded-lg border-[#F5F6F8] cursor-pointer transition-all duration-200`}
+            onMouseEnter={() => setHoveredId(leader.id)}
+            onMouseLeave={() => setHoveredId(null)}
+          >{/* Avatar */}
             <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-gray-200 mr-2 sm:mr-3 overflow-hidden flex items-center justify-center flex-shrink-0">
               <img 
                 src={leader.profileImage} 
@@ -47,15 +48,11 @@ const LeaderboardCard = () => {
             </div>
               {/* User info - using flex-1 to take available width */}
             <div className="flex flex-col flex-1 min-w-0 px-2 sm:px-3 py-0.5 sm:py-1.5">
-              <span className={`text-sm sm:text-base font-semibold transition-colors duration-200 truncate ${
-                selectedUser === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'
-              }`}>{leader.name}</span>
+              <span className={`text-sm sm:text-base font-semibold transition-colors duration-200 truncate ${hoveredId === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'}`}>{leader.name}</span>
               <span className="text-[10px] sm:text-xs text-[#8C9BAC] truncate">{leader.email}</span>
             </div>
               {/* Points - using ml-auto to push to right */}            <div className="flex flex-col items-end ml-auto">
-              <span className="text-sm sm:text-base font-semibold text-[#4F5A69]">
-                {leader.points.toLocaleString()}
-              </span>
+              <span className={`text-sm sm:text-base font-semibold transition-colors duration-200 ${hoveredId === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'}`}>{leader.points.toLocaleString()}</span>
               <span className="text-[10px] sm:text-xs font-medium text-[#8C9BAC]">Points</span>
             </div>
             <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded ml-2 relative">
