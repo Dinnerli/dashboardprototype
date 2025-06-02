@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useMediaQuery } from '@mui/material';
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const LeaderboardCard = () => {
   const [selectedUser, setSelectedUser] = useState<number | null>(null);
@@ -48,9 +49,10 @@ const LeaderboardCard = () => {
   ];
   
   return (
-    <Card className="w-full h-full animate-slide-in-up  overflow-hidden flex flex-col" style={{ animationDelay: '0.4s' }}>
-      <CardHeader title="Leaderboard" rightContent={<ViewReportButton />} />
-      
+   <Card className="w-auto h-full min-h-[555px] p-6 animate-slide-in-up bg-white overflow-hidden" 
+    style={{ animationDelay: '0.4s' }}>
+       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+    
       {/* Leaders list - using flex-1 to take remaining space */}
       <div className="flex-1 overflow-y-auto">
         {leaders.map((leader, index) => (

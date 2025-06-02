@@ -71,10 +71,10 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-      >{items.map((item, index) => (
+      >        {items.map((item, index) => (
           <div 
             key={index} 
-            className="flex-shrink-0 h-full w-[calc(100vw-5rem)] sm:w-auto min-h-[555px] max-w-full snap-start sm:snap-align-none"
+            className="flex-shrink-0 h-full w-[calc(100vw-5rem)] sm:w-[400px] min-h-[555px] max-w-full snap-start sm:snap-align-none"
           >
             {item}
           </div>

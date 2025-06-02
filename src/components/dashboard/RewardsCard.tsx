@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { ChartContainer } from "@/components/ui/chart";
 import TrendIndicator from "./common/TrendIndicator";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Rank data for the Rank Lobby tab
 type Rank = {
@@ -45,11 +46,10 @@ const RewardsCard = () => {
   const segmentAngle = 360 / rankData.length;
 
   return (
-    <Card className="w-full h-[450px] animate-slide-in-up  overflow-hidden" style={{
-      animationDelay: '0.4s'
-    }}>
-      <CardHeader title="Rewards" rightContent={<ViewReportButton />} />
-      <div className="flex flex-col h-full">
+   <Card className="w-auto h-full min-h-[555px] p-6 animate-slide-in-up bg-white overflow-hidden" 
+    style={{ animationDelay: '0.4s' }}>
+       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+   <div className="flex flex-col h-full">
        
 
         {/* Tabs section - converted to using shadcn Tabs */}

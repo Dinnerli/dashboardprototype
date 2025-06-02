@@ -1,9 +1,11 @@
 import React from 'react';
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import ViewReportButton from './ViewReportButton';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { Info } from 'lucide-react';
 import TrendIndicator from "./common/TrendIndicator";
+import { useIsMobile } from '@/hooks/use-mobile';
+import CardHeader from "./CardHeader";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 // Mock data for the radar chart
 const competencyData = [
@@ -16,13 +18,10 @@ const competencyData = [
 
 const CompetencyCard = () => {
   return (
-    <Card className="bg-white rounded-lg  border border-gray-200 flex flex-col">
-      <CardHeader className="pb-2 border-b border-gray-100">
-        <div className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold text-[#233143]">Competency</h3>
-          <ViewReportButton />
-        </div>
-      </CardHeader>
+  <Card className="w-auto h-full min-h-[555px]  p-6 animate-slide-in-up bg-white overflow-hidden" 
+    style={{ animationDelay: '0.4s' }}>
+       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+
       
       {/* Highlight section */}
       <div className="px-6 pt-4 pb-3">

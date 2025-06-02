@@ -4,6 +4,7 @@ import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
 import styles from "./AdminActivityCard.module.css";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const AdminActivityCard = () => {
   const months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
@@ -19,9 +20,10 @@ const AdminActivityCard = () => {
   ];
 
   return (
-    <Card className="w-full h-full  animate-slide-in-up bg-white overflow-hidden" style={{ animationDelay: '0.4s' }}>
-      <CardHeader title="Admin Activity" rightContent={<ViewReportButton />} />
-      <div className="flex flex-col ">
+   <Card className="w-auto h-full min-h-[555px] p-6 animate-slide-in-up bg-white overflow-hidden" 
+    style={{ animationDelay: '0.4s' }}>
+       <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
+   <div className="flex flex-col ">
         {/* Stats section - not clickable, color line instead of dot, no space below */}
         <div className="flex justify-between items-center p-2 pb-0">
           {/* Course Assigned */}
