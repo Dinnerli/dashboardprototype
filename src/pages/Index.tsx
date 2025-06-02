@@ -27,6 +27,7 @@ import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
 import CarouselCardRow from '@/components/dashboard/CarouselCardRow';
 import CompetencyCard from '@/components/dashboard/CompetencyCard';
 import SortableCard from '@/components/dashboard/SortableCard';
+import { DeviceCard } from '@/components/dashboard/DeviceCard';
 
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -60,7 +61,7 @@ const Index = () => {
 
   // Cards to be displayed in the horizontal carousel
   const dashboardCards = [
-    <DevicesCard key="devices" />,
+    <DeviceCard key="devices" />,
     <AdminActivityCard key="admin" />,
       <RewardsCard key="rewards" />,
     <LeaderboardCard key="leaderboard" />,

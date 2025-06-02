@@ -219,3 +219,6 @@
   scrollbar-color: #388eff5c transparent !important;
 }
 
+svg:focus {
+  outline: none;
+}

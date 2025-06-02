@@ -7,21 +7,17 @@
         "trend": "15%",
         "isRising": true
       },
-      {
-        "name": "Mobile",
+       {
+        "name": "Mobile App",
         "value": 300,
-        "trend": "22%",
-        "isRising": false,
-        "subValues": {
-          "browser": {
-            "label": "Browser",
-            "value": 100  
-          },
-          "app": {
-            "label": "App",
-            "value": 200
-          }
-        }
+        "trend": "15%",
+        "isRising": true
+      },
+       {
+        "name": "Mobile Browser",
+        "value": 200,
+        "trend": "15%",
+        "isRising": true
       }
     ]
   }
