@@ -3,25 +3,23 @@
     "stats": [
       {
         "name": "Desktop",
-        "tooltip": "Percentage of total users from desktop devices.",
-        "value": 70,
+        "value": 700,
         "trend": "15%",
         "isRising": true
       },
       {
         "name": "Mobile",
-        "tooltip": "Percentage of total users from mobile devices (browser + app)",
-        "value": 30,
+        "value": 300,
         "trend": "22%",
         "isRising": true,
         "subValues": {
           "browser": {
             "label": "Browser",
-            "value": 10
+            "value": 100  
           },
           "app": {
             "label": "App",
-            "value": 20
+            "value": 200
           }
         }
       }

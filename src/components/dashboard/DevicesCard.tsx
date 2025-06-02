@@ -8,7 +8,7 @@ import StatButton from "./activities/StatButton";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const DevicesCard = () => {
-  const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile' | null>(null);
+  const [selectedDevice, setSelectedDevice] = useState<'desktop' | 'mobile'>('desktop');
   const isMobile = useIsMobile();
 
   // Device stats data
@@ -53,11 +53,13 @@ const DevicesCard = () => {
 
       <div className="flex flex-col h-full">
         {/* Device options section - reduced padding */}
-        <div className="flex  py-6">
+        <div
+          className={isMobile ? 'flex flex-col gap-2 py-4' : 'flex flex-row py-6'}
+        >
           {deviceStats.map((stat) => (
             <div
               key={stat.key}
-              className={`flex justify-between`}
+              className={isMobile ? 'w-full' : 'flex-1 flex justify-between'}
             >
               <StatButton
                 title={stat.title}
@@ -66,9 +68,15 @@ const DevicesCard = () => {
                 isActive={selectedDevice === stat.key}
                 isPositive={stat.isPositive}
                 onClick={() => setSelectedDevice(stat.key as 'desktop' | 'mobile')}
+                tooltip={
+                  stat.key === 'desktop'
+                    ? 'Percentage of total users from desktop devices.'
+                    : 'Percentage of total users from mobile devices (browser + app)'
+                }
               />
             </div>
-          ))}        </div>
+          ))}
+        </div>
         
         {/* Chart section with proper spacing */}
         <div className="flex flex-col items-center justify-center flex-1 px-12 py-8">
@@ -140,18 +148,26 @@ const DevicesCard = () => {
         </div>
         
         {/* Color indicators with proper spacing */}
-        {selectedDevice === 'mobile' && (
-          <div className="flex justify-center gap-4">
-            <div className="flex items-center gap-1">
-              <span className="inline-block w-3 h-3 rounded-full bg-[#338FFF]"></span>
-              <span className="text-xs text-[#233143]">Browser</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="inline-block w-3 h-3 rounded-full bg-[#003072]"></span>
-              <span className="text-xs text-[#233143]">App</span>
-            </div>
+        <div className="flex justify-center gap-4">
+          {selectedDevice === 'desktop' && (
+          <div className="flex items-center gap-1">
+            <span className="inline-block w-3 h-3 rounded-full bg-[#338FFF]"></span>
+            <span className="text-xs text-[#233143]">Desktop</span>
           </div>
-        )}
+          )}
+          {selectedDevice === 'mobile' && (
+            <>
+              <div className="flex items-center gap-1">
+                <span className="inline-block w-3 h-3 rounded-full bg-[#338FFF]"></span>
+                <span className="text-xs text-[#233143]">Browser</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="inline-block w-3 h-3 rounded-full bg-[#003072]"></span>
+                <span className="text-xs text-[#233143]">App</span>
+              </div>
+            </>
+          )}
+        </div>
         </div>
        
       </div>
