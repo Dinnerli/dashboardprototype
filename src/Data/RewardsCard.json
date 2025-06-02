@@ -22,7 +22,7 @@
       "rising": true
     },
     {
-      "name": "Machine Learning Foundations",
+      "name": "Machine Learning",
       "endDate": "2025-05-10",
       "value": 86,
       "trend": 0.9,
@@ -39,36 +39,42 @@
   "rankLobby": [
     {
       "name": "Rookie",
+      "value": 500,
       "trend": 1.1,
       "rising": true,
       "image": "/rewards/rookie.png"
     },
     {
       "name": "Chaser",
+      "value": 400, 
       "trend": 0.4,
       "rising": true,
       "image": "/rewards/chaser.png"
     },
     {
-      "name": "Warrier",
+      "name": "Warrior",
+      "value": 300,
       "trend": -0.8,
       "rising": false,
-      "image": "/rewards/warrier.png"
+      "image": "/rewards/warrior.png"
     },
     {
       "name": "Veteran",
+      "value": 200,
       "trend": 2.2,
       "rising": true,
       "image": "/rewards/veteran.png"
     },
     {
       "name": "Elite",
+      "value": 100,
       "trend": -1.5,
       "rising": false,
       "image": "/rewards/elite.png"
     },
     {
       "name": "Master",
+      "value": 50,
       "trend": 3.9,
       "rising": true,
       "image": "/rewards/master.png"

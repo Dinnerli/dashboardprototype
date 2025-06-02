@@ -1,0 +1,34 @@
+{
+  "competency": [
+    {
+      "name": "Communication",
+      "value": 82,
+      "trend": 1.6,
+      "rising": true
+    },
+    {
+      "name": "Soft Skills",
+      "value": 75,
+      "trend": -0.9,
+      "rising": false
+    },
+    {
+      "name": "Leadership",
+      "value": 88,
+      "trend": 2.1,
+      "rising": true
+    },
+    {
+      "name": "Technical",
+      "value": 93,
+      "trend": 3.5,
+      "rising": true
+    },
+    {
+      "name": "Creativity",
+      "value": 79,
+      "trend": -0.5,
+      "rising": false
+    }
+  ]
+}

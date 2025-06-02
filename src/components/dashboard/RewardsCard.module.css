@@ -1,0 +1,23 @@
+.rankIndicator {
+  width: 2px;
+  height: 24px;
+  margin-right: 12px;
+  border-radius: 2px;
+  transition: background-color 0.3s ease;
+}
+
+/* Active rank colors */
+.rankColor0 { background-color: #00D764; }
+.rankColor1 { background-color: #ED5158; }
+.rankColor2 { background-color: #338FFF; }
+.rankColor3 { background-color: #FDB533; }
+.rankColor4 { background-color: #003072; }
+.rankColor5 { background-color: #A22DDC; }
+
+/* Inactive rank colors with reduced opacity */
+.rankColorInactive0 { background-color: rgba(0, 215, 100, 0.4); }
+.rankColorInactive1 { background-color: rgba(237, 81, 88, 0.4); }
+.rankColorInactive2 { background-color: rgba(51, 143, 255, 0.4); }
+.rankColorInactive3 { background-color: rgba(253, 181, 51, 0.4); }
+.rankColorInactive4 { background-color: rgba(0, 48, 114, 0.4); }
+.rankColorInactive5 { background-color: rgba(162, 45, 220, 0.4); }
