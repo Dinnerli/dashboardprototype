@@ -49,7 +49,7 @@ const LeaderboardCard = () => {
   ];
   
   return (
-   <Card className="w-auto h-full min-h-[555px] p-6 animate-slide-in-up bg-white overflow-hidden" 
+   <Card className="w-auto h-full  p-6 animate-slide-in-up bg-white overflow-hidden" 
     style={{ animationDelay: '0.4s' }}>
        <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
     

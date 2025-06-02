@@ -74,7 +74,7 @@ const CarouselCardRow: React.FC<CarouselCardRowProps> = ({ items }) => {
       >        {items.map((item, index) => (
           <div 
             key={index} 
-            className="flex-shrink-0 h-full w-[calc(100vw-5rem)] sm:w-[400px] min-h-[555px] max-w-full snap-start sm:snap-align-none"
+            className="flex-shrink-0 md:h-[555px] sm:h-[100px] sm:min-h-[100px] w-[calc(100vw-5rem)] sm:w-[400px] min-h-[555px] max-w-full snap-start sm:snap-align-none"
           >
             {item}
           </div>

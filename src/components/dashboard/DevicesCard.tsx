@@ -47,7 +47,7 @@ const DevicesCard = () => {
   const mobileStart = donutSize * (1 - (mobileTotal / 100));
 
   return (
-    <Card className="w-auto h-full min-h-[555px] p-6 animate-slide-in-up bg-white overflow-hidden" 
+    <Card className="w-auto h-full  p-6 animate-slide-in-up bg-white overflow-hidden" 
     style={{ animationDelay: '0.4s' }}>
        <CardHeader title="Activity Overview" rightContent={useIsMobile ? null : <ViewReportButton />} />
 
@@ -68,12 +68,13 @@ const DevicesCard = () => {
                 onClick={() => setSelectedDevice(stat.key as 'desktop' | 'mobile')}
               />
             </div>
-          ))}
-        </div>
-        <div className="flex flex-col items-center justify-between h-full">
-        {/* Circle Graph */}
-        <div className="flex justify-center items-center flex-1">
-          <div className="w-48 h-48 relative">
+          ))}        </div>
+        
+        {/* Chart section with proper spacing */}
+        <div className="flex flex-col items-center justify-center flex-1 px-12 py-8">
+          {/* Circle Graph */}
+          <div className="flex justify-center items-center w-full mb-6">
+            <div className="w-full max-w-md aspect-square relative">
             {/* White circle background to ensure the middle is white */}
             <div className="w-full h-full rounded-full bg-white absolute"></div>
             {/* Light gray background circle */}
@@ -133,16 +134,14 @@ const DevicesCard = () => {
                   transform="rotate(-90 50 50)"
                 />
               </svg>
-            )}
-            {/* White center circle to create donut hole */}
+            )}            {/* White center circle to create donut hole */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[55%] h-[55%] bg-white rounded-full"></div>
           </div>
-          {/* Color indicator legend for mobile */}
-       
-        </div> 
+        </div>
         
+        {/* Color indicators with proper spacing */}
         {selectedDevice === 'mobile' && (
-          <div className="flex justify-center gap-4 pb-2">
+          <div className="flex justify-center gap-4">
             <div className="flex items-center gap-1">
               <span className="inline-block w-3 h-3 rounded-full bg-[#338FFF]"></span>
               <span className="text-xs text-[#233143]">Browser</span>
