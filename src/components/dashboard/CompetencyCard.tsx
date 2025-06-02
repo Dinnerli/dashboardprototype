@@ -106,7 +106,7 @@ const CompetencyCard = () => {
       </div>
       
       {/* Radar chart */}
-      <CardContent className="flex-1 flex items-center justify-center py-2">
+      <CardContent className="flex-1 flex items-center justify-center p-0">
         <div className="w-full h-[220px]">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart 

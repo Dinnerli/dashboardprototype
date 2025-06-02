@@ -12,6 +12,12 @@ const PRIMARY_COLOR = '#388fff';
 const GRAY_COLOR = '#F1F3F5';
 const SELECT_OFFSET = 6; // Adjusted for subtle bounce
 
+const tooltips = {
+  "Mobile App": "Number of total users from the mobile App",
+  "Mobile Browser": "Number of total users from the mobile web browser",
+  "Desktop": "Number of total users from desktop devices."
+};
+
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const {
@@ -27,8 +33,9 @@ const renderActiveShape = (props) => {
 
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + SELECT_OFFSET * cos;
-  const sy = cy + SELECT_OFFSET * sin;
+  const offset = 2; // minimal movement to avoid misalignment
+  const sx = cx + offset * cos;
+  const sy = cy + offset * sin;
 
   return (
     <g>
@@ -36,15 +43,19 @@ const renderActiveShape = (props) => {
         cx={sx}
         cy={sy}
         innerRadius={innerRadius}
-        outerRadius={outerRadius}
+        outerRadius={outerRadius + 15}
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill}
+        stroke='#ffffff'
+        strokeWidth={5}
         cornerRadius={10}
+        
       />
     </g>
   );
 };
+
 
 export const DeviceCard = () => {
   const stats = deviceData.DevicesCard.stats;
@@ -55,18 +66,17 @@ export const DeviceCard = () => {
     () => stats.reduce((sum, entry) => sum + entry.value, 0),
     [stats]
   );
-
   const activeEntry = stats[activeIndex];
   const sharePercent = Math.round((activeEntry.value / total) * 100);
   const trendValue = parseInt(activeEntry.trend.replace('%', ''), 10);
   const isPositiveTrend = activeEntry.isRising;
-  const tooltipText = `${activeEntry.name} accounts for ${sharePercent}% of total usage`;
+  const tooltipText = tooltips[activeEntry.name] || `${activeEntry.name} accounts for ${sharePercent}% of total usage`;
 
   const onPieEnter = (_, index) => setActiveIndex(index);
 
-  const chartSize = isMobile ? 240 : 360;
-  const innerRadius = isMobile ? 50 : 90;
-  const outerRadius = isMobile ? 80 : 170;
+  const chartSize = isMobile ? 240 : 330;
+  const innerRadius = isMobile ? 50 : 100;
+  const outerRadius = isMobile ? 80 : 150;
   return (
     <Card
       className={`
@@ -82,7 +92,9 @@ export const DeviceCard = () => {
       <CardHeader
         title="Devices"
         rightContent={isMobile ? null : <ViewReportButton />}
-      />      <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
+      />   
+      <div className='flex flex-col justify-between h-full'> 
+      <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
         <PieChart 
           width={chartSize} 
           height={chartSize} 
@@ -90,22 +102,23 @@ export const DeviceCard = () => {
           style={{ outline: 'none' }}
         >
           <Pie
-            data={stats}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            innerRadius={innerRadius}
-            outerRadius={outerRadius - 2} // slightly smaller for visual separation
-            cornerRadius={12}
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            onClick={onPieEnter}
-            stroke="#ffffff" // white stroke between segments
-            strokeWidth={18} // creates visible gap
-            style={{ outline: 'none' }}
-            className="outline-none focus:outline-none"
-          >
+  data={stats}
+  dataKey="value"
+  nameKey="name"
+  cx="50%"
+  cy="50%"
+  innerRadius={innerRadius}
+  outerRadius={outerRadius}
+  cornerRadius={0}
+  activeIndex={activeIndex}
+  activeShape={renderActiveShape}
+  onClick={onPieEnter}
+
+  stroke="#ffffff"
+  strokeWidth={5}
+  className="outline-none focus:outline-none"
+>
+
             {stats.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
@@ -113,22 +126,22 @@ export const DeviceCard = () => {
               />
             ))}
           </Pie>
-        </PieChart>
-
-        {/* Center overlay with value, share %, and trend indicator */}
+        </PieChart>        {/* Center overlay with value, share %, and trend indicator */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center">
           <div className="flex justify-center items-center space-x-1">
             <span className="text-base font-semibold text-[#388fff]">
               {activeEntry.name}
             </span>
-            <InfoTooltip
-              tooltip={tooltipText}
-              delayDuration={0}
-              iconProps={{
-                className: 'w-3.5 h-3.5 text-[#8C9BAC]',
-                stroke: '#8C9BAC',
-              }}
-            />
+            <div className="pointer-events-auto">
+              <InfoTooltip
+                tooltip={tooltipText}
+                delayDuration={0}
+                iconProps={{
+                  className: 'w-3.5 h-3.5 text-[#8C9BAC]',
+                  stroke: '#8C9BAC',
+                }}
+              />
+            </div>
           </div>
           <div className="mt-1 text-4xl font-bold text-[#4F5A69] ">
             {activeEntry.value}
@@ -141,6 +154,7 @@ export const DeviceCard = () => {
           </div>
         </div>
       </div>
+      </div>  
     </Card>
   );
 };

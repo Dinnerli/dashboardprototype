@@ -58,7 +58,7 @@ const RewardsCard = () => {
 
   // Function to get rank indicator color with opacity
   const getRankIndicatorColor = (index: number, isActive: boolean) => {
-    return isActive ? rankColors[index] : getColorWithOpacity(rankColors[index], 0.4);
+    return isActive ? rankColors[index] : getColorWithOpacity(rankColors[index], 0.2);
   };
 
   return (
@@ -186,7 +186,7 @@ const RewardsCard = () => {
                         <path 
                           key={rank.name}
                           d={path}
-                          fill={activeRank === rank.name ? rankColors[index] : getColorWithOpacity(rankColors[index], 0.4)}
+                          fill={activeRank === rank.name ? rankColors[index] : getColorWithOpacity(rankColors[index], 0.2)}
                           className="transition-all duration-300"
                         />
                       );
