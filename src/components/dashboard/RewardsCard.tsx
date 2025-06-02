@@ -83,17 +83,17 @@ const RewardsCard = () => {
             {/* Certificate list */}
             <div className="flex flex-col w-full h-full">
               {[1, 2, 3, 4, 5].map((num, index) => (
-                <div key={num} className="flex py-2 px-4 justify-between items-center border-b border-[#F5F6F8]">
-                  <div className="flex h-9 justify-center items-center pr-2">
-                    <span className="w-2 text-[#4F5A69] text-center text-xs">{num}</span>
+                <div key={num} className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
+                  <div className="flex h-full justify-center items-center pr-2">
+                    <span className="w-2 p-2.5 text-[#4F5A69] text-center text-xs">{num}</span>
                   </div>
-                  <div className="flex h-9 flex-col justify-center items-start flex-1">
-                    <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-xs">Marketing Certification</span>
-                    <span className="w-full text-[#8C9BAC] text-[10px]">End date: 18-03-26</span>
+                  <div className="flex py-2.5 px-2.5  flex-col justify-center items-start flex-1">
+                    <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-sm">Marketing Certification</span>
+                    <span className="w-full text-[#8C9BAC] text-xs">End date: 18-03-26</span>
                   </div>
-                  <div className="flex justify-end items-center gap-1">
+                  <div className="flex justify-end items-center px-2.5 gap-2">
                     <div className="flex flex-col justify-center items-end">
-                      <span className="text-[#4F5A69] font-bold text-base">237</span>
+                      <span className="text-[#4F5A69] font-bold text-2xl">237</span>
                     </div>
                     <div className="flex justify-end items-center">
                       <TrendIndicator value="40%" isPositive={index % 2 === 0} />
