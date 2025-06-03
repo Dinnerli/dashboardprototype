@@ -106,7 +106,8 @@ const Index = () => {
             <div className="w-auto">
               <ActivityFilters />
             </div>
-          </div>          <Dashboard />
+          </div>          
+          <Dashboard />
           {/* DND Cards row - disabled on mobile */}
           {isMobile ? (
             // Static grid on mobile without drag and drop
