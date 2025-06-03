@@ -1,33 +1,32 @@
-import { useEffect, useState } from 'react';
-import { useMediaQuery } from '@mui/material';
+import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
+import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
+import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
+import CarouselCardRow from '@/components/dashboard/CarouselCardRow';
+import CompetencyCard from '@/components/dashboard/CompetencyCard';
+import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
+import { DeviceCard } from '@/components/dashboard/DeviceCard';
+import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
+import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
+import LearningActivityCard from '@/components/dashboard/LearningActivityCard';
+import OverviewContent from '@/components/dashboard/OverviewContent';
+import RewardsCard from '@/components/dashboard/RewardsCard';
+import SortableCard from '@/components/dashboard/SortableCard';
+import Header from '@/components/layout/Header';
+import Navigation from '@/components/navigation/Navigation';
 import {
   DndContext,
-  closestCenter,
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
-  TouchSensor,
   MouseSensor,
+  TouchSensor,
+  closestCenter,
   useSensor,
   useSensors
 } from '@dnd-kit/core';
-import { SortableContext, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
-import Header from '@/components/layout/Header';
-import Navigation from '@/components/navigation/Navigation';
-import Dashboard from '@/components/dashboard/Dashboard';
-import ActivitiesCard from '@/components/dashboard/ActivitiesCard';
-import DevicesCard from '@/components/dashboard/DevicesCard';
-import AdminActivityCard from '@/components/dashboard/AdminActivityCard';
-import LeaderboardCard from '@/components/dashboard/LeaderboardCard';
-import RewardsCard from '@/components/dashboard/RewardsCard';
-import LearningActivityCard from '@/components/dashboard/LearningActivityCard';
-import EngagementActivitiesCard from '@/components/dashboard/EngagementActivitiesCard';
-import CoursePerformanceCard from '@/components/dashboard/CoursePerformanceCard';
-import ActivityFilters from '@/components/dashboard/activities/ActivityFilters';
-import CarouselCardRow from '@/components/dashboard/CarouselCardRow';
-import CompetencyCard from '@/components/dashboard/CompetencyCard';
-import SortableCard from '@/components/dashboard/SortableCard';
-import { DeviceCard } from '@/components/dashboard/DeviceCard';
+import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
+import { useMediaQuery } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -107,7 +106,7 @@ const Index = () => {
               <ActivityFilters />
             </div>
           </div>          
-          <Dashboard />
+          <OverviewContent/>
           {/* DND Cards row - disabled on mobile */}
           {isMobile ? (
             // Static grid on mobile without drag and drop
