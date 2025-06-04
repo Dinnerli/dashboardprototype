@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Card } from '../ui/card';
-import { useIsMobile } from '@/hooks/use-mobile';
-import CardHeader from './CardHeader';
-import ViewReportButton from './ViewReportButton';
-import InfoTooltip from '../ui/InfoTooltip';
-import TrendIndicator from './common/TrendIndicator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Gauge } from '../ui/gauge'
-import styles from './DeviceCard.module.css';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useState } from 'react';
+import { Card } from '../ui/card';
+import InfoTooltip from '../ui/InfoTooltip';
+import CardHeader from './CardHeader';
+import TrendIndicator from './common/TrendIndicator';
+import ViewReportButton from './ViewReportButton';
 
 const tooltips = {
   "Mobile App": "Number of total users from the mobile App",
@@ -77,7 +75,7 @@ export const DeviceCard = () => {
   ];
 
   // Define colors for each slice:
-  const COLORS = ['#388fff', '#F2F3F5'];
+  const COLORS = ['#388fff', '#CDD1D7'];
 
   return (
     <Card
@@ -96,14 +94,14 @@ export const DeviceCard = () => {
         rightContent={isMobile ? null : <ViewReportButton />}
       />
 
-      <div className="flex flex-col justify-between h-full">
+      <div className="flex flex-col justify-between">
         <Tabs
           defaultValue="desktop"
           value={selectedTab}
           onValueChange={(value) => setSelectedTab(value as 'desktop' | 'mobile')}
-          className="w-full"
+          className="w-full h-full flex flex-col justify-between"
         >
-          <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
+          <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0 mb-10">
             <TabsTrigger
               value="desktop"
               className="
@@ -146,113 +144,20 @@ export const DeviceCard = () => {
           </TabsList>
 
           {/* DESKTOP TAB CONTENT */}
-          <TabsContent value="desktop" className="m-0 overflow-y-auto">
-            <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
+          <TabsContent value="desktop" className="m-0 overflow-y-auto h-full ">
+            <div className="relative h-full outline-none focus:outline-none flex justify-center items-center ">
               <div className="relative">
-                {/* Gauge replaces custom SVG */}
-                <div className={`flex items-center justify-center w-[260px] h-[260px] relative ${styles['device-gauge-container'] || ''}`}> 
-                  <Gauge
-                    value={70}
-                    size={260}
-                    strokeWidth={13}
-                    gapPercent={7}
-                    primary="#388fff"
-                    secondary="#F2F3F5"
-                    showValue={false}
-                    className={{ svgClassName: styles['device-gauge-svg'], primaryClassName: styles['device-gauge-fg'], secondaryClassName: styles['device-gauge-bg'] }}
-                  />
-                  {/* Overlay SVG for arc click */}
-                  <svg
-                    width={260}
-                    height={260}
-                    viewBox="0 0 100 100"
-                    className={styles['device-gauge-mobile-arc-svg']}
-                  >
-                    {/* Desktop arc (70%) */}
-                    <path
-                      d="M50,10 A40,40 0 1,1 19.021,69.021"
-                      fill="none"
-                      stroke="transparent"
-                      strokeWidth={13}
-                      className={styles['device-gauge-mobile-arc-path']}
-                      onClick={() => setSelectedTab('desktop')}
-                    />
-                    {/* Mobile arc (30%) */}
-                    <path
-                      d="M19.021,69.021 A40,40 0 0,1 50,10"
-                      fill="none"
-                      stroke="transparent"
-                      strokeWidth={13}
-                      className={styles['device-gauge-mobile-arc-path']}
-                      onClick={() => setSelectedTab('mobile')}
-                    />
-                  </svg>
-                  {/* Center overlay stays on top */}
-                  <CenterOverlay
-                    title="Desktop"
-                    tooltip={tooltips['Desktop']}
-                    value={700} // hard-coded as number
-                    percentage={70} // hard-coded percentage
-                    trendValue="15%"
-                    isPositiveTrend={true}
-                  />
-                </div>
+          
+               
               </div>
             </div>
           </TabsContent>
 
           {/* MOBILE TAB CONTENT */}
           <TabsContent value="mobile" className="m-0 overflow-y-auto">
-            <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
+            <div className="relative h-full outline-none focus:outline-none flex justify-center items-center ">
               <div className="relative">
-                {/* Gauge replaces custom SVG */}
-                <div className={`flex items-center justify-center w-[260px] h-[260px] relative ${styles['device-gauge-container'] || ''}`}> 
-                  <Gauge
-                    value={70}
-                    size={260}
-                    strokeWidth={13}
-                    gapPercent={7}
-                    primary="#F2F3F5"
-                    secondary="#388fff"
-                    showValue={false}
-                    className={{ svgClassName: styles['device-gauge-svg'], primaryClassName: styles['device-gauge-fg'], secondaryClassName: styles['device-gauge-bg'] }}
-                  />
-                  {/* Overlay SVG for arc click */}
-                  <svg
-                    width={260}
-                    height={260}
-                    viewBox="0 0 100 100"
-                    className={styles['device-gauge-mobile-arc-svg']}
-                  >
-                    {/* Desktop arc (70%) */}
-                    <path
-                      d="M50,10 A40,40 0 1,1 19.021,69.021"
-                      fill="none"
-                      stroke="transparent"
-                      strokeWidth={13}
-                      className={styles['device-gauge-mobile-arc-path']}
-                      onClick={() => setSelectedTab('desktop')}
-                    />
-                    {/* Mobile arc (30%) */}
-                    <path
-                      d="M19.021,69.021 A40,40 0 0,1 50,10"
-                      fill="none"
-                      stroke="transparent"
-                      strokeWidth={13}
-                      className={styles['device-gauge-mobile-arc-path']}
-                      onClick={() => setSelectedTab('mobile')}
-                    />
-                  </svg>
-                  {/* Center overlay stays on top */}
-                  <CenterOverlay
-                    title="Mobile"
-                    tooltip={tooltips['Mobile']}
-                    value={300} // hard-coded as number
-                    percentage={30} // hard-coded percentage
-                    trendValue="15%"
-                    isPositiveTrend={true}
-                  />
-                </div>
+                
               </div>
             </div>
           </TabsContent>
