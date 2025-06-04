@@ -1,0 +1,38 @@
+.device-gauge-svg {
+  display: block;
+}
+
+.device-gauge-bg {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  shape-rendering: geometricPrecision;
+  transition: all 1s cubic-bezier(.4,1,.3,1);
+}
+
+.device-gauge-fg {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  shape-rendering: geometricPrecision;
+  transition: all 1s cubic-bezier(.4,1,.3,1);
+}
+
+.device-gauge-mobile-arc-overlay {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.device-gauge-mobile-arc-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.device-gauge-mobile-arc-path {
+  cursor: pointer;
+  pointer-events: auto;
+}

@@ -61,8 +61,9 @@ const Index = () => {
   // Cards to be displayed in the horizontal carousel
   const dashboardCards = [
     <DeviceCard key="devices" />,
+        <RewardsCard key="rewards" />,
     <AdminActivityCard key="admin" />,
-      <RewardsCard key="rewards" />,
+  
     <LeaderboardCard key="leaderboard" />,
   
     <CompetencyCard key="competency" />

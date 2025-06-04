@@ -1,17 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Card } from '../ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
 import CardHeader from './CardHeader';
 import ViewReportButton from './ViewReportButton';
 import InfoTooltip from '../ui/InfoTooltip';
 import TrendIndicator from './common/TrendIndicator';
-import deviceData from '@/Data/DeviceCard.json';
-import { Gauge } from '@/components/ui/gauge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-const PRIMARY_COLOR = '#388fff';
-const GRAY_COLOR = '#F1F3F5';
-const SELECT_OFFSET = 6; // Adjusted for subtle bounce
+import { Gauge } from '../ui/gauge'
+import styles from './DeviceCard.module.css';
 
 const tooltips = {
   "Mobile App": "Number of total users from the mobile App",
@@ -19,10 +15,25 @@ const tooltips = {
   "Desktop": "Number of total users from desktop devices."
 };
 
-const CenterOverlay = ({ title, tooltip, value, percentage, trendValue, isPositiveTrend }) => {
-  // Parse trend value to remove % sign if present
+// CenterOverlay stays the same; it will be placed on top of the PieChart
+const CenterOverlay = ({
+  title,
+  tooltip,
+  value,
+  percentage,
+  trendValue,
+  isPositiveTrend
+}: {
+  title: string;
+  tooltip: string;
+  value: number;
+  percentage: number;
+  trendValue: string;
+  isPositiveTrend: boolean;
+}) => {
+  // Ensure trendValue is a string with “%” if necessary
   const parsedTrendValue = typeof trendValue === 'string' ? trendValue : `${trendValue}%`;
-  
+
   return (
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center">
       <div className="flex justify-center items-center space-x-1">
@@ -40,7 +51,7 @@ const CenterOverlay = ({ title, tooltip, value, percentage, trendValue, isPositi
           />
         </div>
       </div>
-      <div className="mt-1 text-4xl font-bold text-[#4F5A69] ">
+      <div className="mt-1 text-4xl font-bold text-[#4F5A69]">
         {value}
       </div>
       <div className="mt-1 flex justify-center gap-2 items-center space-x-1">
@@ -54,48 +65,19 @@ const CenterOverlay = ({ title, tooltip, value, percentage, trendValue, isPositi
 };
 
 export const DeviceCard = () => {
-  const stats = deviceData.DevicesCard.stats;
   const isMobile = useIsMobile();
-  const [activeIndex, setActiveIndex] = useState(0);
+  // Keep track of which tab is selected
   const [selectedTab, setSelectedTab] = useState<'desktop' | 'mobile'>('desktop');
 
-  const total = useMemo(
-    () => stats.reduce((sum, entry) => sum + entry.value, 0),
-    [stats]
-  );
-  const activeEntry = stats[activeIndex];
-  const sharePercent = Math.round((activeEntry.value / total) * 100);
-  const trendValue = parseInt(activeEntry.trend.replace('%', ''), 10);
-  const isPositiveTrend = activeEntry.isRising;
-  const tooltipText = tooltips[activeEntry.name] || `${activeEntry.name} accounts for ${sharePercent}% of total usage`;
+  // Hard-code data for the pie chart:
+  // Desktop = 70, Mobile = 30
+  const pieData = [
+    { name: 'Desktop', value: 70 },
+    { name: 'Mobile', value: 30 }
+  ];
 
-  const onPieEnter = (_, index) => setActiveIndex(index);
-
-  const chartSize = isMobile ? 330 : 330;
-  const innerRadius = isMobile ? 100 : 100;
-  const outerRadius = isMobile ? 140 : 150;
-  const desktopStats = useMemo(() => {
-    const desktop = stats.find((entry) => entry.name === "Desktop");
-    const mobileApp = stats.find((entry) => entry.name === "Mobile App");
-    const mobileBrowser = stats.find((entry) => entry.name === "Mobile Browser");
-
-    return [
-      { name: "Desktop", value: desktop?.value || 0, trend: desktop?.trend || "0%", isRising: desktop?.isRising || false },
-      { name: "Mobile (App + Browser)", value: (mobileApp?.value || 0) + (mobileBrowser?.value || 0), trend: "15%", isRising: true },
-    ];
-  }, [stats]);
-
-  const mobileStats = useMemo(() => {
-    const desktop = stats.find((entry) => entry.name === "Desktop");
-    const mobileApp = stats.find((entry) => entry.name === "Mobile App");
-    const mobileBrowser = stats.find((entry) => entry.name === "Mobile Browser");
-
-    return [
-      { name: "Desktop", value: desktop?.value || 0, trend: desktop?.trend || "0%", isRising: desktop?.isRising || false },
-      { name: "Mobile App", value: mobileApp?.value || 0, trend: mobileApp?.trend || "0%", isRising: mobileApp?.isRising || false },
-      { name: "Mobile Browser", value: mobileBrowser?.value || 0, trend: mobileBrowser?.trend || "0%", isRising: mobileBrowser?.isRising || false },
-    ];
-  }, [stats]);
+  // Define colors for each slice:
+  const COLORS = ['#388fff', '#F2F3F5'];
 
   return (
     <Card
@@ -112,136 +94,170 @@ export const DeviceCard = () => {
       <CardHeader
         title="Devices"
         rightContent={isMobile ? null : <ViewReportButton />}
-      />   
-      <div className='flex flex-col justify-between h-full'>      <Tabs 
-        defaultValue="desktop" 
-        value={selectedTab} 
-        onValueChange={(value) => setSelectedTab(value as 'desktop' | 'mobile')}
-        className="w-full"
-      >
-        <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
-          <TabsTrigger 
-            value="desktop"
-            className="px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0"
-          >
-            {selectedTab === "desktop" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
-            Desktop
-          </TabsTrigger>
-          <TabsTrigger 
-            value="mobile"
-            className="px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0"
-          >
-            {selectedTab === "mobile" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
-            Mobile
-          </TabsTrigger>
-        </TabsList><TabsContent value="desktop" className="m-0 overflow-y-auto">
-          <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
-            <Gauge 
-              value={desktopStats[0].value / (desktopStats[0].value + desktopStats[1].value) * 100} 
-              size={chartSize} 
-              primary={PRIMARY_COLOR} 
-              secondary={GRAY_COLOR} 
-              showValue={false} 
-            />
+      />
 
-            <CenterOverlay 
-              title="Desktop"
-              tooltip={tooltips["Desktop"]}
-              value={desktopStats[0].value}
-              percentage={Math.round(desktopStats[0].value / (desktopStats[0].value + desktopStats[1].value) * 100)}
-              trendValue={desktopStats[0].trend}
-              isPositiveTrend={desktopStats[0].isRising}
-            />
-          </div>
-        </TabsContent>        <TabsContent value="mobile" className="m-0 overflow-y-auto">
-          <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
-            {/* Three-segment gauge: Desktop (gray), Mobile App (blue), Mobile Browser (light gray) */}
-            <svg width={chartSize} height={chartSize} className="outline-none focus:outline-none">
-              <defs>
-                <mask id="gaugeMask">
-                  <rect width="100%" height="100%" fill="black" />
-                  <circle 
-                    cx={chartSize / 2} 
-                    cy={chartSize / 2} 
-                    r={innerRadius} 
-                    fill="white" 
+      <div className="flex flex-col justify-between h-full">
+        <Tabs
+          defaultValue="desktop"
+          value={selectedTab}
+          onValueChange={(value) => setSelectedTab(value as 'desktop' | 'mobile')}
+          className="w-full"
+        >
+          <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
+            <TabsTrigger
+              value="desktop"
+              className="
+                px-3 py-2 sm:px-5 sm:py-3
+                rounded-none
+                data-[state=active]:shadow-none
+                data-[state=active]:bg-white
+                relative
+                text-xs sm:text-sm md:text-base font-semibold
+                data-[state=active]:text-[#338FFF]
+                data-[state=inactive]:text-[#8C9BAC]
+                focus-visible:outline-none focus-visible:ring-0
+              "
+            >
+              {selectedTab === 'desktop' && (
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>
+              )}
+              Desktop
+            </TabsTrigger>
+
+            <TabsTrigger
+              value="mobile"
+              className="
+                px-3 py-2 sm:px-5 sm:py-3
+                rounded-none
+                data-[state=active]:shadow-none
+                data-[state=active]:bg-white
+                relative
+                text-xs sm:text-sm md:text-base font-semibold
+                data-[state=active]:text-[#338FFF]
+                data-[state=inactive]:text-[#8C9BAC]
+                focus-visible:outline-none focus-visible:ring-0
+              "
+            >
+              {selectedTab === 'mobile' && (
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>
+              )}
+              Mobile
+            </TabsTrigger>
+          </TabsList>
+
+          {/* DESKTOP TAB CONTENT */}
+          <TabsContent value="desktop" className="m-0 overflow-y-auto">
+            <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
+              <div className="relative">
+                {/* Gauge replaces custom SVG */}
+                <div className={`flex items-center justify-center w-[260px] h-[260px] relative ${styles['device-gauge-container'] || ''}`}> 
+                  <Gauge
+                    value={70}
+                    size={260}
+                    strokeWidth={13}
+                    gapPercent={7}
+                    primary="#388fff"
+                    secondary="#F2F3F5"
+                    showValue={false}
+                    className={{ svgClassName: styles['device-gauge-svg'], primaryClassName: styles['device-gauge-fg'], secondaryClassName: styles['device-gauge-bg'] }}
                   />
-                </mask>
-              </defs>
-              
-              {/* Background circle */}
-              <circle
-                cx={chartSize / 2}
-                cy={chartSize / 2}
-                r={outerRadius}
-                fill="none"
-                stroke="#F1F3F5"
-                strokeWidth={outerRadius - innerRadius}
-                mask="url(#gaugeMask)"
-                className="outline-none focus:outline-none"
-              />
-              
-              {/* Desktop segment (gray) */}
-              <circle
-                cx={chartSize / 2}
-                cy={chartSize / 2}
-                r={outerRadius}
-                fill="none"
-                stroke="#E5E7EB"
-                strokeWidth={outerRadius - innerRadius}
-                strokeDasharray={`${(mobileStats[0].value / total) * (2 * Math.PI * outerRadius * 0.9)} ${2 * Math.PI * outerRadius}`}
-                strokeDashoffset={2 * Math.PI * outerRadius * 0.05}
-                transform={`rotate(-90 ${chartSize / 2} ${chartSize / 2})`}
-                mask="url(#gaugeMask)"
-                strokeLinecap="round"
-                className="outline-none focus:outline-none"
-              />
-              
-              {/* Mobile App segment (blue - highlighted) */}
-              <circle
-                cx={chartSize / 2}
-                cy={chartSize / 2}
-                r={outerRadius}
-                fill="none"
-                stroke={PRIMARY_COLOR}
-                strokeWidth={outerRadius - innerRadius}
-                strokeDasharray={`${(mobileStats[1].value / total) * (2 * Math.PI * outerRadius * 0.9)} ${2 * Math.PI * outerRadius}`}
-                strokeDashoffset={2 * Math.PI * outerRadius * 0.05 - (mobileStats[0].value / total) * (2 * Math.PI * outerRadius * 0.9)}
-                transform={`rotate(-90 ${chartSize / 2} ${chartSize / 2})`}
-                mask="url(#gaugeMask)"
-                strokeLinecap="round"
-                className="outline-none focus:outline-none"
-              />
-              
-              {/* Mobile Browser segment (light gray) */}
-              <circle
-                cx={chartSize / 2}
-                cy={chartSize / 2}
-                r={outerRadius}
-                fill="none"
-                stroke="#D1D5DB"
-                strokeWidth={outerRadius - innerRadius}
-                strokeDasharray={`${(mobileStats[2].value / total) * (2 * Math.PI * outerRadius * 0.9)} ${2 * Math.PI * outerRadius}`}
-                strokeDashoffset={2 * Math.PI * outerRadius * 0.05 - ((mobileStats[0].value + mobileStats[1].value) / total) * (2 * Math.PI * outerRadius * 0.9)}
-                transform={`rotate(-90 ${chartSize / 2} ${chartSize / 2})`}
-                mask="url(#gaugeMask)"
-                strokeLinecap="round"
-                className="outline-none focus:outline-none"
-              />
-            </svg>
+                  {/* Overlay SVG for arc click */}
+                  <svg
+                    width={260}
+                    height={260}
+                    viewBox="0 0 100 100"
+                    className={styles['device-gauge-mobile-arc-svg']}
+                  >
+                    {/* Desktop arc (70%) */}
+                    <path
+                      d="M50,10 A40,40 0 1,1 19.021,69.021"
+                      fill="none"
+                      stroke="transparent"
+                      strokeWidth={13}
+                      className={styles['device-gauge-mobile-arc-path']}
+                      onClick={() => setSelectedTab('desktop')}
+                    />
+                    {/* Mobile arc (30%) */}
+                    <path
+                      d="M19.021,69.021 A40,40 0 0,1 50,10"
+                      fill="none"
+                      stroke="transparent"
+                      strokeWidth={13}
+                      className={styles['device-gauge-mobile-arc-path']}
+                      onClick={() => setSelectedTab('mobile')}
+                    />
+                  </svg>
+                  {/* Center overlay stays on top */}
+                  <CenterOverlay
+                    title="Desktop"
+                    tooltip={tooltips['Desktop']}
+                    value={700} // hard-coded as number
+                    percentage={70} // hard-coded percentage
+                    trendValue="15%"
+                    isPositiveTrend={true}
+                  />
+                </div>
+              </div>
+            </div>
+          </TabsContent>
 
-            <CenterOverlay 
-              title="Mobile App"
-              tooltip={tooltips["Mobile App"]}
-              value={mobileStats[1].value}
-              percentage={Math.round(mobileStats[1].value / total * 100)}
-              trendValue={mobileStats[1].trend}
-              isPositiveTrend={mobileStats[1].isRising}
-            />
-          </div>
-        </TabsContent>
-      </Tabs>
-      </div>  
+          {/* MOBILE TAB CONTENT */}
+          <TabsContent value="mobile" className="m-0 overflow-y-auto">
+            <div className="relative h-full outline-none focus:outline-none flex justify-center items-center mt-4">
+              <div className="relative">
+                {/* Gauge replaces custom SVG */}
+                <div className={`flex items-center justify-center w-[260px] h-[260px] relative ${styles['device-gauge-container'] || ''}`}> 
+                  <Gauge
+                    value={70}
+                    size={260}
+                    strokeWidth={13}
+                    gapPercent={7}
+                    primary="#F2F3F5"
+                    secondary="#388fff"
+                    showValue={false}
+                    className={{ svgClassName: styles['device-gauge-svg'], primaryClassName: styles['device-gauge-fg'], secondaryClassName: styles['device-gauge-bg'] }}
+                  />
+                  {/* Overlay SVG for arc click */}
+                  <svg
+                    width={260}
+                    height={260}
+                    viewBox="0 0 100 100"
+                    className={styles['device-gauge-mobile-arc-svg']}
+                  >
+                    {/* Desktop arc (70%) */}
+                    <path
+                      d="M50,10 A40,40 0 1,1 19.021,69.021"
+                      fill="none"
+                      stroke="transparent"
+                      strokeWidth={13}
+                      className={styles['device-gauge-mobile-arc-path']}
+                      onClick={() => setSelectedTab('desktop')}
+                    />
+                    {/* Mobile arc (30%) */}
+                    <path
+                      d="M19.021,69.021 A40,40 0 0,1 50,10"
+                      fill="none"
+                      stroke="transparent"
+                      strokeWidth={13}
+                      className={styles['device-gauge-mobile-arc-path']}
+                      onClick={() => setSelectedTab('mobile')}
+                    />
+                  </svg>
+                  {/* Center overlay stays on top */}
+                  <CenterOverlay
+                    title="Mobile"
+                    tooltip={tooltips['Mobile']}
+                    value={300} // hard-coded as number
+                    percentage={30} // hard-coded percentage
+                    trendValue="15%"
+                    isPositiveTrend={true}
+                  />
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </Card>
   );
 };
