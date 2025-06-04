@@ -6,6 +6,8 @@ import InfoTooltip from '../ui/InfoTooltip';
 import CardHeader from './CardHeader';
 import TrendIndicator from './common/TrendIndicator';
 import ViewReportButton from './ViewReportButton';
+import { Gauge } from '../ui/gauge';
+import deviceData from '@/Data/DeviceCard.json';
 
 const tooltips = {
   "Mobile App": "Number of total users from the mobile App",
@@ -65,14 +67,21 @@ const CenterOverlay = ({
 export const DeviceCard = () => {
   const isMobile = useIsMobile();
   // Keep track of which tab is selected
-  const [selectedTab, setSelectedTab] = useState<'desktop' | 'mobile'>('desktop');
+  const [selectedTab, setSelectedTab] = useState<'desktop' |  'browser' | 'app'>('desktop');
 
-  // Hard-code data for the pie chart:
-  // Desktop = 70, Mobile = 30
-  const pieData = [
-    { name: 'Desktop', value: 70 },
-    { name: 'Mobile', value: 30 }
-  ];
+  // Get data from JSON and calculate total and percentages
+  const stats = deviceData.DevicesCard.stats;
+  const totalValue = stats.reduce((sum, stat) => sum + stat.value, 0);
+  
+  // Find specific device data
+  const desktopData = stats.find(stat => stat.name === 'Desktop');
+  const mobileAppData = stats.find(stat => stat.name === 'Mobile App');
+  const mobileBrowserData = stats.find(stat => stat.name === 'Mobile Browser');
+  
+  // Calculate percentages
+  const desktopPercentage = desktopData ? Math.round((desktopData.value / totalValue) * 100) : 0;
+  const mobileAppPercentage = mobileAppData ? Math.round((mobileAppData.value / totalValue) * 100) : 0;
+  const mobileBrowserPercentage = mobileBrowserData ? Math.round((mobileBrowserData.value / totalValue) * 100) : 0;
 
   // Define colors for each slice:
   const COLORS = ['#388fff', '#CDD1D7'];
@@ -98,7 +107,7 @@ export const DeviceCard = () => {
         <Tabs
           defaultValue="desktop"
           value={selectedTab}
-          onValueChange={(value) => setSelectedTab(value as 'desktop' | 'mobile')}
+          onValueChange={(value) => setSelectedTab(value as 'desktop' | 'browser' | 'app')}
           className="w-full h-full flex flex-col justify-between"
         >
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0 mb-10">
@@ -123,7 +132,7 @@ export const DeviceCard = () => {
             </TabsTrigger>
 
             <TabsTrigger
-              value="mobile"
+              value="browser"
               className="
                 px-3 py-2 sm:px-5 sm:py-3
                 rounded-none
@@ -136,28 +145,95 @@ export const DeviceCard = () => {
                 focus-visible:outline-none focus-visible:ring-0
               "
             >
-              {selectedTab === 'mobile' && (
+              {selectedTab === 'browser' && (
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>
               )}
-              Mobile
+              Mobile Browser
             </TabsTrigger>
-          </TabsList>
-
-          {/* DESKTOP TAB CONTENT */}
+            <TabsTrigger
+              value="app"
+              className="
+                px-3 py-2 sm:px-5 sm:py-3
+                rounded-none
+                data-[state=active]:shadow-none
+                data-[state=active]:bg-white
+                relative
+                text-xs sm:text-sm md:text-base font-semibold
+                data-[state=active]:text-[#338FFF]
+                data-[state=inactive]:text-[#8C9BAC]
+                focus-visible:outline-none focus-visible:ring-0
+              "
+            >
+              {selectedTab === 'app' && (
+                <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>
+              )}
+              App
+            </TabsTrigger>
+          </TabsList>            {/* DESKTOP TAB CONTENT */}
           <TabsContent value="desktop" className="m-0 overflow-y-auto h-full ">
             <div className="relative h-full outline-none focus:outline-none flex justify-center items-center ">
               <div className="relative">
-          
-               
+                <Gauge 
+                value1={desktopPercentage} 
+                value2={mobileAppPercentage} 
+                value3={mobileBrowserPercentage}
+                color1='#388fff'
+                color2='#F2F3F5'
+                color3='#F2F3F5'
+                />
+                <CenterOverlay
+                  title="Desktop"
+                  tooltip={tooltips["Desktop"]}
+                  value={desktopData?.value || 0}
+                  percentage={desktopPercentage}
+                  trendValue={desktopData?.trend || "0%"}
+                  isPositiveTrend={desktopData?.isRising || false}
+                />
               </div>
             </div>
-          </TabsContent>
-
-          {/* MOBILE TAB CONTENT */}
-          <TabsContent value="mobile" className="m-0 overflow-y-auto">
+          </TabsContent>          {/* BROWSER TAB CONTENT */}
+          <TabsContent value="browser" className="m-0 overflow-y-auto">
             <div className="relative h-full outline-none focus:outline-none flex justify-center items-center ">
               <div className="relative">
+                <Gauge 
+                value1={desktopPercentage} 
+                value2={mobileBrowserPercentage} 
+                value3={mobileAppPercentage}
+                color1='#F2F3F5'
+                color2='#388fff'
+                color3='#F2F3F5'
+                />
+                <CenterOverlay
+                  title="Mobile Browser"
+                  tooltip={tooltips["Mobile Browser"]}
+                  value={mobileBrowserData?.value || 0}
+                  percentage={mobileBrowserPercentage}
+                  trendValue={mobileBrowserData?.trend || "0%"}
+                  isPositiveTrend={mobileBrowserData?.isRising || false}
+                />
+              </div>
+            </div>
+          </TabsContent>          {/* APP TAB CONTENT */}
+          <TabsContent value="app" className="m-0 overflow-y-auto">
+            <div className="relative h-full outline-none focus:outline-none flex justify-center items-center ">
+              <div className="relative">
+                  <Gauge 
+                value1={desktopPercentage} 
+                value2={mobileBrowserPercentage} 
+                value3={mobileAppPercentage}
+             color1='#F2F3F5'
+                color2='#F2F3F5'
+                   color3='#388fff'
                 
+                />
+                <CenterOverlay
+                  title="Mobile App"
+                  tooltip={tooltips["Mobile App"]}
+                  value={mobileAppData?.value || 0}
+                  percentage={mobileAppPercentage}
+                  trendValue={mobileAppData?.trend || "0%"}
+                  isPositiveTrend={mobileAppData?.isRising || false}
+                />
               </div>
             </div>
           </TabsContent>

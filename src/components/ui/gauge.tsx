@@ -1,316 +1,190 @@
+// Gauge.tsx
+
 import { cn } from '@/lib/utils'
 import type { CSSProperties, SVGProps } from 'react'
 
 export interface GaugeProps extends Omit<SVGProps<SVGSVGElement>, 'className'> {
-  value: number
+  /**
+   * Three raw values (e.g. 65, 20, 10). Internally they are normalized
+   * so that value1+value2+value3 = 100%. Then we draw three arcs with
+   * exactly one “gap” of gapPercent between each.
+   */
+  value1: number
+  value2: number
+  value3: number
+
+  /** Overall width/height of the SVG. */
   size?: number | string
+
+  /**
+   * Gap size, in percent‐of‐circle, between each pair of arcs.
+   * e.g. gapPercent = 5 → 5% of the circumference is left blank
+   * between arc1→arc2, arc2→arc3, and arc3→arc1.
+   */
   gapPercent?: number
+
+  /** Stroke thickness of each arc. */
   strokeWidth?: number
-  equal?: boolean
-  showValue?: boolean
 
-  primary?: 'danger' | 'warning' | 'success' | 'info' | string | { [key: number]: string }
-  secondary?: 'danger' | 'warning' | 'success' | 'info' | string | { [key: number]: string }
-
-  transition?: {
-    length?: number
-    step?: number
-    delay?: number
-  }
-
+  /**
+   * Pass either a string or an object so you can style each circle individually:
+   *   { svgClassName, firstClassName, secondClassName, thirdClassName }
+   */
   className?:
     | string
     | {
         svgClassName?: string
-        primaryClassName?: string
-        secondaryClassName?: string
-        textClassName?: string
+        firstClassName?: string
+        secondClassName?: string
+        thirdClassName?: string
       }
+
+  /** Fill‐colors of the three arcs. */
+  color1?: string
+  color2?: string
+  color3?: string
+
+  /**
+   * Simple fade/size transition on the stroke. Defaults to length=1000ms, delay=0.
+   * (If you don’t want any animation, set length=0.)
+   */
+  transition?: {
+    length?: number
+    delay?: number
+  }
 }
 
 /**
- * Renders a circular gauge using SVG. Allows configuration of colors, stroke, and animations.
- * @param value - Current value of the gauge, expressed as a percentage.
- * @param size = Width and height of the gauge. Defaults to 100%.
- * @param gapPercent -  Percentage of the total circumference that represents a gap in the gauge. Defaults to 5%.
- * @param strokeWidth - Stroke width of the gauge. Defaults to 10px.
- * @param equal - Determines if the gauge should have equal primary and secondary stroke lengths. Defaults to false.
- * @param showValue - Option to display the numeric value inside the gauge. Defaults to true.
- * @param primary - Primary color or set of colors for the gauge, with optional threshold values to determine color changes.
- * @param secondary - Secondary color or set of colors for the gauge, similar to `primary`.
- * @param transition - Transition settings for the gauge's animation, specifying the length, step, and delay of transitions.
- * @param className - Class names for different parts of the gauge, including the SVG container and individual elements.
- * @param props Configuration and properties for the svg.
+ * A three‐segment “donut” gauge. Each of the three arcs gets exactly one
+ * gap of size `gapPercent%` between it and the next arc. Rounded ends are preserved.
  */
 function Gauge({
-  value,
+  value1,
+  value2,
+  value3,
   size = '100%',
   gapPercent = 5,
   strokeWidth = 10,
-  equal = false,
-  showValue = true,
-
-  primary,
-  secondary,
-
+  color1 = '#3b82f6',
+  color2 = '#f59e0b',
+  color3 = '#22c55e',
   transition = {
-    length: 1000, // ms
-    step: 200, // ms
-    delay: 0 // ms
+    length: 1000,
+    delay: 0,
   },
-
   className,
-
   ...props
 }: GaugeProps) {
-  const strokePercent = value // %
+  // 1) Normalize the three raw values so that they sum to exactly 100%.
+  const total = value1 + value2 + value3 || 1
+  const pct1 = (value1 / total) * 100
+  const pct2 = (value2 / total) * 100
+  const pct3 = (value3 / total) * 100
 
-  const circleSize = 100 // px
+  // 2) We will draw everything inside a 100×100 viewBox for simplicity.
+  const circleSize = 100
   const radius = circleSize / 2 - strokeWidth / 2
   const circumference = 2 * Math.PI * radius
 
-  const percentToDegree = 360 / 100 // deg
-  const percentToPx = circumference / 100 // px
+  // “Percent → degrees” and “percent → pixels on the circle”
+  const percentToDegree = 360 / 100 // 1% = 3.6°
+  const percentToPx = circumference / 100 // 1% = circumference/100 px
 
-  const offsetFactor = equal ? 0.5 : 0
-  const offsetFactorSecondary = 1 - offsetFactor
+  // 3) Compute how many degrees (and px) each gap occupies:
+  const gapDeg = gapPercent * percentToDegree // e.g. 5% → 5×3.6 = 18°
+  const gapPx = gapPercent * percentToPx
 
-  const primaryStrokeDasharray = () => {
-    if (offsetFactor > 0 && strokePercent > 100 - gapPercent * 2 * offsetFactor) {
-      // calculation to gradually shift back to 0 offset as progress nears 100% when offsetFactor > 0
-      const subtract = -strokePercent + 100
+  // 4) Compute how many degrees each visible arc should occupy:
+  //    (We subtract one full gapDeg from each segment so that the three
+  //     arcs + the three gaps together exactly fill 360°.)
+  const visibleDeg1 = pct1 * percentToDegree - gapDeg
+  const visibleDeg2 = pct2 * percentToDegree - gapDeg
+  const visibleDeg3 = pct3 * percentToDegree - gapDeg
 
-      return `${Math.max(strokePercent * percentToPx - subtract * percentToPx, 0)} ${circumference}`
-    } else {
-      const subtract = gapPercent * 2 * offsetFactor
+  // 5) Convert “visible degrees” into actual stroke lengths in px:
+  //    Because (visibleDeg / 360) × circumference = (pct - gapPercent) × percentToPx.
+  const visiblePx1 = Math.max((pct1 - gapPercent) * percentToPx, 0)
+  const visiblePx2 = Math.max((pct2 - gapPercent) * percentToPx, 0)
+  const visiblePx3 = Math.max((pct3 - gapPercent) * percentToPx, 0)
 
-      return `${Math.max(strokePercent * percentToPx - subtract * percentToPx, 0)} ${circumference}`
-    }
-  }
+  // 6) Compute the starting angle for each arc so that:
+  //    – The first arc begins at:   −90° − (gapDeg/2).  (That leaves a half-gap before and half after,
+  //      once you draw visibleDeg1, so that the gap is evenly split.)
+  //    – Then, after drawing arc 1, you insert a full gapDeg. → start2 = start1 + visibleDeg1 + gapDeg
+  //    – Then, after drawing arc 2, you insert another gapDeg. → start3 = start2 + visibleDeg2 + gapDeg
+  //
+  //    Finally, after drawing arc 3 (visibleDeg3), the leftover ½-gap to close the circle is implicit,
+  //    because visibleDeg1+visibleDeg2+visibleDeg3 + 3×gapDeg = 360° exactly.
+  const startAngle1 = -90 - gapDeg / 2
+  const startAngle2 = startAngle1 + visibleDeg1 + gapDeg
+  const startAngle3 = startAngle2 + visibleDeg2 + gapDeg
 
-  const secondaryStrokeDasharray = () => {
-    if (offsetFactorSecondary < 1 && strokePercent < gapPercent * 2 * offsetFactorSecondary) {
-      // calculation to gradually shift back to 1 secondary offset as progress nears 100% when offsetFactorSecondary < 1
-      const subtract = strokePercent
-
-      return `${Math.max((100 - strokePercent) * percentToPx - subtract * percentToPx, 0)} ${circumference}`
-    } else {
-      const subtract = gapPercent * 2 * offsetFactorSecondary
-
-      return `${Math.max((100 - strokePercent) * percentToPx - subtract * percentToPx, 0)} ${circumference}`
-    }
-  }
-
-  const primaryTransform = () => {
-    if (offsetFactor > 0 && strokePercent > 100 - gapPercent * 2 * offsetFactor) {
-      // calculation to gradually shift back to 0 offset as progress nears 100% when offsetFactor > 0
-      const add = 0.5 * (-strokePercent + 100)
-
-      return `rotate(${-90 + add * percentToDegree}deg)`
-    } else {
-      const add = gapPercent * offsetFactor
-
-      return `rotate(${-90 + add * percentToDegree}deg)`
-    }
-  }
-
-  const secondaryTransform = () => {
-    if (offsetFactorSecondary < 1 && strokePercent < gapPercent * 2 * offsetFactorSecondary) {
-      // calculation to gradually shift back to 1 secondary offset as progress nears 100% when offsetFactorSecondary < 1
-      const subtract = 0.5 * strokePercent
-
-      return `rotate(${360 - 90 - subtract * percentToDegree}deg) scaleY(-1)`
-    } else {
-      const subtract = gapPercent * offsetFactorSecondary
-
-      return `rotate(${360 - 90 - subtract * percentToDegree}deg) scaleY(-1)`
-    }
-  }
-
-  const primaryStroke = () => {
-    if (!primary) {
-      return strokePercent <= 25
-        ? '#dc2626' // Red
-        : strokePercent <= 50
-          ? '#f59e0b' // Amber
-          : strokePercent <= 75
-            ? '#3b82f6' // Blue
-            : '#22c55e' // Green
-    }
-  
-    else if (typeof primary === 'string') {
-      return primary === 'danger'
-        ? '#dc2626' // Red
-        : primary === 'warning'
-          ? '#f59e0b' // Amber
-          : primary === 'info'
-            ? '#3b82f6' // Blue
-            : primary === 'success'
-              ? '#22c55e' // Green
-              : primary
-    }
-  
-    else if (typeof primary === 'object') {
-      const primaryKeys = Object.keys(primary).sort((a, b) => Number(a) - Number(b))
-      let primaryStroke = ''
-      for (let i = 0; i < primaryKeys.length; i++) {
-        const currentKey = Number(primaryKeys[i])
-        const nextKey = Number(primaryKeys[i + 1])
-  
-        if (strokePercent >= currentKey && (strokePercent < nextKey || !nextKey)) {
-          primaryStroke = primary[currentKey] || ''
-  
-          if (['danger', 'warning', 'success', 'info'].includes(primaryStroke)) {
-            primaryStroke = {
-              danger: '#dc2626',
-              warning: '#f59e0b',
-              info: '#3b82f6',
-              success: '#22c55e'
-            }[primaryStroke] || primaryStroke
-          }
-  
-          break
-        }
-      }
-      return primaryStroke
-    }
-  }
-
-  const secondaryStroke = () => {
-    if (!secondary) {
-      return '#9ca3af' // Default Gray
-    }
-  
-    else if (typeof secondary === 'string') {
-      return secondary === 'danger'
-        ? '#fecaca' // Light Red
-        : secondary === 'warning'
-          ? '#fde68a' // Light Amber
-          : secondary === 'info'
-            ? '#bfdbfe' // Light Blue
-            : secondary === 'success'
-              ? '#bbf7d0' // Light Green
-              : secondary
-    }
-  
-    else if (typeof secondary === 'object') {
-      const stroke_percent_secondary = 100 - strokePercent
-      const secondaryKeys = Object.keys(secondary).sort((a, b) => Number(a) - Number(b))
-      let secondaryStroke = ''
-  
-      for (let i = 0; i < secondaryKeys.length; i++) {
-        const currentKey = Number(secondaryKeys[i])
-        const nextKey = Number(secondaryKeys[i + 1])
-  
-        if (stroke_percent_secondary >= currentKey && (stroke_percent_secondary < nextKey || !nextKey)) {
-          secondaryStroke = secondary[currentKey] || ''
-  
-          if (['danger', 'warning', 'success', 'info'].includes(secondaryStroke)) {
-            secondaryStroke = {
-              danger: '#fecaca',
-              warning: '#fde68a',
-              info: '#bfdbfe',
-              success: '#bbf7d0'
-            }[secondaryStroke] || secondaryStroke
-          }
-  
-          break
-        }
-      }
-      return secondaryStroke
-    }
-  }
-
-  const primaryOpacity = () => {
-    if (
-      offsetFactor > 0 &&
-      strokePercent < gapPercent * 2 * offsetFactor &&
-      strokePercent < gapPercent * 2 * offsetFactorSecondary
-    ) {
-      return 0
-    } else return 1
-  }
-
-  const secondaryOpacity = () => {
-    if (
-      (offsetFactor === 0 && strokePercent > 100 - gapPercent * 2) ||
-      (offsetFactor > 0 &&
-        strokePercent > 100 - gapPercent * 2 * offsetFactor &&
-        strokePercent > 100 - gapPercent * 2 * offsetFactorSecondary)
-    ) {
-      return 0
-    } else return 1
-  }
-
+  // 7) Build a reusable circle style object (rounded ends, transitions, etc.)
   const circleStyles: CSSProperties = {
     strokeLinecap: 'round',
     strokeLinejoin: 'round',
     strokeDashoffset: 0,
     strokeWidth: strokeWidth,
-    transition: `all ${transition?.length}ms ease ${transition?.delay}ms`,
+    transition: `all ${transition.length}ms ease ${transition.delay}ms`,
     transformOrigin: '50% 50%',
-    shapeRendering: 'geometricPrecision'
+    shapeRendering: 'geometricPrecision',
   }
 
   return (
     <svg
-      xmlns='http://www.w3.org/2000/svg'
+      xmlns="http://www.w3.org/2000/svg"
       viewBox={`0 0 ${circleSize} ${circleSize}`}
-      shapeRendering='crispEdges'
       width={size}
       height={size}
+      fill="none"
       style={{ userSelect: 'none' }}
-      strokeWidth={2} // TODO: not needed?
-      fill='none'
       className={cn('', typeof className === 'string' ? className : className?.svgClassName)}
       {...props}
     >
-      {/*secondary*/}
+      {/** ── FIRST ARC ── **/}
       <circle
         cx={circleSize / 2}
         cy={circleSize / 2}
         r={radius}
         style={{
           ...circleStyles,
-          strokeDasharray: secondaryStrokeDasharray(),
-          transform: secondaryTransform(),
-          stroke: secondaryStroke(),
-          opacity: secondaryOpacity()
+          // Draw exactly visiblePx1 of the circumference, then leave the rest blank
+          strokeDasharray: `${visiblePx1} ${circumference}`,
+          transform: `rotate(${startAngle1}deg)`,
+          stroke: color1,
         }}
-        className={cn('', typeof className === 'object' && className?.secondaryClassName)}
+        className={cn('', typeof className === 'object' && className.firstClassName)}
       />
 
-      {/* primary */}
+      {/** ── SECOND ARC ── **/}
       <circle
         cx={circleSize / 2}
         cy={circleSize / 2}
         r={radius}
         style={{
           ...circleStyles,
-          strokeDasharray: primaryStrokeDasharray(),
-          transform: primaryTransform(),
-          stroke: primaryStroke(),
-          opacity: primaryOpacity()
+          strokeDasharray: `${visiblePx2} ${circumference}`,
+          transform: `rotate(${startAngle2}deg)`,
+          stroke: color2,
         }}
-        className={cn('', typeof className === 'object' && className?.primaryClassName)}
+        className={cn('', typeof className === 'object' && className.secondClassName)}
       />
 
-      {showValue && (
-        <text
-          x='50%'
-          y='50%'
-          textAnchor='middle'
-          dominantBaseline='middle'
-          alignmentBaseline='central'
-          fill='currentColor'
-          fontSize={36}
-          className={cn('font-semibold', typeof className === 'object' && className?.textClassName)}
-        >
-          {Math.round(strokePercent)}
-        </text>
-      )}
+      {/** ── THIRD ARC ── **/}
+      <circle
+        cx={circleSize / 2}
+        cy={circleSize / 2}
+        r={radius}
+        style={{
+          ...circleStyles,
+          strokeDasharray: `${visiblePx3} ${circumference}`,
+          transform: `rotate(${startAngle3}deg)`,
+          stroke: color3,
+        }}
+        className={cn('', typeof className === 'object' && className.thirdClassName)}
+      />
     </svg>
   )
 }
 
-export {Gauge}
+export { Gauge }
