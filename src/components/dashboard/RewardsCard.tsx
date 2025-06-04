@@ -98,9 +98,9 @@ const RewardsCard = () => {
             <div className="flex flex-col w-full h-full">
               {rewardsData.certificates.map((cert, index) => (
                 <div key={cert.name} className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
-                  <div className="flex h-full justify-center items-center pr-2">
-                    <span className="w-2 p-2.5 text-[#4F5A69] text-center text-xs">{index + 1}</span>
-                  </div>
+                    <div className="flex h-full items-start pr-2">
+                    <span className="w-2 p-2.5 text-[#4F5A69] text-center text-xs self-start">{index + 1}</span>
+                    </div>
                   <div className="flex py-2.5 px-2.5  flex-col justify-center items-start flex-1">
                     <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-sm font-medium">
                       {cert.name}

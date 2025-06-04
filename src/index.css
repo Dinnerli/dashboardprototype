@@ -216,7 +216,7 @@
 /* For Firefox */
 .minimal-scrollbar {
   scrollbar-width: thin !important;
-  scrollbar-color: #388eff5c transparent !important;
+  scrollbar-color: #45494d5c transparent !important;
 }
 
 svg:focus {

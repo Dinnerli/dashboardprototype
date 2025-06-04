@@ -50,7 +50,14 @@ const LeaderboardCard = () => {
     <div className="flex items-center gap-2">
       <button
         className={`rounded-lg p-2 transition ${showSearch ? 'bg-[#F5F6F8]' : 'bg-transparent'}`}
-        onClick={() => setShowSearch((v) => !v)}
+        onClick={() => {
+          if (showSearch) {
+            setShowSearch(false);
+            setSearch("");
+          } else {
+            setShowSearch(true);
+          }
+        }}
         aria-label="Search"
       >
         <Search className={`w-5 h-5 ${showSearch ? 'text-[#338FFF]' : 'text-black'}`} />
@@ -70,14 +77,7 @@ const LeaderboardCard = () => {
     onChange={(e) => setSearch(e.target.value)}
   />
   
-  {/* Close Button - styled like your image */}
-  <button
-    className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center shadow-md transition"
-    onClick={() => { setShowSearch(false); setSearch(""); }}
-    aria-label="Close search"
-  >
-    <X className="w-2.5 h-2.5 text-white" />
-  </button>
+  
 
   {/* Search Icon */}
   <Search className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8C9BAC]" />
@@ -112,10 +112,10 @@ const LeaderboardCard = () => {
             </div>
             <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded ml-2 relative">
               <svg width={isMobile ? 30 : 35} height={isMobile ? 30 : 35} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
                 <g id="SVGRepo_iconCarrier"> 
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M18.6284 13.4807C19.4942 12.2024 20 10.6603 20 9C20 4.58172 16.4183 1 12 1C7.58172 1 4 4.58172 4 9C4 10.5545 4.44338 12.0055 5.21057 13.2333L2.05686 18.6957C1.88357 18.9958 1.87805 19.3643 2.04226 19.6695C2.20648 19.9747 2.51701 20.1731 2.86297 20.1939L5.85952 20.3738L7.51356 22.8789C7.70452 23.1681 8.03162 23.3379 8.37805 23.3275C8.72447 23.3171 9.04081 23.1281 9.2141 22.8279L12.0008 18.0013L14.634 22.5622C14.8073 22.8623 15.1236 23.0513 15.47 23.0617C15.8165 23.0721 16.1436 22.9024 16.3345 22.6132L17.9071 20.2314L20.7561 20.0604C21.102 20.0396 21.4126 19.8412 21.5768 19.536C21.741 19.2308 21.7355 18.8623 21.5622 18.5622L18.6284 13.4807ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM13.6355 16.8327L15.557 20.1609L16.5136 18.7122C16.687 18.4495 16.974 18.2838 17.2882 18.2649L19.0211 18.1609L17.2282 15.0554C16.2192 15.9273 14.9901 16.5513 13.6355 16.8327ZM4.59792 18.2944L6.57139 14.8763C7.61642 15.8422 8.91965 16.5328 10.3659 16.833L8.29107 20.4267L7.25305 18.8545C7.07962 18.5919 6.79264 18.4262 6.47845 18.4073L4.59792 18.2944Z" 
+                  <path fillRule="evenodd" clipRule="evenodd" d="M18.6284 13.4807C19.4942 12.2024 20 10.6603 20 9C20 4.58172 16.4183 1 12 1C7.58172 1 4 4.58172 4 9C4 10.5545 4.44338 12.0055 5.21057 13.2333L2.05686 18.6957C1.88357 18.9958 1.87805 19.3643 2.04226 19.6695C2.20648 19.9747 2.51701 20.1731 2.86297 20.1939L5.85952 20.3738L7.51356 22.8789C7.70452 23.1681 8.03162 23.3379 8.37805 23.3275C8.72447 23.3171 9.04081 23.1281 9.2141 22.8279L12.0008 18.0013L14.634 22.5622C14.8073 22.8623 15.1236 23.0513 15.47 23.0617C15.8165 23.0721 16.1436 22.9024 16.3345 22.6132L17.9071 20.2314L20.7561 20.0604C21.102 20.0396 21.4126 19.8412 21.5768 19.536C21.741 19.2308 21.7355 18.8623 21.5622 18.5622L18.6284 13.4807ZM12 15C15.3137 15 18 12.3137 18 9C18 5.68629 15.3137 3 12 3C8.68629 3 6 5.68629 6 9C6 12.3137 8.68629 15 12 15ZM13.6355 16.8327L15.557 20.1609L16.5136 18.7122C16.687 18.4495 16.974 18.2838 17.2882 18.2649L19.0211 18.1609L17.2282 15.0554C16.2192 15.9273 14.9901 16.5513 13.6355 16.8327ZM4.59792 18.2944L6.57139 14.8763C7.61642 15.8422 8.91965 16.5328 10.3659 16.833L8.29107 20.4267L7.25305 18.8545C7.07962 18.5919 6.79264 18.4262 6.47845 18.4073L4.59792 18.2944Z" 
                   fill="#4F5A69"></path> 
                 </g>
               </svg>
