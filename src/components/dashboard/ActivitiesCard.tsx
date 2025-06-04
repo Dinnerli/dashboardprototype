@@ -88,7 +88,7 @@ const ActivitiesCard = () => {
   
   // Pass chartSeries as prop to ActivityChart
   return (
-    <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[555px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`}>
+    <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`}>
       <div className="h-full">
         <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
         <div className="flex flex-col w-full justify-between mb-2">
