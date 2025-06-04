@@ -17,19 +17,31 @@ interface CompetencyItem {
   rising: boolean;
 }
 
+const MAX_LABEL_LENGTH = 4;
+const getTruncated = (name: string) =>
+  name.length > MAX_LABEL_LENGTH ? name.slice(0, MAX_LABEL_LENGTH) + '...' : name;
+
 const transformedData = competencyJsonData.competency.map(item => ({
-  subject: item.name,
+  subject: getTruncated(item.name),
   present: item.present,
   past: item.past,
   fullMark: 100
 }));
 
+interface RadarChartClickData {
+  activePayload?: Array<{ payload: { subject: string } }>;
+
+}
+
 const CompetencyCard = () => {
   const isMobile = useIsMobile();
-  const [selectedCompetency, setSelectedCompetency] = useState<CompetencyItem>(competencyJsonData.competency[0]);  const handleClick = (data: any) => {
-    if (data && data.activePayload && data.activePayload[0]) {
-      const subject = data.activePayload[0].payload.subject;
-      const found = competencyJsonData.competency.find(item => item.name === subject);
+  const [selectedCompetency, setSelectedCompetency] = useState<CompetencyItem>(competencyJsonData.competency[0]);
+
+  const handleClick = (data: unknown) => {
+    const d = data as RadarChartClickData;
+    if (d && d.activePayload && d.activePayload[0]) {
+      const subject = d.activePayload[0].payload.subject;
+      const found = competencyJsonData.competency.find(item => getTruncated(item.name) === subject);
       if (found) {
         setSelectedCompetency(found);
       }
@@ -44,7 +56,8 @@ const CompetencyCard = () => {
     cy: number;
   }
   const renderPolarAngleAxis = ({ payload, x, y, cx, cy, ...rest }: PolarAngleAxisProps) => {
-    const isActive = selectedCompetency.name === payload.value;
+    // Find full item by truncated name
+    const isActive = getTruncated(selectedCompetency.name) === payload.value;
     
     // Calculate distance from center and angle
     const dx = x - cx;
@@ -76,13 +89,13 @@ const CompetencyCard = () => {
           textAnchor={textAnchor}
           dominantBaseline="middle"
           onClick={() => {
-            const found = competencyJsonData.competency.find(item => item.name === payload.value);
+            const found = competencyJsonData.competency.find(item => getTruncated(item.name) === payload.value);
             if (found) {
               setSelectedCompetency(found);
             }
           }}
         >
-          {payload.value}
+          {isActive ? selectedCompetency.name : payload.value}
         </text>
       </g>
     );
@@ -107,16 +120,17 @@ const CompetencyCard = () => {
       
       {/* Radar chart */}
       <CardContent className="flex-1 flex items-center justify-center p-0">
-        <div className="w-full h-[220px]">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="w-full h-[360px] px-4 overflow-visible relative"> {/* Increased height and set overflow-visible */}
+          <ResponsiveContainer width="100%" height="100%" className="overflow-visible">
             <RadarChart 
               cx="50%" 
               cy="50%" 
-              outerRadius="70%" 
+              outerRadius="70%" // Reduce outer radius to prevent label cutoff
               data={transformedData}
               onClick={handleClick}
             >
-              <PolarGrid stroke="#e5e7eb" />              <PolarAngleAxis 
+              <PolarGrid stroke="#e5e7eb" />
+              <PolarAngleAxis 
                 dataKey="subject"
                 tick={renderPolarAngleAxis}
                 fontSize={12}

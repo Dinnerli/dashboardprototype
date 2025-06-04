@@ -51,7 +51,7 @@ const ActivitiesCard = () => {
 
   if (error || !activitiesData) {
     return (
-      <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[555px]'} p-4 sm:p-5 md:p-6`}>
+      <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} p-4 sm:p-5 md:p-6`}>
         <div className="flex items-center justify-center h-full">
           <div className="text-red-500 text-center">
             Error loading activities data: {error || 'Data not available'}
