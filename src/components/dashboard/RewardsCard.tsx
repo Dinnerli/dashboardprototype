@@ -62,7 +62,7 @@ const RewardsCard = () => {
   };
 
   return (
-   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
+   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
     style={{ animationDelay: '0.4s' }}>
        <CardHeader title="Rewards" rightContent={isMobile ? null : <ViewReportButton />} />
    

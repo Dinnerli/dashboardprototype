@@ -40,7 +40,7 @@ const LeaderboardCard = () => {
       )
     : leaders;
     return (
-   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white flex flex-col`} 
+   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white flex flex-col`} 
     style={{ animationDelay: '0.4s' }}>
       
       {/* Header - Fixed at top */}

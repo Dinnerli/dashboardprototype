@@ -102,7 +102,7 @@ const CompetencyCard = () => {
   };
   
   return (
-  <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[555px]'} p-6 animate-slide-in-up bg-white overflow-hidden flex flex-col justify-between`}
+  <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden flex flex-col justify-between`}
     style={{ animationDelay: '0.4s' }}>
        <CardHeader title="Competency" rightContent={isMobile ? null : <ViewReportButton />} />
 

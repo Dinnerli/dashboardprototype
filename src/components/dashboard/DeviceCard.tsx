@@ -90,7 +90,7 @@ export const DeviceCard = () => {
     <Card
       className={`
         w-auto h-full
-        ${isMobile ? '' : 'min-h-[555px]'}
+        ${isMobile ? '' : 'min-h-[490px]'}
         p-6 animate-slide-in-up bg-white overflow-hidden relative
         [&_svg]:outline-none [&_svg]:focus:outline-none
         [&_path]:outline-none [&_path]:focus:outline-none
