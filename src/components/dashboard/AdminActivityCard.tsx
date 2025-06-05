@@ -99,7 +99,7 @@ const AdminActivityCard = () => {
           />
         </div>
           {/* Legends */}
-        <div className="flex justify-center gap-8 mt-4">
+        <div className="flex justify-center gap-8 mt-0 pt-0">
           <div 
             className={`flex items-center gap-2 cursor-pointer transition-opacity ${selectedActivity === 'create' ? 'opacity-100' : 'opacity-70'} hover:opacity-100`}
             onClick={() => setSelectedActivity('create')}

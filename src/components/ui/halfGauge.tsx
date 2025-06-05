@@ -198,6 +198,7 @@ function HalfGauge({
         className={cn('', typeof className === 'object' && className.thirdClassName)}
         onClick={onArc3Click}
       />
+      
     </svg>
   )
 }
