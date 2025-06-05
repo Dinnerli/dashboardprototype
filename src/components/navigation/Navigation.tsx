@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import NavItem from './NavItem';
 import { Menu, X } from 'lucide-react';
+import ActivityFilters from '../dashboard/activities/ActivityFilters';
 
 const Navigation = () => {
   const [activeItem, setActiveItem] = useState('dashboard');
@@ -189,98 +190,7 @@ const Navigation = () => {
       <div className="flex flex-col">
         <h1 className="text-h4 font-bold text-dark mb-1">Dashboard</h1>
       </div>
-      {/* Desktop nav links */}
-      <div className="hidden md:flex justify-end gap-2">
-        {navLinks.map(link => (
-          <div
-            key={link.name}
-            className="cursor-pointer"
-            onClick={() => handleItemClick(link.name)}
-          >
-            <NavItem
-              icon={link.icon}
-              label={link.label}
-              active={activeItem === link.name}
-              dropdown={link.dropdown}
-            />
-          </div>
-        ))}
-      </div>
-      {/* Hamburger icon for mobile */}
-      <button
-        className="md:hidden flex items-center justify-center p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-        aria-label="Open menu"
-        onClick={() => setMenuOpen(true)}
-        tabIndex={0}
-      >
-        <Menu size={28} />
-      </button>
-      {/* Overlay menu */}
-      {menuOpen && (
-        <div
-          ref={overlayRef}
-          className="fixed inset-0 z-50 flex flex-col bg-white/80 backdrop-blur-sm transition-all duration-300 animate-fade-in"
-          onClick={handleOverlayClick}
-          aria-modal="true"
-          role="dialog"
-        >
-          <div className="flex justify-end p-4">
-            <button
-              className="text-2xl p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label="Close menu"
-              onClick={() => setMenuOpen(false)}
-              tabIndex={0}
-              autoFocus
-            >
-              <X size={32} />
-            </button>
-          </div>
-          <div className="flex-1 flex flex-col items-center justify-center gap-6">
-            {navLinks.map(link => (
-              <div key={link.name} className="w-full max-w-xs">
-                <button
-                  className={`w-full flex items-center gap-3 px-6 py-4 rounded-lg text-lg font-medium text-dark hover:bg-blue-100 focus:bg-blue-100 transition-colors ${activeItem === link.name ? 'bg-blue-50 text-blue-700' : ''}`}
-                  onClick={() => {
-                    if (link.dropdown) {
-                      setExpandedDropdown(expandedDropdown === link.name ? null : link.name);
-                    } else {
-                      handleItemClick(link.name);
-                    }
-                  }}
-                  tabIndex={0}
-                  aria-expanded={link.dropdown ? (expandedDropdown === link.name ? 'true' : 'false') : undefined}
-                  aria-controls={link.dropdown ? `${link.name}-dropdown` : undefined}
-                >
-                  {link.icon}
-                  <span>{link.label}</span>
-                  {link.dropdown && (
-                    <svg className={`ml-auto transition-transform ${expandedDropdown === link.name ? 'rotate-90' : ''}`} width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
-                  )}
-                </button>
-                {/* Subitems for mobile overlay */}
-                {link.dropdown && expandedDropdown === link.name && link.subitems && (
-                  <div id={`${link.name}-dropdown`} className="flex flex-col bg-white/90 rounded-b-lg shadow-inner animate-fade-in">
-                    {link.subitems.map(sub => (
-                      <button
-                        key={sub.name}
-                        className="w-full text-left px-10 py-3 text-base text-gray-700 hover:bg-blue-50 focus:bg-blue-50 transition-colors"
-                        onClick={() => {
-                          setActiveItem(link.name + '-' + sub.name);
-                          setMenuOpen(false);
-                          setExpandedDropdown(null);
-                        }}
-                        tabIndex={0}
-                      >
-                        {sub.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      <ActivityFilters />
     </nav>
   );
 };

@@ -7,7 +7,7 @@ const ActivityFilters = () => {
     from: new Date(),
     to: undefined
   });
-  const typeOptions = ["All", "Marketing", "Accounts", "Sales", "Support"];
+  const departmentOptions = ["All", "Marketing", "Accounts", "Sales", "Development"];
   
   const handleDateRangeChange = (from: Date, to: Date) => {
     setDateRange({ from, to });
@@ -16,17 +16,21 @@ const ActivityFilters = () => {
   };
 
   return (
-    <div className="flex gap-2.5 items-center">
-      <div className="flex items-center gap-2.5">
-        <div className="flex items-center gap-1.5 pl-2.5 rounded-[10px]">
-          <span className="text-[10px] text-[#8C9BAC] font-poppins">Filter by:</span>
-        </div>
+    <div className="flex gap-6 items-center">
+      {/* Start and end date section */}
+      <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-lg px-4 py-2 bg-white">
+        <span className="text-sm text-[#6B7280] font-medium">Start and end date</span>
         <DateRangePicker 
           onDateRangeChange={handleDateRangeChange}
           defaultValue="Last 60 Days"
         />
+      </div>
+      
+      {/* Filters section */}
+      <div className="flex min-w-44 items-center gap-2 border border-[#E5E7EB] rounded-md  bg-white">
+       
         <FilterDropdown 
-          options={typeOptions} 
+          options={departmentOptions} 
           defaultValue="All" 
           size="sm"
         />

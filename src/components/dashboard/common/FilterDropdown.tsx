@@ -1,6 +1,5 @@
-
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Filter as FilterIcon } from 'lucide-react';
 
 interface FilterDropdownProps {
   options: string[];
@@ -39,18 +38,29 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDro
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div className="flex items-center gap-1 cursor-pointer" onClick={toggleDropdown}>
-        {label && <span className={`${textSize} text-[#8C9BAC]`}>{label}</span>}
-        <span className={`${textSize} text-[#8C9BAC]`}>{selectedOption}</span>
-        <ChevronDown className={`${size === 'sm' ? 'w-6 h-6' : 'w-4 h-4'} text-[#8C9BAC] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+      <button
+        className={`cursor-pointer bg-transparent border-none outline-none p-0`}
+        onClick={toggleDropdown}
+        type="button"
+      >
+        <div className='flex flex-row items-center justify-between gap-2 min-w-44 px-3 py-1 '>
+        <div>
+         <span className={`${textSize} text-[#8C9BAC] `}>Filters :</span>
+        <span className={`${textSize} text-[##233143] font-semibold  `}>{selectedOption}</span>
       </div>
-      
+       <div className=' border-l'>
+        <FilterIcon className="w-5 h-5 text-[#233143] p-1" />
+        </div>
+        </div>
+      </button>
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 bg-white shadow-md rounded-md z-50 min-w-[120px]">
+        <div className="absolute top-full right-0 min-w-44 mt-2 bg-white shadow-lg rounded-xl z-50 py-2 px-1">
           {options.map((option) => (
             <div 
               key={option}
-              className={`${textSize} px-3 py-2 hover:bg-gray-100 cursor-pointer ${option === selectedOption ? 'text-[#338FFF] font-medium' : 'text-[#4F5A69]'}`}
+              className={`px-5 py-2 rounded-lg cursor-pointer font-semibold ${textSize} mb-1 last:mb-0 transition-colors
+                ${option === selectedOption ? 'bg-[#F5F7FA] text-[#338FFF]' : 'text-[#233143] hover:bg-[#F5F7FA]'}
+              `}
               onClick={() => selectOption(option)}
             >
               {option}
