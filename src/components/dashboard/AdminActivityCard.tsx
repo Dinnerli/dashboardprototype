@@ -87,6 +87,7 @@ const AdminActivityCard = () => {
             onArc1Click={() => setSelectedActivity('create')}
             onArc2Click={() => setSelectedActivity('edit')}
             onArc3Click={() => setSelectedActivity('delete')}
+            activeArc={selectedActivity === 'create' ? 1 : selectedActivity === 'edit' ? 2 : 3}
           />
           <CenterOverlay
             title={selectedData.title}
