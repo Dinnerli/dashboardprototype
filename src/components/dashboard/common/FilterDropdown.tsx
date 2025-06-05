@@ -43,13 +43,13 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDro
         onClick={toggleDropdown}
         type="button"
       >
-        <div className='flex flex-row items-center justify-between gap-2 min-w-44 px-3 py-1 '>
+        <div className='flex flex-row items-center justify-between gap-2 min-w-48 px-3 py-1 '>
         <div>
-         <span className={`${textSize} text-[#8C9BAC] `}>Filters :</span>
-        <span className={`${textSize} text-[##233143] font-semibold  `}>{selectedOption}</span>
+         <span className={`${textSize} text-[#8C9BAC] `}>Filters : </span>
+        <span className={`${textSize} text-[#233143] font-semibold  `}>{selectedOption}</span>
       </div>
        <div className=' border-l'>
-        <FilterIcon className="w-5 h-5 text-[#233143] p-1" />
+        <FilterIcon className="w-5 h-5 text-[#4f5a69] p-1" />
         </div>
         </div>
       </button>

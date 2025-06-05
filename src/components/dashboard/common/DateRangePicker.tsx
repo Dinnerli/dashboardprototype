@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { format, addMonths, subMonths } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar1, ChevronDown, ChevronLeft, ChevronRight, FilterIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
 
@@ -127,13 +127,16 @@ const DateRangePicker = ({
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <div 
-          className="flex items-center gap-1 cursor-pointer"
+          className="flex flex-row w-48 items-center justify-between gap-2 min-w-44 px-3 py-1 cursor-pointer bg-transparent border-none outline-none p-0" // match FilterDropdown style
           ref={triggerRef}
         >
-          <span className="text-[10px] text-[#8C9BAC]">{getDisplayText()}</span>
-          <ChevronDown 
-            className="w-6 h-6 text-[#8C9BAC] transition-transform"
-          />
+          <div>
+            
+            <span className="text-[10px] text-[#233143] font-semibold">{getDisplayText()}</span>
+          </div>
+          <div className='border-l'>
+            <Calendar1 className="w-5 h-5 text-[#4f5a69] p-1" />
+          </div>
         </div>
       </PopoverTrigger>
       <PopoverContent

@@ -18,8 +18,8 @@ const ActivityFilters = () => {
   return (
     <div className="flex gap-6 items-center">
       {/* Start and end date section */}
-      <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-lg px-4 py-2 bg-white">
-        <span className="text-sm text-[#6B7280] font-medium">Start and end date</span>
+      <div className="flex min-w-48 items-center gap-2 border border-[#E5E7EB] rounded-md  bg-white">
+       
         <DateRangePicker 
           onDateRangeChange={handleDateRangeChange}
           defaultValue="Last 60 Days"
@@ -27,7 +27,7 @@ const ActivityFilters = () => {
       </div>
       
       {/* Filters section */}
-      <div className="flex min-w-44 items-center gap-2 border border-[#E5E7EB] rounded-md  bg-white">
+      <div className="flex min-w-48 items-center gap-2 border border-[#E5E7EB] rounded-md  bg-white">
        
         <FilterDropdown 
           options={departmentOptions} 
