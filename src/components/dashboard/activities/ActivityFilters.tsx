@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FilterDropdown from "../common/FilterDropdown";
 import DateRangePicker from "../common/DateRangePicker";
+import MobileDateRangePicker from "../common/MobileDateRangePicker";
 
 const ActivityFilters = () => {
   const [dateRange, setDateRange] = useState<{ from: Date; to: Date | undefined }>({
@@ -51,7 +52,7 @@ const ActivityFilters = () => {
           <div className="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-lg flex flex-col gap-4">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
-                <DateRangePicker 
+                <MobileDateRangePicker 
                   onDateRangeChange={handleDateRangeChange}
                   defaultValue="Last 60 Days"
                 />
