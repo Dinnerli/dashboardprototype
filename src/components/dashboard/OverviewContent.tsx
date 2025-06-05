@@ -11,7 +11,7 @@ const OverviewContent = () => {
 
   if (error) {
     return (
-      <div className="flex flex-col gap-6 px-3 sm:px-4 md:px-5 py-4 sm:py-5 md:py-6">
+      <div className="flex flex-col gap-6 px-3 sm:px-4 md:px-5 py-4 ">
         <div className="text-red-500 text-center">
           Error loading overview data: {error}
         </div>
@@ -20,9 +20,9 @@ const OverviewContent = () => {
   }
   return (
     <div 
-      className={`flex flex-col gap-6 px-3 sm:px-4 md:px-5 py-4 sm:py-5 md:py-6 animate-fade-in`}
+      className={`flex flex-col gap-4 px-3 sm:px-4 md:px-5 py-4 animate-fade-in`}
     >
-    <div className="flex overflow-x-auto pb-4 gap-6 animate-slide-in-up hide-scrollbar bg-[#F5F6F8] scroll-smooth snap-x snap-mandatory" data-animation-delay="0.1s">
+    <div className="flex overflow-x-auto  gap-4 animate-slide-in-up hide-scrollbar bg-[#F5F6F8] scroll-smooth snap-x snap-mandatory" data-animation-delay="0.1s">
       {stats.map((stat, idx) => (
         <StatsCard
           key={stat.title}
