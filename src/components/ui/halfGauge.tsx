@@ -52,6 +52,13 @@ export interface GaugeProps extends Omit<SVGProps<SVGSVGElement>, 'className'> {
     length?: number
     delay?: number
   }
+  /** Click handlers for each arc */
+  onArc1Click?: () => void
+  onArc2Click?: () => void
+  onArc3Click?: () => void
+
+  /** Which arc is currently active (1, 2, or 3). Only the active arc shows its color, others are gray */
+  activeArc?: 1 | 2 | 3
 }
 
 /**
@@ -75,6 +82,10 @@ function HalfGauge({
     delay: 0,
   },
   className,
+  onArc1Click,
+  onArc2Click,
+  onArc3Click,
+  activeArc = 1,
   ...props
 }: GaugeProps) {
   // 1) Normalize the three raw values so that they sum to exactly 100%.
@@ -119,7 +130,6 @@ function HalfGauge({
   const startAngle1 = 180 + gapDeg / 2
   const startAngle2 = startAngle1 + visibleDeg1 + gapDeg
   const startAngle3 = startAngle2 + visibleDeg2 + gapDeg
-
   // 8) Build a reusable circle‐style object (rounded ends, transitions, etc.)
   const circleStyles: CSSProperties = {
     strokeLinecap: 'round',
@@ -129,6 +139,7 @@ function HalfGauge({
     transition: `all ${transition.length}ms ease ${transition.delay}ms`,
     transformOrigin: '50% 50%',
     shapeRendering: 'geometricPrecision',
+    cursor: 'pointer',
   }
 
   return (
@@ -156,6 +167,7 @@ function HalfGauge({
           stroke: color1,
         }}
         className={cn('', typeof className === 'object' && className.firstClassName)}
+        onClick={onArc1Click}
       />
 
       {/** ── SECOND ARC ── **/}
@@ -170,6 +182,7 @@ function HalfGauge({
           stroke: color2,
         }}
         className={cn('', typeof className === 'object' && className.secondClassName)}
+        onClick={onArc2Click}
       />
 
       {/** ── THIRD ARC ── **/}
@@ -184,6 +197,7 @@ function HalfGauge({
           stroke: color3,
         }}
         className={cn('', typeof className === 'object' && className.thirdClassName)}
+        onClick={onArc3Click}
       />
     </svg>
   )
