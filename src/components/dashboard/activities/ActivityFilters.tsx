@@ -18,7 +18,7 @@ const ActivityFilters = () => {
   return (
     <div className="flex gap-6 items-center">
       {/* Start and end date section */}
-      <div className="flex min-w-48 items-center gap-2 border border-[#E5E7EB] rounded-md  bg-white">
+      <div className="flex  items-center gap-2 border border-[#E5E7EB] rounded-md  bg-white">
        
         <DateRangePicker 
           onDateRangeChange={handleDateRangeChange}

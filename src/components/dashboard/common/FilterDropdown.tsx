@@ -34,7 +34,7 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDro
     setIsOpen(false);
   };
 
-  const textSize = size === 'sm' ? 'text-[10px]' : 'text-xs';
+  const textSize = size === 'sm' ? 'text-[16x]' : 'text-xs';
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -43,18 +43,18 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDro
         onClick={toggleDropdown}
         type="button"
       >
-        <div className='flex flex-row items-center justify-between gap-2 min-w-48 px-3 py-1 '>
+        <div className='flex flex-row items-center justify-between gap-2 px-6 py-3 '>
         <div>
          <span className={`${textSize} text-[#8C9BAC] `}>Filters : </span>
         <span className={`${textSize} text-[#233143] font-semibold  `}>{selectedOption}</span>
       </div>
-       <div className=' border-l'>
-        <FilterIcon className="w-5 h-5 text-[#4f5a69] p-1" />
+       <div className=' border-l pl-2'>
+        <FilterIcon className="w-5 h-5 text-[#4f5a69] " />
         </div>
         </div>
       </button>
       {isOpen && (
-        <div className="absolute top-full right-0 min-w-44 mt-2 bg-white shadow-lg rounded-xl z-50 py-2 px-1">
+        <div className="absolute top-full right-0 min-w-52 mt-2 bg-white shadow-lg rounded-xl z-50 py-2 px-1">
           {options.map((option) => (
             <div 
               key={option}

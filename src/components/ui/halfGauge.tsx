@@ -163,7 +163,7 @@ function HalfGauge({
           strokeDasharray: `${visiblePx1} ${circumference}`,
           // Rotate so that it starts at 180° + half-gap
           transform: `rotate(${startAngle1}deg)`,
-          stroke: activeArc === 1 ? '#1E4273' : '#6B7280', // Dark blue vs Dark gray
+          stroke: activeArc === 1 ? '#1E4273' : '#F2F3F5', // Dark blue vs Dark gray
         }}
         className={cn('', typeof className === 'object' && className.firstClassName)}
         onClick={onArc1Click}
@@ -178,7 +178,7 @@ function HalfGauge({
           ...circleStyles,
           strokeDasharray: `${visiblePx2} ${circumference}`,
           transform: `rotate(${startAngle2}deg)`,
-          stroke: activeArc === 2 ? '#388FFF' : '#9CA3AF', // Medium blue vs Medium gray
+          stroke: activeArc === 2 ? '#388FFF' : '#F2F3F5', // Medium blue vs Medium gray
         }}
         className={cn('', typeof className === 'object' && className.secondClassName)}
         onClick={onArc2Click}
@@ -193,7 +193,7 @@ function HalfGauge({
           ...circleStyles,
           strokeDasharray: `${visiblePx3} ${circumference}`,
           transform: `rotate(${startAngle3}deg)`,
-          stroke: activeArc === 3 ? '#CDE4FF' : '#D1D5DB', // Light blue vs Light gray
+          stroke: activeArc === 3 ? '#CDE4FF' : '#F2F3F5', // Light blue vs Light gray
         }}
         className={cn('', typeof className === 'object' && className.thirdClassName)}
         onClick={onArc3Click}

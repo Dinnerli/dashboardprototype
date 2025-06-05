@@ -19,16 +19,37 @@ type DateRange = {
 
 const DateRangePicker = ({
   onDateRangeChange,
-  defaultValue = "last-7-days",
+  defaultValue = "last-30-days", // 1. Default to 'Last 30 Days'
 }: DateRangePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(defaultValue);
+  const presetTabs = [
+    { key: "last-7-days", label: "Last 7 Days", days: 7 },
+    { key: "last-30-days", label: "Last 30 Days", days: 30 },
+    { key: "last-90-days", label: "Last 90 Days", days: 90 },
+    { key: "last-1-year", label: "Last 1 Year", years: 1 },
+  ];
+
+  // 1. Set default to 'Last 30 Days'
+  const defaultPreset = presetTabs.find(
+    (tab) => tab.key === (defaultValue.toLowerCase().replace(/\s/g, "-"))
+  ) || presetTabs[1]; // fallback to 'Last 30 Days'
+
+  const [selectedOption, setSelectedOption] = useState(defaultPreset.label);
+  const [activeTab, setActiveTab] = useState<string>(
+    presetTabs.some((tab) => tab.key === defaultValue.toLowerCase().replace(/\s/g, "-"))
+      ? defaultValue.toLowerCase().replace(/\s/g, "-")
+      : "custom"
+  );
   const triggerRef = useRef<HTMLDivElement>(null);
   
   // Initialize with the default option's date range
   const today = new Date();
   const defaultFrom = new Date(today);
-  defaultFrom.setDate(today.getDate() - 7); // Default is Last 7 Days
+  if (defaultPreset.days) {
+    defaultFrom.setDate(today.getDate() - defaultPreset.days);
+  } else if (defaultPreset.years) {
+    defaultFrom.setFullYear(today.getFullYear() - defaultPreset.years);
+  }
 
   const [dateRange, setDateRange] = useState<DateRange>({
     from: defaultFrom,
@@ -39,13 +60,9 @@ const DateRangePicker = ({
     new Date(), 
     addMonths(new Date(), 1)
   ]);
-  
-  // Set active tab based on defaultValue
-  const [activeTab, setActiveTab] = useState<string>(() => {
-    const presetTabs = ["last-7-days", "last-30-days", "last-90-days", "last-1-year"];
-    const tab = defaultValue.toLowerCase().replace(/\s/g, "-");
-    return presetTabs.includes(tab) ? tab : "custom";
-  });
+
+  // Track pending custom selection before update
+  const [pendingRange, setPendingRange] = useState<DateRange | null>(null);
 
   // Handle popover open state
   const handleOpenChange = (open: boolean) => {
@@ -92,13 +109,9 @@ const DateRangePicker = ({
   // Handle date selection in the calendar
   const handleSelect = (range: DateRange | undefined) => {
     if (!range) return;
-    
-    setDateRange(range);
+    setPendingRange(range); // Only set pending, do not update main dateRange
     setActiveTab("custom");
-    
-    if (range.from && range.to && onDateRangeChange) {
-      onDateRangeChange(range.from, range.to);
-    }
+    setSelectedOption("Custom");
   };
 
   // Update the display text based on the current selection
@@ -106,36 +119,49 @@ const DateRangePicker = ({
     if (activeTab !== "custom") {
       return selectedOption;
     }
-    
     if (dateRange.from && dateRange.to) {
       return `${format(dateRange.from, "MMM d, yyyy")} - ${format(dateRange.to, "MMM d, yyyy")}`;
     }
-    
     return "Select date range";
   };
 
   // Handle the update button click
   const handleUpdate = () => {
-    if (dateRange.from && dateRange.to && onDateRangeChange) {
-      onDateRangeChange(dateRange.from, dateRange.to);
+    if (pendingRange && pendingRange.from && pendingRange.to) {
+      setDateRange(pendingRange);
+      if (onDateRangeChange) {
+        onDateRangeChange(pendingRange.from, pendingRange.to);
+      }
     }
     setActiveTab("custom");
     setIsOpen(false);
+    setPendingRange(null);
+  };
+
+  // Cancel button resets pendingRange
+  const handleCancel = () => {
+    setActiveTab("custom");
+    setIsOpen(false);
+    setPendingRange(null);
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={isOpen} onOpenChange={(open) => {
+      // Prevent closing when clicking outside (dismiss on out)
+      if (!open) return; // Only allow opening, not closing
+      setIsOpen(open);
+    }}>
       <PopoverTrigger asChild>
         <div 
-          className="flex flex-row w-48 items-center justify-between gap-2 min-w-44 px-3 py-1 cursor-pointer bg-transparent border-none outline-none p-0" // match FilterDropdown style
+          className="flex flex-row w-auto items-center justify-between gap-2 min-w-44 px-6 py-3 cursor-pointer bg-transparent border-none outline-none p-0" // match FilterDropdown style
           ref={triggerRef}
         >
           <div>
-            
-            <span className="text-[10px] text-[#233143] font-semibold">{getDisplayText()}</span>
+            {/* 3. Only show date range if custom, otherwise show label */}
+            <span className="text-base text-[#233143] font-semibold">{getDisplayText()}</span>
           </div>
-          <div className='border-l'>
-            <Calendar1 className="w-5 h-5 text-[#4f5a69] p-1" />
+          <div className='border-l pl-2'>
+            <Calendar1 className="w-5 h-5 text-[#4f5a69] " />
           </div>
         </div>
       </PopoverTrigger>
@@ -148,7 +174,7 @@ const DateRangePicker = ({
           {/* Left Sidebar - Quick Range Selection */}
           <div className="bg-white p-2">
             <div className="flex flex-col w-36 py-1">
-              {["Custom", "Last 7 Days", "Last 30 Days", "Last 90 Days", "Last 1 Year"].map((option, idx, arr) => {
+              {["Custom", ...presetTabs.map((tab) => tab.label)].map((option, idx, arr) => {
                 const isActive = activeTab === option.toLowerCase().replace(/\s/g, "-");
                 const spacing = idx !== arr.length - 1 ? "mb-1" : "";
                 return (
@@ -164,36 +190,22 @@ const DateRangePicker = ({
                     onClick={() => {
                       if (option === "Custom") {
                         setActiveTab("custom");
+                        setSelectedOption("Custom");
                       } else {
-                        // Auto-select the range and update UI
-                        setSelectedOption(option);
-                        setActiveTab(option.toLowerCase().replace(/\s/g, "-"));
+                        const tab = presetTabs.find((t) => t.label === option);
+                        if (!tab) return;
+                        setSelectedOption(tab.label);
+                        setActiveTab(tab.key);
                         const today = new Date();
-                        let fromDate: Date;
-                        const toDate = today;
-                        switch (option) {
-                          case "Last 7 Days":
-                            fromDate = new Date(today);
-                            fromDate.setDate(today.getDate() - 7);
-                            break;
-                          case "Last 30 Days":
-                            fromDate = new Date(today);
-                            fromDate.setDate(today.getDate() - 30);
-                            break;
-                          case "Last 90 Days":
-                            fromDate = new Date(today);
-                            fromDate.setDate(today.getDate() - 90);
-                            break;
-                          case "Last 1 Year":
-                            fromDate = new Date(today);
-                            fromDate.setFullYear(today.getFullYear() - 1);
-                            break;
-                          default:
-                            return;
+                        const fromDate = new Date(today);
+                        if (tab.days) {
+                          fromDate.setDate(today.getDate() - tab.days);
+                        } else if (tab.years) {
+                          fromDate.setFullYear(today.getFullYear() - tab.years);
                         }
-                        setDateRange({ from: fromDate, to: toDate });
+                        setDateRange({ from: fromDate, to: today });
                         if (onDateRangeChange) {
-                          onDateRangeChange(fromDate, toDate);
+                          onDateRangeChange(fromDate, today);
                         }
                       }
                     }}
@@ -212,7 +224,7 @@ const DateRangePicker = ({
               <div className="flex flex-row space-x-1 justify-center text-[11px]">
                 <Calendar
                   mode="range"
-                  selected={dateRange}
+                  selected={pendingRange || dateRange}
                   onSelect={handleSelect}
                   month={monthsToShow[0]}
                   onMonthChange={(month) => {
@@ -233,7 +245,7 @@ const DateRangePicker = ({
                 />
                 <Calendar
                   mode="range"
-                  selected={dateRange}
+                  selected={pendingRange || dateRange}
                   onSelect={handleSelect}
                   month={monthsToShow[1]}
                   onMonthChange={(month) => {
@@ -275,10 +287,7 @@ const DateRangePicker = ({
               {/* Action Buttons */}
               <div className="flex justify-end space-x-1 mt-2">
                 <button
-                  onClick={() => {
-                    setActiveTab("custom");
-                    setIsOpen(false);
-                  }}
+                  onClick={handleCancel}
                   className="px-2 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors text-[11px] min-h-0"
                 >
                   Cancel
