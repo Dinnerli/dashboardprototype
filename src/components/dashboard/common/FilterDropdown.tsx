@@ -34,23 +34,23 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDro
     setIsOpen(false);
   };
 
-  const textSize = size === 'sm' ? 'text-[16x]' : 'text-xs';
+  const textSize = size === 'sm' ? 'text-[16px]' : 'text-xs';
 
   return (
     <div className={isOpen ? "relative w-64 transition-colors duration-200" : "relative w-64 transition-colors duration-200"} ref={dropdownRef}>
       <button
-        className={`cursor-pointer w-64 bg-transparent border-none outline-none p-0`}
+        className={
+          `flex flex-row w-auto items-center justify-between gap-2 min-w-80 px-6 py-3 cursor-pointer bg-transparent border-none outline-none p-0` // match DateRangePicker style
+        }
         onClick={toggleDropdown}
         type="button"
       >
-        <div className='flex flex-row min-w-52 items-center justify-between gap-2 px-6 py-3 '>
-          <div>
-            <span className={`${textSize} text-[#8C9BAC] `}>Filters : </span>
-            <span className={`${textSize} text-[#233143] font-semibold truncate `}>{selectedOption}</span>
-          </div>
-          <div className=' border-l pl-2'>
-            <FilterIcon className="w-5 h-5 text-[#4f5a69] " />
-          </div>
+        <div className="flex-1 text-left">
+          <span className={`${textSize} text-[#8C9BAC]`}>Filters : </span>
+          <span className={`${textSize} text-[#233143] font-semibold truncate`}>{selectedOption}</span>
+        </div>
+        <div className='border-l pl-2'>
+          <FilterIcon className="w-5 h-5 text-[#4f5a69]" />
         </div>
       </button>
       {isOpen && (
