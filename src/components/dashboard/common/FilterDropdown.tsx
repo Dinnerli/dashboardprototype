@@ -37,7 +37,7 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDro
   const textSize = size === 'sm' ? 'text-[16x]' : 'text-xs';
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className={isOpen ? "relative bg-black/30 transition-colors duration-200" : "relative transition-colors duration-200"} ref={dropdownRef}>
       <button
         className={`cursor-pointer bg-transparent border-none outline-none p-0`}
         onClick={toggleDropdown}

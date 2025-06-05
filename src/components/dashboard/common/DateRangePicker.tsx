@@ -41,7 +41,7 @@ const DateRangePicker = ({
       : "custom"
   );
   const triggerRef = useRef<HTMLDivElement>(null);
-  
+
   // Initialize with the default option's date range
   const today = new Date();
   const defaultFrom = new Date(today);
@@ -55,9 +55,9 @@ const DateRangePicker = ({
     from: defaultFrom,
     to: today,
   });
-  
+
   const [monthsToShow, setMonthsToShow] = useState<Date[]>([
-    new Date(), 
+    new Date(),
     addMonths(new Date(), 1)
   ]);
 
@@ -72,11 +72,11 @@ const DateRangePicker = ({
   const handleQuickSelect = (option: string) => {
     setSelectedOption(option);
     setActiveTab(option.toLowerCase().replace(/\s/g, "-"));
-    
+
     const today = new Date();
     let fromDate: Date;
     const toDate = today;
-    
+
     switch (option) {
       case "Last 7 Days":
         fromDate = new Date(today);
@@ -97,18 +97,24 @@ const DateRangePicker = ({
       default:
         return;
     }
-    
+
     setDateRange({ from: fromDate, to: toDate });
     if (onDateRangeChange) {
       onDateRangeChange(fromDate, toDate);
     }
-    
+
     setIsOpen(false);
   };
 
   // Handle date selection in the calendar
   const handleSelect = (range: DateRange | undefined) => {
     if (!range) return;
+    // Prevent selecting a range where from or to is in the future
+    const now = new Date();
+    now.setHours(0,0,0,0); // Only compare date part
+    if ((range.from && range.from > now) || (range.to && range.to > now)) {
+      return; // Ignore selection if any date is in the future
+    }
     setPendingRange(range); // Only set pending, do not update main dateRange
     setActiveTab("custom");
     setSelectedOption("Custom");
@@ -152,7 +158,7 @@ const DateRangePicker = ({
       setIsOpen(open);
     }}>
       <PopoverTrigger asChild>
-        <div 
+        <div
           className="flex flex-row w-auto items-center justify-between gap-2 min-w-44 px-6 py-3 cursor-pointer bg-transparent border-none outline-none p-0" // match FilterDropdown style
           ref={triggerRef}
         >
@@ -168,140 +174,127 @@ const DateRangePicker = ({
       <PopoverContent
         align="end"
         side="bottom"
-        className="p-0 min-w-[340px] w-auto max-w-[98vw] h-auto rounded-2xl shadow-xl border-none bg-white mt-2"
+        className="p-5 gap-5 flex flex-row min-w-[340px] w-auto max-w-[98vw] h-auto rounded-xl shadow-xl border-none bg-white mt-2"
       >
-        <div className="flex flex-row h-full rounded-2xl overflow-hidden">
-          {/* Left Sidebar - Quick Range Selection */}
-          <div className="bg-white p-2">
-            <div className="flex flex-col w-36 py-1">
-              {["Custom", ...presetTabs.map((tab) => tab.label)].map((option, idx, arr) => {
-                const isActive = activeTab === option.toLowerCase().replace(/\s/g, "-");
-                const spacing = idx !== arr.length - 1 ? "mb-1" : "";
-                return (
-                  <button
-                    key={option}
-                    className={cn(
-                      "px-3 py-1.5 text-left font-medium text-[11px] transition-colors rounded-lg min-h-0",
-                      spacing,
-                      isActive
-                        ? "bg-[#EAF2FF] text-[#338FFF]"
-                        : "text-[#232D3A] hover:bg-gray-100"
-                    )}
-                    onClick={() => {
-                      if (option === "Custom") {
-                        setActiveTab("custom");
-                        setSelectedOption("Custom");
-                      } else {
-                        const tab = presetTabs.find((t) => t.label === option);
-                        if (!tab) return;
-                        setSelectedOption(tab.label);
-                        setActiveTab(tab.key);
-                        const today = new Date();
-                        const fromDate = new Date(today);
-                        if (tab.days) {
-                          fromDate.setDate(today.getDate() - tab.days);
-                        } else if (tab.years) {
-                          fromDate.setFullYear(today.getFullYear() - tab.years);
-                        }
-                        setDateRange({ from: fromDate, to: today });
-                        if (onDateRangeChange) {
-                          onDateRangeChange(fromDate, today);
-                        }
+        {/* Left Sidebar - Quick Range Selection */}
+        <div className="bg-white w-52">
+          <div className="flex flex-col  gap-2.5">
+            {["Custom", ...presetTabs.map((tab) => tab.label)].map((option, idx, arr) => {
+              const isActive = activeTab === option.toLowerCase().replace(/\s/g, "-");
+              const spacing = idx !== arr.length - 1 ? "mb-1" : "";
+              return (
+                <button
+                  key={option}
+                  className={cn(
+                    "px-5 py-1.5 text-left text-base font-semibold transition-colors rounded-md min-h-0",
+                    spacing,
+                    isActive
+                      ? "bg-[#F2F3F5] text-[#338FFF]"
+                      : "text-[#4F5A69] hover:bg-gray-100"
+                  )}
+                  onClick={() => {
+                    if (option === "Custom") {
+                      setActiveTab("custom");
+                      setSelectedOption("Custom");
+                    } else {
+                      const tab = presetTabs.find((t) => t.label === option);
+                      if (!tab) return;
+                      setSelectedOption(tab.label);
+                      setActiveTab(tab.key);
+                      const today = new Date();
+                      const fromDate = new Date(today);
+                      if (tab.days) {
+                        fromDate.setDate(today.getDate() - tab.days);
+                      } else if (tab.years) {
+                        fromDate.setFullYear(today.getFullYear() - tab.years);
                       }
-                    }}
-                  >
-                    {option}
-                  </button>
-                );
-              })}
-            </div>
+                      setDateRange({ from: fromDate, to: today });
+                      if (onDateRangeChange) {
+                        onDateRangeChange(fromDate, today);
+                      }
+                    }
+                  }}
+                >
+                  {option}
+                </button>
+              );
+            })}
           </div>
-
-          {/* Right Panel - Calendar View */}
-          <div className="flex-1 p-3 bg-white">
-            <div className="flex flex-col space-y-3">
-              {/* Dual Calendar */}
-              <div className="flex flex-row space-x-1 justify-center text-[11px]">
-                <Calendar
-                  mode="range"
-                  selected={pendingRange || dateRange}
-                  onSelect={handleSelect}
-                  month={monthsToShow[0]}
-                  onMonthChange={(month) => {
+        </div>
+        <div className="w-px bg-gray-200 mx-2"></div>
+        {/* Right Panel - Calendar View */}
+        <div className="flex-1 bg-white">
+          <div className="flex flex-col">
+            {/* Dual Calendar */}
+            <div className="flex flex-row space-x-5  justify-center text-xs">
+              <Calendar
+                mode="range"
+                selected={pendingRange || dateRange}
+                onSelect={handleSelect}
+                month={monthsToShow[0]}
+                onMonthChange={(month) => {
+                  // Prevent navigating to future months
+                  const now = new Date();
+                  now.setHours(0,0,0,0);
+                  const nextMonth = addMonths(month, 1);
+                  if (month > now) return;
+                  if (nextMonth > now) {
+                    setMonthsToShow([month, now]);
+                  } else {
                     setMonthsToShow([month, addMonths(month, 1)]);
-                  }}
-                  numberOfMonths={1}
-                  className="border rounded-md text-[11px] min-w-[180px] "
-                  classNames={{
-                    caption_label: "text-xs font-medium py-1",
-                    head_cell: "text-[10px] w-7 h-7",
-                    cell: "h-7 w-7 text-center text-[11px] p-0",
-                    day: "h-7 w-7 p-0 text-[11px]",
-                  }}
-                  components={{
-                    IconLeft: (props) => <ChevronLeft {...props} className="h-3 w-3" />, 
-                    IconRight: () => null // Hide right arrow
-                  }}
-                />
-                <Calendar
-                  mode="range"
-                  selected={pendingRange || dateRange}
-                  onSelect={handleSelect}
-                  month={monthsToShow[1]}
-                  onMonthChange={(month) => {
-                    setMonthsToShow([addMonths(month, -1), month]);
-                  }}
-                  numberOfMonths={1}
-                  className="border rounded-md text-[11px] min-w-[180px] "
-                  classNames={{
-                    caption_label: "text-xs font-medium py-1",
-                    head_cell: "text-[10px] w-7 h-7",
-                    cell: "h-7 w-7 text-center text-[11px] p-0",
-                    day: "h-7 w-7 p-0 text-[11px]",
-                    
-                  }}
-                  components={{
-                    IconLeft: () => null, // Hide left arrow
-                    IconRight: (props) => <ChevronRight {...props} className="h-3 w-3" />
-                  }}
-                />
-              </div>
+                  }
+                }}
+                numberOfMonths={2}
+                className="text-xs min-w-[180px] "
+                classNames={{
+                  caption_label: "text-xs font-medium text-[#4F5A69] py-1",
+                  head_cell: "text-[10px] w-7 h-7 text-[#4F5A69] font-medium",
+                  cell: "h-7 w-7 text-center text-[11px] p-0",
+                  day: "h-7 w-7 p-0 text-xs text-[#4F5A69] font-medium",
+                }}
+                components={{
+                  IconLeft: (props) => <ChevronLeft {...props} className="h-3 w-3" />,
+                  IconRight: (props) => <ChevronRight {...props} className="h-3 w-3" />,
+                }}
+              />
+              
+            </div>
 
-              {/* Date Input Fields */}
-              <div className="flex flex-col sm:flex-row justify-between items-center space-y-1 sm:space-y-0 sm:space-x-2 text-[11px]">
-                <div className="flex items-center space-x-1 w-full">
-                  <div className="w-full sm:w-1/2">
-                    <div className="px-2 py-1 bg-gray-100 rounded-full">
-                      {dateRange.from ? format(dateRange.from, "MMM d, yyyy") : "Start Date"}
-                    </div>
+            {/* Date Input Fields */}
+            <div className="flex flex-col sm:flex-row justify-between items-center space-y-1 sm:space-y-0 sm:space-x-2 text-[11px]">
+              <div className="flex items-center space-x-1 w-full">
+                <div className="w-full sm:w-1/2">
+                  <div className="px-2 py-1 bg-gray-100 rounded-full">
+                    {dateRange.from ? format(dateRange.from, "MMM d, yyyy") : "Start Date"}
                   </div>
-                  <span>—</span>
-                  <div className="w-full sm:w-1/2">
-                    <div className="px-2 py-1 bg-gray-100 rounded-full">
-                      {dateRange.to ? format(dateRange.to, "MMM d, yyyy") : "End Date"}
-                    </div>
+                </div>
+                <span>—</span>
+                <div className="w-full sm:w-1/2">
+                  <div className="px-2 py-1 bg-gray-100 rounded-full">
+                    {dateRange.to ? format(dateRange.to, "MMM d, yyyy") : "End Date"}
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Action Buttons */}
-              <div className="flex justify-end space-x-1 mt-2">
-                <button
-                  onClick={handleCancel}
-                  className="px-2 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors text-[11px] min-h-0"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleUpdate}
-                  className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-[11px] min-h-0"
-                >
-                  Update
-                </button>
-              </div>
+            {/* Action Buttons */}
+            <div className="flex justify-end space-x-1 mt-2">
+              <button
+                onClick={handleCancel}
+                className="px-2 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors text-[11px] min-h-0"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdate}
+                className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-[11px] min-h-0"
+              >
+                Update
+              </button>
             </div>
           </div>
         </div>
+
       </PopoverContent>
     </Popover>
   );
