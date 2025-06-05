@@ -152,14 +152,22 @@ const DateRangePicker = ({
   };
 
   return (
-    <Popover open={isOpen} onOpenChange={(open) => {
-      // Prevent closing when clicking outside (dismiss on out)
-      if (!open) return; // Only allow opening, not closing
-      setIsOpen(open);
-    }}>
+    <>
+      {/* Overlay when date picker is open */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/10 pointer-events-auto"
+          // Remove onClick to prevent closing on outside click
+        />
+      )}
+      <Popover open={isOpen} onOpenChange={(open) => {
+        // Prevent closing when clicking outside (dismiss on out)
+        if (!open) return; // Only allow opening, not closing
+        setIsOpen(open);
+      }}>
       <PopoverTrigger asChild>
         <div
-          className="flex flex-row w-auto items-center justify-between gap-2 min-w-44 px-6 py-3 cursor-pointer bg-transparent border-none outline-none p-0" // match FilterDropdown style
+          className="flex flex-row w-auto items-center justify-between gap-2 min-w-80 px-6 py-3 cursor-pointer bg-transparent border-none outline-none p-0" // match FilterDropdown style
           ref={triggerRef}
         >
           <div>
@@ -174,7 +182,7 @@ const DateRangePicker = ({
       <PopoverContent
         align="end"
         side="bottom"
-        className="p-5 gap-5 flex flex-row min-w-[340px] w-auto max-w-[98vw] h-auto rounded-xl shadow-xl border-none bg-white mt-2"
+        className="p-5 gap-5 flex flex-row min-w-[340px] w-auto max-w-[98vw] h-auto rounded-xl shadow-xl border-none bg-white mt-5"
       >
         {/* Left Sidebar - Quick Range Selection */}
         <div className="bg-white w-52">
@@ -226,7 +234,7 @@ const DateRangePicker = ({
         <div className="flex-1 bg-white">
           <div className="flex flex-col">
             {/* Dual Calendar */}
-            <div className="flex flex-row space-x-5  justify-center text-xs">
+            <div className="flex flex-row p-2.5 space-y-2.5 justify-center text-xs">
               <Calendar
                 mode="range"
                 selected={pendingRange || dateRange}
@@ -252,6 +260,18 @@ const DateRangePicker = ({
                   cell: "h-7 w-7 text-center text-[11px] p-0",
                   day: "h-7 w-7 p-0 text-xs text-[#4F5A69] font-medium",
                 }}
+                // Disable all future dates
+                disabled={{ after: new Date() }}
+                modifiers={{
+                  future: (date) => {
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    return date > today;
+                  }
+                }}
+                modifiersClassNames={{
+                  future: "line-through text-gray-400 cursor-not-allowed"
+                }}
                 components={{
                   IconLeft: (props) => <ChevronLeft {...props} className="h-3 w-3" />,
                   IconRight: (props) => <ChevronRight {...props} className="h-3 w-3" />,
@@ -261,33 +281,38 @@ const DateRangePicker = ({
             </div>
 
             {/* Date Input Fields */}
-            <div className="flex flex-col sm:flex-row justify-between items-center space-y-1 sm:space-y-0 sm:space-x-2 text-[11px]">
+            <div className="flex flex-col sm:flex-row justify-between items-center p-2.5 space-y-1 sm:space-y-0 sm:space-x-2 text-[11px]">
               <div className="flex items-center space-x-1 w-full">
                 <div className="w-full sm:w-1/2">
-                  <div className="px-2 py-1 bg-gray-100 rounded-full">
-                    {dateRange.from ? format(dateRange.from, "MMM d, yyyy") : "Start Date"}
+                  <div className="px-2 py-1 bg-gray-100 rounded-lg border">
+                    <div className="text-sm py-1 px-2">
+                       {dateRange.from ? format(dateRange.from, "MMM d, yyyy") : "Start Date"}
+                    </div>
+                   
                   </div>
                 </div>
                 <span>—</span>
                 <div className="w-full sm:w-1/2">
-                  <div className="px-2 py-1 bg-gray-100 rounded-full">
-                    {dateRange.to ? format(dateRange.to, "MMM d, yyyy") : "End Date"}
+                  <div className="px-2 py-1 bg-gray-100 rounded-lg border">
+                    <div className="text-sm py-1 px-2">
+                      {dateRange.to ? format(dateRange.to, "MMM d, yyyy") : "End Date"}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-end space-x-1 mt-2">
+            <div className="flex justify-end space-x-3 mt-2">
               <button
                 onClick={handleCancel}
-                className="px-2 py-1 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors text-[11px] min-h-0"
+                className="px-7 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-50 transition-colors text-base min-h-0"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpdate}
-                className="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-[11px] min-h-0"
+                className="px-7 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-base min-h-0"
               >
                 Update
               </button>
@@ -297,6 +322,7 @@ const DateRangePicker = ({
 
       </PopoverContent>
     </Popover>
+    </>
   );
 };
 
