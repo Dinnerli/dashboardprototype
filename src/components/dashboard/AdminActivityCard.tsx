@@ -73,7 +73,8 @@ const AdminActivityCard = () => {
     <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
       style={{ animationDelay: '0.4s' }}>
       <CardHeader title="Admin Activity" rightContent={isMobile ? null : <ViewReportButton />} />      
-      <div className="flex flex-col items-center justify-center relative h-full">        <div className="relative ">
+      <div className="flex flex-col items-center justify-center relative h-full pt-20">       
+         <div className="relative ">
           <HalfGauge
             value1={create.value}
             value2={edit.value}
@@ -96,10 +97,10 @@ const AdminActivityCard = () => {
             percentage={selectedData.percentage}
             trendValue={selectedData.trendValue}
             isPositiveTrend={selectedData.isPositiveTrend}
+            
           />
-        </div>
           {/* Legends */}
-        <div className="flex justify-center gap-8 mt-0 pt-0">
+        <div className="flex justify-center gap-8 mt-0  md:translate-x-[-50%] absolute bottom-4 left-1/2 transform -translate-x-1/2">
           <div 
             className={`flex items-center gap-2 cursor-pointer transition-opacity ${selectedActivity === 'create' ? 'opacity-100' : 'opacity-70'} hover:opacity-100`}
             onClick={() => setSelectedActivity('create')}
@@ -122,6 +123,8 @@ const AdminActivityCard = () => {
             <span className="text-sm text-[#4F5A69]">Delete</span>
           </div>
         </div>
+        </div>
+          
       </div>
     </Card>
   );

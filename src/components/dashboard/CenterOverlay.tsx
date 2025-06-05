@@ -24,7 +24,7 @@ export const CenterOverlay = ({
   const parsedTrendValue = typeof trendValue === 'string' ? trendValue : `${trendValue}%`;
 
   return (
-    <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center">
+    <div className="absolute top-[36%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center">
       <div className="flex justify-center items-center space-x-1">
         <span className="text-base font-semibold text-[#388fff]">
           {title}
