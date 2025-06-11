@@ -125,7 +125,7 @@ export const useCourseData = () => {
               percentage: course.completed.trend,
               isActive: true,
               isSelected: true,
-              tooltip: `Completed: ${course.completed.value} out of ${course.all}`,
+              tooltip: `Percentage of  learners who finished all course components`,
               rising: course.completed.rising,
             },
             {
@@ -134,7 +134,7 @@ export const useCourseData = () => {
               percentage: course.pass.trend,
               isActive: true,
               isSelected: true,
-              tooltip: `Passed: ${course.pass.value} out of ${course.all}`,
+              tooltip: `Percentage learners who met the passing criteria for the course`,
               rising: course.pass.rising,
             }
           ]

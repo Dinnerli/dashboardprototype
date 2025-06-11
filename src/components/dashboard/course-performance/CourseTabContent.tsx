@@ -1,7 +1,6 @@
-import React from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import ActivityStat from "./ActivityStat";
 import CourseChart from "./CourseChart";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 type CourseTabContentProps = {
   stats: {

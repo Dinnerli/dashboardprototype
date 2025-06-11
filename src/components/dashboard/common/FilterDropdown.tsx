@@ -40,7 +40,7 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDro
     <div className={isOpen ? "relative w-64 transition-colors duration-200" : "relative w-64 transition-colors duration-200"} ref={dropdownRef}>
       <button
         className={
-          `flex flex-row w-auto items-center justify-between gap-2 min-w-80 px-6 py-3 cursor-pointer bg-transparent border-none outline-none p-0` // match DateRangePicker style
+          `flex flex-row w-auto items-center justify-between gap-2 min-w-64 px-6 py-3 cursor-pointer bg-transparent border-none outline-none p-0` // match DateRangePicker style
         }
         onClick={toggleDropdown}
         type="button"

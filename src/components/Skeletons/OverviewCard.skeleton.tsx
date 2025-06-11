@@ -5,7 +5,7 @@ const OverviewCardSkeleton = () => {
 
   return (
     <div 
-      className={`flex flex-col gap-4 px-3 sm:px-4 md:px-5 py-4 `}
+      className={`flex flex-col gap-4  py-4 `}
     >
       <div className="flex overflow-x-auto  gap-4 hide-scrollbar bg-[#F5F6F8] scroll-smooth snap-x snap-mandatory">
         {skeletonCards.map((index) => (

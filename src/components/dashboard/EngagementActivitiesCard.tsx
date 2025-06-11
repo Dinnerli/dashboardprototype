@@ -51,7 +51,7 @@ const EngagementActivitiesCard = () => {
 
   return (
     <Card className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-      <CardHeader title="Engagement Activities" rightContent={isMobile ? null : <ViewReportButton />} />
+      <CardHeader title="Social Wall Activities" rightContent={isMobile ? null : <ViewReportButton />} />
       <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
         <div className="flex flex-col justify-between h-full gap-6 ">
 

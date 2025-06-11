@@ -20,7 +20,7 @@ const OverviewContent = () => {
   }
   return (
     <div 
-      className={`flex flex-col gap-4 px-3 sm:px-4 md:px-5 py-4 animate-fade-in`}
+      className={`flex flex-col gap-4  py-4 animate-fade-in`}
     >
     <div className="flex overflow-x-auto  gap-4 animate-slide-in-up hide-scrollbar bg-[#F5F6F8] scroll-smooth snap-x snap-mandatory" data-animation-delay="0.1s">
       {stats.map((stat, idx) => (

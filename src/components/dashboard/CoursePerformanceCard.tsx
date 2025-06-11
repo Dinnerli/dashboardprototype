@@ -1,11 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Info } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useIsMobile } from "@/hooks/use-mobile";
+import CardHeader from "./CardHeader";
 import CourseTabContent from "./course-performance/CourseTabContent";
 import { useCourseData } from "./course-performance/useCourseData";
-import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const CoursePerformanceCard = () => {
   const { tabs, activeTab, setActiveTab, handleStatClick, handleCourseClick, selectedCourse } = useCourseData();
