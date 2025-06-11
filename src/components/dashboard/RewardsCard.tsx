@@ -71,6 +71,31 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
     return isActive ? rankColors[index] : getColorWithOpacity(rankColors[index], 0.2);
   };
 
+  // Skeleton for certificates loading
+  const CertificatesSkeleton = () => (
+    <div className="flex flex-col w-full h-full animate-pulse">
+      {[...Array(5)].map((_, i) => (
+        <div key={i} className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
+          <div className="flex h-full items-start pr-2">
+            <span className="w-2 p-2.5 text-[#D1D5DB] text-center text-xs self-start bg-gray-200 rounded-full">&nbsp;</span>
+          </div>
+          <div className="flex py-2.5 px-2.5 flex-col justify-center items-start flex-1">
+            <span className="w-32 h-4 bg-gray-200 rounded mb-2"></span>
+            <span className="w-24 h-3 bg-gray-100 rounded"></span>
+          </div>
+          <div className="flex justify-end items-center px-2.5 gap-2">
+            <div className="flex flex-col justify-end items-end">
+              <span className="w-10 h-6 bg-gray-200 rounded"></span>
+            </div>
+            <div className="flex justify-end items-end">
+              <span className="w-6 h-6 bg-gray-100 rounded-full"></span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
       style={{ animationDelay: '0.4s' }}>
@@ -104,7 +129,7 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
             {/* Certificate list */}
             <div className="flex flex-col w-full h-full">
               {loading ? (
-                <div className="p-6 text-center text-gray-400">Loading certificates...</div>
+                <CertificatesSkeleton />
               ) : error ? (
                 <div className="p-6 text-center text-red-500">{error}</div>
               ) : certificates && certificates.length > 0 ? (
