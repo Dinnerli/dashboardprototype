@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CardHeader from "./CardHeader";
 import CourseTabContent from "./course-performance/CourseTabContent";
 import { useCoursePerforming, CoursePerformance } from "../../hooks/useCoursePerforming";
@@ -33,10 +33,41 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
     endDate,
     enabled: activeTab === "underperformers"
   });
-
   // Determine overall loading and error states
   const loading = (activeTab === "top-performers" && performingLoading) || (activeTab === "underperformers" && underperformingLoading);
   const error = (activeTab === "top-performers" && performingError) || (activeTab === "underperformers" && underperformingError);
+
+  // Auto-select first course when performing data loads
+  useEffect(() => {
+    if (activeTab === "top-performers" && performingData && performingData.length > 0 && !selectedCourse) {
+      setSelectedCourse(performingData[0].title);
+    }
+  }, [performingData, activeTab, selectedCourse]);
+  // Auto-select first course when underperforming data loads
+  useEffect(() => {
+    if (activeTab === "underperformers" && underperformingData && underperformingData.length > 0 && !selectedCourse) {
+      setSelectedCourse(underperformingData[0].title);
+    }
+  }, [underperformingData, activeTab, selectedCourse]);
+
+  // Ensure selected course exists in current data, if not select first available
+  useEffect(() => {
+    if (activeTab === "top-performers" && performingData) {
+      if (selectedCourse && !performingData.find(course => course.title === selectedCourse)) {
+        // Selected course doesn't exist in current data, select first available
+        if (performingData.length > 0) {
+          setSelectedCourse(performingData[0].title);
+        }
+      }
+    } else if (activeTab === "underperformers" && underperformingData) {
+      if (selectedCourse && !underperformingData.find(course => course.title === selectedCourse)) {
+        // Selected course doesn't exist in current data, select first available
+        if (underperformingData.length > 0) {
+          setSelectedCourse(underperformingData[0].title);
+        }
+      }
+    }
+  }, [performingData, underperformingData, selectedCourse, activeTab]);
 
   // Transform API data to chart format for performing courses
   const transformPerformingData = (data: CoursePerformance[]) => {
@@ -262,8 +293,7 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
         rising: mostFailedRising,
       }
     ];
-  };
-  const handleStatClick = (statName: string) => {
+  };  const handleStatClick = (statName: string) => {
     // Always ensure a course is selected when clicking stats
     if (!selectedCourse) {
       if (activeTab === "top-performers" && performingData && performingData.length > 0) {
@@ -272,15 +302,22 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
         setSelectedCourse(underperformingData[0].title);
       }
     }
+    // If a course is already selected, keep it selected
   };
 
   const handleCourseClick = (courseName: string) => {
     setSelectedCourse(courseName);
   };
-
   const handleTabChange = (newTab: string) => {
     setActiveTab(newTab);
-    setSelectedCourse(null); // Reset selected course when switching tabs
+    // Auto-select first course of the new tab
+    if (newTab === "top-performers" && performingData && performingData.length > 0) {
+      setSelectedCourse(performingData[0].title);
+    } else if (newTab === "underperformers" && underperformingData && underperformingData.length > 0) {
+      setSelectedCourse(underperformingData[0].title);
+    } else {
+      setSelectedCourse(null); // Only set to null if no data available
+    }
   };
 
   // Get current tab data and stats
