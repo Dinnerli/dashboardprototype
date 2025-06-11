@@ -8,10 +8,9 @@ export interface GaugeProps extends Omit<SVGProps<SVGSVGElement>, 'className'> {
    * Three raw values (e.g. 65, 20, 10). Internally they are normalized
    * so that value1+value2+value3 = 100%. Then we draw three arcs with
    * exactly one “gap” of gapPercent between each, but only over a 180° arc.
-   */
-  value1: number
+   */  value1: number
   value2: number
-  value3: number
+  value3?: number
 
   /** Overall width/height of the SVG. */
   size?: number | string
@@ -87,12 +86,11 @@ function HalfGauge({
   onArc3Click,
   activeArc = 1,
   ...props
-}: GaugeProps) {
-  // 1) Normalize the three raw values so that they sum to exactly 100%.
-  const total = value1 + value2 + value3 || 1
+}: GaugeProps) {  // 1) Normalize the three raw values so that they sum to exactly 100%.
+  const total = value1 + value2 + (value3 || 0) || 1
   const pct1 = (value1 / total) * 100
   const pct2 = (value2 / total) * 100
-  const pct3 = (value3 / total) * 100
+  const pct3 = ((value3 || 0) / total) * 100
 
   // 2) Draw everything inside a 100×100 viewBox for simplicity.
   const circleSize = 100
@@ -182,9 +180,7 @@ function HalfGauge({
         }}
         className={cn('', typeof className === 'object' && className.secondClassName)}
         onClick={onArc2Click}
-      />
-
-      {/** ── THIRD ARC (LIGHT SHADE) ── **/}
+      />      {/** ── THIRD ARC (LIGHT SHADE) ── Only show with color if value3 is provided and > 0 **/}
       <circle
         cx={circleSize / 2}
         cy={circleSize / 2}
@@ -193,7 +189,9 @@ function HalfGauge({
           ...circleStyles,
           strokeDasharray: `${visiblePx3} ${circumference}`,
           transform: `rotate(${startAngle3}deg)`,
-          stroke: activeArc === 3 ? '#CDE4FF' : '#F2F3F5', // Light blue vs Light gray
+          stroke: (value3 !== undefined && value3 > 0) 
+            ? (activeArc === 3 ? '#CDE4FF' : '#F2F3F5') 
+            : '#FFFFFF', // White when no deleted data
         }}
         className={cn('', typeof className === 'object' && className.thirdClassName)}
         onClick={onArc3Click}

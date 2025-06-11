@@ -93,7 +93,11 @@ const Index = () => {
       endDate={formatDate(dateRange.to || dateRange.from)}
       department={department}
     />,
-    <AdminActivityCard key="admin" />,
+    <AdminActivityCard 
+      key="admin"
+      startDate={formatDate(dateRange.from)}
+      endDate={formatDate(dateRange.to || dateRange.from)}
+    />,
     <LeaderboardCard 
       key="leaderboard"
       startDate={formatDate(dateRange.from)}
