@@ -26,7 +26,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { useMediaQuery } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { format } from 'date-fns';
 
 const Index = () => {
@@ -104,16 +104,22 @@ const Index = () => {
       endDate={formatDate(dateRange.to || dateRange.from)}
       department={department}
     />,
-    <CompetencyCard key="competency" />
-  ];
-  // DND for first 4 cards in 2x2 grid using @dnd-kit
-  const initialDndCards = [
+    <CompetencyCard key="competency" />  ];
+
+  // DND for first 4 cards in 2x2 grid using @dnd-kit - make reactive to date changes
+  const initialDndCards = useMemo(() => [
     { id: '0', component: <ActivitiesCard /> },
     { id: '1', component: <LearningActivityCard /> },
-    { id: '2', component: <CoursePerformanceCard /> },
+    { id: '2', component: <CoursePerformanceCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} /> },
     { id: '3', component: <EngagementActivitiesCard /> },
-  ];
+  ], [dateRange.from, dateRange.to]);
+  
   const [cards, setCards] = useState(initialDndCards);
+
+  // Update cards when dates change
+  useEffect(() => {
+    setCards(initialDndCards);
+  }, [initialDndCards]);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const handleDragStart = (event: DragStartEvent) => {

@@ -34,7 +34,7 @@ const StatsCard = ({
       <div className="flex flex-col justify-center items-start gap-2.5 w-full max-w-full">
         {/* Title row */}
         <div className="flex items-center gap-2.5 w-full min-w-0">
-          <div className="font-poppins font-medium text-xs text-[#8C9BAC] truncate">
+          <div className="font-poppins font-medium text-sm text-[#8C9BAC] truncate">
             {title}
           </div>
           {tooltip ? (
