@@ -129,16 +129,12 @@ const Index = () => {
       <Header />
       <main className="flex-1 flex flex-col">
         {/* Pass dateRange, department, and handlers to ActivityFilters */}
-          <nav className="flex items-center justify-between w-full px-5 py-3 bg-white border-b animate-slide-in-up relative">
-      <div className="flex flex-col">
-        <h1 className="text-h4 font-semibold text-dark mb-1">Analytical Dashboard</h1>
-      </div>
         <ActivityFilters
           dateRange={dateRange}
           onDateRangeChange={handleDateRangeChange}
           department={department}
           onDepartmentChange={handleDepartmentChange}
-        />  </nav>
+        />
         <div className="px-3 sm:px-4 md:px-5 bg-slate-200">
           <OverviewContent/>
           {/* DND Cards row - disabled on mobile */}
