@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { X, Search, Loader2 } from "lucide-react";
 import { useLeaderboard } from "@/hooks/useLeaderboard";
 import LeaderboardSkeleton from "@/components/Skeletons/LeaderboardCard.skeleton";
-import EmptyState from "./EmptyState";
 
 interface LeaderboardCardProps {
   startDate: string;
@@ -136,12 +135,15 @@ const LeaderboardCard = ({ startDate, endDate, department }: LeaderboardCardProp
 <div 
   ref={scrollContainerRef}
   className="flex-1 overflow-y-auto min-h-0 minimal-scrollbar"
->  <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">    {loading && leaders.length === 0 ? (
+>  <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
+    {loading && leaders.length === 0 ? (
       // Initial loading state - Use skeleton
       <LeaderboardSkeleton count={5} />
     ) : leaders.length === 0 ? (
-      // No data state - Use EmptyState component
-      <EmptyState cardName="Leaders" />
+      // No data state
+      <div className="flex justify-center items-center p-6 text-gray-500">
+        <p className="text-sm">No leaders found</p>
+      </div>
     ) : (
       // Leaders list
       <>        {leaders.map((leader, index) => (
