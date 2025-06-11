@@ -79,7 +79,6 @@ const Index = () => {
   // --- Department State (LIFTED UP) ---
   const [department, setDepartment] = useState<string>("All");
   const handleDepartmentChange = (dep: string) => setDepartment(dep);
-
   // Cards to be displayed in the horizontal carousel
   const dashboardCards = [
     <DeviceCard
@@ -95,7 +94,12 @@ const Index = () => {
       department={department}
     />,
     <AdminActivityCard key="admin" />,
-    <LeaderboardCard key="leaderboard" />,
+    <LeaderboardCard 
+      key="leaderboard"
+      startDate={formatDate(dateRange.from)}
+      endDate={formatDate(dateRange.to || dateRange.from)}
+      department={department}
+    />,
     <CompetencyCard key="competency" />
   ];
   // DND for first 4 cards in 2x2 grid using @dnd-kit
