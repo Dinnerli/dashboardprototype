@@ -1,79 +1,45 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import { Award } from "lucide-react";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from '@mui/material';
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import { useIsMobile } from "@/hooks/use-mobile";
+import leaderboardData from "@/Data/LeaderBoard.json";
 import { Input } from "@/components/ui/input";
-import { X, Search, Loader2 } from "lucide-react";
-import { useLeaderboard } from "@/hooks/useLeaderboard";
-import LeaderboardSkeleton from "@/components/Skeletons/LeaderboardCard.skeleton";
+import { X, Search } from "lucide-react";
 
-interface LeaderboardCardProps {
-  startDate: string;
-  endDate: string;
-  department: string;
+
+interface Leader {
+  id: number;
+  name: string;
+  email: string;
+  points: number;
+  profileImage: string;
+  position: number;
 }
 
-const LeaderboardCard = ({ startDate, endDate, department }: LeaderboardCardProps) => {
+const LeaderboardCard = () => {
+
   const isMobile = useIsMobile();
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Handle leader click to open user report
-  const handleLeaderClick = useCallback((leaderId: string) => {
-    const baseUrl = import.meta.env.VITE_USER_REPORT_URL || "/layuplive/admin_user_report.php";
-    const site = import.meta.env.VITE_TENANT_SITE || "playground";
-    const fullUrl = `${window.location.origin}${baseUrl}?site=${site}&id=${leaderId}`;
-    window.open(fullUrl, '_blank');
-  }, []);
+  // Get all leaders
+  const allLeaders: Leader[] = leaderboardData.Leaderboard;
+  // Get only the first 5 leaders
+  const leaders: Leader[] = allLeaders.slice(0, 5);
 
-  // Debounce search to avoid too many API calls
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [search]);  // Use the leaderboard hook
-  const { 
-    data: leaders, 
-    loading, 
-    error, 
-    hasMore, 
-    loadMore, 
-    refetch 
-  } = useLeaderboard({ 
-    startDate, 
-    endDate, 
-    department, 
-    search: showSearch ? debouncedSearch : undefined 
-  });
-
-  // Infinite scroll handler
-  const handleScroll = useCallback(() => {
-    if (!scrollContainerRef.current || loading || !hasMore) return;
-    
-    const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
-    const threshold = 100; // Load more when 100px from bottom
-    
-    if (scrollTop + clientHeight >= scrollHeight - threshold) {
-      loadMore();
-    }
-  }, [loading, hasMore, loadMore]);
-
-  // Attach scroll listener
-  useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer) return;
-
-    scrollContainer.addEventListener('scroll', handleScroll);
-    return () => scrollContainer.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);  return (
+  // Filter leaders by search
+  const filteredLeaders = showSearch && search
+    ? allLeaders.filter(
+        (leader) =>
+          leader.name.toLowerCase().includes(search.toLowerCase()) ||
+          leader.email.toLowerCase().includes(search.toLowerCase())
+      )
+    : leaders;
+    return (
    <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white flex flex-col`} 
     style={{ animationDelay: '0.4s' }}>
       
@@ -111,87 +77,39 @@ const LeaderboardCard = ({ startDate, endDate, department }: LeaderboardCardProp
     onChange={(e) => setSearch(e.target.value)}
   />
   
+  
+
   {/* Search Icon */}
   <Search className="absolute right-2 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8C9BAC]" />
 </div>
 )}
 
-{/* Error state */}
-{error && (
-  <div className="flex justify-center items-center p-6 text-red-500">
-    <div className="text-center">
-      <p className="text-sm">{error}</p>
-      <button 
-        onClick={refetch}
-        className="mt-2 px-4 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 transition-colors"
-      >
-        Retry
-      </button>
-    </div>
-  </div>
-)}
-
 {/* Leaders list - Scrollable content area */}
-<div 
-  ref={scrollContainerRef}
-  className="flex-1 overflow-y-auto min-h-0 minimal-scrollbar"
->  <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
-    {loading && leaders.length === 0 ? (
-      // Initial loading state - Use skeleton
-      <LeaderboardSkeleton count={5} />
-    ) : leaders.length === 0 ? (
-      // No data state
-      <div className="flex justify-center items-center p-6 text-gray-500">
-        <p className="text-sm">No leaders found</p>
-      </div>
-    ) : (
-      // Leaders list
-      <>        {leaders.map((leader, index) => (
+<div className="flex-1 overflow-y-auto min-h-0 minimal-scrollbar">
+  <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
+    {filteredLeaders.map((leader, index) => (
           <div 
             key={leader.id} 
-            className={`flex py-2.5 sm:py-2.5 px-2 sm:px-3 md:px-4 items-center border-b hover:bg-[#F5F6F8] hover:rounded-lg border-[#F5F6F8] cursor-pointer transition-all duration-200 hover:shadow-sm`}
+            className={`flex py-2.5 sm:py-2.5 px-2 sm:px-3 md:px-4 items-center border-b hover:bg-[#F5F6F8] hover:rounded-lg border-[#F5F6F8] cursor-pointer transition-all duration-200`}
             onMouseEnter={() => setHoveredId(leader.id)}
             onMouseLeave={() => setHoveredId(null)}
-            onClick={() => handleLeaderClick(leader.id)}
-            title={`View ${leader.name}'s detailed report`}
-          >
-            {/* Avatar */}
+          >{/* Avatar */}
             <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-gray-200 mr-2 sm:mr-3 overflow-hidden flex items-center justify-center flex-shrink-0">
-              {leader.profileImage ? (
-                <img 
-                  src={leader.profileImage} 
-                  alt={leader.name} 
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Fallback to default avatar on error
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600 font-medium text-lg">' + leader.name.charAt(0).toUpperCase() + '</div>';
-                  }}
-                />
-              ) : (
-                <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-600 font-medium text-lg">
-                  {leader.name.charAt(0).toUpperCase()}
-                </div>
-              )}
+              <img 
+                src={leader.profileImage} 
+                alt={leader.name} 
+                className="w-full h-full object-cover"
+              />
             </div>
-            
-            {/* User info - using flex-1 to take available width */}
+              {/* User info - using flex-1 to take available width */}
             <div className="flex flex-col flex-1 min-w-0 px-2 sm:px-3 py-0.5 sm:py-1.5">
-              <span className={`text-sm sm:text-base font-semibold transition-colors duration-200 truncate ${hoveredId === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'}`}>
-                {leader.name}
-              </span>
-              <span className="text-[10px] sm:text-xs text-[#8C9BAC] truncate">
-                {leader.email}
-              </span>
+              <span className={`text-sm sm:text-base font-semibold transition-colors duration-200 truncate ${hoveredId === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'}`}>{leader.name}</span>
+              <span className="text-[10px] sm:text-xs text-[#8C9BAC] truncate">{leader.email}</span>
             </div>
-              {/* Points - using ml-auto to push to right */}
-            <div className="flex flex-col items-end ml-auto">
-              <span className={`text-sm sm:text-base font-semibold transition-colors duration-200 ${hoveredId === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'}`}>
-                {Number(leader.points || 0).toLocaleString()}
-              </span>
+              {/* Points - using ml-auto to push to right */}            <div className="flex flex-col items-end ml-auto">
+              <span className={`text-sm sm:text-base font-semibold transition-colors duration-200 ${hoveredId === leader.id ? 'text-[#338FFF]' : 'text-[#4F5A69]'}`}>{leader.points.toLocaleString()}</span>
               <span className="text-[10px] sm:text-xs font-medium text-[#8C9BAC]">Points</span>
             </div>
-            
             <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded ml-2 relative">
               <svg width={isMobile ? 30 : 35} height={isMobile ? 30 : 35} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                 <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -204,27 +122,11 @@ const LeaderboardCard = ({ startDate, endDate, department }: LeaderboardCardProp
               
               <span className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[8px] sm:text-[10px] font-semibold text-[#8C9BAC]">
                 {leader.position}
-              </span>
-            </div>
+              </span>            </div>
           </div>
         ))}
-          {/* Load more indicator */}
-        {loading && leaders.length > 0 && (
-          <div className="pt-2">
-            <LeaderboardSkeleton count={2} />
-          </div>
-        )}
-        
-        {/* End of list indicator */}
-        {!loading && !hasMore && leaders.length > 0 && (
-          <div className="flex justify-center items-center p-4 text-gray-500">
-            <span className="text-xs">No more users to show</span>
-          </div>
-        )}
-      </>
-    )}
-  </div>
-</div>
+      </div>
+    </div>
     </Card>
   );
 };
