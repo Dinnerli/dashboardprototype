@@ -6,10 +6,9 @@ interface FilterDropdownProps {
   defaultValue: string;
   label?: string;
   size?: 'sm' | 'md';
-  onChange?: (option: string) => void;
 }
 
-const FilterDropdown = ({ options, defaultValue, label, size = 'sm', onChange }: FilterDropdownProps) => {
+const FilterDropdown = ({ options, defaultValue, label, size = 'sm' }: FilterDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -33,7 +32,6 @@ const FilterDropdown = ({ options, defaultValue, label, size = 'sm', onChange }:
   const selectOption = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
-    if (onChange) onChange(option);
   };
 
   const textSize = size === 'sm' ? 'text-[16px]' : 'text-xs';

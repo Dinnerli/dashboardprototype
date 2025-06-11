@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "./api";
+import axios from "axios";
 
 export interface TenantContextData {
   userId: string;
@@ -19,9 +19,11 @@ export function useTenantContext() {
       setLoading(true);
       setError(null);
       try {
-        const response = await api.get(
-          "/analytical_dashboard/getTenantContext.endpoint.php"
-        );
+        const site = import.meta.env.VITE_TENANT_SITE;
+        const baseUrl = import.meta.env.VITE_BASE_URL || "";
+        const url = `${baseUrl}/analytical_dashboard/getTenantContext.endpoint.php?site=${site}`;
+        console.log("Fetching tenant context from:", url);
+        const response = await axios.get(url);
         if (response.data?.success && response.data.result?.data) {
           setData(response.data.result.data);
         } else {

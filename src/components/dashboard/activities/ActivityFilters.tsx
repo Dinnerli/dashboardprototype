@@ -1,66 +1,20 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 import FilterDropdown from "../common/FilterDropdown";
 import DateRangePicker from "../common/DateRangePicker";
 import MobileDateRangePicker from "../common/MobileDateRangePicker";
 
-const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, department, ...rest }: {
-  dateRange: { from: Date; to: Date | undefined };
-  onDateRangeChange: (from: Date, to: Date) => void;
-  department: string;
-  onDepartmentChange: (department: string) => void;
-}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const today = new Date();
-  const defaultFrom = new Date(today);
-  defaultFrom.setDate(today.getDate() - 29); // last 30 days (inclusive)
+const ActivityFilters = () => {
+  const [dateRange, setDateRange] = useState<{ from: Date; to: Date | undefined }>({
+    from: new Date(),
+    to: undefined
+  });
   const [showMobileFilters, setShowMobileFilters] = useState(false); // mobile filter toggle
   const departmentOptions = ["All", "Marketing", "Accounts", "Sales", "Development"];
-
-  // Add local pendingDateRange state for controlled update
-  const [pendingDateRange, setPendingDateRange] = useState<{ from: Date; to: Date | undefined }>(dateRange);
-
-  // Helper to format date as yyyy-mm-dd
-  const formatDate = (date: Date) => {
-    return date.toISOString().slice(0, 10);
-  };
-
-  // Update URL params
-  const updateUrlParams = (from: Date, to: Date | undefined, department: string) => {
-    const params = new URLSearchParams(location.search);
-    params.set("startDate", formatDate(from));
-    params.set("endDate", formatDate(to || from));
-    if (department && department !== "All") {
-      params.set("q", department);
-    } else {
-      params.delete("q");
-    }
-    navigate({ pathname: location.pathname, search: params.toString() }, { replace: true });
-  };
-
-  // On mount, set default params
-  useEffect(() => {
-    updateUrlParams(dateRange.from, dateRange.to, department);
-    // eslint-disable-next-line
-  }, []);
-
-  // When date or department changes, update params
-  useEffect(() => {
-    updateUrlParams(dateRange.from, dateRange.to, department);
-    // eslint-disable-next-line
-  }, [dateRange, department]);
-
-  useEffect(() => {
-    setPendingDateRange(dateRange); // Sync local state if parent changes
-  }, [dateRange]);
-
+  
   const handleDateRangeChange = (from: Date, to: Date) => {
-    setPendingDateRange({ from, to });
-  };
-
-  const handleDepartmentChange = (option: string) => {
-    onDepartmentChange(option);
+    setDateRange({ from, to });
+    // Here you can implement any additional logic needed when the date range changes
+    // For example, fetching filtered data based on the new date range
   };
 
   return (
@@ -78,9 +32,8 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
         {/* Start and end date section */}
         <div className="flex w-80 items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
           <DateRangePicker 
-            onDateRangeChange={onDateRangeChange}
-            defaultValue="Last 30 Days"
-            value={dateRange}
+            onDateRangeChange={handleDateRangeChange}
+            defaultValue="Last 60 Days"
           />
         </div>
         {/* Filters section */}
@@ -89,8 +42,6 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
             options={departmentOptions} 
             defaultValue="All" 
             size="sm"
-            onChange={handleDepartmentChange}
-            value={department}
           />
         </div>
       </div>
@@ -102,9 +53,8 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
                 <MobileDateRangePicker 
-                  onDateRangeChange={onDateRangeChange}
-                  defaultValue="Last 30 Days"
-                  value={dateRange}
+                  onDateRangeChange={handleDateRangeChange}
+                  defaultValue="Last 60 Days"
                 />
               </div>
               <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
@@ -112,8 +62,6 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
                   options={departmentOptions} 
                   defaultValue="All" 
                   size="sm"
-                  onChange={handleDepartmentChange}
-                  value={department}
                 />
               </div>
             </div>
