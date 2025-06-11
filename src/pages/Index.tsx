@@ -27,6 +27,7 @@ import {
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -58,14 +59,38 @@ const Index = () => {
     });
   }, []);
 
+  // --- Date Range State (LIFTED UP) ---
+  const today = new Date();
+  const defaultFrom = new Date(today);
+  defaultFrom.setDate(today.getDate() - 29); // last 30 days (inclusive)
+  const [dateRange, setDateRange] = useState<{ from: Date; to: Date | undefined }>({
+    from: defaultFrom,
+    to: today
+  });
+
+  // Helper to format date as yyyy-mm-dd
+  const formatDate = (date: Date) => date.toISOString().slice(0, 10);
+
+  // Handler to pass to ActivityFilters
+  const handleDateRangeChange = (from: Date, to: Date) => {
+    setDateRange({ from, to });
+  };
+
+  // --- Department State (LIFTED UP) ---
+  const [department, setDepartment] = useState<string>("All");
+  const handleDepartmentChange = (dep: string) => setDepartment(dep);
+
   // Cards to be displayed in the horizontal carousel
   const dashboardCards = [
-    <DeviceCard key="devices" />,
-        <RewardsCard key="rewards" />,
+    <DeviceCard
+      key="devices"
+      startDate={formatDate(dateRange.from)}
+      endDate={formatDate(dateRange.to || dateRange.from)}
+      department={department}
+    />,
+    <RewardsCard key="rewards" />,
     <AdminActivityCard key="admin" />,
-  
     <LeaderboardCard key="leaderboard" />,
-  
     <CompetencyCard key="competency" />
   ];
   // DND for first 4 cards in 2x2 grid using @dnd-kit
@@ -98,10 +123,14 @@ const Index = () => {
     <div className="min-h-screen max-w-full bg-white font-poppins flex flex-col">
       <Header />
       <main className="flex-1 flex flex-col">
-        <Navigation />
-
+        {/* Pass dateRange, department, and handlers to ActivityFilters */}
+        <ActivityFilters
+          dateRange={dateRange}
+          onDateRangeChange={handleDateRangeChange}
+          department={department}
+          onDepartmentChange={handleDepartmentChange}
+        />
         <div className="px-3 sm:px-4 md:px-5 bg-slate-200">
-                    
           <OverviewContent/>
           {/* DND Cards row - disabled on mobile */}
           {isMobile ? (
@@ -145,7 +174,7 @@ const Index = () => {
 
           {/* Horizontal scrollable card row - replacing the previous draggable grid */}
           <div className="mt-6 ">
-          <CarouselCardRow items={dashboardCards} />
+            <CarouselCardRow items={dashboardCards} />
           </div>
         </div>
       </main>
