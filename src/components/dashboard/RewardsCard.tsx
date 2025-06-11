@@ -11,6 +11,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import rewardsData from "@/Data/RewardsCard.json";
 import { useTopCertificates } from "@/hooks/useTopCertificates";
 import styles from './RewardsCard.module.css';
+import EmptyState from "./EmptyState";
 
 
 type RankLobbyItem = {
@@ -155,9 +156,8 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
                       </div>
                     </div>
                   </div>
-                ))
-              ) : (
-                <div className="p-6 text-center text-gray-400">No certificates found.</div>
+                ))              ) : (
+                <EmptyState cardName="Certificates" />
               )}
             </div>
           </TabsContent>

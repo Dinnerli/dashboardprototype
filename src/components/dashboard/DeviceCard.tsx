@@ -9,6 +9,7 @@ import TrendIndicator from './common/TrendIndicator';
 import ViewReportButton from './ViewReportButton';
 import { Gauge } from '../ui/gauge';
 import DeviceCardSkeleton from '../Skeletons/DeviceCard.skeleton';
+import EmptyState from './EmptyState';
 
 const tooltips = {
   "Mobile App": "Number of total users from the mobile App",
@@ -95,13 +96,13 @@ export const DeviceCard = ({ startDate, endDate, department }: { startDate: stri
       <CardHeader
         title="Devices"
         rightContent={isMobile ? null : <ViewReportButton />}
-      />
-
-      <div className="flex flex-col justify-between">
+      />      <div className="flex flex-col justify-between">
         {loading ? (
           <DeviceCardSkeleton />
         ) : error ? (
           <div className="flex justify-center items-center h-40 text-red-500">{error}</div>
+        ) : !stats || stats.length === 0 ? (
+          <EmptyState cardName="Device Data" />
         ) : (
           <Tabs
             defaultValue="desktop"
