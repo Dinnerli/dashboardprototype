@@ -9,7 +9,6 @@ import { ChartContainer } from "@/components/ui/chart";
 import TrendIndicator from "./common/TrendIndicator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import rewardsData from "@/Data/RewardsCard.json";
-import { useTopCertificates } from "@/hooks/useTopCertificates";
 import styles from './RewardsCard.module.css';
 
 
@@ -39,19 +38,10 @@ const getColorWithOpacity = (color: string, opacity: number) => {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 };
 
-interface RewardsCardProps {
-  startDate: string;
-  endDate: string;
-  department: string;
-}
-
-const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
+const RewardsCard = () => {
   const [selectedTab, setSelectedTab] = useState<'certificates' | 'rank'>('certificates');
   const [activeRank, setActiveRank] = useState<string>(rewardsData.rankLobby[0].name);
   const isMobile = useIsMobile();
-
-  // Fetch certificates data from API
-  const { data: certificates, loading, error } = useTopCertificates({ startDate, endDate, department });
 
   // Function to get the image for the rank
   const getRankImage = (rank: RankLobbyItem) => {
@@ -72,10 +62,13 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
   };
 
   return (
-    <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
-      style={{ animationDelay: '0.4s' }}>
-      <CardHeader title="Rewards" rightContent={isMobile ? null : <ViewReportButton />} />
-      <div className="flex flex-col h-full">
+   <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
+    style={{ animationDelay: '0.4s' }}>
+       <CardHeader title="Rewards" rightContent={isMobile ? null : <ViewReportButton />} />
+   
+   <div className="flex flex-col h-full">
+       
+
         {/* Tabs section - converted to using shadcn Tabs */}
         <Tabs 
           defaultValue="certificates" 
@@ -103,37 +96,29 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
           <TabsContent value="certificates" className="m-0 overflow-y-auto">
             {/* Certificate list */}
             <div className="flex flex-col w-full h-full">
-              {loading ? (
-                <div className="p-6 text-center text-gray-400">Loading certificates...</div>
-              ) : error ? (
-                <div className="p-6 text-center text-red-500">{error}</div>
-              ) : certificates && certificates.length > 0 ? (
-                certificates.map((cert, index) => (
-                  <div key={cert.name} className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
+              {rewardsData.certificates.map((cert, index) => (
+                <div key={cert.name} className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
                     <div className="flex h-full items-start pr-2">
-                      <span className="w-2 p-2.5 text-[#4F5A69] text-center text-xs self-start">{index + 1}</span>
+                    <span className="w-2 p-2.5 text-[#4F5A69] text-center text-xs self-start">{index + 1}</span>
                     </div>
-                    <div className="flex py-2.5 px-2.5  flex-col justify-center items-start flex-1">
-                      <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-sm font-medium">
-                        {cert.name}
-                      </span>
-                      <span className="w-full text-[#8C9BAC] text-xs pt-1">
-                        End date: {formatDate(cert.endDate)}
-                      </span>
+                  <div className="flex py-2.5 px-2.5  flex-col justify-center items-start flex-1">
+                    <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-sm font-medium">
+                      {cert.name}
+                    </span>
+                    <span className="w-full text-[#8C9BAC] text-xs pt-1">
+                      End date: {formatDate(cert.endDate)}
+                    </span>
+                  </div>
+                  <div className="flex justify-end items-center px-2.5 gap-2">
+                    <div className="flex flex-col justify-end items-end">
+                      <span className="text-[#4F5A69] font-bold text-2xl">{cert.value}</span>
                     </div>
-                    <div className="flex justify-end items-center px-2.5 gap-2">
-                      <div className="flex flex-col justify-end items-end">
-                        <span className="text-[#4F5A69] font-bold text-2xl">{cert.value}</span>
-                      </div>
-                      <div className="flex justify-end items-end">
-                        <TrendIndicator value={`${Math.abs(cert.trend)}%`} isPositive={cert.rising} />
-                      </div>
+                    <div className="flex justify-end items-end">
+                      <TrendIndicator value={`${Math.abs(cert.trend)}%`} isPositive={cert.rising} />
                     </div>
                   </div>
-                ))
-              ) : (
-                <div className="p-6 text-center text-gray-400">No certificates found.</div>
-              )}
+                </div>
+              ))}
             </div>
           </TabsContent>
 
