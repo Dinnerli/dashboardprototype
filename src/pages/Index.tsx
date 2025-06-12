@@ -104,13 +104,12 @@ const Index = () => {
       endDate={formatDate(dateRange.to || dateRange.from)}
       department={department}
     />,
-    <CompetencyCard key="competency" />  ];
-  // DND for first 4 cards in 2x2 grid using @dnd-kit - make reactive to date changes
+    <CompetencyCard key="competency" />  ];  // DND for first 4 cards in 2x2 grid using @dnd-kit - make reactive to date changes
   const initialDndCards = useMemo(() => [
     { id: '0', component: <ActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department} /> },
     { id: '1', component: <LearningActivityCard /> },
     { id: '2', component: <CoursePerformanceCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} /> },
-    { id: '3', component: <EngagementActivitiesCard /> },
+    { id: '3', component: <EngagementActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} /> },
   ], [dateRange.from, dateRange.to, department]);
   
   const [cards, setCards] = useState(initialDndCards);
