@@ -51,7 +51,7 @@ const AdminActivityCard = ({ startDate, endDate }: { startDate: string; endDate:
     return (
       <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
         style={{ animationDelay: '0.4s' }}>
-        <CardHeader title="Admin Activity" rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title="Admin Activity" rightContent={isMobile ? null : <ViewReportButton target="admin_recent_admin_activities.php"/>} />
         <div className="flex items-center justify-center h-full">
           <span className="text-gray-500">No data available</span>
         </div>
