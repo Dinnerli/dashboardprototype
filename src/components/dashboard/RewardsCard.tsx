@@ -141,7 +141,7 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
                     </div>
                     <div className="flex py-2.5 px-2.5  flex-col justify-center items-start flex-1">
                       <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-[#4F5A69] text-sm font-medium">
-                        {cert.name}
+                        {cert.name.length > 18 ? cert.name.slice(0, 15) + '...' : cert.name}
                       </span>
                       <span className="w-full text-[#8C9BAC] text-xs pt-1">
                         End date: {formatDate(cert.endDate)}
