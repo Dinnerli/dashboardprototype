@@ -10,6 +10,7 @@ import { CenterOverlay } from "./CenterOverlay";
 import { useAdminActivity } from "@/hooks/useAdminActivity";
 import { useState } from "react";
 import EmptyState from "./EmptyState";
+import AdminActivityCardSkeleton from "../Skeletons/AdminActivityCard.skeleton";
 
 const AdminActivityCard = ({ startDate, endDate }: { startDate: string; endDate: string }) => {
   const isMobile = useIsMobile();
@@ -19,18 +20,9 @@ const AdminActivityCard = ({ startDate, endDate }: { startDate: string; endDate:
   
   // Fetch admin activity data from API
   const { data: adminActivityData, loading, error, message } = useAdminActivity({ startDate, endDate });
-  
-  // Handle loading state
+    // Handle loading state
   if (loading) {
-    return (
-      <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
-        style={{ animationDelay: '0.4s' }}>
-        <CardHeader title="Admin Activity" rightContent={isMobile ? null : <ViewReportButton />} />
-        <div className="flex items-center justify-center h-full">
-          <span className="text-gray-500">Loading...</span>
-        </div>
-      </Card>
-    );
+    return <AdminActivityCardSkeleton />;
   }
 
   // Handle error state

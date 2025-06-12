@@ -109,6 +109,16 @@ const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCa
       .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
       .map((date) => merged[date]);
   };
+  // Prepare chart data and dynamic axes
+  const chartData = mergedChartData();
+  // Determine Y axis range dynamically
+  const yValues = chartData.flatMap(point => allActivities.map(act => Number(point[act.title] || 0)));
+  const yMin = Math.min(...yValues);
+  const yMax = Math.max(...yValues);
+  const yDomain: [number, number] = [yMin > 0 ? 0 : yMin, yMax];
+  // X axis ticks from date string
+  const xTicks = chartData.map(point => point.date);
+
   // Show loading state
   if (wallLoading || usersLoading) {
     return <EngagementActivitiesCardSkeleton />;
@@ -170,12 +180,25 @@ const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCa
         <div className="w-full h-[250px] sm:h-[250px] flex items-end justify-center"> {/* Fixed height for mobile and desktop */}
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              data={mergedChartData()}
+              data={chartData}
               margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
               
             >              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="date" tick={{ fill: '#CDD1D7', fontSize: 12 }} axisLine={{ stroke: '#CDD1D7' }} tickLine={{ stroke: '#CDD1D7' }} />
-              <YAxis domain={[0, 'dataMax']} tick={{ fill: '#CDD1D7', fontSize: 12 }} width={30} axisLine={{ stroke: '#CDD1D7' }} tickLine={{ stroke: '#CDD1D7' }} />
+              <XAxis
+                dataKey="date"
+                ticks={xTicks}
+                interval={0}
+                tick={{ fill: '#CDD1D7', fontSize: 12 }}
+                axisLine={{ stroke: '#CDD1D7' }}
+                tickLine={{ stroke: '#CDD1D7' }}
+              />
+              <YAxis
+                domain={yDomain}
+                tick={{ fill: '#CDD1D7', fontSize: 12 }}
+                width={30}
+                axisLine={{ stroke: '#CDD1D7' }}
+                tickLine={{ stroke: '#CDD1D7' }}
+              />
               <Tooltip
                 contentStyle={{ backgroundColor: "#F2F3F5", border: "none", borderRadius: "8px" }}
                 itemStyle={{ color: "#4F5A69", fontSize: 12 }}
