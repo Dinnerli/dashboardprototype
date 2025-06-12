@@ -24,14 +24,14 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
   const { data: performingData, loading: performingLoading, error: performingError } = useCoursePerforming({ 
     startDate, 
     endDate,
-    enabled: activeTab === "top-performers"
+
   });
 
   // Fetch underperforming courses data
   const { data: underperformingData, loading: underperformingLoading, error: underperformingError } = useCourseUnderperforming({ 
     startDate, 
     endDate,
-    enabled: activeTab === "underperformers"
+
   });
   // Determine overall loading and error states
   const loading = (activeTab === "top-performers" && performingLoading) || (activeTab === "underperformers" && underperformingLoading);
@@ -384,14 +384,14 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
               <EmptyState 
                 cardName="performing courses" 
                 className="h-full flex flex-col justify-center"
-              />
-            ) : (
+              />            ) : (
               <CourseTabContent
                 stats={{ firstStat: stats[0], secondStat: stats[1] }}
                 courseData={courseData}
                 onStatClick={handleStatClick}
                 onCourseClick={handleCourseClick}
                 selectedCourse={selectedCourse}
+                isUnderperforming={false}
               />
             )}
           </TabsContent>
@@ -409,6 +409,7 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
                 onStatClick={handleStatClick}
                 onCourseClick={handleCourseClick}
                 selectedCourse={selectedCourse}
+                isUnderperforming={true}
               />
             )}
           </TabsContent>
