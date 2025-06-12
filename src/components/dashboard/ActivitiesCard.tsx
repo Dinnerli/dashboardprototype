@@ -8,36 +8,48 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import StatButton from "./activities/StatButton";
 import styles from './StatButton.module.css';
 import ActivitiesCardSkeleton from '../Skeletons/ActivitiesCard.skeleton';
-import { useGetActivitiesData } from '../../hooks/useGetActivitiesData';
+import { useUserActivity } from '../../hooks/useUserActivity';
+import { useUsageActivity } from '../../hooks/useUsageActivity';
+import { useCourseActivity } from '../../hooks/useCourseActivity';
 
-const ActivitiesCard = () => {
-  const isMobile = useIsMobile();
-  const { data: activitiesData, loading, error } = useGetActivitiesData();
-  
+interface ActivitiesCardProps {
+  startDate: string;
+  endDate: string;
+  department?: string;
+}
+
+const ActivitiesCard = ({ startDate, endDate, department = "All" }: ActivitiesCardProps) => {
+  const isMobile = useIsMobile();  
   const [activeTab, setActiveTab] = useState<TabType>('user');
   const [selectedStat, setSelectedStat] = useState<string>('');
 
-  // Update state when data loads
-  useEffect(() => {
-    if (activitiesData && activitiesData.tabKeyList.length > 0) {
-      const firstTab = activitiesData.tabKeyList[0];
-      setActiveTab(firstTab);
-      const firstTabData = activitiesData.tabs.find(tab => tab.key === firstTab);
-      if (firstTabData && firstTabData.stats.length > 0) {
-        setSelectedStat(firstTabData.stats[0].title);
-      }
-    }
-  }, [activitiesData]);
+  // Use the appropriate hook based on active tab
+  const userActivityResult = useUserActivity({ startDate, endDate, department });
+  const usageActivityResult = useUsageActivity({ startDate, endDate, department });
+  const courseActivityResult = useCourseActivity({ startDate, endDate, department });
 
-  // Update selectedStat when tab changes
-  useEffect(() => {
-    if (activitiesData) {
-      const currentTabData = activitiesData.tabs.find(tab => tab.key === activeTab);
-      if (currentTabData && currentTabData.stats.length > 0) {
-        setSelectedStat(currentTabData.stats[0].title);
-      }
+  // Get current data based on active tab
+  const getCurrentData = () => {
+    switch (activeTab) {
+      case 'user':
+        return userActivityResult;
+      case 'usage':
+        return usageActivityResult;
+      case 'course':
+        return courseActivityResult;
+      default:
+        return userActivityResult;
     }
-  }, [activeTab, activitiesData]);
+  };
+
+  const { data: currentData, loading, error } = getCurrentData();
+
+  // Update selectedStat when tab changes or data loads
+  useEffect(() => {
+    if (currentData && currentData.length > 0) {
+      setSelectedStat(currentData[0].title);
+    }
+  }, [activeTab, currentData]);
 
   const handleStatClick = (title: string) => {
     if (selectedStat !== title) {
@@ -48,8 +60,7 @@ const ActivitiesCard = () => {
   if (loading) {
     return <ActivitiesCardSkeleton />;
   }
-
-  if (error || !activitiesData) {
+  if (error || !currentData) {
     return (
       <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} p-4 sm:p-5 md:p-6`}>
         <div className="flex items-center justify-center h-full">
@@ -61,14 +72,13 @@ const ActivitiesCard = () => {
     );
   }
 
-  const currentTabData = activitiesData.tabs.find(tab => tab.key === activeTab)!;
-  
-  // Find the stat object for the selected stat
-  const selectedStatObj = currentTabData.stats.find(stat => stat.title === selectedStat) || currentTabData.stats[0];  // Prepare chart data for the current tab and selected stat
+  // Find the selected stat object
+  const selectedStatObj = currentData.find(stat => stat.title === selectedStat) || currentData[0];
+  // Prepare chart data for the selected stat
   const chartSeries: Highcharts.SeriesOptionsType[] = [
     {
       name: selectedStatObj.title,
-      data: selectedStatObj.data.map((point: { month: string; value: number }) => point.value),
+      data: selectedStatObj.chartValues.map(point => point.value),
       color: '#338FFF',
       type: 'areaspline' as const,
       fillColor: {
@@ -85,6 +95,9 @@ const ActivitiesCard = () => {
       showInLegend: false
     }
   ];
+
+  // Extract x-axis categories from the selected stat
+  const xAxisCategories = selectedStatObj.chartValues.map(point => point.name);
   
   // Pass chartSeries as prop to ActivityChart
   return (
@@ -95,26 +108,28 @@ const ActivitiesCard = () => {
           {/* Tabs */}
           <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
-            {/* Stats Row */}
+          <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>            {/* Stats Row */}
             <div className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}>
-              {currentTabData.stats.map((stat, index) => (
+              {currentData.map((stat, index) => (
                 <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
                   <StatButton
                     title={stat.title}
-                    value={stat.value}
-                    percentage={stat.percentage}
+                    value={stat.value.toString()}
+                    percentage={stat.trend}
                     isActive={selectedStat === stat.title}
-                    isPositive={stat.isPositive}
+                    isPositive={stat.rising}
                     onClick={() => handleStatClick(stat.title)}
-                    tooltip={stat.tooltip}
+                    tooltip={stat.title}
                   />
                 </div>
               ))}
-            </div>
-
-            {/* Chart */}
-            <ActivityChart chartType={currentTabData.chartType} selectedStat={selectedStat} chartSeries={chartSeries} />
+            </div>            {/* Chart */}
+            <ActivityChart 
+              chartType={activeTab} 
+              selectedStat={selectedStat} 
+              chartSeries={chartSeries}
+              xAxisCategories={xAxisCategories}
+            />
           </CardContent>
         </div>
       </div>

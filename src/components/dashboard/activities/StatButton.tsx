@@ -59,7 +59,7 @@ const StatButton = ({
         iconProps={{ className: 'w-3.5 h-3.5 text-[#8C9BAC]', stroke: '#8C9BAC' }}
         />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <div>
         <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>
           {value}
