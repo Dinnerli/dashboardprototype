@@ -183,11 +183,11 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
                     </div>
                     
                     {/* Two-row content: Title + Badge, User Count */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1">                      
                       {/* Row 1: Title and Active Badge */}
                       <div className="flex items-center gap-2">
-                        <span className="text-[#4F5A69] text-md font-medium">
-                          {rankItem.rank}
+                        <span className="text-[#4F5A69] text-md font-medium overflow-hidden text-ellipsis whitespace-nowrap max-w-[120px]">
+                          {rankItem.rank.length > 15 ? rankItem.rank.slice(0, 12) + '...' : rankItem.rank}
                         </span>
                         <span className={cn(
                           "text-[8px] px-2 py-0.5 rounded-full font-light",
