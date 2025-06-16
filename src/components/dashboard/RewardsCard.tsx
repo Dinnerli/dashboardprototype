@@ -30,6 +30,13 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
   // Fetch rank lobby data from API
   const { data: rankLobbyData, loading: rankLoading, error: rankError } = useRankLobby({ startDate, endDate, department });
 
+  // Function to get rank image based on index (loop through 9 images)
+  const getRankImage = (index: number) => {
+    const imageNumber = (index % 9) + 1;
+    const paddedNumber = imageNumber.toString().padStart(2, '0');
+    return `/rank-map/rank-${paddedNumber}.svg`;
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' });
@@ -81,38 +88,41 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
         </div>
       ))}
     </div>
-  );
-
-  return (
-    <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white overflow-hidden`} 
+  );  return (
+    <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white flex flex-col overflow-hidden`} 
       style={{ animationDelay: '0.4s' }}>
+      
+      {/* Header - Fixed at top */}
       <CardHeader title="Rewards" rightContent={isMobile ? null : <ViewReportButton />} />
-      <div className="flex flex-col h-full">
-        {/* Tabs section - converted to using shadcn Tabs */}
-        <Tabs 
-          defaultValue="certificates" 
-          value={selectedTab} 
-          onValueChange={(value) => setSelectedTab(value as 'certificates' | 'rank')}
-          className="w-full"
-        >
-          <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">
-            <TabsTrigger 
-              value="certificates"
-              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
-            >
-              {selectedTab === "certificates" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
-              Certificates
-            </TabsTrigger>
-            <TabsTrigger 
-              value="rank"
-              className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
-            >
-              {selectedTab === "rank" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
-              Rank Lobby
-            </TabsTrigger>
-          </TabsList>          <TabsContent value="certificates" className="m-0 overflow-y-auto">
-            {/* Certificate list */}
-            <div className="flex flex-col w-full h-full">
+      
+      {/* Tabs section - Fixed below header */}
+      <Tabs 
+        defaultValue="certificates" 
+        value={selectedTab} 
+        onValueChange={(value) => setSelectedTab(value as 'certificates' | 'rank')}
+        className="w-full flex flex-col flex-1 min-h-0"
+      >
+        {/* Tab headers - Fixed */}
+        <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0 flex-shrink-0">
+          <TabsTrigger 
+            value="certificates"
+            className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
+          >
+            {selectedTab === "certificates" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
+            Certificates
+          </TabsTrigger>
+          <TabsTrigger 
+            value="rank"
+            className={`px-3 py-2 sm:px-5 sm:py-3 rounded-none data-[state=active]:shadow-none data-[state=active]:bg-white relative text-xs sm:text-sm md:text-base font-semibold data-[state=active]:text-[#338FFF] data-[state=inactive]:text-[#8C9BAC] focus-visible:outline-none focus-visible:ring-0 ${isMobile ? 'flex-1' : ''}`}
+          >
+            {selectedTab === "rank" && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#338FFF]"></div>}
+            Rank Lobby
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Scrollable content area */}
+        <TabsContent value="certificates" className="m-0 flex-1 overflow-y-auto minimal-scrollbar min-h-0">
+          <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
               {certificatesLoading ? (
                 <CertificatesSkeleton />
               ) : certificatesError ? (
@@ -140,69 +150,75 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
                       </div>
                     </div>
                   </div>
-                ))              ) : (
-                <EmptyState cardName="Certificates" />
-              )}
-            </div>
-          </TabsContent>          <TabsContent value="rank" className="mt-4 overflow-hidden">
-            <div className="flex flex-col h-full overflow-y-auto gap-2">
-              {rankLoading ? (
-                <RankLobbySkeleton />
-              ) : rankError ? (
-                <div className="p-6 text-center text-red-500">{rankError}</div>
-              ) : rankLobbyData && rankLobbyData.length > 0 ? (
-                rankLobbyData.map((rankItem, index) => (
-                  <div
-                    key={`${rankItem.rank}-${index}`}
-                    className="flex justify-between items-center p-3 border-b border-[#F5F6F8] hover:bg-[#F8F9FA] transition-colors duration-200"
-                  >
-                    {/* First Column - Image + Title/Badge + User Count */}
-                    <div className="flex items-center gap-3">
-                      {/* Image */}
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center flex-shrink-0">
-                        <img 
-                          src="/placeholder.svg" 
-                          alt={rankItem.rank}
-                          className="w-8 h-8 object-contain"
-                        />
+                ))            ) : (
+              <EmptyState cardName="Certificates" />
+            )}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="rank" className="m-0 flex-1 overflow-y-auto minimal-scrollbar min-h-0">
+          <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
+            {rankLoading ? (
+              <RankLobbySkeleton />
+            ) : rankError ? (
+              <div className="p-6 text-center text-red-500">{rankError}</div>
+            ) : rankLobbyData && rankLobbyData.length > 0 ? (
+              rankLobbyData.map((rankItem, index) => (
+                <div
+                  key={`${rankItem.rank}-${index}`}
+                  className="flex justify-between items-center p-3 border-b border-[#F5F6F8] hover:bg-[#F8F9FA] transition-colors duration-200"
+                >                  {/* First Column - Image + Title/Badge + User Count */}
+                  <div className="flex items-center gap-3">
+                    {/* Image */}
+                    <div className="w-12 h-12 bg-gradient-to-br  rounded-full flex items-center justify-center flex-shrink-0">
+                      <img 
+                        src={getRankImage(index)} 
+                        alt={rankItem.rank}
+                        className="w-12 h-12 object-contain"
+                        onError={(e) => {
+                          // Fallback to placeholder if rank image fails to load
+                          e.currentTarget.src = "/placeholder.svg";
+                        }}
+                      />
+                    </div>
+                    
+                    {/* Two-row content: Title + Badge, User Count */}
+                    <div className="flex flex-col gap-1">
+                      {/* Row 1: Title and Active Badge */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-[#4F5A69] text-md font-medium">
+                          {rankItem.rank}
+                        </span>
+                        <span className={cn(
+                          "text-[8px] px-2 py-0.5 rounded-full font-light",
+                          rankItem.active 
+                            ? "bg-green-100 text-green-600" 
+                            : "bg-gray-100 text-gray-600"
+                        )}>
+                          {rankItem.active ? "Active" : "Inactive"}
+                        </span>
                       </div>
                       
-                      {/* Two-row content: Title + Badge, User Count */}
-                      <div className="flex flex-col gap-1">                        {/* Row 1: Title and Active Badge */}
-                        <div className="flex items-center gap-2">
-                          <span className="text-[#4F5A69] text-md font-semibold">
-                            {rankItem.rank}
-                          </span>
-                          <span className={cn(
-                            "text-[8px] px-2 py-0.5 rounded-full font-light",
-                            rankItem.active 
-                              ? "bg-green-100 text-green-600" 
-                              : "bg-gray-100 text-gray-600"
-                          )}>
-                            {rankItem.active ? "Active" : "Inactive"}
-                          </span>
-                        </div>
-                        
-                        {/* Row 2: Achieved Users Count */}
-                        <div className="flex items-center">
-                          <span className="text-[#8C9BAC] text-sm font-medium mr-1">Achieved Users |</span>
-                          <span className="text-[#4F5A69]
-                           font-semibold text-xs">{rankItem.users}</span>
-                        </div>
+                      {/* Row 2: Achieved Users Count */}
+                      <div className="flex items-center">
+                        <span className="text-[#8C9BAC] text-sm font-medium mr-1">Achieved Users : </span>
+                        <span className="text-[#4F5A69] font-semibold text-sm">{rankItem.users}</span>
                       </div>
-                    </div>                    {/* Second Column - Percentage (with space between) */}
-                    <div className="flex items-center ml-8">
-                      <span className="text-[#4F5A69] font-semibold text-[22px]">{rankItem.value}</span>
                     </div>
                   </div>
-                ))
-              ) : (
-                <EmptyState cardName="Rank Lobby" />
-              )}
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
+
+                  {/* Second Column - Percentage (with space between) */}
+                  <div className="flex items-center ml-8">
+                    <span className="text-[#4F5A69] font-semibold text-[22px]">{rankItem.value}</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <EmptyState cardName="Rank Lobby" />
+            )}
+          </div>
+        </TabsContent>
+      </Tabs>
     </Card>
   );
 };
