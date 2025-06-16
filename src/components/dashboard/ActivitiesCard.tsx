@@ -11,6 +11,8 @@ import ActivitiesCardSkeleton from '../Skeletons/ActivitiesCard.skeleton';
 import { useUserActivity } from '../../hooks/useUserActivity';
 import { useUsageActivity } from '../../hooks/useUsageActivity';
 import { useCourseActivity } from '../../hooks/useCourseActivity';
+import activitiesTooltips from '../../Data/ActivitiesTooltips.json';
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 interface ActivitiesCardProps {
   startDate: string;
@@ -42,9 +44,11 @@ const ActivitiesCard = ({ startDate, endDate, department = "All" }: ActivitiesCa
     }
   };
 
-  const { data: currentData, loading, error } = getCurrentData();
-
-  // Update selectedStat when tab changes or data loads
+  const { data: currentData, loading, error } = getCurrentData();  // Helper function to get tooltip for a stat
+  const getTooltipForStat = (statTitle: string): string | undefined => {
+    const categoryTooltips = activitiesTooltips[activeTab as keyof typeof activitiesTooltips];
+    return categoryTooltips ? categoryTooltips[statTitle as keyof typeof categoryTooltips] : undefined;
+  };  // Update selectedStat when tab changes or data loads
   useEffect(() => {
     if (currentData && currentData.length > 0) {
       setSelectedStat(currentData[0].title);
@@ -98,42 +102,46 @@ const ActivitiesCard = ({ startDate, endDate, department = "All" }: ActivitiesCa
 
   // Extract x-axis categories from the selected stat
   const xAxisCategories = selectedStatObj.chartValues.map(point => point.name);
-  
-  // Pass chartSeries as prop to ActivityChart
+    // Pass chartSeries as prop to ActivityChart
   return (
-    <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`}>
-      <div className="h-full">
-        <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
-        <div className="flex flex-col w-full justify-between mb-2">
-          {/* Tabs */}
-          <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+    <TooltipProvider>
+      <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`}>
+        <div className="h-full">
+          <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
+          <div className="flex flex-col w-full justify-between mb-2">
+            {/* Tabs */}
+            <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>            {/* Stats Row */}
-            <div className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}>
-              {currentData.map((stat, index) => (
-                <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
-                  <StatButton
-                    title={stat.title}
-                    value={stat.value.toString()}
-                    percentage={stat.trend}
-                    isActive={selectedStat === stat.title}
-                    isPositive={stat.rising}
-                    onClick={() => handleStatClick(stat.title)}
-                    tooltip={stat.title}
-                  />
-                </div>
-              ))}
-            </div>            {/* Chart */}
-            <ActivityChart 
-              chartType={activeTab} 
-              selectedStat={selectedStat} 
-              chartSeries={chartSeries}
-              xAxisCategories={xAxisCategories}
-            />
-          </CardContent>
+            <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
+              {/* Stats Row */}
+              <div className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}>
+                {currentData.map((stat, index) => (
+                  <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+                    <StatButton
+                      title={stat.title}
+                      value={stat.value.toString()}
+                      percentage={stat.trend}
+                      isActive={selectedStat === stat.title}
+                      isPositive={stat.rising}
+                      onClick={() => handleStatClick(stat.title)}
+                      tooltip={getTooltipForStat(stat.title)}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Chart */}
+              <ActivityChart 
+                chartType={activeTab} 
+                selectedStat={selectedStat} 
+                chartSeries={chartSeries}
+                xAxisCategories={xAxisCategories}
+              />
+            </CardContent>
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </TooltipProvider>
   );};
 
 export default ActivitiesCard;

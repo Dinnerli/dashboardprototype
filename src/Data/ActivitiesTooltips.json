@@ -1,0 +1,16 @@
+{
+  "user": {
+    "Active Users": "Total number of users who actively engaged with the learning platform",
+    "Signups": "Number of new user registrations during this period"
+  },
+  "usage": {
+    "Platform": "Overall platform usage metrics and engagement statistics",
+    "Courses": "Usage statistics specifically related to course activities",
+    "Library": "Usage statistics for library and resource access"
+  },
+  "course": {
+    "Assigned Courses": "Number of courses assigned to learners during this period",
+    "Passed Courses": "Number of learners who achieved a passing score in courses",
+    "Completed Courses": "Number of learners who finished all course components"
+  }
+}

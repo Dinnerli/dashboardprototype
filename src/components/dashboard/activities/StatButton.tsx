@@ -1,7 +1,7 @@
 import { Info } from "lucide-react";
 import TrendIndicator from "../common/TrendIndicator";
-import InfoTooltip from "@/components/ui/InfoTooltip";
-import React, { useState, useEffect } from "react";  // added imports for state and effect
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import React, { useState, useEffect } from "react";
 
 type StatButtonProps = { 
   title: string; 
@@ -46,18 +46,26 @@ const StatButton = ({
         }`}
       />
       </div>
-      <div className="flex flex-col gap-0.5">
-      <div className="flex items-center gap-2.5 ">
+      <div className="flex flex-col gap-0.5">      <div className="flex items-center gap-2.5 ">
         <span className={`font-medium transition-colors duration-200 truncate max-w-[120px] whitespace-nowrap ${
         isActive ? 'text-[#338FFF]' : 'text-[#8C9BAC]'
         } ${isMobile ? 'text-xs' : 'text-sm'}`}>
         {title}
         </span>
-        <InfoTooltip
-        tooltip={tooltip}
-        delayDuration={0}
-        iconProps={{ className: 'w-3.5 h-3.5 text-[#8C9BAC]', stroke: '#8C9BAC' }}
-        />
+        {tooltip ? (
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <span tabIndex={0} onClick={e => e.stopPropagation()} className='cursor-pointer'>
+                <Info className='w-3.5 h-3.5 text-[#8C9BAC]' stroke='#8C9BAC' />
+              </span>
+            </TooltipTrigger>
+            <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+              {tooltip}
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <Info className='w-3.5 h-3.5 text-[#8C9BAC]' stroke='#8C9BAC' />
+        )}
       </div>
       <div className="flex items-center justify-between">
         <div>
