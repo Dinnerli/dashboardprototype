@@ -200,15 +200,24 @@ const LearningActivityCard = ({
                   const arcSpacing = 8;
                   const baseRadius = 120;
                   const r = baseRadius - idx * (arcWidth + arcSpacing);
-                  const cx = 150, cy = 150;
-                  const donutData = getDonutData(activity);
+                  const cx = 150, cy = 150;                  const donutData = getDonutData(activity);
                   const total = donutData.reduce((sum, d) => sum + (typeof d.value === 'number' ? d.value : 0), 0);
                   const assigned = donutData[0]?.value || 0;
                   const completed = donutData[1]?.value || 0;
                   const enrolled = donutData[2]?.value || 0;
-                  const assignedPct = assigned / total;
-                  const completedPct = completed / total;
-                  const enrolledPct = enrolled / total;
+                  
+                  // Handle division by zero - when total is 0, show a placeholder arc structure
+                  let assignedPct, completedPct, enrolledPct;
+                  if (total > 0) {
+                    assignedPct = assigned / total;
+                    completedPct = completed / total;
+                    enrolledPct = enrolled / total;
+                  } else {
+                    // When all values are 0, show a minimal arc structure
+                    assignedPct = 0.01; // Very small arc just to show structure
+                    completedPct = 0.01;
+                    enrolledPct = 0.01;
+                  }
                   const startAngle = 0;
                   const assignedEnd = startAngle + assignedPct * 270;
                   const completedEnd = assignedEnd + completedPct * 270;
