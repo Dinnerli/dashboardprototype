@@ -35,7 +35,7 @@
   "Quizzes": {
     "stats": {
       "Ongoing": "Total number of Ongoing Exams",
-      "Participants": "Overall time learners spent engaging with Exams content"
+      "Time Spent": "Overall time learners spent engaging with Exams content"
     },
     "data": {
       "Assigned": "Number of learners assigned for Exams",
@@ -45,7 +45,7 @@
   },
   "Library": {
     "stats": {
-      "Uploads": "Total number of Library Groups Uploads",
+      "Groups": "Total number of Library Groups Uploads",
       "Time Spent": "Overall time learners spent engaging with course content"
     },
     "data": {
