@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import FilterDropdown from "../common/FilterDropdown";
 import DateRangePicker from "../common/DateRangePicker";
 import MobileDateRangePicker from "../common/MobileDateRangePicker";
+import { useDepartments } from "../../../hooks/useDepartments";
 
 const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, department, ...rest }: {
   dateRange: { from: Date; to: Date | undefined };
@@ -16,7 +17,9 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
   const defaultFrom = new Date(today);
   defaultFrom.setDate(today.getDate() - 29); // last 30 days (inclusive)
   const [showMobileFilters, setShowMobileFilters] = useState(false); // mobile filter toggle
-  const departmentOptions = ["All", "Marketing", "Accounts", "Sales", "Development"];
+  
+  // Use the departments hook instead of hardcoded values
+  const { data: departmentOptions, loading: departmentsLoading } = useDepartments();
 
   // Add local pendingDateRange state for controlled update
   const [pendingDateRange, setPendingDateRange] = useState<{ from: Date; to: Date | undefined }>(dateRange);
@@ -58,9 +61,15 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
   const handleDateRangeChange = (from: Date, to: Date) => {
     setPendingDateRange({ from, to });
   };
-
-  const handleDepartmentChange = (option: string) => {
-    onDepartmentChange(option);
+  const handleDepartmentChange = (selectedDepartments: string[]) => {
+    // If "All" is selected or no departments are selected, pass "All"
+    // Otherwise, pass the first selected department (for backward compatibility)
+    // Or you could join them with a comma if the API supports multiple departments
+    const departmentParam = selectedDepartments.length === 0 || selectedDepartments.includes('All') 
+      ? "All" 
+      : selectedDepartments.join(','); // Join multiple departments with comma
+    
+    onDepartmentChange(departmentParam);
   };
 
   return (
@@ -82,15 +91,15 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
             defaultValue="Last 30 Days"
             value={dateRange}
           />
-        </div>
-        {/* Filters section */}
+        </div>        {/* Filters section */}
         <div className="flex w-64 items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
           <FilterDropdown 
-            options={departmentOptions} 
+            options={departmentOptions || ["All"]} 
             defaultValue="All" 
             size="sm"
             onChange={handleDepartmentChange}
-            value={department}
+            value={department === "All" ? ["All"] : department.split(',')}
+            disabled={departmentsLoading}
           />
         </div>
       </div>
@@ -106,14 +115,14 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
                   defaultValue="Last 30 Days"
                   value={dateRange}
                 />
-              </div>
-              <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
+              </div>              <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
                 <FilterDropdown 
-                  options={departmentOptions} 
+                  options={departmentOptions || ["All"]} 
                   defaultValue="All" 
                   size="sm"
                   onChange={handleDepartmentChange}
-                  value={department}
+                  value={department === "All" ? ["All"] : department.split(',')}
+                  disabled={departmentsLoading}
                 />
               </div>
             </div>
