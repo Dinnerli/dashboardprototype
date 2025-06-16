@@ -1,5 +1,5 @@
 import { Card, CardTitle } from "@/components/ui/card";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Filter } from "lucide-react";
 import { useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
@@ -12,6 +12,9 @@ import { useTopCertificates } from "@/hooks/useTopCertificates";
 import { useRankLobby } from "@/hooks/useRankLobby";
 import styles from './RewardsCard.module.css';
 import EmptyState from "./EmptyState";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Checkbox } from "@/components/ui/checkbox";
 
 
 interface RewardsCardProps {
@@ -20,15 +23,81 @@ interface RewardsCardProps {
   department: string;
 }
 
+// Extended interfaces to include language field for filtering
+interface ExtendedRankLobbyItem {
+  rank: string;
+  active: boolean;
+  users: number;
+  value: string;
+  language?: string;
+}
+
+interface ExtendedCertificate {
+  name: string;
+  value: number;
+  trend: number;
+  rising: boolean;
+  endDate: string;
+  language?: string;
+  active?: boolean;
+}
+
 const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
   const [selectedTab, setSelectedTab] = useState<'certificates' | 'rank'>('certificates');
   const isMobile = useIsMobile();
   
+  // Filter states
+  const [languageFilters, setLanguageFilters] = useState({
+    english: true,   // language: "1"
+    sinhala: true,   // language: "2"
+    tamil: true      // language: "3"
+  });
+  
+  const [statusFilters, setStatusFilters] = useState({
+    active: true,
+    inactive: true
+  });
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  
   // Fetch certificates data from API
   const { data: certificates, loading: certificatesLoading, error: certificatesError } = useTopCertificates({ startDate, endDate, department });
-  
-  // Fetch rank lobby data from API
+    // Fetch rank lobby data from API
   const { data: rankLobbyData, loading: rankLoading, error: rankError } = useRankLobby({ startDate, endDate, department });
+  // Filter functions
+  const filterByLanguage = (item: ExtendedRankLobbyItem | ExtendedCertificate) => {
+    if (!item.language) return true; // If no language field, show all
+    const lang = item.language.toString();
+    if (lang === "1" && languageFilters.english) return true;
+    if (lang === "2" && languageFilters.sinhala) return true;
+    if (lang === "3" && languageFilters.tamil) return true;
+    return false;
+  };
+
+  const filterByStatus = (item: ExtendedRankLobbyItem | ExtendedCertificate) => {
+    if (typeof item.active === 'undefined') return true; // If no active field, show all
+    if (item.active && statusFilters.active) return true;
+    if (!item.active && statusFilters.inactive) return true;
+    return false;
+  };
+  // Apply filters to data
+  const filteredRankLobbyData = (rankLobbyData as ExtendedRankLobbyItem[])?.filter(item => 
+    filterByLanguage(item) && filterByStatus(item)
+  ) || [];
+
+  // Filter certificates data (assuming certificates also have language field)
+  const filteredCertificates = (certificates as ExtendedCertificate[])?.filter(item => 
+    filterByLanguage(item) && filterByStatus(item)
+  ) || [];
+
+  // Filter UI handlers
+  const handleLanguageFilterChange = (language: 'english' | 'sinhala' | 'tamil', checked: boolean) => {
+    setLanguageFilters(prev => ({ ...prev, [language]: checked }));
+  };
+
+  const handleStatusFilterChange = (status: 'active' | 'inactive', checked: boolean) => {
+    setStatusFilters(prev => ({ ...prev, [status]: checked }));
+  };
 
   // Function to get rank image based on index (loop through 9 images)
   const getRankImage = (index: number) => {
@@ -90,16 +159,100 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
     </div>
   );  return (
     <Card className={`w-auto h-full ${isMobile ? '' : 'min-h-[490px]'} p-6 animate-slide-in-up bg-white flex flex-col overflow-hidden`} 
-      style={{ animationDelay: '0.4s' }}>
+      style={{ animationDelay: '0.4s' }}>      {/* Header - Fixed at top */}
+      <CardHeader title="Rewards" 
+      rightContent={selectedTab === 'rank' ? (
+        <Popover open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+          <PopoverTrigger asChild>
+            <button 
+              className="flex items-center justify-center   transition-colors"
+              aria-label="Filter options"
+              title="Filter options"
+            >
+              <Filter className="w-5 h-5 text-gray-600" />
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="w-52 p-0" align="end">
+            <div className="p-4 pt-0">
+                         
+              <Accordion type="multiple" defaultValue={["language", "status"]} className="w-full">                {/* Language Accordion */}
+                <AccordionItem value="language">
+                  <AccordionTrigger className="text-sm font-medium text-[#4F5A69] hover:no-underline">Language</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-3 ">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="english"
+                          checked={languageFilters.english}
+                          onCheckedChange={(checked) => handleLanguageFilterChange('english', checked as boolean)}
+                        />
+                        <label htmlFor="english" className="text-sm text-[#4F5A69] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          English
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="sinhala"
+                          checked={languageFilters.sinhala}
+                          onCheckedChange={(checked) => handleLanguageFilterChange('sinhala', checked as boolean)}
+                        />
+                        <label htmlFor="sinhala" className="text-sm text-[#4F5A69] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          Sinhala
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="tamil"
+                          checked={languageFilters.tamil}
+                          onCheckedChange={(checked) => handleLanguageFilterChange('tamil', checked as boolean)}
+                        />
+                        <label htmlFor="tamil" className="text-sm text-[#4F5A69] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          Tamil
+                        </label>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>                {/* Status Accordion */}
+                <AccordionItem value="status" className="border-b-0">
+                  <AccordionTrigger className="text-sm font-medium text-[#4F5A69] hover:no-underline">Status</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="active"
+                          checked={statusFilters.active}
+                          onCheckedChange={(checked) => handleStatusFilterChange('active', checked as boolean)}
+                        />
+                        <label htmlFor="active" className="text-sm text-[#4F5A69] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          Active
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="inactive"
+                          checked={statusFilters.inactive}
+                          onCheckedChange={(checked) => handleStatusFilterChange('inactive', checked as boolean)}
+                        />
+                        <label htmlFor="inactive" className="text-sm text-[#4F5A69] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          Inactive
+                        </label>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </PopoverContent>
+        </Popover>
+      ) : null} />
       
-      {/* Header - Fixed at top */}
-      <CardHeader title="Rewards" rightContent={isMobile ? null : <ViewReportButton />} />
-      
-      {/* Tabs section - Fixed below header */}
-      <Tabs 
+      {/* Tabs section - Fixed below header */}      <Tabs 
         defaultValue="certificates" 
         value={selectedTab} 
-        onValueChange={(value) => setSelectedTab(value as 'certificates' | 'rank')}
+        onValueChange={(value) => {
+          setSelectedTab(value as 'certificates' | 'rank');
+          setIsFilterOpen(false); // Close filter popover when switching tabs
+        }}
         className="w-full flex flex-col flex-1 min-h-0"
       >
         {/* Tab headers - Fixed */}
@@ -120,15 +273,14 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
           </TabsTrigger>
         </TabsList>
 
-        {/* Scrollable content area */}
-        <TabsContent value="certificates" className="m-0 flex-1 overflow-y-auto minimal-scrollbar min-h-0">
+        {/* Scrollable content area */}        <TabsContent value="certificates" className="m-0 flex-1 overflow-y-auto minimal-scrollbar min-h-0">
           <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
               {certificatesLoading ? (
                 <CertificatesSkeleton />
               ) : certificatesError ? (
                 <div className="p-6 text-center text-red-500">{certificatesError}</div>
-              ) : certificates && certificates.length > 0 ? (
-                certificates.map((cert, index) => (
+              ) : filteredCertificates && filteredCertificates.length > 0 ? (
+                filteredCertificates.map((cert, index) => (
                   <div key={cert.name} className="flex p-2.5 justify-between items-center border-b border-[#F5F6F8]">
                     <div className="flex h-full items-start pr-2">
                       <span className="w-2 p-2.5 text-[#4F5A69] text-center text-xs self-start">{index + 1}</span>
@@ -154,16 +306,14 @@ const RewardsCard = ({ startDate, endDate, department }: RewardsCardProps) => {
               <EmptyState cardName="Certificates" />
             )}
           </div>
-        </TabsContent>
-
-        <TabsContent value="rank" className="m-0 flex-1 overflow-y-auto minimal-scrollbar min-h-0">
+        </TabsContent>        <TabsContent value="rank" className="m-0 flex-1 overflow-y-auto minimal-scrollbar min-h-0">
           <div className="py-2.5 flex flex-col gap-2.5 transition-all duration-300">
             {rankLoading ? (
               <RankLobbySkeleton />
             ) : rankError ? (
               <div className="p-6 text-center text-red-500">{rankError}</div>
-            ) : rankLobbyData && rankLobbyData.length > 0 ? (
-              rankLobbyData.map((rankItem, index) => (
+            ) : filteredRankLobbyData && filteredRankLobbyData.length > 0 ? (
+              filteredRankLobbyData.map((rankItem, index) => (
                 <div
                   key={`${rankItem.rank}-${index}`}
                   className="flex justify-between items-center p-3 border-b border-[#F5F6F8] hover:bg-[#F8F9FA] transition-colors duration-200"

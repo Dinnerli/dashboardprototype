@@ -95,7 +95,7 @@ export const DeviceCard = ({ startDate, endDate, department }: { startDate: stri
     >
       <CardHeader
         title="Devices"
-        rightContent={isMobile ? null : <ViewReportButton />}
+       
       />      <div className="flex flex-col justify-between">
         {loading ? (
           <DeviceCardSkeleton />
