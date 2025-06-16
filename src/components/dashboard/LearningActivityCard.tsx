@@ -8,31 +8,28 @@ import learningActivities from "@/Data/LearningActivities.json";
 import learningActivitiesTooltips from "@/Data/LearningActivitiesTooltips.json";
 import InfoTooltip from "@/components/ui/InfoTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Activity,
+  DataItem,
+  LearningActivitiesResponse,
+  TooltipData,
+  DonutKey,
+  activityKeyMap,
+  donutKeys
+} from "@/types/LearningActivities";
 
 interface LearningActivityCardProps {
   title?: string;
 }
 
-// Map activity names to keys for donut chart logic
-const activityKeyMap: Record<string, string> = {
-  "Courses": "courses",
-  "ILT": "ilt_vilt",
-  "VILT": "ilt_vilt",
-  "Quizzes": "quizzes",
-  "Library": "library"
-};
-
-type Activity = typeof learningActivities.activities[number];
-type ActivityData = Activity["data"][number];
-
-type DonutKey = "library" | "quizzes" | "ilt_vilt" | "courses";
-const donutKeys: DonutKey[] = ["library", "quizzes", "ilt_vilt", "courses"];
-
 const LearningActivityCard = ({
   title = "Learning Activities"
 }: LearningActivityCardProps) => {
-  // Prepare activities data
-  const activities: Activity[] = learningActivities.activities;
+  // Prepare activities data from the correct JSON structure
+  const learningActivitiesData = learningActivities as LearningActivitiesResponse;
+  const activities: Activity[] = learningActivitiesData.result.data;
+  const tooltipsData = learningActivitiesTooltips as TooltipData;
+  
   // Find first available activity for initial state
   const initialKey = activityKeyMap[activities[0]?.name] || "courses";
   const [activeSegment, setActiveSegment] = useState<string>(initialKey);
@@ -42,12 +39,12 @@ const LearningActivityCard = ({
   const isMobile = useIsMobile();
 
   // Helper to get tooltip for stats
-  function getStatTooltip(activityName: string, statName: string) {
-    return learningActivitiesTooltips[activityName]?.stats?.[statName] || undefined;
+  function getStatTooltip(activityName: string, statName: string): string | undefined {
+    return tooltipsData[activityName]?.stats?.[statName] || undefined;
   }
   // Helper to get tooltip for data
-  function getDataTooltip(activityName: string, dataName: string) {
-    return learningActivitiesTooltips[activityName]?.data?.[dataName] || undefined;
+  function getDataTooltip(activityName: string, dataName: string): string | undefined {
+    return tooltipsData[activityName]?.data?.[dataName] || undefined;
   }
 
   // Find the active activity data
@@ -88,26 +85,31 @@ const LearningActivityCard = ({
       x: cx + r * Math.cos(rad),
       y: cy + r * Math.sin(rad)
     };
-  }
-  // Donut chart expects three metrics: different for each activity type
-  function getDonutData(activity: Activity): ActivityData[] {
+  }  // Donut chart expects three metrics: different for each activity type
+  function getDonutData(activity: Activity): DataItem[] {
     // Handle Library specifically - it has different metrics
     if (activity.name === "Library") {
-      const itemsUploaded = activity.data.find(d => d.name === "Items Uploaded")!;
-      const assigned      = activity.data.find(d => d.name === "Assigned")!;
-      const viewed        = activity.data.find(d => d.name === "Viewed")!;
-      return [ itemsUploaded, assigned, viewed ];
+      const assigned = activity.data.find(d => d.name === "Assigned");
+      const viewed = activity.data.find(d => d.name === "Viewed");
+      // For Library, we need to create a third metric from stats since it only has 2 data items
+      const itemsUploaded: DataItem = {
+        name: "Items Uploaded",
+        value: activity.stats.find(s => s.statName === "Items Uploaded")?.value || 0,
+        trend: activity.stats.find(s => s.statName === "Items Uploaded")?.trend || "0%",
+        isRising: activity.stats.find(s => s.statName === "Items Uploaded")?.isRising || false
+      };
+      return [assigned, viewed, itemsUploaded].filter(Boolean) as DataItem[];
     }
     
     // For other activities: Assigned, Completed, Enrolled/Passed
     const assigned = activity.data.find((d) => d.name === "Assigned") || activity.data[0];
     const completed = activity.data.find((d) => d.name === "Completed") || activity.data[1];
-    // Use "Enrolled" for ILT/VILT, "Passed" for Exams, or fallback to third item
+    // Use "Enrolled" for ILT/VILT, "Passed" for Courses/Quizzes, or fallback to third item
     let thirdMetric = activity.data.find((d) => d.name === "Enrolled");
     if (!thirdMetric) thirdMetric = activity.data.find((d) => d.name === "Passed");
     if (!thirdMetric) thirdMetric = activity.data[2];
     
-    return [assigned, completed, thirdMetric];
+    return [assigned, completed, thirdMetric].filter(Boolean) as DataItem[];
   }
   // Add hoveredArc state to the component
   const [hoveredArc, setHoveredArc] = useState<{
@@ -269,11 +271,10 @@ const LearningActivityCard = ({
                                 iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
                               />
                             )}
-                          </div>
-                          <div className="flex items-center gap-3">
+                          </div>                          <div className="flex items-center gap-3">
                             <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>{stat.value}</span>
                             <div className="flex items-center">
-                              <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
+                              <TrendIndicator value={stat.trend} isPositive={stat.isRising} />
                             </div>
                           </div>
                         </div>

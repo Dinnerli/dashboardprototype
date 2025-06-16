@@ -1,189 +1,188 @@
 {
-  "activities": [
-    {
-      "name": "Courses",
-      "stats": [
-        {
-          "statName": "Uploads",
-          "value": 230,
-          "trendPercentage": "2.5%",
-          "isRising": true
-        },
-        {
-          "statName": "Time Spent",
-          "value": "12",
-          "trendPercentage": "1.1%",
-          "isRising": false
-        }
-      ],
-      "data": [
-        {
-          "name": "Assigned",
-          "value": 980,
-          "trend": "4.0%",
-          "isRising": true
-        },
-        {
-          "name": "Passed",
-          "value": 40,
-          "trend": "3.6%",
-          "isRising": true
-        },
-        {
-          "name": "Completed",
-          "value": 220,
-          "trend": "2.0%",
-          "isRising": false
-        }
-      ]
+    "success": true,
+    "result": {
+        "message": "Learning activity stats fetched successfully.",
+        "data": [
+            {
+                "name": "Courses",
+                "stats": [
+                    {
+                        "statName": "Uploaded",
+                        "value": 336,
+                        "trend": "-13.85%",
+                        "isRising": false
+                    },
+                    {
+                        "statName": "Time Spent (hrs)",
+                        "value": 11.6,
+                        "trend": "-14.18%",
+                        "isRising": false
+                    }
+                ],
+                "data": [
+                    {
+                        "name": "Assigned",
+                        "value": 43,
+                        "trend": "-4.44%",
+                        "isRising": false
+                    },
+                    {
+                        "name": "Passed",
+                        "value": 16,
+                        "trend": "-42.86%",
+                        "isRising": false
+                    },
+                    {
+                        "name": "Completed",
+                        "value": 34,
+                        "trend": "-5.56%",
+                        "isRising": false
+                    }
+                ]
+            },
+            {
+                "name": "Quizzes",
+                "stats": [
+                    {
+                        "statName": "Ongoing",
+                        "value": 84,
+                        "trend": "211.11%",
+                        "isRising": true
+                    },
+                    {
+                        "statName": "Time Spent (hrs)",
+                        "value": 14.3,
+                        "trend": "68.18%",
+                        "isRising": true
+                    }
+                ],
+                "data": [
+                    {
+                        "name": "Assigned",
+                        "value": 34,
+                        "trend": "25.93%",
+                        "isRising": true
+                    },
+                    {
+                        "name": "Passed",
+                        "value": 15,
+                        "trend": "-25%",
+                        "isRising": false
+                    },
+                    {
+                        "name": "Completed",
+                        "value": 31,
+                        "trend": "19.23%",
+                        "isRising": true
+                    }
+                ]
+            },
+            {
+                "name": "ILT",
+                "stats": [
+                    {
+                        "statName": "Ongoing Sessions",
+                        "value": 0,
+                        "trend": "0%",
+                        "isRising": false
+                    },
+                    {
+                        "statName": "Time Spent (hrs)",
+                        "value": 0.1,
+                        "trend": "100%",
+                        "isRising": true
+                    }
+                ],
+                "data": [
+                    {
+                        "name": "Assigned",
+                        "value": 6,
+                        "trend": "100%",
+                        "isRising": true
+                    },
+                    {
+                        "name": "Enrolled",
+                        "value": 6,
+                        "trend": "100%",
+                        "isRising": true
+                    },
+                    {
+                        "name": "Completed",
+                        "value": 6,
+                        "trend": "100%",
+                        "isRising": true
+                    }
+                ]
+            },
+            {
+                "name": "VILT",
+                "stats": [
+                    {
+                        "statName": "Ongoing Sessions",
+                        "value": 0,
+                        "trend": "0%",
+                        "isRising": false
+                    },
+                    {
+                        "statName": "Time Spent (hrs)",
+                        "value": 0,
+                        "trend": "100%",
+                        "isRising": true
+                    }
+                ],
+                "data": [
+                    {
+                        "name": "Assigned",
+                        "value": 2,
+                        "trend": "100%",
+                        "isRising": true
+                    },
+                    {
+                        "name": "Enrolled",
+                        "value": 2,
+                        "trend": "100%",
+                        "isRising": true
+                    },
+                    {
+                        "name": "Completed",
+                        "value": 2,
+                        "trend": "100%",
+                        "isRising": true
+                    }
+                ]
+            },
+            {
+                "name": "Library",
+                "stats": [
+                    {
+                        "statName": "Groups Uploaded",
+                        "value": 61,
+                        "trend": "12.96%",
+                        "isRising": true
+                    },
+                    {
+                        "statName": "Items Uploaded",
+                        "value": 29,
+                        "trend": "-53.97%",
+                        "isRising": false
+                    }
+                ],
+                "data": [
+                    {
+                        "name": "Assigned",
+                        "value": 21,
+                        "trend": "0%",
+                        "isRising": true
+                    },
+                    {
+                        "name": "Viewed",
+                        "value": 19,
+                        "trend": "0%",
+                        "isRising": true
+                    }
+                ]
+            }
+        ]
     },
-    {
-      "name": "ILT",
-      "stats": [
-        {
-          "statName": "Ongoing",
-          "value": 20,
-          "trendPercentage": "0.5%",
-          "isRising": true
-        },
-        {
-          "statName": "Total Session",
-          "value": 100,
-          "trendPercentage": "1.0%",
-          "isRising": false
-        }
-      ],
-      "data": [
-        {
-          "name": "Assigned",
-          "value": 80,
-          "trend": "1.2%",
-          "isRising": true
-        },
-        {
-          "name": "Enrolled",
-          "value": 300,
-          "trend": "0.9%",
-          "isRising": false
-        },
-        {
-          "name": "Completed",
-          "value": 570,
-          "trend": "2.4%",
-          "isRising": true
-        }
-      ]
-    },
-    {
-      "name": "VILT",
-      "stats": [
-        {
-          "statName": "Ongoing",
-          "value": 15,
-          "trendPercentage": "1.5%",
-          "isRising": true
-        },
-        {
-          "statName": "Total Session",
-          "value": 75,
-          "trendPercentage": "0.8%",
-          "isRising": false
-        }
-      ],
-      "data": [
-        {
-          "name": "Assigned",
-          "value": 460,
-          "trend": "3.1%",
-          "isRising": true
-        },
-        {
-          "name": "Enrolled",
-          "value": 210,
-          "trend": "2.0%",
-          "isRising": false
-        },
-        {
-          "name": "Completed",
-          "value": 90,
-          "trend": "1.7%",
-          "isRising": true
-        }
-      ]
-    },
-    {
-      "name": "Quizzes",
-      "stats": [
-        {
-          "statName": "Ongoing",
-          "value": 10,
-          "trendPercentage": "1.0%",
-          "isRising": true
-        },
-        {
-          "statName": "Participants",
-          "value": 580,
-          "trendPercentage": "2.2%",
-          "isRising": true
-        }
-      ],
-      "data": [
-        {
-          "name": "Assigned",
-          "value": 520,
-          "trend": "2.8%",
-          "isRising": true
-        },
-        {
-          "name": "Passed",
-          "value": 230,
-          "trend": "1.9%",
-          "isRising": false
-        },
-        {
-          "name": "Completed",
-          "value": 80,
-          "trend": "3.3%",
-          "isRising": true
-        }
-      ]
-    },
-    {
-      "name": "Library",
-      "stats": [
-        {
-          "statName": "Uploads",
-          "value": 95,
-          "trendPercentage": "0.6%",
-          "isRising": false
-        },
-        {
-          "statName": "Time Spent",
-          "value": "1,350",
-          "trendPercentage": "1.1%",
-          "isRising": false
-        }
-      ],
-      "data": [
-        {
-          "name": "Items Uploaded",
-          "value": 280,
-          "trend": "0.8%",
-          "isRising": false
-        },
-        {
-          "name": "Assigned",
-          "value": 290,
-          "trend": "1.0%",
-          "isRising": true
-        },
-        {
-          "name": "Viewed",
-          "value": 65,
-          "trend": "2.5%",
-          "isRising": false
-        }
-      ]
-    }
-  ]
+    "error": null
 }
