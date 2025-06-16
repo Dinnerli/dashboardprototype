@@ -1,16 +1,51 @@
 .stat-row {
-  /* Desktop styles remain unchanged, only mobile styles below */
+  /* Ensure horizontal scrolling with proper snap behavior */
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  /* Add padding to prevent cutting off content */
+  padding-right: 1rem;
+  /* Ensure proper spacing between items */
+  gap: 0.75rem;
+  /* Enable momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Improve scrolling performance */
+  scroll-behavior: smooth;
+  /* Ensure items don't wrap */
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
   .stat-row {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     flex-wrap: nowrap !important;
+    /* Hide scrollbar for better mobile experience */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+    /* Increase gap on mobile for better touch targets */
+    gap: 1rem;
+    padding-right: 1rem;
+    /* Enhanced touch scrolling */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    /* Ensure smooth dragging */
+    overscroll-behavior-x: contain;
   }
   .stat-row::-webkit-scrollbar {
-    display: none;
+    display: none; /* Webkit browsers */
+  }
+}
+
+@media (min-width: 769px) {
+  .stat-row {
+    /* On desktop, still allow horizontal scrolling if content overflows */
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+    gap: 1.25rem;
+    padding-right: 1rem;
+    /* Enable smooth scrolling */
+    scroll-behavior: smooth;
+    /* Enable mouse wheel horizontal scrolling */
+    overscroll-behavior-x: contain;
   }
 }

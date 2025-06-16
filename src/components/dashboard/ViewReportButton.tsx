@@ -8,7 +8,7 @@ const ViewReportButton: React.FC<ViewReportButtonProps> = ({ target }) => {
 
   const baseUrl = import.meta.env.VITE_BASE_URL || "https://www.layupcloud.com/";
   const site = import.meta.env.VITE_TENANT_SITE || "playground";
-  const targetUrl = `${baseUrl}${target ? target : "admin_leaderboard.php"}?site=${site}`;
+  const targetUrl = `${baseUrl}${target ? target : ""}?site=${site}`;
   return (
     <div className="flex items-center justify-center gap-1.5 px-0 py-1.5">
       <a href={targetUrl} target="_blank" rel="noopener noreferrer">

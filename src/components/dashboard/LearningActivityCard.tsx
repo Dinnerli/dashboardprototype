@@ -76,7 +76,8 @@ const LearningActivityCard = ({
   if (error) {
     return (
       <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton 
+        target="admin_learning_master_report.php" />} />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
           <div className="flex items-center justify-center h-64">
             <div className="text-red-500">Error: {error}</div>
@@ -90,7 +91,8 @@ const LearningActivityCard = ({
   if (!activities || activities.length === 0) {
     return (
       <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton 
+        target="admin_learning_master_report.php"/>} />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
           <EmptyState cardName="learning activities" />
         </CardContent>
@@ -164,7 +166,8 @@ const LearningActivityCard = ({
   return (
     <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
     
-        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton 
+        target="admin_learning_master_report.php" />} />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
           <div className="flex flex-col gap-4 w-full h-full md:flex-row items-center justify-center">
             {/* Interactive Chart */}

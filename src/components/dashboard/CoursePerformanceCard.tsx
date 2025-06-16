@@ -350,7 +350,8 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
     return (
       <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`} style={{ animationDelay: '0.2s' }}>
         <div className="h-full flex flex-col">
-          <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
+          <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton 
+          target="admin_report_courses.php" />} />
           <div className="flex items-center justify-center h-full">
             <span className="text-red-500">Error: {error}</span>
           </div>
@@ -360,7 +361,7 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
   }  return (
     <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`} style={{ animationDelay: '0.2s' }}>
       <div className="h-full flex flex-col">
-        <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title="Course Performance" rightContent={isMobile ? null : <ViewReportButton target="admin_report_courses.php" />} />
           {/* Tabs with top indicator */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="h-full">
           <TabsList className="flex h-auto justify-start w-full bg-white rounded-none p-0">

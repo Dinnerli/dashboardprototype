@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import ActivityTabs, { TabType } from "./activities/ActivityTabs";
 import ActivityChart from "./activities/ActivityChart";
@@ -24,6 +24,60 @@ const ActivitiesCard = ({ startDate, endDate, department = "All" }: ActivitiesCa
   const isMobile = useIsMobile();  
   const [activeTab, setActiveTab] = useState<TabType>('user');
   const [selectedStat, setSelectedStat] = useState<string>('');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Add drag scrolling functionality
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let isDown = false;
+    let startX: number;
+    let scrollLeft: number;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDown = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+      e.preventDefault();
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5; // Scroll speed multiplier
+      container.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleMouseUp = () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    };
+
+    const handleMouseLeave = () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    };
+
+    // Add event listeners for mouse drag
+    container.addEventListener('mousedown', handleMouseDown);
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener('mouseleave', handleMouseLeave);
+
+    // Set initial cursor
+    container.style.cursor = 'grab';
+
+    // Cleanup
+    return () => {
+      container.removeEventListener('mousedown', handleMouseDown);
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseup', handleMouseUp);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
 
   // Use the appropriate hook based on active tab
   const userActivityResult = useUserActivity({ startDate, endDate, department });
@@ -107,16 +161,21 @@ const ActivitiesCard = ({ startDate, endDate, department = "All" }: ActivitiesCa
     <TooltipProvider>
       <Card className={`w-full h-full ${isMobile ? '' : 'min-h-[490px]'} animate-slide-in-up p-4 sm:p-5 md:p-6`}>
         <div className="h-full">
-          <CardHeader title="Activity Overview" rightContent={isMobile ? null : <ViewReportButton />} />
+          <CardHeader title="Activity Overview" rightContent={isMobile ? null : 
+          <ViewReportButton  
+          target="admin_report_activities.php"
+          />} />
           <div className="flex flex-col w-full justify-between mb-2">
             {/* Tabs */}
             <ActivityTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-            <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>
-              {/* Stats Row */}
-              <div className={`stat-row flex items-center gap-3 sm:gap-5 p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto ${styles['stat-row']}`}>
+            <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 flex flex-col justify-between'}>              {/* Stats Row */}
+              <div 
+                ref={scrollContainerRef}
+                className={`stat-row flex items-center p-2.5 h-20 w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap carousel-scroll ${styles['stat-row']}`}
+              >
                 {currentData.map((stat, index) => (
-                  <div key={index} className="snap-start w-[70vw] min-w-[70vw] sm:w-auto sm:min-w-0">
+                  <div key={index} className="snap-start flex-shrink-0 min-w-fit">
                     <StatButton
                       title={stat.title}
                       value={stat.value.toString()}

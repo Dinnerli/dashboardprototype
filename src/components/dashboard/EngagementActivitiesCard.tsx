@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useSocialActiveUsers } from "@/hooks/useSocialActiveUsers";
 import { useSocialWallStats } from "@/hooks/useSocialWallStats";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import CardHeader from "./CardHeader";
 import EngagementStat from "./EngagementStat";
@@ -39,11 +39,89 @@ const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCa
     ...(activeUsersData ? [activeUsersData] : []),
     ...socialWallStats
   ] : [];
-
   const [selectedStat, setSelectedStat] = useState<string>('');
   const [isAnimated, setIsAnimated] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobile();
+
+  // Add drag scrolling functionality
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let isDown = false;
+    let startX: number;
+    let scrollLeft: number;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDown = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+      e.preventDefault();
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5; // Scroll speed multiplier
+      container.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleMouseUp = () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    };
+
+    const handleMouseLeave = () => {
+      isDown = false;
+      container.style.cursor = 'grab';
+    };
+
+    // Add touch events for mobile
+    const handleTouchStart = (e: TouchEvent) => {
+      isDown = true;
+      startX = e.touches[0].pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      container.scrollLeft = scrollLeft - walk;
+    };
+
+    const handleTouchEnd = () => {
+      isDown = false;
+    };
+
+    // Add event listeners
+    container.addEventListener('mousedown', handleMouseDown);
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('touchstart', handleTouchStart, { passive: false });
+    container.addEventListener('touchmove', handleTouchMove, { passive: false });
+    container.addEventListener('touchend', handleTouchEnd);
+
+    // Set initial cursor
+    container.style.cursor = 'grab';
+
+    // Cleanup
+    return () => {
+      container.removeEventListener('mousedown', handleMouseDown);
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseup', handleMouseUp);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
   // Set initial selected stat when data loads
   useEffect(() => {
     const combinedActivities = socialWallStats ? [
@@ -128,7 +206,7 @@ const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCa
   if (wallError || usersError) {
     return (
       <Card className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-        <CardHeader title="Social Wall Activities" rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title="Social Wall Activities"  />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
           <div className="flex items-center justify-center h-64">
             <div className="text-red-500">Error: {wallError || usersError}</div>
@@ -145,7 +223,7 @@ const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCa
   if (hasNoData) {
     return (
       <Card className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-        <CardHeader title="Social Wall Activities" rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title="Social Wall Activities"  />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
           <EmptyState cardName="Social Wall Activities" />
         </CardContent>
@@ -154,16 +232,16 @@ const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCa
   }
   return (
     <Card className="w-full h-full animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-      <CardHeader title="Social Wall Activities" rightContent={isMobile ? null : <ViewReportButton />} />
+      <CardHeader title="Social Wall Activities"  />
       <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0'}>
-        <div className="flex flex-col justify-between h-full gap-6 ">
-
-        {/* Stats Section */}
+        <div className="flex flex-col justify-between h-full gap-6 ">        {/* Stats Section */}
         <div
-          className={`stat-row flex items-center  gap-2.5  p-5 h-auto w-full overflow-x-auto hide-scrollbar scroll-smooth snap-x snap-mandatory flex-nowrap md:overflow-visible md:flex-wrap md:snap-none md:scroll-auto`}
+          ref={scrollContainerRef}
+          className={`flex items-center p-2.5 h-auto w-full overflow-x-auto hide-scrollbar scroll-smooth flex-nowrap ${styles['engagement-stat-row']}`}
         >
           {allActivities.map((activity) => (
-            <div key={activity.title} className="snap-start w-[70vw] min-w-[70vw]  sm:w-auto sm:min-w-0">              <EngagementStat
+            <div key={activity.title} className="flex-shrink-0 min-w-fit">
+              <EngagementStat
                 title={activity.title}
                 value={activity.value}
                 percentage={activity.trend}
