@@ -17,15 +17,15 @@ const activityKeyMap: Record<string, string> = {
   "Courses": "courses",
   "ILT": "ilt_vilt",
   "VILT": "ilt_vilt",
-  "Exams": "exams",
+  "Quizzes": "quizzes",
   "Library": "library"
 };
 
 type Activity = typeof learningActivities.activities[number];
 type ActivityData = Activity["data"][number];
 
-type DonutKey = "library" | "exams" | "ilt_vilt" | "courses";
-const donutKeys: DonutKey[] = ["library", "exams", "ilt_vilt", "courses"];
+type DonutKey = "library" | "quizzes" | "ilt_vilt" | "courses";
+const donutKeys: DonutKey[] = ["library", "quizzes", "ilt_vilt", "courses"];
 
 const LearningActivityCard = ({
   title = "Learning Activities"
