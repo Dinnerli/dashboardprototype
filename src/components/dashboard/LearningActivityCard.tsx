@@ -17,6 +17,7 @@ import {
   donutKeys
 } from "@/types/LearningActivities";
 import EmptyState from "./EmptyState";
+import LearningActivityCardSkeleton from "../Skeletons/LearningActivityCard.skeleton";
 
 interface LearningActivityCardProps {
   title?: string;
@@ -66,19 +67,9 @@ const LearningActivityCard = ({
     );
     return () => timers.forEach(timer => clearTimeout(timer));
   }, []);
-
   // Handle loading state
   if (loading) {
-    return (
-      <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
-        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
-        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
-          <div className="flex items-center justify-center h-64">
-            <div className="text-gray-500">Loading learning activities...</div>
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return <LearningActivityCardSkeleton />;
   }
 
   // Handle error state
