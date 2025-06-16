@@ -5,6 +5,7 @@ import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
 import learningActivities from "@/Data/LearningActivities.json";
+import learningActivitiesTooltips from "@/Data/LearningActivitiesTooltips.json";
 import InfoTooltip from "@/components/ui/InfoTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -39,6 +40,15 @@ const LearningActivityCard = ({
   const [segments, setSegments] = useState<Record<string, boolean>>({});
 
   const isMobile = useIsMobile();
+
+  // Helper to get tooltip for stats
+  function getStatTooltip(activityName: string, statName: string) {
+    return learningActivitiesTooltips[activityName]?.stats?.[statName] || undefined;
+  }
+  // Helper to get tooltip for data
+  function getDataTooltip(activityName: string, dataName: string) {
+    return learningActivitiesTooltips[activityName]?.data?.[dataName] || undefined;
+  }
 
   // Find the active activity data
   let activeActivity: Activity;
@@ -253,9 +263,9 @@ const LearningActivityCard = ({
                         <div className="flex flex-col">
                           <div className="flex items-center gap-2">
                             <span className={`font-semibold truncate text-[#8C9BAC] ${isMobile ? 'text-sm' : 'text-base'}`}>{stat.statName}</span>
-                            {stat.tooltip && (
+                            {getStatTooltip(activeActivity.name, stat.statName) && (
                               <InfoTooltip
-                                tooltip={stat.tooltip}
+                                tooltip={getStatTooltip(activeActivity.name, stat.statName)}
                                 iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
                               />
                             )}
@@ -298,9 +308,9 @@ const LearningActivityCard = ({
                     {/* Status label with tooltip */}
                     <div className="flex items-center gap-1">
                       <span className={`${isMobile ? 'text-sm' : 'text-base'} font-semibold text-[#8C9BAC]`}>{item.name}</span>
-                      {item.tooltip && (
+                      {getDataTooltip(activeActivity.name, item.name) && (
                         <InfoTooltip
-                          tooltip={item.tooltip}
+                          tooltip={getDataTooltip(activeActivity.name, item.name)}
                           iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
                         />
                       )}

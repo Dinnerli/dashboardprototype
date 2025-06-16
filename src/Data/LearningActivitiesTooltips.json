@@ -1,0 +1,57 @@
+{
+  "Courses": {
+    "stats": {
+      "Uploads": "Total number of course uploaded",
+      "Time Spent": "Overall time learners spent engaging with course content"
+    },
+    "data": {
+      "Assigned": "Number of learners assigned for courses",
+      "Passed": "Number of learners who achieved a passing score",
+      "Completed": "Number of learners who finished all course components, regardless of whether they passed the assessments"
+    }
+  },
+  "ILT": {
+    "stats": {
+      "Ongoing": "Total number of Ongoing Sessions",
+      "Total Session": "Total number of Sessions Uploads"
+    },
+    "data": {
+      "Assigned": "Number of learners assigned for Sessions",
+      "Enrolled": "Number of learners who self-enrolled in sessions",
+      "Completed": "Number of learners who completed the sessions"
+    }
+  },
+  "VILT": {
+    "stats": {
+      "Ongoing": "Total number of Ongoing Sessions",
+      "Total Session": "Total number of Sessions Uploads"
+    },
+    "data": {
+      "Assigned": "Number of learners assigned for Sessions",
+      "Enrolled": "Number of learners who self-enrolled in sessions",
+      "Completed": "Number of learners who completed the sessions"
+    }
+  },
+  "Quizzes": {
+    "stats": {
+      "Ongoing": "Total number of Ongoing Exams",
+      "Participants": "Overall time learners spent engaging with Exams content"
+    },
+    "data": {
+      "Assigned": "Number of learners assigned for Exams",
+      "Passed": "Number of learners who achieved a passing score",
+      "Completed": "Number of learners who finished the exams regardless of whether they passed the assessments"
+    }
+  },
+  "Library": {
+    "stats": {
+      "Uploads": "Total number of Library Groups Uploads",
+      "Time Spent": "Overall time learners spent engaging with course content"
+    },
+    "data": {
+      "Items Uploaded": "Total number of Items Uploads",
+      "Assigned": "Number of learners assigned for Items",
+      "Viewed": "Number of learners viewed the Items"
+    }
+  }
+}
