@@ -4,39 +4,107 @@ import { useEffect, useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
-import learningActivities from "@/Data/LearningActivities.json";
 import learningActivitiesTooltips from "@/Data/LearningActivitiesTooltips.json";
 import InfoTooltip from "@/components/ui/InfoTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLearningActivity } from "@/hooks/useLearningActivity";
 import {
   Activity,
   DataItem,
-  LearningActivitiesResponse,
   TooltipData,
   DonutKey,
   activityKeyMap,
   donutKeys
 } from "@/types/LearningActivities";
+import EmptyState from "./EmptyState";
 
 interface LearningActivityCardProps {
   title?: string;
+  startDate: string;
+  endDate: string;
+  department?: string;
 }
 
 const LearningActivityCard = ({
-  title = "Learning Activities"
+  title = "Learning Activities",
+  startDate,
+  endDate,
+  department = "All"
 }: LearningActivityCardProps) => {
-  // Prepare activities data from the correct JSON structure
-  const learningActivitiesData = learningActivities as LearningActivitiesResponse;
-  const activities: Activity[] = learningActivitiesData.result.data;
+  const isMobile = useIsMobile();
+  
+  // Fetch learning activities data from API
+  const { data: activities, loading, error } = useLearningActivity({
+    startDate,
+    endDate,
+    department
+  });  // Get tooltips data
   const tooltipsData = learningActivitiesTooltips as TooltipData;
   
-  // Find first available activity for initial state
-  const initialKey = activityKeyMap[activities[0]?.name] || "courses";
-  const [activeSegment, setActiveSegment] = useState<string>(initialKey);
+  // State management - must be at the top before any conditional returns
+  const [activeSegment, setActiveSegment] = useState<string>("courses");
   const [iltViltTab, setIltViltTab] = useState<'ILT' | 'VILT'>('ILT');
   const [segments, setSegments] = useState<Record<string, boolean>>({});
+  const [hoveredArc, setHoveredArc] = useState<{
+    category: string | null;
+    metric: string | null;
+  } | null>(null);
 
-  const isMobile = useIsMobile();
+  // Update activeSegment when activities change
+  useEffect(() => {
+    if (activities && activities.length > 0) {
+      const newInitialKey = activityKeyMap[activities[0]?.name] || "courses";
+      setActiveSegment(newInitialKey);
+    }
+  }, [activities]);
+
+  // Staggered animation effect
+  useEffect(() => {
+    // Staggered animation to reveal each segment
+    const timers = donutKeys.map((key, idx) =>
+      setTimeout(() => setSegments(prev => ({ ...prev, [key]: true })), 300 + idx * 300)
+    );
+    return () => timers.forEach(timer => clearTimeout(timer));
+  }, []);
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
+          <div className="flex items-center justify-center h-64">
+            <div className="text-gray-500">Loading learning activities...</div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
+          <div className="flex items-center justify-center h-64">
+            <div className="text-red-500">Error: {error}</div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Handle empty data state
+  if (!activities || activities.length === 0) {
+    return (
+      <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
+          <EmptyState cardName="learning activities" />
+        </CardContent>
+      </Card>
+    );  }
 
   // Helper to get tooltip for stats
   function getStatTooltip(activityName: string, statName: string): string | undefined {
@@ -46,7 +114,6 @@ const LearningActivityCard = ({
   function getDataTooltip(activityName: string, dataName: string): string | undefined {
     return tooltipsData[activityName]?.data?.[dataName] || undefined;
   }
-
   // Find the active activity data
   let activeActivity: Activity;
   if (activeSegment === 'ilt_vilt') {
@@ -54,14 +121,6 @@ const LearningActivityCard = ({
   } else {
     activeActivity = activities.find(a => activityKeyMap[a.name] === activeSegment) || activities[0];
   }
-
-  useEffect(() => {
-    // Staggered animation to reveal each segment
-    const timers = donutKeys.map((key, idx) =>
-      setTimeout(() => setSegments(prev => ({ ...prev, [key]: true })), 300 + idx * 300)
-    );
-    return () => timers.forEach(timer => clearTimeout(timer));
-  }, []);
 
   // Color palettes for active/inactive arcs
   const arcColors = {
@@ -108,14 +167,8 @@ const LearningActivityCard = ({
     let thirdMetric = activity.data.find((d) => d.name === "Enrolled");
     if (!thirdMetric) thirdMetric = activity.data.find((d) => d.name === "Passed");
     if (!thirdMetric) thirdMetric = activity.data[2];
-    
-    return [assigned, completed, thirdMetric].filter(Boolean) as DataItem[];
+      return [assigned, completed, thirdMetric].filter(Boolean) as DataItem[];
   }
-  // Add hoveredArc state to the component
-  const [hoveredArc, setHoveredArc] = useState<{
-    category: string | null;
-    metric: string | null;
-  } | null>(null);
 
   return (
     <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
