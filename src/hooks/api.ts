@@ -21,4 +21,19 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor to handle global 401 errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Check for 401 unauthorized error on any endpoint
+    if (error.response && error.response.status === 401) {
+      // Redirect to base URL on unauthorized access
+      const baseUrl = import.meta.env.VITE_BASE_URL || "/";
+      window.location.href = baseUrl;
+      return Promise.reject(error);
+    }
+    return Promise.reject(error);
+  }
+);
+
 export { api };

@@ -26,9 +26,9 @@ export function useTenantContext() {
           setData(response.data.result.data);
         } else {
           setError("Invalid response");
-        }
-      } catch (err: any) {
-        setError(err.message || "Failed to fetch tenant context");
+        }      } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to fetch tenant context";
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
