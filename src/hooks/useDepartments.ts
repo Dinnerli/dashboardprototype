@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { api } from "./api";
 
+export interface DepartmentOption {
+  id: string;
+  name: string;
+}
+
 export interface UseDepartmentsResult {
-  data: string[] | null;
+  data: DepartmentOption[] | null;
   loading: boolean;
   error: string | null;
   refetch: () => void;
 }
 
 export function useDepartments(): UseDepartmentsResult {
-  const [data, setData] = useState<string[] | null>(null);
+  const [data, setData] = useState<DepartmentOption[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadFlag, setReloadFlag] = useState(0);
@@ -26,8 +31,13 @@ export function useDepartments(): UseDepartmentsResult {
         const response = await api.get(url);
         
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
-          // Add "All" option at the beginning of the department list
-          setData(["All", ...response.data.result.data]);
+          type Dept = { id: string; name: string };
+          // Add "All" option at the beginning
+          const options: DepartmentOption[] = [
+            { id: 'All', name: 'All' },
+            ...response.data.result.data.map((d: Dept) => ({ id: d.id, name: d.name }))
+          ];
+          setData(options);
         } else {
           setError("Invalid response");
           setData(null);

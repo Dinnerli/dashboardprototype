@@ -35,10 +35,12 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
     params.set("startDate", formatDate(from));
     params.set("endDate", formatDate(to || from));
     if (department && department !== "All") {
-      params.set("q", department);
+      params.set("groups", department);
     } else {
-      params.delete("q");
+      params.delete("groups");
     }
+    // Remove old param if present
+    params.delete("q");
     navigate({ pathname: location.pathname, search: params.toString() }, { replace: true });
   };
 
@@ -84,16 +86,28 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
   const handleDateRangeChange = (from: Date, to: Date) => {
     setPendingDateRange({ from, to });
   };
-  const handleDepartmentChange = (selectedDepartments: string[]) => {
-    // If "All" is selected or no departments are selected, pass "All"
-    // Otherwise, pass the first selected department (for backward compatibility)
-    // Or you could join them with a comma if the API supports multiple departments
-    const departmentParam = selectedDepartments.length === 0 || selectedDepartments.includes('All') 
-      ? "All" 
-      : selectedDepartments.join(','); // Join multiple departments with comma
-    
-    onDepartmentChange(departmentParam);
+  const handleDepartmentChange = (selectedNames: string[]) => {
+    if (!departmentOptions) {
+      onDepartmentChange("All");
+      return;
+    }
+    // Find the "All" option by id, not by name
+    const allOption = departmentOptions.find(opt => opt.id === 'All');
+    const isAllSelected = selectedNames.some(name => allOption && name === allOption.name);
+    if (selectedNames.length === 0 || isAllSelected) {
+      onDepartmentChange("All");
+      return;
+    }
+    // Map selected names to ids (excluding the 'All' option)
+    const selectedIds = selectedNames.map(name => {
+      const found = departmentOptions.find(opt => opt.name === name && opt.id !== 'All');
+      return found ? found.id : name;
+    });
+    onDepartmentChange(selectedIds.join(','));
   };
+
+  // Map departmentOptions to names for display in dropdown
+  const departmentNames = departmentOptions ? departmentOptions.map(opt => opt.name) : ["All"];
 
   return (
     <div className="flex gap-6 items-center">
@@ -117,11 +131,16 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
         </div>        {/* Filters section */}
         <div className="flex w-64 items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
           <FilterDropdown 
-            options={departmentOptions || ["All"]} 
+            options={departmentNames} 
             defaultValue="All" 
             size="sm"
             onChange={handleDepartmentChange}
-            value={department === "All" ? ["All"] : department.split(',')}
+            value={department === "All" ? ["All"] : department.split(',').map(id => {
+              // Map id(s) to name(s)
+              if (!departmentOptions) return id;
+              const found = departmentOptions.find(opt => opt.id === id);
+              return found ? found.name : id;
+            })}
             disabled={departmentsLoading}
           />
         </div>
@@ -140,11 +159,15 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
                 />
               </div>              <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
                 <FilterDropdown 
-                  options={departmentOptions || ["All"]} 
+                  options={departmentNames} 
                   defaultValue="All" 
                   size="sm"
                   onChange={handleDepartmentChange}
-                  value={department === "All" ? ["All"] : department.split(',')}
+                  value={department === "All" ? ["All"] : department.split(',').map(id => {
+                    if (!departmentOptions) return id;
+                    const found = departmentOptions.find(opt => opt.id === id);
+                    return found ? found.name : id;
+                  })}
                   disabled={departmentsLoading}
                 />
               </div>

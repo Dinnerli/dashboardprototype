@@ -169,9 +169,9 @@ const Index = () => {
 
   const initialDndCards = useMemo(() => [
     { id: '0', component: <ActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department} /> },
-    { id: '1', component: <LearningActivityCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department}  /> },
-    { id: '2', component: <CoursePerformanceCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} /> },
-    { id: '3', component: <EngagementActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} /> },
+    { id: '1', component: <LearningActivityCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department} /> },
+    { id: '2', component: <CoursePerformanceCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department} /> },
+    { id: '3', component: <EngagementActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department} /> },
   ], [dateRange.from, dateRange.to, department]);
 
   const [cards, setCards] = useState(() => {
@@ -184,7 +184,7 @@ const Index = () => {
   useEffect(() => {
     const cardMap = Object.fromEntries(initialDndCards.map(c => [c.id, c]));
     setCards(cardOrder.map(id => cardMap[id]));
-  }, [initialDndCards, cardOrder]);
+  }, [initialDndCards, cardOrder, dateRange, department]);
   // Save card order to localStorage on change
   useEffect(() => {
     localStorage.setItem(DND_ORDER_KEY, JSON.stringify(cardOrder));
