@@ -42,20 +42,43 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
     navigate({ pathname: location.pathname, search: params.toString() }, { replace: true });
   };
 
-  // On mount, set default params
+  // On mount, set default params and restore from storage if available
   useEffect(() => {
+    // Try to restore filters from localStorage
+    const storedFilters = localStorage.getItem('dashboard-filters');
+    if (storedFilters) {
+      try {
+        const { startDate, endDate, department } = JSON.parse(storedFilters);
+        if (startDate && endDate && department) {
+          onDateRangeChange(new Date(startDate), new Date(endDate));
+          onDepartmentChange(department);
+          updateUrlParams(new Date(startDate), new Date(endDate), department);
+          return;
+        }
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
     updateUrlParams(dateRange.from, dateRange.to, department);
     // eslint-disable-next-line
   }, []);
 
-  // When date or department changes, update params
+  // Remove all code that sets dateRange or department from any other effect
+  // Only updateUrlParams and persist to localStorage when date/department changes
   useEffect(() => {
     updateUrlParams(dateRange.from, dateRange.to, department);
+    // Save to localStorage
+    localStorage.setItem('dashboard-filters', JSON.stringify({
+      startDate: dateRange.from,
+      endDate: dateRange.to || dateRange.from,
+      department
+    }));
     // eslint-disable-next-line
   }, [dateRange, department]);
 
+  // Sync calendar UI with dateRange from props (from parent/params)
   useEffect(() => {
-    setPendingDateRange(dateRange); // Sync local state if parent changes
+    setPendingDateRange(dateRange);
   }, [dateRange]);
 
   const handleDateRangeChange = (from: Date, to: Date) => {
@@ -89,7 +112,7 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
           <DateRangePicker 
             onDateRangeChange={onDateRangeChange}
             defaultValue="Last 30 Days"
-            value={dateRange}
+            value={pendingDateRange}
           />
         </div>        {/* Filters section */}
         <div className="flex w-64 items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
@@ -113,7 +136,7 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
                 <MobileDateRangePicker 
                   onDateRangeChange={onDateRangeChange}
                   defaultValue="Last 30 Days"
-                  value={dateRange}
+                  value={pendingDateRange}
                 />
               </div>              <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
                 <FilterDropdown 

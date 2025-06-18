@@ -10,6 +10,7 @@ import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
 interface DateRangePickerProps {
   onDateRangeChange?: (startDate: Date, endDate: Date) => void;
   defaultValue?: string;
+  value?: DateRange;
 }
 
 type DateRange = {
@@ -19,7 +20,8 @@ type DateRange = {
 
 const DateRangePicker = ({
   onDateRangeChange,
-  defaultValue = "last-30-days", // 1. Default to 'Last 30 Days'
+  defaultValue = "last-30-days",
+  value,
 }: DateRangePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const presetTabs = [
@@ -123,6 +125,7 @@ const DateRangePicker = ({
   // Update the display text based on the current selection
   const getDisplayText = () => {
     if (activeTab !== "custom") {
+      // Show the label for the selected preset
       return selectedOption;
     }
     if (dateRange.from && dateRange.to) {
@@ -150,6 +153,74 @@ const DateRangePicker = ({
     setIsOpen(false);
     setPendingRange(null);
   };
+
+  // If value prop is provided, use it as the source of truth and update preset label if matched
+  useEffect(() => {
+    if (value && value.from && value.to) {
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const from = new Date(value.from); from.setHours(0,0,0,0);
+      const to = new Date(value.to); to.setHours(0,0,0,0);
+      // Check if the value matches a preset
+      let matched = false;
+      for (const tab of presetTabs) {
+        if (tab.days) {
+          const expectedFrom = new Date(today);
+          expectedFrom.setDate(today.getDate() - (tab.days - 1));
+          if (from.getTime() === expectedFrom.getTime() && to.getTime() === today.getTime()) {
+            setActiveTab(tab.key);
+            setSelectedOption(tab.label);
+            matched = true;
+            break;
+          }
+        }
+        if (tab.years) {
+          const expectedFrom = new Date(today);
+          expectedFrom.setFullYear(today.getFullYear() - tab.years);
+          if (from.getTime() === expectedFrom.getTime() && to.getTime() === today.getTime()) {
+            setActiveTab(tab.key);
+            setSelectedOption(tab.label);
+            matched = true;
+            break;
+          }
+        }
+      }
+      if (!matched) {
+        setActiveTab("custom");
+        setSelectedOption("Custom");
+      }
+      setDateRange(value);
+      setPendingRange(null);
+    }
+  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // When a preset is selected, set the activeTab and selectedOption accordingly
+  useEffect(() => {
+    if (value && value.from && value.to) {
+      // Check if the value matches a preset
+      const today = new Date();
+      const diffDays = Math.round((today.getTime() - value.from.getTime()) / (1000 * 60 * 60 * 24));
+      let matched = false;
+      for (const tab of presetTabs) {
+        if (tab.days && diffDays === tab.days - 1) {
+          setActiveTab(tab.key);
+          setSelectedOption(tab.label);
+          matched = true;
+          break;
+        }
+        if (tab.years && today.getFullYear() - value.from.getFullYear() === tab.years) {
+          setActiveTab(tab.key);
+          setSelectedOption(tab.label);
+          matched = true;
+          break;
+        }
+      }
+      if (!matched) {
+        setActiveTab("custom");
+        setSelectedOption("Custom");
+      }
+    }
+  }, [value]);
 
   return (
     <>

@@ -60,13 +60,25 @@ const Index = () => {
   }, []);
 
   // --- Date Range State (LIFTED UP) ---
-  const today = new Date();
-  const defaultFrom = new Date(today);
-  defaultFrom.setDate(today.getDate() - 29); // last 30 days (inclusive)
-  const [dateRange, setDateRange] = useState<{ from: Date; to: Date | undefined }>({
-    from: defaultFrom,
-    to: today
-  });
+  // Restore from localStorage if available
+  function getInitialDateRange() {
+    const storedFilters = localStorage.getItem('dashboard-filters');
+    if (storedFilters) {
+      try {
+        const { startDate, endDate } = JSON.parse(storedFilters);
+        if (startDate && endDate) {
+          return { from: new Date(startDate), to: new Date(endDate) };
+        }
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
+    const today = new Date();
+    const defaultFrom = new Date(today);
+    defaultFrom.setDate(today.getDate() - 29);
+    return { from: defaultFrom, to: today };
+  }
+  const [dateRange, setDateRange] = useState<{ from: Date; to: Date | undefined }>(getInitialDateRange());
 
   // Helper to format date as yyyy-mm-dd
   const formatDate = (date: Date) => date.toISOString().slice(0, 10);
@@ -74,11 +86,39 @@ const Index = () => {
   // Handler to pass to ActivityFilters
   const handleDateRangeChange = (from: Date, to: Date) => {
     setDateRange({ from, to });
+    // Persist to localStorage
+    const storedFilters = localStorage.getItem('dashboard-filters');
+    let department = 'All';
+    if (storedFilters) {
+      try {
+        const parsed = JSON.parse(storedFilters);
+        if (parsed.department) department = parsed.department;
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
+    localStorage.setItem('dashboard-filters', JSON.stringify({ startDate: from, endDate: to, department }));
   };
 
   // --- Department State (LIFTED UP) ---
-  const [department, setDepartment] = useState<string>("All");
-  const handleDepartmentChange = (dep: string) => setDepartment(dep);
+  function getInitialDepartment() {
+    const storedFilters = localStorage.getItem('dashboard-filters');
+    if (storedFilters) {
+      try {
+        const { department } = JSON.parse(storedFilters);
+        if (department) return department;
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
+    return 'All';
+  }
+  const [department, setDepartment] = useState<string>(getInitialDepartment());
+  const handleDepartmentChange = (dep: string) => {
+    setDepartment(dep);
+    // Persist to localStorage
+    localStorage.setItem('dashboard-filters', JSON.stringify({ startDate: dateRange.from, endDate: dateRange.to || dateRange.from, department: dep }));
+  };
   // Cards to be displayed in the horizontal carousel
   const dashboardCards = [
     <DeviceCard

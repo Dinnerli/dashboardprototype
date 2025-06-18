@@ -31,6 +31,8 @@ api.interceptors.response.use(
   (error) => {
     // Check for 401 unauthorized error on any endpoint
     if (error.response && error.response.status === 401) {
+      // Remove dashboard filter storage on unauthorized
+      localStorage.removeItem('dashboard-filters');
       // Redirect to base URL on unauthorized access
       const baseUrl = import.meta.env.VITE_BASE_URL || "/";
       window.location.href = baseUrl;
