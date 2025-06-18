@@ -33,6 +33,8 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Remove dashboard filter storage on unauthorized
       localStorage.removeItem('dashboard-filters');
+      // Remove DnD card order on unauthorized
+      localStorage.removeItem('dashboard-dnd-order');
       // Redirect to base URL on unauthorized access
       const baseUrl = import.meta.env.VITE_BASE_URL || "/";
       window.location.href = baseUrl;

@@ -145,19 +145,51 @@ const Index = () => {
       department={department}
     />,
     <CompetencyCard key="competency" />  ];  // DND for first 4 cards in 2x2 grid using @dnd-kit - make reactive to date changes
+  // --- DND Card Order Persistence ---
+  const DND_ORDER_KEY = 'dashboard-dnd-order';
+
+  // Helper to get initial card order from localStorage
+  function getInitialCardOrder(defaultOrder: string[]) {
+    const stored = localStorage.getItem(DND_ORDER_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length === defaultOrder.length) {
+          return parsed;
+        }
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
+    return defaultOrder;
+  }
+
+  const initialCardIds = useMemo(() => ['0', '1', '2', '3'], []);
+  const [cardOrder, setCardOrder] = useState(() => getInitialCardOrder(initialCardIds));
+
   const initialDndCards = useMemo(() => [
     { id: '0', component: <ActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department} /> },
     { id: '1', component: <LearningActivityCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department}  /> },
     { id: '2', component: <CoursePerformanceCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} /> },
     { id: '3', component: <EngagementActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} /> },
   ], [dateRange.from, dateRange.to, department]);
-  
-  const [cards, setCards] = useState(initialDndCards);
 
-  // Update cards when dates change
+  const [cards, setCards] = useState(() => {
+    // Order cards according to cardOrder
+    const cardMap = Object.fromEntries(initialDndCards.map(c => [c.id, c]));
+    return cardOrder.map(id => cardMap[id]);
+  });
+
+  // Update cards when dates/department change, but keep order
   useEffect(() => {
-    setCards(initialDndCards);
-  }, [initialDndCards]);
+    const cardMap = Object.fromEntries(initialDndCards.map(c => [c.id, c]));
+    setCards(cardOrder.map(id => cardMap[id]));
+  }, [initialDndCards, cardOrder]);
+  // Save card order to localStorage on change
+  useEffect(() => {
+    localStorage.setItem(DND_ORDER_KEY, JSON.stringify(cardOrder));
+  }, [cardOrder]);
+
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -166,13 +198,12 @@ const Index = () => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-
     if (active.id !== over?.id) {
-      const oldIndex = cards.findIndex(item => item.id === active.id);
-      const newIndex = cards.findIndex(item => item.id === over?.id);
-      setCards(arrayMove(cards, oldIndex, newIndex));
+      const oldIndex = cardOrder.indexOf(active.id);
+      const newIndex = cardOrder.indexOf(over?.id);
+      const newOrder = arrayMove(cardOrder, oldIndex, newIndex);
+      setCardOrder(newOrder);
     }
-
     setActiveId(null);
   };
 
@@ -212,15 +243,18 @@ const Index = () => {
               sensors={sensors}
             >
               <SortableContext
-                items={cards.map(item => item.id)}
+                items={cardOrder}
                 strategy={rectSortingStrategy}
               >
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
-                  {cards.map((item) => (
-                    <SortableCard key={item.id} id={item.id.toString()}>
-                      {item.component}
-                    </SortableCard>
-                  ))}
+                  {cardOrder.map((id) => {
+                    const item = cards.find(c => c.id === id);
+                    return item ? (
+                      <SortableCard key={item.id} id={item.id.toString()}>
+                        {item.component}
+                      </SortableCard>
+                    ) : null;
+                  })}
                 </div>
               </SortableContext>
               <DragOverlay>
