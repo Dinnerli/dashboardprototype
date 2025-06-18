@@ -5,7 +5,11 @@ const api = axios.create();
 
 api.interceptors.request.use((config) => {
   const baseUrl = import.meta.env.VITE_BASE_URL || "";
-  const site = import.meta.env.VITE_TENANT_SITE;
+  
+  // Get site from URL params, fallback to playground
+  const urlParams = new URLSearchParams(window.location.search);
+  const site = urlParams.get("site") || "playground";
+  
   // If the request URL is relative, prepend the base URL
   if (config.url && !config.url.startsWith("http")) {
     config.url = `${baseUrl}${config.url}`;
