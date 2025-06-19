@@ -356,18 +356,49 @@ const DateRangePicker = ({
               <div className="flex items-center space-x-1 w-full">
                 <div className="w-full sm:w-1/2">
                   <div className="px-2 py-1 bg-gray-100 rounded-lg border">
-                    <div className="text-sm py-1 px-2">
-                       {dateRange.from ? format(dateRange.from, "MMM d, yyyy") : "Start Date"}
-                    </div>
-                   
+                    <input
+                      type="text"
+                      className="text-sm py-1 px-2 bg-gray-100 rounded-lg border-none w-full focus:outline-none"
+                      value={pendingRange?.from ? format(pendingRange.from, "yyyy-MM-dd") : dateRange.from ? format(dateRange.from, "yyyy-MM-dd") : ""}
+                      placeholder="Start Date"
+                      onChange={e => {
+                        const val = e.target.value;
+                        const parsed = new Date(val);
+                        if (!isNaN(parsed.getTime())) {
+                          setPendingRange(r => ({
+                            from: parsed,
+                            to: r?.to || dateRange.to
+                          }));
+                        }
+                      }}
+                      onBlur={e => {
+                        // Optionally, format on blur
+                      }}
+                    />
                   </div>
                 </div>
                 <span>—</span>
                 <div className="w-full sm:w-1/2">
                   <div className="px-2 py-1 bg-gray-100 rounded-lg border">
-                    <div className="text-sm py-1 px-2">
-                      {dateRange.to ? format(dateRange.to, "MMM d, yyyy") : "End Date"}
-                    </div>
+                    <input
+                      type="text"
+                      className="text-sm py-1 px-2 bg-gray-100 rounded-lg border-none w-full focus:outline-none"
+                      value={pendingRange?.to ? format(pendingRange.to, "yyyy-MM-dd") : dateRange.to ? format(dateRange.to, "yyyy-MM-dd") : ""}
+                      placeholder="End Date"
+                      onChange={e => {
+                        const val = e.target.value;
+                        const parsed = new Date(val);
+                        if (!isNaN(parsed.getTime())) {
+                          setPendingRange(r => ({
+                            from: r?.from || dateRange.from,
+                            to: parsed
+                          }));
+                        }
+                      }}
+                      onBlur={e => {
+                        // Optionally, format on blur
+                      }}
+                    />
                   </div>
                 </div>
               </div>

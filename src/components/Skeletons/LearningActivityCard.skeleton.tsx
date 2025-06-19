@@ -55,7 +55,7 @@ const LearningActivityCardSkeleton = () => {
             {/* First row: stats[] Skeleton */}
             <div className={`flex flex-wrap gap-1 pb-6 ${isMobile ? 'justify-between' : 'justify-center p-2.5'}`}>
               <div className="flex items-center justify-between w-full">
-                {Array.from({ length: 3 }, (_, idx) => (
+                {Array.from({ length: 2 }, (_, idx) => (
                   <div key={idx} className="flex items-center gap-1 me-2">
                     {/* Icon skeleton */}
                     <div className="w-10 h-10 sm:w-12 sm:h-12">
