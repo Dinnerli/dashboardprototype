@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import FilterDropdown from "../common/FilterDropdown";
 import DateRangePicker from "../common/DateRangePicker";
 import MobileDateRangePicker from "../common/MobileDateRangePicker";
+import HierarchicalFilterDropdown, { type HierarchicalOption } from "../common/HierarchicalFilterDropdown";
 import { useDepartments } from "../../../hooks/useDepartments";
 
 const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, department, ...rest }: {
@@ -20,6 +21,9 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
   
   // Use the departments hook instead of hardcoded values
   const { data: departmentOptions, loading: departmentsLoading } = useDepartments();
+  
+  // State for hierarchical filter selections
+  const [selectedDepartmentIds, setSelectedDepartmentIds] = useState<string[]>([]);
 
   // Add local pendingDateRange state for controlled update
   const [pendingDateRange, setPendingDateRange] = useState<{ from: Date; to: Date | undefined }>(dateRange);
@@ -28,86 +32,87 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
   const formatDate = (date: Date) => {
     return date.toISOString().slice(0, 10);
   };
-
   // Update URL params
-  const updateUrlParams = (from: Date, to: Date | undefined, department: string) => {
+  const updateUrlParams = (from: Date, to: Date | undefined, departmentIds: string[]) => {
     const params = new URLSearchParams(location.search);
     params.set("startDate", formatDate(from));
     params.set("endDate", formatDate(to || from));
-    if (department && department !== "All") {
-      params.set("groups", department);
+    
+    // Handle department IDs in URL params
+    if (departmentIds.length > 0) {
+      params.set("groups", departmentIds.join(','));
     } else {
       params.delete("groups");
     }
-    // Remove old param if present
-    params.delete("q");
+   
     navigate({ pathname: location.pathname, search: params.toString() }, { replace: true });
   };
+  // Handle hierarchical department selection
+  const handleHierarchicalDepartmentChange = (selectedIds: string[]) => {
+    setSelectedDepartmentIds(selectedIds);
+    // Update the old department prop for backward compatibility
+    onDepartmentChange(selectedIds.length > 0 ? selectedIds.join(',') : 'All');
+  };
+
+  // Convert department options to hierarchical format
+  const hierarchicalOptions: HierarchicalOption[] = departmentOptions || [];
 
   // On mount, set default params and restore from storage if available
   useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const departmentsParam = urlParams.get('groups');
+    
     // Try to restore filters from localStorage
     const storedFilters = localStorage.getItem('dashboard-filters');
     if (storedFilters) {
       try {
-        const { startDate, endDate, department } = JSON.parse(storedFilters);
-        if (startDate && endDate && department) {
+        const { startDate, endDate, departments } = JSON.parse(storedFilters);
+        if (startDate && endDate) {
           onDateRangeChange(new Date(startDate), new Date(endDate));
-          onDepartmentChange(department);
-          updateUrlParams(new Date(startDate), new Date(endDate), department);
+          if (departments && Array.isArray(departments)) {
+            setSelectedDepartmentIds(departments);
+            onDepartmentChange(departments.join(','));
+          }
+          updateUrlParams(new Date(startDate), new Date(endDate), departments || []);
           return;
         }
       } catch (e) {
         // Ignore parse errors
       }
     }
-    updateUrlParams(dateRange.from, dateRange.to, department);
+    
+    // Initialize from URL params
+    if (departmentsParam) {
+      const deptIds = departmentsParam.split(',').filter(Boolean);
+      setSelectedDepartmentIds(deptIds);
+      onDepartmentChange(departmentsParam);
+    }
+    
+    updateUrlParams(dateRange.from, dateRange.to, departmentsParam ? departmentsParam.split(',').filter(Boolean) : []);
     // eslint-disable-next-line
   }, []);
-
   // Remove all code that sets dateRange or department from any other effect
   // Only updateUrlParams and persist to localStorage when date/department changes
   useEffect(() => {
-    updateUrlParams(dateRange.from, dateRange.to, department);
+    updateUrlParams(dateRange.from, dateRange.to, selectedDepartmentIds);
     // Save to localStorage
     localStorage.setItem('dashboard-filters', JSON.stringify({
       startDate: dateRange.from,
       endDate: dateRange.to || dateRange.from,
-      department
+      departments: selectedDepartmentIds,
     }));
     // eslint-disable-next-line
-  }, [dateRange, department]);
+  }, [dateRange, selectedDepartmentIds]);
 
   // Sync calendar UI with dateRange from props (from parent/params)
   useEffect(() => {
     setPendingDateRange(dateRange);
   }, [dateRange]);
 
-  const handleDateRangeChange = (from: Date, to: Date) => {
-    setPendingDateRange({ from, to });
-  };
-  const handleDepartmentChange = (selectedNames: string[]) => {
-    if (!departmentOptions) {
-      onDepartmentChange("All");
-      return;
-    }
-    // Find the "All" option by id, not by name
-    const allOption = departmentOptions.find(opt => opt.id === 'All');
-    const isAllSelected = selectedNames.some(name => allOption && name === allOption.name);
-    if (selectedNames.length === 0 || isAllSelected) {
-      onDepartmentChange("All");
-      return;
-    }
-    // Map selected names to ids (excluding the 'All' option)
-    const selectedIds = selectedNames.map(name => {
-      const found = departmentOptions.find(opt => opt.name === name && opt.id !== 'All');
-      return found ? found.id : name;
-    });
-    onDepartmentChange(selectedIds.join(','));
-  };
 
-  // Map departmentOptions to names for display in dropdown
-  const departmentNames = departmentOptions ? departmentOptions.map(opt => opt.name) : ["All"];
+  
+ 
+
 
   return (
     <div className="flex gap-6 items-center">
@@ -130,17 +135,12 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
           />
         </div>        {/* Filters section */}
         <div className="flex w-64 items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
-          <FilterDropdown 
-            options={departmentNames} 
-            defaultValue="All" 
+          <HierarchicalFilterDropdown
+            options={hierarchicalOptions}
+            defaultValue={[]}
             size="sm"
-            onChange={handleDepartmentChange}
-            value={department === "All" ? ["All"] : department.split(',').map(id => {
-              // Map id(s) to name(s)
-              if (!departmentOptions) return id;
-              const found = departmentOptions.find(opt => opt.id === id);
-              return found ? found.name : id;
-            })}
+            onChange={handleHierarchicalDepartmentChange}
+            value={selectedDepartmentIds}
             disabled={departmentsLoading}
           />
         </div>
@@ -158,16 +158,12 @@ const ActivityFilters = ({ dateRange, onDateRangeChange, onDepartmentChange, dep
                   value={pendingDateRange}
                 />
               </div>              <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-md bg-white">
-                <FilterDropdown 
-                  options={departmentNames} 
-                  defaultValue="All" 
+                <HierarchicalFilterDropdown
+                  options={hierarchicalOptions}
+                  defaultValue={[]}
                   size="sm"
-                  onChange={handleDepartmentChange}
-                  value={department === "All" ? ["All"] : department.split(',').map(id => {
-                    if (!departmentOptions) return id;
-                    const found = departmentOptions.find(opt => opt.id === id);
-                    return found ? found.name : id;
-                  })}
+                  onChange={handleHierarchicalDepartmentChange}
+                  value={selectedDepartmentIds}
                   disabled={departmentsLoading}
                 />
               </div>

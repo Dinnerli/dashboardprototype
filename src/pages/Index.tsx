@@ -143,7 +143,8 @@ const Index = () => {
       endDate={formatDate(dateRange.to || dateRange.from)}
       department={department}
     />,
-    <CompetencyCard key="competency" />  ];  // DND for first 4 cards in 2x2 grid using @dnd-kit - make reactive to date changes
+    // <CompetencyCard key="competency" /> 
+   ];  // DND for first 4 cards in 2x2 grid using @dnd-kit - make reactive to date changes
   // --- DND Card Order Persistence ---
   const DND_ORDER_KEY = 'dashboard-dnd-order';
 

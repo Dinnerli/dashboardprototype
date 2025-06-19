@@ -4,6 +4,7 @@ import { api } from "./api";
 export interface DepartmentOption {
   id: string;
   name: string;
+  children?: DepartmentOption[];
 }
 
 export interface UseDepartmentsResult {
@@ -29,13 +30,12 @@ export function useDepartments(): UseDepartmentsResult {
       try {
         const url = `/analytical_dashboard/getDepartments.endpoint.php`;
         const response = await api.get(url);
-        
+        // Expecting hierarchical data
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
-          type Dept = { id: string; name: string };
           // Add "All" option at the beginning
           const options: DepartmentOption[] = [
             { id: 'All', name: 'All' },
-            ...response.data.result.data.map((d: Dept) => ({ id: d.id, name: d.name }))
+            ...response.data.result.data
           ];
           setData(options);
         } else {
