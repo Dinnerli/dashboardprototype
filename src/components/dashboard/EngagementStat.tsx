@@ -47,11 +47,7 @@ const EngagementStat: React.FC<EngagementStatProps> = ({
           >
             {title}
           </span>
-          <InfoTooltip
-            tooltip={tooltip}
-            delayDuration={0}
-            iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
-          />
+          <InfoTooltip tooltip={tooltip} iconProps={{ className: 'w-3 h-3 text-[#8C9BAC]' }} />
         </div>        <div className="flex items-center justify-between gap-2">
           <div className="min-w-0 flex-shrink-0">
             <span className={`font-bold text-[#4F5A69] whitespace-nowrap ${isMobile ? 'text-lg' : 'text-2xl'}`}>{value}</span>

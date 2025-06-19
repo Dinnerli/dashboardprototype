@@ -248,7 +248,7 @@ const EngagementActivitiesCard = ({ startDate, endDate, department }: Engagement
                 title={activity.title}
                 value={activity.value}
                 percentage={activity.trend}
-                tooltip={`${activity.title} engagement statistics`}
+                tooltip={`${activity.title} engagement`}
                 isPositive={activity.rising}
                 isActive={selectedStat === activity.title}
                 onClick={() => handleStatClick(activity.title)}

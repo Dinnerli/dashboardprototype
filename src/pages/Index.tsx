@@ -12,7 +12,6 @@ import OverviewContent from '@/components/dashboard/OverviewContent';
 import RewardsCard from '@/components/dashboard/RewardsCard';
 import SortableCard from '@/components/dashboard/SortableCard';
 import Header from '@/components/layout/Header';
-import Navigation from '@/components/navigation/Navigation';
 import {
   DndContext,
   DragEndEvent,
@@ -26,8 +25,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { useMediaQuery } from '@mui/material';
-import { useEffect, useState, useMemo } from 'react';
-import { format } from 'date-fns';
+import { useEffect, useMemo, useState } from 'react';
 
 const Index = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -215,7 +213,7 @@ const Index = () => {
         {/* Pass dateRange, department, and handlers to ActivityFilters */}
           <nav className="flex items-center justify-between w-full px-5 py-3 bg-white border-b animate-slide-in-up relative">
       <div className="flex flex-col">
-        <h1 className="text-h4 font-semibold text-dark mb-1">Analytical Dashboard</h1>
+        <h1 className="text-h4 font-semibold text-dark mb-1">Insight Desk</h1>
       </div>
         <ActivityFilters
           dateRange={dateRange}

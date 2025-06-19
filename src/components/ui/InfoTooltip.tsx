@@ -32,7 +32,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({ tooltip, delayDuration = 300,
               <Info {...iconProps} />
             </span>
           </TooltipTrigger>
-          <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+          <TooltipContent side="top" align="center" className="max-w-[180px] text-center wh">
             {tooltip}
           </TooltipContent>
         </Tooltip>
