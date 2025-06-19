@@ -32,12 +32,8 @@ export function useDepartments(): UseDepartmentsResult {
         const response = await api.get(url);
         // Expecting hierarchical data
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
-          // Add "All" option at the beginning
-          const options: DepartmentOption[] = [
-            { id: 'All', name: 'All' },
-            ...response.data.result.data
-          ];
-          setData(options);
+          // Remove the old 'All' option, just use the API data
+          setData(response.data.result.data);
         } else {
           setError("Invalid response");
           setData(null);

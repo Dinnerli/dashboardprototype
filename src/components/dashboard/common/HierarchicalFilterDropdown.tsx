@@ -99,11 +99,13 @@ const HierarchicalFilterDropdown = ({
     if (selected.length === 0) return '';
     if (selected.length === 1) {
       const found = findOptionById(options, selected[0]);
-      return found ? found.name : '';
+      if (!found) return '';
+      return found.name.length > 7 ? found.name.slice(0, 7) + '…' : found.name;
     }
     const displayItems = selected.slice(0, 3).map(id => {
       const found = findOptionById(options, id);
-      return found ? found.name : id;
+      const name = found ? found.name : id;
+      return name.length > 7 ? name.slice(0, 7) + '…' : name;
     });
     let displayText = displayItems.join(', ');
     if (selected.length > 3) displayText += `, +${selected.length - 3} more`;
@@ -121,18 +123,31 @@ const HierarchicalFilterDropdown = ({
     return undefined;
   }
 
-  function getAllIds() {
-    const allIds: string[] = ['All'];
-    options.forEach(opt => {
-      if (opt.id !== 'All') {
-        allIds.push(opt.id);
-        if (opt.children) {
-          opt.children.forEach(child => allIds.push(child.id));
-        }
-      }
-    });
-    return allIds;
-  }
+  // Add 'All Groups' synthetic option
+  const allGroupsOption: HierarchicalOption = { id: '__all_groups__', name: 'All Groups' };
+  const optionsWithAll = [allGroupsOption, ...options];
+
+  const handleAllGroupsToggle = () => {
+    if (selected.length === options.flatMap(opt => [opt.id, ...(opt.children?.map(c => c.id) || [])]).length) {
+      // Deselect all
+      setSelected([]);
+      onChange?.([]);
+    } else {
+      // Select all
+      const allIds = options.flatMap(opt => [opt.id, ...(opt.children?.map(c => c.id) || [])]);
+      setSelected(allIds);
+      onChange?.(allIds);
+    }
+  };
+
+  const isAllGroupsChecked = () => {
+    const allIds = options.flatMap(opt => [opt.id, ...(opt.children?.map(c => c.id) || [])]);
+    return allIds.length > 0 && allIds.every(id => selected.includes(id));
+  };
+  const isAllGroupsIndeterminate = () => {
+    const allIds = options.flatMap(opt => [opt.id, ...(opt.children?.map(c => c.id) || [])]);
+    return selected.length > 0 && !isAllGroupsChecked();
+  };
 
   const textSize = size === 'sm' ? 'text-[16px]' : 'text-xs';
 
@@ -162,6 +177,25 @@ const HierarchicalFilterDropdown = ({
       {isOpen && !disabled && (
         <div className="absolute top-full right-0 min-w-52 mt-5 bg-white shadow-lg rounded-xl z-50 py-2 px-1">
           <div className="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+            {/* All Groups option at the top */}
+            <div className="mb-2">
+              <div
+                className="flex items-center gap-2 px-3 py-2 font-semibold rounded-lg transition-colors group select-none relative cursor-pointer"
+                onClick={handleAllGroupsToggle}
+              >
+                <span className="relative flex items-center">
+                  <Checkbox
+                    checked={isAllGroupsChecked()}
+                    indeterminate={isAllGroupsIndeterminate()}
+                    onCheckedChange={handleAllGroupsToggle}
+                    className="mr-2"
+                  />
+                </span>
+                <span className="flex-1 cursor-pointer">All Groups</span>
+              </div>
+              <div className="border-b border-gray-200 my-2 w-full" />
+            </div>
+            {/* Render the rest of the options */}
             {options.map(parent => (
               <div key={parent.id} className="mb-2">
                 <div
