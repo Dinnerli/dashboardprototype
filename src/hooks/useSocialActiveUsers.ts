@@ -20,9 +20,10 @@ export interface UseSocialActiveUsersResult {
 interface Params {
   startDate: string; // yyyy-mm-dd
   endDate: string;   // yyyy-mm-dd
+  department?: string;
 }
 
-export function useSocialActiveUsers({ startDate, endDate }: Params): UseSocialActiveUsersResult {
+export function useSocialActiveUsers({ startDate, endDate, department }: Params): UseSocialActiveUsersResult {
   const [data, setData] = useState<SocialActiveUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +38,10 @@ export function useSocialActiveUsers({ startDate, endDate }: Params): UseSocialA
     
     const fetchActiveUsers = async () => {
       try {
-        const url = `/analytical_dashboard/getSocialActiveUsers.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        let url = `/analytical_dashboard/getSocialActiveUsers.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        if (department && department !== 'All') {
+          url += `&groups=${encodeURIComponent(department)}`;
+        }
         const response = await api.get(url);
         
         if (response.data?.success && response.data.result?.data) {
@@ -55,7 +59,7 @@ export function useSocialActiveUsers({ startDate, endDate }: Params): UseSocialA
     };
     
     fetchActiveUsers();
-  }, [startDate, endDate, reloadFlag]);
+  }, [startDate, endDate, department, reloadFlag]);
 
   return { data, loading, error, refetch };
 }

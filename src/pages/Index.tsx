@@ -137,6 +137,7 @@ const Index = () => {
       key="admin"
       startDate={formatDate(dateRange.from)}
       endDate={formatDate(dateRange.to || dateRange.from)}
+      department={department}
     />,
     <LeaderboardCard 
       key="leaderboard"

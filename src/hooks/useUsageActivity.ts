@@ -42,9 +42,8 @@ export function useUsageActivity({ startDate, endDate, department }: Params): Us
       try {
         let url = `/analytical_dashboard/getUsageActivityStats.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
         if (department && department !== 'All') {
-          url += `&q=${encodeURIComponent(department)}`;
+          url += `&groups=${encodeURIComponent(department)}`;
         }
-        
         const response = await api.get(url);
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
           setData(response.data.result.data);

@@ -57,10 +57,11 @@ const StatButton = ({
                   <Info className='w-3.5 h-3.5 text-[#8C9BAC]' stroke='#8C9BAC' />
                 </span>
               </TooltipTrigger>
-              <TooltipContent side="top" align="center" className="max-w-[180px] text-center">
+              <TooltipContent side="top" align="center" className="max-w-[180px] h-auto text-center break-words whitespace-pre-line">
                 {tooltip}
               </TooltipContent>
             </Tooltip>
+            
           ) : (
             <Info className='w-3.5 h-3.5 text-[#8C9BAC]' stroke='#8C9BAC' />
           )}

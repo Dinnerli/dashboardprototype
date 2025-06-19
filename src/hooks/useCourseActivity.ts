@@ -42,9 +42,8 @@ export function useCourseActivity({ startDate, endDate, department }: Params): U
       try {
         let url = `/analytical_dashboard/getCourseActivityStats.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
         if (department && department !== 'All') {
-          url += `&q=${encodeURIComponent(department)}`;
+          url += `&groups=${encodeURIComponent(department)}`;
         }
-        
         const response = await api.get(url);
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
           setData(response.data.result.data);

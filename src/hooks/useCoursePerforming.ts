@@ -32,9 +32,10 @@ interface Params {
   startDate: string; // yyyy-mm-dd
   endDate: string;   // yyyy-mm-dd
   enabled?: boolean; // Control when the hook should fetch data
+  department?: string;
 }
 
-export function useCoursePerforming({ startDate, endDate, enabled = true }: Params): UseCoursePerformingResult {
+export function useCoursePerforming({ startDate, endDate, enabled = true, department }: Params): UseCoursePerformingResult {
   const [data, setData] = useState<CoursePerformance[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -45,13 +46,14 @@ export function useCoursePerforming({ startDate, endDate, enabled = true }: Para
       setLoading(false);
       return;
     }
-    
     setLoading(true);
     setError(null);
-    
     const fetchCoursePerforming = async () => {
       try {
-        const url = `/analytical_dashboard/getCoursePerforming.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        let url = `/analytical_dashboard/getCoursePerforming.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        if (department && department !== 'All') {
+          url += `&groups=${encodeURIComponent(department)}`;
+        }
         const response = await api.get(url);
         
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
@@ -66,9 +68,8 @@ export function useCoursePerforming({ startDate, endDate, enabled = true }: Para
         setLoading(false);
       }
     };
-    
     fetchCoursePerforming();
-  }, [startDate, endDate, enabled, reloadFlag]);
+  }, [startDate, endDate, enabled, department, reloadFlag]);
 
   return { data, loading, error, refetch };
 }

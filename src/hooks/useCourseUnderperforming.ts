@@ -32,9 +32,10 @@ interface Params {
   startDate: string; // yyyy-mm-dd
   endDate: string;   // yyyy-mm-dd
   enabled?: boolean; // Control when the hook should fetch data
+  department?: string;
 }
 
-export function useCourseUnderperforming({ startDate, endDate, enabled = true }: Params): UseCourseUnderperformingResult {
+export function useCourseUnderperforming({ startDate, endDate, enabled = true, department }: Params): UseCourseUnderperformingResult {
   const [data, setData] = useState<CourseUnderperforming[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,7 +54,10 @@ export function useCourseUnderperforming({ startDate, endDate, enabled = true }:
     
     const fetchCourseUnderperforming = async () => {
       try {
-        const url = `/analytical_dashboard/getCourseUnderperforming.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        let url = `/analytical_dashboard/getCourseUnderperforming.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        if (department && department !== 'All') {
+          url += `&groups=${encodeURIComponent(department)}`;
+        }
         const response = await api.get(url);
         
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
@@ -70,7 +74,7 @@ export function useCourseUnderperforming({ startDate, endDate, enabled = true }:
     };
     
     fetchCourseUnderperforming();
-  }, [startDate, endDate, enabled, reloadFlag]);
+  }, [startDate, endDate, enabled, department, reloadFlag]);
 
   return { data, loading, error, refetch };
 }

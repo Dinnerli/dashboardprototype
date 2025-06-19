@@ -14,9 +14,10 @@ import styles from "./EngagementActivitiesCard.module.css";
 interface EngagementActivitiesCardProps {
   startDate?: string;
   endDate?: string;
+  department?: string;
 }
 
-const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCardProps) => {  // Default date range if not provided
+const EngagementActivitiesCard = ({ startDate, endDate, department }: EngagementActivitiesCardProps) => {  // Default date range if not provided
   const defaultEndDate = new Date().toISOString().slice(0, 10);
   const defaultStartDate = new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   
@@ -26,12 +27,14 @@ const EngagementActivitiesCard = ({ startDate, endDate }: EngagementActivitiesCa
   // Fetch data from APIs
   const { data: socialWallStats, loading: wallLoading, error: wallError } = useSocialWallStats({
     startDate: effectiveStartDate,
-    endDate: effectiveEndDate
+    endDate: effectiveEndDate,
+    department,
   });
 
   const { data: activeUsersData, loading: usersLoading, error: usersError } = useSocialActiveUsers({
     startDate: effectiveStartDate,
-    endDate: effectiveEndDate
+    endDate: effectiveEndDate,
+    department,
   });
 
   // Combine all stats including active users

@@ -24,9 +24,10 @@ export interface UseSocialWallStatsResult {
 interface Params {
   startDate: string; // yyyy-mm-dd
   endDate: string;   // yyyy-mm-dd
+  department?: string; 
 }
 
-export function useSocialWallStats({ startDate, endDate }: Params): UseSocialWallStatsResult {
+export function useSocialWallStats({ startDate, endDate, department }: Params): UseSocialWallStatsResult {
   const [data, setData] = useState<SocialWallStat[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -19,9 +19,10 @@ export interface UseAdminActivityResult {
 interface Params {
   startDate: string; // yyyy-mm-dd
   endDate: string;   // yyyy-mm-dd
+  department?: string;
 }
 
-export function useAdminActivity({ startDate, endDate }: Params): UseAdminActivityResult {
+export function useAdminActivity({ startDate, endDate, department }: Params): UseAdminActivityResult {
   const [data, setData] = useState<AdminActivity[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +39,10 @@ export function useAdminActivity({ startDate, endDate }: Params): UseAdminActivi
     
     const fetchAdminActivity = async () => {
       try {
-        const url = `/analytical_dashboard/getAdminActivity.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        let url = `/analytical_dashboard/getAdminActivity.endpoint.php?startDate=${startDate}&endDate=${endDate}`;
+        if (department && department !== 'All') {
+          url += `&groups=${encodeURIComponent(department)}`;
+        }
         const response = await api.get(url);
         
         if (response.data?.success && Array.isArray(response.data.result?.data)) {
@@ -61,7 +65,7 @@ export function useAdminActivity({ startDate, endDate }: Params): UseAdminActivi
     
     fetchAdminActivity();
     // eslint-disable-next-line
-  }, [startDate, endDate, reloadFlag]);
+  }, [startDate, endDate, department, reloadFlag]);
 
   return { data, loading, error, message, refetch };
 }

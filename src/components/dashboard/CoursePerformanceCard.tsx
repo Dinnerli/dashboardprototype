@@ -13,9 +13,10 @@ import CoursePerformanceCardSkeleton from "../Skeletons/CoursePerformanceCard.sk
 interface CoursePerformanceCardProps {
   startDate: string;
   endDate: string;
+  department: string;
 }
 
-const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProps) => {
+const CoursePerformanceCard = ({ startDate, endDate, department }: CoursePerformanceCardProps) => {
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("top-performers");
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -24,14 +25,14 @@ const CoursePerformanceCard = ({ startDate, endDate }: CoursePerformanceCardProp
   const { data: performingData, loading: performingLoading, error: performingError } = useCoursePerforming({ 
     startDate, 
     endDate,
-
+    department,
   });
 
   // Fetch underperforming courses data
   const { data: underperformingData, loading: underperformingLoading, error: underperformingError } = useCourseUnderperforming({ 
     startDate, 
     endDate,
-
+    department,
   });
   // Determine overall loading and error states
   const loading = (activeTab === "top-performers" && performingLoading) || (activeTab === "underperformers" && underperformingLoading);

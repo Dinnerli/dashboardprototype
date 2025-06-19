@@ -12,14 +12,14 @@ import { useState } from "react";
 import EmptyState from "./EmptyState";
 import AdminActivityCardSkeleton from "../Skeletons/AdminActivityCard.skeleton";
 
-const AdminActivityCard = ({ startDate, endDate }: { startDate: string; endDate: string }) => {
+const AdminActivityCard = ({ startDate, endDate, department }: { startDate: string; endDate: string; department: string }) => {
   const isMobile = useIsMobile();
   
   // State to track which activity is selected
   const [selectedActivity, setSelectedActivity] = useState<'create' | 'edit' | 'delete'>('create');
   
   // Fetch admin activity data from API
-  const { data: adminActivityData, loading, error, message } = useAdminActivity({ startDate, endDate });
+  const { data: adminActivityData, loading, error, message } = useAdminActivity({ startDate, endDate,department });
     // Handle loading state
   if (loading) {
     return <AdminActivityCardSkeleton />;
