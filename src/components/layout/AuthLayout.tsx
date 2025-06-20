@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useTenantContext } from "@/hooks/useTenantContext";
+import { CardOrderProvider } from '@/hooks/CardOrderContext';
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -27,7 +28,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <img src="/status.gif" alt="Loading..." className="h-16 w-16 mx-auto mb-4" />
-          <p className="text-gray-600">Verifying access...</p>
+    
         </div>
       </div>
     );
@@ -49,7 +50,12 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
 
   // If we have valid tenant data, render the children
   if (data) {
-    return <>{children}</>;
+    // Provide card order context to dashboard and descendants
+    return (
+      <CardOrderProvider defaultOrder={['0', '1', '2', '3']}>
+        {children}
+      </CardOrderProvider>
+    );
   }
 
   // Fallback state

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { api } from './api';
 
 const GET_URL = '/analytical_dashboard/getCardOrder.endpoint.php';
@@ -10,7 +10,6 @@ export function useCardOrder(defaultOrder: string[]) {
   const [error, setError] = useState<string | null>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Fetch card order from server on mount
   useEffect(() => {
     let isMounted = true;
     async function fetchOrder() {
@@ -20,7 +19,6 @@ export function useCardOrder(defaultOrder: string[]) {
         const urlParams = new URLSearchParams(window.location.search);
         const site = urlParams.get('site') || 'playground';
         const response = await api.get(`${GET_URL}?site=${site}`);
-        // Support nested response structure
         let cardOrder: string[] | null = null;
         if (response.data?.cardOrder) {
           cardOrder = response.data.cardOrder;
@@ -43,7 +41,6 @@ export function useCardOrder(defaultOrder: string[]) {
     return () => { isMounted = false; };
   }, [defaultOrder]);
 
-  // Debounced save to server
   const saveOrder = useCallback((order: string[]) => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(async () => {
@@ -57,7 +54,6 @@ export function useCardOrder(defaultOrder: string[]) {
     }, 600);
   }, []);
 
-  // Setter that updates state and triggers save
   const setCardOrder = useCallback((order: string[]) => {
     setCardOrderState(order);
     saveOrder(order);
