@@ -12,6 +12,7 @@ import OverviewContent from '@/components/dashboard/OverviewContent';
 import RewardsCard from '@/components/dashboard/RewardsCard';
 import SortableCard from '@/components/dashboard/SortableCard';
 import Header from '@/components/layout/Header';
+import { useCardOrder } from '@/hooks/useCardOrder';
 import {
   DndContext,
   DragEndEvent,
@@ -146,26 +147,8 @@ const Index = () => {
     // <CompetencyCard key="competency" /> 
    ];  // DND for first 4 cards in 2x2 grid using @dnd-kit - make reactive to date changes
   // --- DND Card Order Persistence ---
-  const DND_ORDER_KEY = 'dashboard-dnd-order';
-
-  // Helper to get initial card order from localStorage
-  function getInitialCardOrder(defaultOrder: string[]) {
-    const stored = localStorage.getItem(DND_ORDER_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length === defaultOrder.length) {
-          return parsed;
-        }
-      } catch (e) {
-        // Ignore parse errors
-      }
-    }
-    return defaultOrder;
-  }
-
   const initialCardIds = useMemo(() => ['0', '1', '2', '3'], []);
-  const [cardOrder, setCardOrder] = useState(() => getInitialCardOrder(initialCardIds));
+  const { cardOrder, setCardOrder, loading: cardOrderLoading } = useCardOrder(initialCardIds);
 
   const initialDndCards = useMemo(() => [
     { id: '0', component: <ActivitiesCard startDate={formatDate(dateRange.from)} endDate={formatDate(dateRange.to || dateRange.from)} department={department} /> },
@@ -175,20 +158,15 @@ const Index = () => {
   ], [dateRange.from, dateRange.to, department]);
 
   const [cards, setCards] = useState(() => {
-    // Order cards according to cardOrder
     const cardMap = Object.fromEntries(initialDndCards.map(c => [c.id, c]));
     return cardOrder.map(id => cardMap[id]);
   });
 
-  // Update cards when dates/department change, but keep order
+  // Update cards when dates/department/cardOrder change, but keep order
   useEffect(() => {
     const cardMap = Object.fromEntries(initialDndCards.map(c => [c.id, c]));
     setCards(cardOrder.map(id => cardMap[id]));
   }, [initialDndCards, cardOrder, dateRange, department]);
-  // Save card order to localStorage on change
-  useEffect(() => {
-    localStorage.setItem(DND_ORDER_KEY, JSON.stringify(cardOrder));
-  }, [cardOrder]);
 
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -198,11 +176,13 @@ const Index = () => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    if (active.id !== over?.id) {
-      const oldIndex = cardOrder.indexOf(active.id);
-      const newIndex = cardOrder.indexOf(over?.id);
-      const newOrder = arrayMove(cardOrder, oldIndex, newIndex);
-      setCardOrder(newOrder);
+    if (active.id !== over?.id && over?.id) {
+      const oldIndex = cardOrder.indexOf(active.id.toString());
+      const newIndex = cardOrder.indexOf(over.id.toString());
+      if (oldIndex !== -1 && newIndex !== -1) {
+        const newOrder = arrayMove(cardOrder, oldIndex, newIndex);
+        setCardOrder(newOrder);
+      }
     }
     setActiveId(null);
   };
