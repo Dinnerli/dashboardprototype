@@ -7,7 +7,8 @@ interface ViewReportButtonProps {
 const ViewReportButton: React.FC<ViewReportButtonProps> = ({ target }) => {
 
   const baseUrl = import.meta.env.VITE_BASE_URL || "https://www.layupcloud.com/";
-  const site = import.meta.env.VITE_TENANT_SITE || "playground";
+  // Use site from localStorage if available, otherwise fallback to default
+  const site = localStorage.getItem("site") || "playground";
   const targetUrl = `${baseUrl}${target ? target : ""}?site=${site}`;
   return (
     <div className="flex items-center justify-center gap-1.5 px-0 py-1.5">

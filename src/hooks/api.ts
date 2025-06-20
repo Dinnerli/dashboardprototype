@@ -9,6 +9,8 @@ api.interceptors.request.use((config) => {
   // Get site from URL params, fallback to playground
   const urlParams = new URLSearchParams(window.location.search);
   const site = urlParams.get("site") || "playground";
+  // Save site to localStorage
+  localStorage.setItem("site", site);
   
   // If the request URL is relative, prepend the base URL
   if (config.url && !config.url.startsWith("http")) {
