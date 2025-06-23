@@ -4,7 +4,7 @@ import axios from "axios";
 const api = axios.create();
 
 api.interceptors.request.use((config) => {
-  const baseUrl = import.meta.env.VITE_BASE_URL || "";
+  const baseUrl = import.meta.env.VITE_BASE_URL!;
   
   // Get site from URL params, fallback to playground
   const urlParams = new URLSearchParams(window.location.search);
@@ -38,7 +38,7 @@ api.interceptors.response.use(
       // Remove DnD card order on unauthorized
       localStorage.removeItem('dashboard-dnd-order');
       // Redirect to base URL on unauthorized access
-      const baseUrl = import.meta.env.VITE_BASE_URL || "/";
+      const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://www.layupcloud.com/";
       window.location.href = baseUrl;
       return Promise.reject(error);
     }
