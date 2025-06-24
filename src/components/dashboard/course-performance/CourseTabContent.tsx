@@ -36,9 +36,10 @@ type CourseTabContentProps = {
   onStatClick: (statName: string) => void;
   onCourseClick?: (courseName: string) => void;
   selectedCourse?: string | null;
+  isUnderperforming?: boolean; // New prop to indicate underperforming tab
 };
 
-const CourseTabContent = ({ stats, courseData, onStatClick, onCourseClick, selectedCourse }: CourseTabContentProps) => {
+const CourseTabContent = ({ stats, courseData, onStatClick, onCourseClick, selectedCourse, isUnderperforming = false }: CourseTabContentProps) => {
   const isMobile = useIsMobile();
 
   return (
@@ -65,14 +66,13 @@ const CourseTabContent = ({ stats, courseData, onStatClick, onCourseClick, selec
           isPositive={stats.secondStat.rising}
           onClick={() => onStatClick(stats.secondStat.title)}
         />
-      </div>
-
-      {/* Chart - taking remaining space */}
+      </div>      {/* Chart - taking remaining space */}
       <div className="flex-1 flex px-2.5">
         <CourseChart 
           courseData={courseData} 
           onCourseClick={onCourseClick}
           selectedCourse={selectedCourse}
+          isUnderperforming={isUnderperforming}
         />
       </div>
     </div>

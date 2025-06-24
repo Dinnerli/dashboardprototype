@@ -4,50 +4,62 @@ import { useEffect, useState } from "react";
 import CardHeader from "./CardHeader";
 import ViewReportButton from "./ViewReportButton";
 import TrendIndicator from "./common/TrendIndicator";
-import learningActivities from "@/Data/LearningActivities.json";
+import learningActivitiesTooltips from "@/Data/LearningActivitiesTooltips.json";
 import InfoTooltip from "@/components/ui/InfoTooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLearningActivity } from "@/hooks/useLearningActivity";
+import {
+  Activity,
+  DataItem,
+  TooltipData,
+  DonutKey,
+  activityKeyMap,
+  donutKeys
+} from "@/types/LearningActivities";
+import EmptyState from "./EmptyState";
+import LearningActivityCardSkeleton from "../Skeletons/LearningActivityCard.skeleton";
 
 interface LearningActivityCardProps {
   title?: string;
+  startDate: string;
+  endDate: string;
+  department?: string;
 }
 
-// Map activity names to keys for donut chart logic
-const activityKeyMap: Record<string, string> = {
-  "Courses": "courses",
-  "ILT": "ilt_vilt",
-  "VILT": "ilt_vilt",
-  "Exams": "exams",
-  "Library": "library"
-};
-
-type Activity = typeof learningActivities.activities[number];
-type ActivityData = Activity["data"][number];
-
-type DonutKey = "library" | "exams" | "ilt_vilt" | "courses";
-const donutKeys: DonutKey[] = ["library", "exams", "ilt_vilt", "courses"];
-
 const LearningActivityCard = ({
-  title = "Learning Activities"
+  title = "Learning Activities",
+  startDate,
+  endDate,
+  department = "All"
 }: LearningActivityCardProps) => {
-  // Prepare activities data
-  const activities: Activity[] = learningActivities.activities;
-  // Find first available activity for initial state
-  const initialKey = activityKeyMap[activities[0]?.name] || "courses";
-  const [activeSegment, setActiveSegment] = useState<string>(initialKey);
+  const isMobile = useIsMobile();
+  
+  // Fetch learning activities data from API
+  const { data: activities, loading, error } = useLearningActivity({
+    startDate,
+    endDate,
+    department
+  });  // Get tooltips data
+  const tooltipsData = learningActivitiesTooltips as TooltipData;
+  
+  // State management - must be at the top before any conditional returns
+  const [activeSegment, setActiveSegment] = useState<string>("courses");
   const [iltViltTab, setIltViltTab] = useState<'ILT' | 'VILT'>('ILT');
   const [segments, setSegments] = useState<Record<string, boolean>>({});
+  const [hoveredArc, setHoveredArc] = useState<{
+    category: string | null;
+    metric: string | null;
+  } | null>(null);
 
-  const isMobile = useIsMobile();
+  // Update activeSegment when activities change
+  useEffect(() => {
+    if (activities && activities.length > 0) {
+      const newInitialKey = activityKeyMap[activities[0]?.name] || "courses";
+      setActiveSegment(newInitialKey);
+    }
+  }, [activities]);
 
-  // Find the active activity data
-  let activeActivity: Activity;
-  if (activeSegment === 'ilt_vilt') {
-    activeActivity = activities.find(a => a.name === iltViltTab) || activities.find(a => a.name === 'ILT') || activities[0];
-  } else {
-    activeActivity = activities.find(a => activityKeyMap[a.name] === activeSegment) || activities[0];
-  }
-
+  // Staggered animation effect
   useEffect(() => {
     // Staggered animation to reveal each segment
     const timers = donutKeys.map((key, idx) =>
@@ -55,6 +67,53 @@ const LearningActivityCard = ({
     );
     return () => timers.forEach(timer => clearTimeout(timer));
   }, []);
+  // Handle loading state
+  if (loading) {
+    return <LearningActivityCardSkeleton />;
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton 
+        target="admin_learning_master_report.php" />} />
+        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
+          <div className="flex items-center justify-center h-64">
+            <div className="text-red-500">Error: {error}</div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Handle empty data state
+  if (!activities || activities.length === 0) {
+    return (
+      <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton 
+        target="admin_learning_master_report.php"/>} />
+        <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
+          <EmptyState cardName="learning activities" />
+        </CardContent>
+      </Card>
+    );  }
+
+  // Helper to get tooltip for stats
+  function getStatTooltip(activityName: string, statName: string): string | undefined {
+    return tooltipsData[activityName]?.stats?.[statName] || undefined;
+  }
+  // Helper to get tooltip for data
+  function getDataTooltip(activityName: string, dataName: string): string | undefined {
+    return tooltipsData[activityName]?.data?.[dataName] || undefined;
+  }
+  // Find the active activity data
+  let activeActivity: Activity;
+  if (activeSegment === 'ilt_vilt') {
+    activeActivity = activities.find(a => a.name === iltViltTab) || activities.find(a => a.name === 'ILT') || activities[0];
+  } else {
+    activeActivity = activities.find(a => activityKeyMap[a.name] === activeSegment) || activities[0];
+  }
 
   // Color palettes for active/inactive arcs
   const arcColors = {
@@ -78,37 +137,37 @@ const LearningActivityCard = ({
       x: cx + r * Math.cos(rad),
       y: cy + r * Math.sin(rad)
     };
-  }
-  // Donut chart expects three metrics: different for each activity type
-  function getDonutData(activity: Activity): ActivityData[] {
+  }  // Donut chart expects three metrics: different for each activity type
+  function getDonutData(activity: Activity): DataItem[] {
     // Handle Library specifically - it has different metrics
     if (activity.name === "Library") {
-      const itemsUploaded = activity.data.find(d => d.name === "Items Uploaded")!;
-      const assigned      = activity.data.find(d => d.name === "Assigned")!;
-      const viewed        = activity.data.find(d => d.name === "Viewed")!;
-      return [ itemsUploaded, assigned, viewed ];
+      const assigned = activity.data.find(d => d.name === "Assigned");
+      const viewed = activity.data.find(d => d.name === "Viewed");
+      // For Library, we need to create a third metric from stats since it only has 2 data items
+      const itemsUploaded: DataItem = {
+        name: "Items Uploaded",
+        value: activity.stats.find(s => s.statName === "Items Uploaded")?.value || 0,
+        trend: activity.stats.find(s => s.statName === "Items Uploaded")?.trend || "0%",
+        isRising: activity.stats.find(s => s.statName === "Items Uploaded")?.isRising || false
+      };
+      return [assigned, viewed, itemsUploaded].filter(Boolean) as DataItem[];
     }
     
     // For other activities: Assigned, Completed, Enrolled/Passed
     const assigned = activity.data.find((d) => d.name === "Assigned") || activity.data[0];
     const completed = activity.data.find((d) => d.name === "Completed") || activity.data[1];
-    // Use "Enrolled" for ILT/VILT, "Passed" for Exams, or fallback to third item
+    // Use "Enrolled" for ILT/VILT, "Passed" for Courses/Quizzes, or fallback to third item
     let thirdMetric = activity.data.find((d) => d.name === "Enrolled");
     if (!thirdMetric) thirdMetric = activity.data.find((d) => d.name === "Passed");
     if (!thirdMetric) thirdMetric = activity.data[2];
-    
-    return [assigned, completed, thirdMetric];
+      return [assigned, completed, thirdMetric].filter(Boolean) as DataItem[];
   }
-  // Add hoveredArc state to the component
-  const [hoveredArc, setHoveredArc] = useState<{
-    category: string | null;
-    metric: string | null;
-  } | null>(null);
 
   return (
     <Card className="w-full h-full flex flex-col justify-between animate-slide-in-up p-4 sm:p-5 md:p-6" style={{ animationDelay: '0.2s' }}>
     
-        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton />} />
+        <CardHeader title={title} rightContent={isMobile ? null : <ViewReportButton 
+        target="admin_learning_master_report.php" />} />
         <CardContent className={isMobile ? 'p-0 pt-2' : 'p-0 h-full'}>
           <div className="flex flex-col gap-4 w-full h-full md:flex-row items-center justify-center">
             {/* Interactive Chart */}
@@ -135,15 +194,24 @@ const LearningActivityCard = ({
                   const arcSpacing = 8;
                   const baseRadius = 120;
                   const r = baseRadius - idx * (arcWidth + arcSpacing);
-                  const cx = 150, cy = 150;
-                  const donutData = getDonutData(activity);
+                  const cx = 150, cy = 150;                  const donutData = getDonutData(activity);
                   const total = donutData.reduce((sum, d) => sum + (typeof d.value === 'number' ? d.value : 0), 0);
                   const assigned = donutData[0]?.value || 0;
                   const completed = donutData[1]?.value || 0;
                   const enrolled = donutData[2]?.value || 0;
-                  const assignedPct = assigned / total;
-                  const completedPct = completed / total;
-                  const enrolledPct = enrolled / total;
+                  
+                  // Handle division by zero - when total is 0, show a placeholder arc structure
+                  let assignedPct, completedPct, enrolledPct;
+                  if (total > 0) {
+                    assignedPct = assigned / total;
+                    completedPct = completed / total;
+                    enrolledPct = enrolled / total;
+                  } else {
+                    // When all values are 0, show a minimal arc structure
+                    assignedPct = 0.01; // Very small arc just to show structure
+                    completedPct = 0.01;
+                    enrolledPct = 0.01;
+                  }
                   const startAngle = 0;
                   const assignedEnd = startAngle + assignedPct * 270;
                   const completedEnd = assignedEnd + completedPct * 270;
@@ -253,17 +321,16 @@ const LearningActivityCard = ({
                         <div className="flex flex-col">
                           <div className="flex items-center gap-2">
                             <span className={`font-semibold truncate text-[#8C9BAC] ${isMobile ? 'text-sm' : 'text-base'}`}>{stat.statName}</span>
-                            {stat.tooltip && (
+                            {getStatTooltip(activeActivity.name, stat.statName) && (
                               <InfoTooltip
-                                tooltip={stat.tooltip}
+                                tooltip={getStatTooltip(activeActivity.name, stat.statName)}
                                 iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
                               />
                             )}
-                          </div>
-                          <div className="flex items-center gap-3">
+                          </div>                          <div className="flex items-center gap-3">
                             <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>{stat.value}</span>
                             <div className="flex items-center">
-                              <TrendIndicator value={stat.trendPercentage} isPositive={stat.isRising} />
+                              <TrendIndicator value={stat.trend} isPositive={stat.isRising} />
                             </div>
                           </div>
                         </div>
@@ -298,9 +365,9 @@ const LearningActivityCard = ({
                     {/* Status label with tooltip */}
                     <div className="flex items-center gap-1">
                       <span className={`${isMobile ? 'text-sm' : 'text-base'} font-semibold text-[#8C9BAC]`}>{item.name}</span>
-                      {item.tooltip && (
+                      {getDataTooltip(activeActivity.name, item.name) && (
                         <InfoTooltip
-                          tooltip={item.tooltip}
+                          tooltip={getDataTooltip(activeActivity.name, item.name)}
                           iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
                         />
                       )}

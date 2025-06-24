@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format, addMonths } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -9,6 +9,7 @@ import { Calendar1 } from "lucide-react";
 interface MobileDateRangePickerProps {
   onDateRangeChange?: (startDate: Date, endDate: Date) => void;
   defaultValue?: string;
+  value?: DateRange;
 }
 
 type DateRange = {
@@ -26,6 +27,7 @@ const presetTabs = [
 const MobileDateRangePicker = ({
   onDateRangeChange,
   defaultValue = "last-30-days",
+  value,
 }: MobileDateRangePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const defaultPreset =
@@ -49,6 +51,14 @@ const MobileDateRangePicker = ({
     new Date(),
     addMonths(new Date(), 1),
   ]);
+
+  // If value prop is provided, use it as the source of truth
+  useEffect(() => {
+    if (value && value.from && value.to) {
+      setDateRange(value);
+      setSelectedOption("Custom");
+    }
+  }, [value]);
 
   // Handle quick select
   const handleQuickSelect = (tab: typeof presetTabs[number]) => {

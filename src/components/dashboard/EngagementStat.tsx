@@ -26,7 +26,7 @@ const EngagementStat: React.FC<EngagementStatProps> = ({
   const isMobile = useIsMobile();
   return (
     <div
-      className={`flex items-center gap-2.5 py-2.5 px-1.5 rounded-sm cursor-pointer transition-all duration-200  
+      className={`flex items-center gap-2.5 py-2.5 px-1.5 rounded-sm cursor-pointer transition-all duration-200 w-auto min-w-fit whitespace-nowrap  
         ${        isActive ? "bg-[#F5F6F8] " : ""      }
                   ${isMobile ? 'border border-[#F5F6F8]' : ''}
                   `}
@@ -38,27 +38,21 @@ const EngagementStat: React.FC<EngagementStatProps> = ({
             isActive ? "bg-[#338FFF]" : "bg-[#CDD1D7]"
           }`}
         />
-      </div>
-      <div className="flex flex-col px-2.5">
+      </div>      <div className="flex flex-col px-2.5 min-w-0">
         <div className="flex items-center gap-2.5 ">
           <span
-            className={`font-semibold transition-colors duration-200 ${
+            className={`font-semibold transition-colors duration-200 truncate ${
               isActive ? "text-[#338FFF]" : "text-[#8C9BAC]"
             } ${isMobile ? "text-sm" : "text-base"}`}
           >
             {title}
           </span>
-          <InfoTooltip
-            tooltip={tooltip}
-            delayDuration={0}
-            iconProps={{ className: `${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-[#8C9BAC]`, stroke: '#8C9BAC' }}
-          />
-        </div>
-        <div className="flex items-center justify-between ">
-          <div>
-            <span className={`font-bold text-[#4F5A69] ${isMobile ? 'text-lg' : 'text-2xl'}`}>{value}</span>
+          <InfoTooltip tooltip={tooltip} iconProps={{ className: 'w-3 h-3 text-[#8C9BAC]' }} />
+        </div>        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0 flex-shrink-0">
+            <span className={`font-bold text-[#4F5A69] whitespace-nowrap ${isMobile ? 'text-lg' : 'text-2xl'}`}>{value}</span>
           </div>
-          <div className="w-[66px] flex justify-end items-center">
+          <div className="w-[66px] flex justify-end items-center flex-shrink-0">
             <TrendIndicator value={percentage} isPositive={isPositive} />
           </div>
         </div>

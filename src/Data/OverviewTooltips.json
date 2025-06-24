@@ -1,0 +1,8 @@
+{
+  "Total training hours": "Total number of hours spent by learners on learning activities",
+  "Avg. Daily Usage": "Average number of hours spent by learners daily on learning activities",
+  "ILT Enrolled Rate": "Percentage of learners who have enrolled in Instructor-Led Training (ILT) session",
+  "ILT Dropout Rate": "Percentage of learners who enrolled in Instructor-Led Training (ILT) sessions but did not complete them.",
+  "VILT Enrolled Rate": "Percentage of learners who have enrolled in Virtual Instructor-Led Training (VILT) session",
+  "VILT Dropout Rate": "Percentage of learners who enrolled in Virtual Instructor-Led Training (VILT) sessions but did not complete them."
+}
